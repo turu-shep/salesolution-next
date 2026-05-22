@@ -178,6 +178,8 @@ export default function WebDevServicePage() {
           { label: 'Engagement', href: '#engagement' },
           { label: 'FAQ', href: '#faq' },
         ]}
+        serviceName="website-development-design-services"
+        serviceCategory="web"
       />
 
       <BuildReality />

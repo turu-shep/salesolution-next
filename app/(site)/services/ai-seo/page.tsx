@@ -162,6 +162,8 @@ export default function AISEOServicePage() {
           { label: 'Engagement', href: '#engagement' },
           { label: 'FAQ', href: '#faq' },
         ]}
+        serviceName="ai-seo"
+        serviceCategory="seo"
       />
       <MarketReality />
       <ServicesTabs id="practice-areas" />

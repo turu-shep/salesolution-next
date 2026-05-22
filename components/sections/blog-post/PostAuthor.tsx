@@ -64,6 +64,8 @@ export function PostAuthor({ author }: { author: Author }) {
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
             <Link
               href="/book-growth-call/"
+              data-cta="book_call__post_author"
+              data-cta-location="mid_body"
               className="inline-flex items-center gap-2 text-sm font-semibold text-white underline decoration-white/30 underline-offset-[6px] transition-colors duration-200 hover:text-accent-500 hover:decoration-accent-500"
             >
               Work with {author.name.split(' ')[0]}

@@ -68,6 +68,8 @@ export function Evidence() {
 
           <Link
             href="/book-growth-call/"
+            data-cta="book_call__evidence"
+            data-cta-location="mid_body"
             className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[6px] transition hover:text-brand-600 hover:decoration-brand-600"
           >
             Book a similar audit

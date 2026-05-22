@@ -70,6 +70,9 @@ export function AuditHero() {
                   </p>
                 </div>
                 <LeadForm
+                  formId="audit_lead_form"
+                  formName="Audit hero lead form"
+                  leadType="audit"
                   submitLabel="Book my free audit"
                   thankYouHref="/unlock-growth-audit/thank-you/"
                   className="rounded-t-none border-t border-rule shadow-none ring-0"

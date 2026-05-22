@@ -14,26 +14,10 @@
  */
 import { NextRequest, NextResponse } from 'next/server'
 
+import { sendServerEvent } from '@/lib/analytics-server'
 import { leadSchema } from '@/lib/lead-form/schema'
 import { submitLead } from '@/lib/lead-form/submit'
-
-// Crude in-memory rate limiter — fine for dev; replace with Upstash / Redis
-// before high-traffic launch. Keyed on IP, 5 submissions / 10 minutes.
-const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
-const RATE_LIMIT_MAX = 5
-const hits = new Map<string, number[]>()
-
-function rateLimitHit(ip: string): boolean {
-  const now = Date.now()
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS)
-  if (recent.length >= RATE_LIMIT_MAX) {
-    hits.set(ip, recent)
-    return true
-  }
-  recent.push(now)
-  hits.set(ip, recent)
-  return false
-}
+import { rateLimit } from '@/lib/rate-limit'
 
 export async function POST(req: NextRequest) {
   const ip =
@@ -41,10 +25,16 @@ export async function POST(req: NextRequest) {
     req.headers.get('x-real-ip') ??
     'unknown'
 
-  if (rateLimitHit(ip)) {
+  const limit = await rateLimit(ip)
+  if (!limit.success) {
     return NextResponse.json(
       { ok: false, error: 'rate-limit' },
-      { status: 429 },
+      {
+        status: 429,
+        headers: {
+          'Retry-After': String(Math.max(1, Math.ceil((limit.reset - Date.now()) / 1000))),
+        },
+      },
     )
   }
 
@@ -75,5 +65,81 @@ export async function POST(req: NextRequest) {
     )
   }
 
+  // ── GA4 Measurement Protocol failsafe ──
+  // Mirrors the client-side `generate_lead` hit (see docs/strategy/ga4.md §5.8).
+  // Dedups against the client hit on `transaction_id` (= our submissionId UUID).
+  // No-ops silently if env vars are missing, or if the client didn't include a
+  // GA client_id (consent denied / no cookie / ad-blocker stripped it).
+  if (parsed.data.gaClientId && parsed.data.submissionId) {
+    const pageSource = parsed.data.pageSource ?? ''
+    const leadType: 'audit' | 'sprint' | 'strategy_call' | 'contact' =
+      pageSource.includes('/unlock-growth-audit/') ? 'audit' :
+      pageSource.includes('/constraint-sprint/')   ? 'sprint' :
+      pageSource.includes('/book-growth-call/')    ? 'strategy_call' :
+      'contact'
+
+    const value = computeLeadValue(leadType, parsed.data.revenue)
+    const baseParams = {
+      value,
+      currency: 'USD',
+      transaction_id: parsed.data.submissionId,
+      lead_type: leadType,
+      revenue_band: parsed.data.revenue,
+      page_location: pageSource || undefined,
+    }
+
+    // Canonical conversion — always fire.
+    await sendServerEvent({
+      clientId: parsed.data.gaClientId,
+      eventName: 'generate_lead',
+      params: baseParams,
+    })
+
+    // Page-specific echo, matches the client-side behavior.
+    const echo =
+      leadType === 'audit'         ? 'audit_request' :
+      leadType === 'sprint'        ? 'constraint_sprint_apply' :
+      leadType === 'strategy_call' ? 'book_growth_call' :
+      null
+    if (echo) {
+      await sendServerEvent({
+        clientId: parsed.data.gaClientId,
+        eventName: echo,
+        params: baseParams,
+      })
+    }
+  }
+
   return NextResponse.json({ ok: true, channels: result.channels })
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Lead-value model from docs/strategy/ga4.md §3.2. Maps the form's revenue
+ * select (lib/lead-form-config.ts REVENUE_RANGES) onto the doc's coarser
+ * `<$50k`, `$50k–$250k`, `$250k–$1M`, `$1M+` bands.
+ *
+ * `under-100k` lands in the smallest band (the form has no sub-50k option).
+ * Unknown revenue values fall through to the smallest tier.
+ */
+function computeLeadValue(
+  leadType: 'audit' | 'sprint' | 'strategy_call' | 'contact',
+  revenueBand: string,
+): number {
+  if (leadType === 'sprint') return 2400
+  if (leadType === 'contact') return 50
+
+  const auditValue =
+    revenueBand === 'under-100k' ? 80  :
+    revenueBand === '100k-250k'  ? 220 :
+    revenueBand === '250k-500k'  ? 500 :
+    revenueBand === '500k-1m'    ? 500 :
+    revenueBand === '1m-2m'      ? 900 :
+    revenueBand === '2m-5m'      ? 900 :
+    revenueBand === '5m-plus'    ? 900 :
+    80
+
+  if (leadType === 'strategy_call') return Math.round(auditValue * 1.2)
+  return auditValue
 }

@@ -1,10 +1,15 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import { Analytics, ConsentDefault } from '@/components/integrations/Analytics'
 import { ConsentBanner } from '@/components/integrations/ConsentBanner'
+import { CTAClickTracker } from '@/components/integrations/CTAClickTracker'
 import { HubSpotTracking } from '@/components/integrations/HubSpotTracking'
 import { MetaPixel } from '@/components/integrations/MetaPixel'
+import { OutboundLinkTracker } from '@/components/integrations/OutboundLinkTracker'
+import { RouteChangeTracker } from '@/components/integrations/RouteChangeTracker'
 import './globals.css'
 
 // Geist — Vercel's open-source family. Sharper and more distinctive than the
@@ -23,12 +28,23 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://salesolution.net'),
   title: {
     default: 'Sale Solution',
     template: '%s · Sale Solution',
   },
   description:
     'AI-engineered search for industrial e-commerce. Hydraulics, MRO, and technical distribution.',
+  openGraph: {
+    type: 'website',
+    siteName: 'Sale Solution',
+    locale: 'en_US',
+    url: 'https://salesolution.net',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@ArturShepel',
+  },
 }
 
 export default function RootLayout({
@@ -51,10 +67,22 @@ export default function RootLayout({
         <MetaPixel />
         <HubSpotTracking />
 
+        {/* GA4 event dispatchers — fire client-side navigation page_view,
+            outbound-link clicks, and primary-CTA clicks (anything carrying
+            a `data-cta` attribute). All three consent-gate inside track(). */}
+        <RouteChangeTracker />
+        <OutboundLinkTracker />
+        <CTAClickTracker />
+
         {children}
 
         {/* Consent banner — default-deny stays in force until visitor decides. */}
         <ConsentBanner />
+
+        {/* Vercel-first-party telemetry. Cookie-free; safe under default-deny.
+            Enable / disable per-project in Vercel → Project → Analytics. */}
+        <VercelAnalytics />
+        <SpeedInsights />
       </body>
     </html>
   )

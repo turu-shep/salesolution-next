@@ -87,6 +87,8 @@ export function WhatsIncluded({ id }: { id?: string }) {
         </p>
         <Link
           href="/contact-me/"
+          data-cta="contact__whats_included"
+          data-cta-location="mid_body"
           className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-white underline decoration-white/30 underline-offset-[6px] transition hover:text-accent-500 hover:decoration-accent-500"
         >
           Request a custom quote <span aria-hidden>→</span>

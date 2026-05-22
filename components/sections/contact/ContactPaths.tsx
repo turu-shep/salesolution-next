@@ -106,6 +106,14 @@ export function ContactPaths() {
               href={p.action.href}
               target={p.action.external ? '_blank' : undefined}
               rel={p.action.external ? 'noopener noreferrer' : undefined}
+              data-cta={
+                p.action.href === '/book-growth-call/'
+                  ? 'book_call__contact_path'
+                  : undefined
+              }
+              data-cta-location={
+                p.action.href === '/book-growth-call/' ? 'mid_body' : undefined
+              }
               className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-white underline decoration-white/30 underline-offset-[6px] transition-colors duration-200 hover:text-accent-500 hover:decoration-accent-500"
             >
               {p.action.label}

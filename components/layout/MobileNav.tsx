@@ -113,6 +113,8 @@ export function MobileNav() {
             <Link
               href={primaryCta.href}
               onClick={() => setOpen(false)}
+              data-cta="audit__primary_nav"
+              data-cta-location="header"
               className="block w-full rounded-md bg-brand-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-cta transition hover:bg-brand-700"
             >
               {primaryCta.label}

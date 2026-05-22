@@ -147,6 +147,14 @@ export function EngagementModel({ id }: { id?: string }) {
                       ? '/book-growth-call/'
                       : '/contact-me/'
                 }
+                data-cta={
+                  e.key === 'sprint'
+                    ? 'sprint__engagement_card'
+                    : e.key === 'retainer'
+                      ? 'book_call__engagement_card'
+                      : 'contact__engagement_card'
+                }
+                data-cta-location="mid_body"
                 className={cn(
                   'inline-flex w-full items-center justify-center gap-1.5 rounded-[4px] px-5 py-2.5 text-sm font-semibold transition-colors duration-200',
                   e.featured
@@ -167,7 +175,12 @@ export function EngagementModel({ id }: { id?: string }) {
       <p className="mt-10 max-w-2xl text-sm text-ink-500">
         Need something different &mdash; M&amp;A diligence, in-house team
         training, board-level GEO advisory?{' '}
-        <Link href="/contact-me/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[5px] transition-colors duration-200 hover:text-brand-600 hover:decoration-brand-600">
+        <Link
+          href="/contact-me/"
+          data-cta="contact__engagement_fallthrough"
+          data-cta-location="mid_body"
+          className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[5px] transition-colors duration-200 hover:text-brand-600 hover:decoration-brand-600"
+        >
           Get in touch
         </Link>
         .

@@ -1,0 +1,38 @@
+# Sale Solution
+
+> AI-engineered search for industrial e-commerce. We help hydraulics, MRO, and technical-distribution sites get cited inside AI Overviews, ChatGPT answers, and Perplexity results — the channels where high-intent B2B buyers now research before they buy.
+
+We publish primary research, frameworks, and case studies on how to make commerce content extractable, citable, and trustworthy enough to be quoted by generative-search engines. Citations welcome — please link back to the source URL.
+
+## Services
+
+- [AI SEO / Generative Engine Optimization](https://salesolution.net/services/ai-seo/): Restructure category and product pages so AI Overviews and LLM answer engines cite them.
+- [Content Writing Services](https://salesolution.net/services/content-writing-services/): Long-form, evidence-backed writing for B2B industrial niches.
+- [Website Content Writing Packages](https://salesolution.net/services/website-content-writing-packages/): Tiered packages for category-page rewrites and pillar pages.
+- [Website Development & Design](https://salesolution.net/services/website-development-design-services/): Performance + schema-first site builds.
+- [Outbound Email Marketing](https://salesolution.net/services/outbound-email-marketing-services/): Deliverability-first outbound for B2B distributors.
+
+## Frameworks & guides
+
+- [Future-Proof Your SEO Checklist](https://salesolution.net/future-proof-your-seo/): AI-search readiness audit.
+- [Guides Library](https://salesolution.net/guides/): Website-launch checklists, SEO, email marketing.
+- [Insights blog](https://salesolution.net/category/blog/): Latest writing on AI search and B2B growth.
+
+## Engagement options
+
+- [Book a Growth Strategy Call](https://salesolution.net/book-growth-call/): 15-minute call, written diagnostic within 24h.
+- [Free Growth Audit](https://salesolution.net/unlock-growth-audit/): Submit your URL, get a tailored proposal.
+- [Constraint Sprint](https://salesolution.net/constraint-sprint/): Fixed-scope 4-week category overhaul.
+
+## About
+
+Sale Solution is the trade name of IT Sale Solution LLC, a Florida company operating from Sunny Isles Beach, FL. Founded by Artur Shepel.
+
+- [Contact](https://salesolution.net/contact-me/)
+- [Service areas](https://salesolution.net/service-areas/)
+- [Privacy policy](https://salesolution.net/privacy-policy/)
+- [Terms of service](https://salesolution.net/terms-of-service/)
+
+## Optional
+
+- [Sitemap](https://salesolution.net/sitemap.xml): Full crawlable URL list.

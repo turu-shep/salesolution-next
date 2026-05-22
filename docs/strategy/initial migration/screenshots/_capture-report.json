@@ -1,0 +1,338 @@
+{
+  "generatedAt": "2026-05-17T05:06:30.309Z",
+  "base": "https://salesolution.net",
+  "viewports": [
+    "desktop-1440",
+    "tablet-768",
+    "mobile-375"
+  ],
+  "results": {
+    "ok": [
+      {
+        "viewport": "desktop-1440",
+        "url": "/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/home.png",
+        "bytes": 4431269
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/services.png",
+        "bytes": 3769894
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/services/ai-seo/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/services--ai-seo.png",
+        "bytes": 3769894
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/services/content-writing-services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/services--content-writing-services.png",
+        "bytes": 2052926
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/services/website-content-writing-packages/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/services--website-content-writing-packages.png",
+        "bytes": 669497
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/services/website-development-design-services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/services--website-development-design-services.png",
+        "bytes": 1063071
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/services/outbound-email-marketing-services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/services--outbound-email-marketing-services.png",
+        "bytes": 449942
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/contact-me/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/contact-me.png",
+        "bytes": 1214433
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/unlock-growth-audit/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/unlock-growth-audit.png",
+        "bytes": 785027
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/future-proof-your-seo/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/future-proof-your-seo.png",
+        "bytes": 2323695
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/book-growth-call/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/book-growth-call.png",
+        "bytes": 1126035
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/constraint-sprint/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/constraint-sprint.png",
+        "bytes": 1431015
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/category/blog/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/category--blog.png",
+        "bytes": 1139276
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/generative-engine-optimization-basic-to-advanced/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/generative-engine-optimization-basic-to-advanced.png",
+        "bytes": 4046617
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/guides/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/guides.png",
+        "bytes": 567321
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/guide/website-launch-checklist-series-part-1-seo-and-crawling/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/guide--website-launch-checklist-series-part-1-seo-and-crawling.png",
+        "bytes": 3533822
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/career-paths/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/career-paths.png",
+        "bytes": 200204
+      },
+      {
+        "viewport": "desktop-1440",
+        "url": "/service-areas/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/desktop-1440/service-areas.png",
+        "bytes": 1179429
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/home.png",
+        "bytes": 7170687
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/services.png",
+        "bytes": 6033229
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/services/ai-seo/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/services--ai-seo.png",
+        "bytes": 6033229
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/services/content-writing-services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/services--content-writing-services.png",
+        "bytes": 4067505
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/services/website-content-writing-packages/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/services--website-content-writing-packages.png",
+        "bytes": 1626321
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/services/website-development-design-services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/services--website-development-design-services.png",
+        "bytes": 1907513
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/services/outbound-email-marketing-services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/services--outbound-email-marketing-services.png",
+        "bytes": 1103746
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/contact-me/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/contact-me.png",
+        "bytes": 2253309
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/unlock-growth-audit/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/unlock-growth-audit.png",
+        "bytes": 1559379
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/future-proof-your-seo/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/future-proof-your-seo.png",
+        "bytes": 3983418
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/book-growth-call/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/book-growth-call.png",
+        "bytes": 2118438
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/constraint-sprint/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/constraint-sprint.png",
+        "bytes": 2853247
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/category/blog/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/category--blog.png",
+        "bytes": 2791035
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/generative-engine-optimization-basic-to-advanced/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/generative-engine-optimization-basic-to-advanced.png",
+        "bytes": 8590653
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/guides/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/guides.png",
+        "bytes": 1722213
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/guide/website-launch-checklist-series-part-1-seo-and-crawling/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/guide--website-launch-checklist-series-part-1-seo-and-crawling.png",
+        "bytes": 7641156
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/career-paths/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/career-paths.png",
+        "bytes": 550665
+      },
+      {
+        "viewport": "tablet-768",
+        "url": "/service-areas/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/tablet-768/service-areas.png",
+        "bytes": 2673872
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/home.png",
+        "bytes": 5930542
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/services.png",
+        "bytes": 4596882
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/services/ai-seo/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/services--ai-seo.png",
+        "bytes": 4596882
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/services/content-writing-services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/services--content-writing-services.png",
+        "bytes": 4117016
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/services/website-content-writing-packages/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/services--website-content-writing-packages.png",
+        "bytes": 1787771
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/services/website-development-design-services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/services--website-development-design-services.png",
+        "bytes": 1920489
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/services/outbound-email-marketing-services/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/services--outbound-email-marketing-services.png",
+        "bytes": 1224853
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/contact-me/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/contact-me.png",
+        "bytes": 1536409
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/unlock-growth-audit/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/unlock-growth-audit.png",
+        "bytes": 1381051
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/future-proof-your-seo/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/future-proof-your-seo.png",
+        "bytes": 3257205
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/book-growth-call/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/book-growth-call.png",
+        "bytes": 1476531
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/constraint-sprint/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/constraint-sprint.png",
+        "bytes": 2168834
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/category/blog/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/category--blog.png",
+        "bytes": 1771766
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/generative-engine-optimization-basic-to-advanced/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/generative-engine-optimization-basic-to-advanced.png",
+        "bytes": 8916817
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/guides/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/guides.png",
+        "bytes": 1418720
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/guide/website-launch-checklist-series-part-1-seo-and-crawling/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/guide--website-launch-checklist-series-part-1-seo-and-crawling.png",
+        "bytes": 7888231
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/career-paths/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/career-paths.png",
+        "bytes": 416912
+      },
+      {
+        "viewport": "mobile-375",
+        "url": "/service-areas/",
+        "file": "/Users/artur/Documents/Projects/Salesolution new/docs/strategy/screenshots/mobile-375/service-areas.png",
+        "bytes": 2511290
+      }
+    ],
+    "failed": []
+  }
+}

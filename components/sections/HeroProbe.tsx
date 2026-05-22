@@ -90,12 +90,16 @@ export function HeroProbe() {
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Link
                 href="/unlock-growth-audit/"
+                data-cta="audit__hero_cta"
+                data-cta-location="hero"
                 className="inline-flex items-center justify-center rounded-[4px] bg-brand-600 px-6 py-3.5 text-base font-semibold text-white shadow-cta transition-colors duration-200 hover:bg-brand-700"
               >
                 Get the full audit
               </Link>
               <Link
                 href="/future-proof-your-seo/"
+                data-cta="checklist__hero_cta"
+                data-cta-location="hero"
                 className="inline-flex items-center gap-1.5 py-3 text-base font-semibold text-ink-800 underline decoration-rule-strong underline-offset-[6px] transition-colors duration-200 hover:text-brand-600 hover:decoration-brand-600"
               >
                 See the framework
@@ -265,6 +269,8 @@ function ProbeResultPanel({ state }: { state: ProbeState }) {
       </div>
       <Link
         href="/unlock-growth-audit/"
+        data-cta="audit__hero_probe_result"
+        data-cta-location="hero"
         className="mt-4 inline-flex w-full items-center justify-center border border-ink-900/10 bg-mark px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-900 transition-colors duration-200 hover:bg-ink-900 hover:text-white"
       >
         Get the full audit →

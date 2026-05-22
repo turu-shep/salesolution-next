@@ -169,6 +169,8 @@ export default function OutboundEmailServicePage() {
           { label: 'Engagement', href: '#engagement' },
           { label: 'FAQ', href: '#faq' },
         ]}
+        serviceName="outbound-email-marketing-services"
+        serviceCategory="email"
       />
 
       <DeliverabilityReality id="reality" />

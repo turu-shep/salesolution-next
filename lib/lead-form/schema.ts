@@ -19,9 +19,13 @@ export const leadSchema = z.object({
   platform: z.string().min(1, 'Pick a platform'),
   frustration: z.string().min(1, 'Pick what stings most right now'),
 
-  // Anti-spam / context fields — not user-visible.
+  // Anti-spam / context fields — not user-visible, never rendered back to the
+  // user. `gaClientId` and `submissionId` are GA4-only (see lib/analytics-server.ts)
+  // and are NOT forwarded to HubSpot or Resend.
   turnstileToken: z.string().optional(),
   pageSource: z.string().optional(),
+  gaClientId: z.string().optional(),
+  submissionId: z.string().uuid().optional(),
 })
 
 export type LeadFormData = z.infer<typeof leadSchema>

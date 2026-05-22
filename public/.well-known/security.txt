@@ -1,0 +1,5 @@
+Contact: mailto:security@salesolution.net
+Expires: 2027-05-21T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://salesolution.net/.well-known/security.txt
+Policy: https://salesolution.net/privacy-policy/

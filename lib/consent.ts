@@ -52,13 +52,37 @@ export const ALL_ACCEPTED: ConsentState = {
   security_storage: 'granted',
 }
 
-/** Read the persisted simple choice. SSR-safe — returns `undecided` on server. */
+/**
+ * Detect Global Privacy Control. Required to honor as an opt-out-of-sale/share
+ * signal under CCPA/CPRA + Colorado CPA + Connecticut CTDPA. GPC scope is
+ * narrowly "sale/share" — we map it to the `marketing` category. Analytics
+ * (first-party measurement) is left to the user's stored choice / default-deny.
+ *
+ * Reference: https://globalprivacycontrol.org/
+ */
+function hasGPC(): boolean {
+  if (typeof window === 'undefined') return false
+  const nav = window.navigator as Navigator & { globalPrivacyControl?: boolean }
+  return nav.globalPrivacyControl === true
+}
+
+/** Read the persisted simple choice. SSR-safe — returns `undecided` on server.
+ *  GPC, when active, forces `marketing: false` regardless of stored choice. */
 export function readConsent(): SimpleConsent {
   if (typeof window === 'undefined') return { analytics: false, marketing: false, decided: false }
+  const gpc = hasGPC()
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY)
-    if (!raw) return { analytics: false, marketing: false, decided: false }
-    return JSON.parse(raw) as SimpleConsent
+    if (!raw) {
+      // No prior choice. GPC implies an explicit opt-out of sale/share, so
+      // we treat the visitor as "decided" — banner doesn't need to ask again.
+      if (gpc) return { analytics: false, marketing: false, decided: true }
+      return { analytics: false, marketing: false, decided: false }
+    }
+    const stored = JSON.parse(raw) as SimpleConsent
+    // GPC overrides marketing even after an "accept all" choice, per CCPA.
+    if (gpc) return { ...stored, marketing: false }
+    return stored
   } catch {
     return { analytics: false, marketing: false, decided: false }
   }
@@ -87,11 +111,11 @@ export function updateGtagConsent(state: ConsentState) {
   if (typeof window === 'undefined') return
   // window.gtag may not be defined yet if the user hasn't accepted anything —
   // we still push to dataLayer so the eventual tag manager picks it up.
-  // @ts-expect-error window.dataLayer is typed loosely
+  // `dataLayer` is declared as `unknown[]` on the global Window in
+  // lib/analytics.ts; the casts below preserve the original push semantics.
   window.dataLayer = window.dataLayer || []
   function gtag(...args: unknown[]) {
-    // @ts-expect-error implicit-any push API
-    window.dataLayer.push(args)
+    window.dataLayer?.push(args)
   }
   gtag('consent', 'update', state)
 }

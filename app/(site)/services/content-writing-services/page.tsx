@@ -181,6 +181,8 @@ export default function ContentWritingServicePage() {
           { label: 'Engagement', href: '#engagement' },
           { label: 'FAQ', href: '#faq' },
         ]}
+        serviceName="content-writing-services"
+        serviceCategory="content"
       />
       <ContentMarketReality />
       <ContentTypes id="formats" />

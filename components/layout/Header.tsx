@@ -146,6 +146,8 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Link
             href={primaryCta.href}
+            data-cta="audit__primary_nav"
+            data-cta-location="header"
             className={cn(
               'hidden items-center gap-2 rounded-[4px] px-4 py-2 text-sm font-semibold transition-colors duration-200 md:inline-flex',
               isDark

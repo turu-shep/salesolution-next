@@ -126,6 +126,8 @@ export function Signals() {
 
         <Link
           href="/unlock-growth-audit/"
+          data-cta="audit__signals"
+          data-cta-location="mid_body"
           className={cn(
             'inline-flex items-center justify-center gap-1.5 rounded-[4px] px-5 py-3 text-sm font-semibold transition-colors duration-200',
             count >= 2

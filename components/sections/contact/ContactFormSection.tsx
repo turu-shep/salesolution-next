@@ -60,6 +60,9 @@ export function ContactFormSection() {
 
         <div className="md:col-span-7">
           <LeadForm
+            formId="contact_lead_form"
+            formName="Contact page lead form"
+            leadType="contact"
             submitLabel="Send my details"
             thankYouHref="/unlock-growth-audit/thank-you/"
           />

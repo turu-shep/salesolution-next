@@ -31,6 +31,53 @@ const nextConfig: NextConfig = {
   async redirects() {
     return redirectMap
   },
+
+  /**
+   * Security headers — applied to every response.
+   *
+   * No Content-Security-Policy: gtag/GTM/Meta Pixel/HubSpot/Calendly all
+   * inject inline + cross-origin scripts that would require per-vendor nonces
+   * to allowlist. The trade-off — risk a CSP that breaks tracking, or skip
+   * CSP — leans toward "skip" for a marketing site. Revisit when consolidating
+   * tags inside a GTM container.
+   */
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          // Force HTTPS for 2 years; allow subdomain coverage; preload list eligible.
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          // Prevent MIME-type sniffing.
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          // Allow embedding only from same origin (defense-in-depth alongside CSP frame-ancestors).
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          // Send only the origin on cross-origin nav, full referrer same-origin.
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          // Deny powerful features by default — opt in per-feature if we ever need them.
+          {
+            key: 'Permissions-Policy',
+            value: [
+              'camera=()',
+              'microphone=()',
+              'geolocation=()',
+              'payment=()',
+              'usb=()',
+              'magnetometer=()',
+              'gyroscope=()',
+              'accelerometer=()',
+              'interest-cohort=()',
+            ].join(', '),
+          },
+          // Modern XSS mitigation; XSS-Protection header is deprecated but harmless.
+          { key: 'X-XSS-Protection', value: '0' },
+        ],
+      },
+    ]
+  },
 }
 
 export default nextConfig

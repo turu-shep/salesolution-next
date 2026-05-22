@@ -65,6 +65,8 @@ export function ContentEvidence({ id }: { id?: string }) {
 
           <Link
             href="/book-growth-call/"
+            data-cta="book_call__content_evidence"
+            data-cta-location="mid_body"
             className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[6px] transition-colors duration-200 hover:text-brand-600 hover:decoration-brand-600"
           >
             Scope a similar engagement

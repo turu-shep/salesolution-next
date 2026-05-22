@@ -155,6 +155,8 @@ export function StackTypes({ id }: { id?: string }) {
         Migrating from Magento, BigCommerce, or a custom monolith?{' '}
         <Link
           href="/contact-me/"
+          data-cta="contact__stack_types"
+          data-cta-location="mid_body"
           className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[5px] transition-colors duration-200 hover:text-brand-600 hover:decoration-brand-600"
         >
           Talk to us about the redirect map first

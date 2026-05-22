@@ -2,10 +2,8 @@ import type { Metadata } from 'next'
 
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
-import {
-  PACKAGE_TIERS,
-  PackagesGrid,
-} from '@/components/sections/content-packages/PackagesGrid'
+import { PACKAGE_TIERS } from '@/components/sections/content-packages/package-tiers'
+import { PackagesGrid } from '@/components/sections/content-packages/PackagesGrid'
 import { WhatsIncluded } from '@/components/sections/content-packages/WhatsIncluded'
 import { WhyFixedPackages } from '@/components/sections/content-packages/WhyFixedPackages'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
@@ -149,6 +147,8 @@ export default function ContentPackagesPage() {
           { label: 'Included in every tier', href: '#included' },
           { label: 'FAQ', href: '#faq' },
         ]}
+        serviceName="website-content-writing-packages"
+        serviceCategory="content"
       />
 
       <WhyFixedPackages id="why" />

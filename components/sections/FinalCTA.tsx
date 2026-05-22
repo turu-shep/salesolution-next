@@ -20,6 +20,8 @@ export function FinalCTA() {
         </p>
         <Link
           href="/unlock-growth-audit/"
+          data-cta="audit__final_rail"
+          data-cta-location="final_rail"
           className="mt-8 inline-flex items-center justify-center rounded-md bg-brand-600 px-7 py-3.5 text-sm font-semibold text-white shadow-cta transition hover:bg-brand-700"
         >
           Get Your Free Growth Audit

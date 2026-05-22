@@ -106,6 +106,8 @@ const CALL_FAQ: QA[] = [
           The{' '}
           <a
             href="/unlock-growth-audit/"
+            data-cta="audit__book_call_faq"
+            data-cta-location="mid_body"
             className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[5px] transition-colors duration-200 hover:text-brand-600 hover:decoration-brand-600"
           >
             free 15-minute Growth Audit

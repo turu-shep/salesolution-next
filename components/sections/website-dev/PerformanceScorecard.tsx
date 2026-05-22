@@ -241,6 +241,8 @@ export function PerformanceScorecard({ id }: { id?: string }) {
             you commit to a rebuild?{' '}
             <a
               href="/unlock-growth-audit/"
+              data-cta="audit__performance_scorecard"
+              data-cta-location="mid_body"
               className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[5px] transition-colors duration-200 hover:text-brand-600 hover:decoration-brand-600"
             >
               Get the free performance audit

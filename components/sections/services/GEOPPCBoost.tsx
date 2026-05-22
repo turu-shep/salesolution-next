@@ -30,6 +30,8 @@ export function GEOPPCBoost() {
           </p>
           <Link
             href="/book-growth-call/"
+            data-cta="book_call__geo_ppc_boost"
+            data-cta-location="mid_body"
             className="mt-6 inline-flex items-center justify-center rounded-md bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-cta transition hover:bg-brand-700"
           >
             Book a strategy call

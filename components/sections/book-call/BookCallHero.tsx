@@ -1,18 +1,20 @@
 import { LeadForm } from '@/components/forms/LeadForm'
+import { CalendlyEmbed } from '@/components/integrations/CalendlyEmbed'
 
 /**
  * /book-growth-call/ hero.
  *
  * Mirrors the ServicesHero typography (eyebrow, two-tone H1, lede) but adds
- * a right-rail form so the page IS the booking — no scroll required. The
- * left column stays editorial; the form sits in a quiet card on warm paper
- * so it reads as part of the page, not a popup.
+ * a right-rail booking widget so the page IS the booking — no scroll required.
  *
- * Form/calendar embed is delegated to <LeadForm /> — preserved verbatim
- * from the previous /book-growth-call/ implementation, including its
- * thank-you redirect target.
+ * Booking widget — two modes:
+ *   1. If NEXT_PUBLIC_CALENDLY_URL is set, embed the Calendly inline widget
+ *      (matches live site behavior).
+ *   2. Otherwise, fall back to the LeadForm so the page is still functional
+ *      (form submits to /api/lead and redirects to the thank-you page).
  */
 export function BookCallHero() {
+  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL
   return (
     <section data-section-tone="light" className="relative bg-paper">
       <div className="mx-auto max-w-6xl px-4 pb-16 pt-16 sm:px-6 md:pb-24 md:pt-24 lg:px-8">
@@ -75,15 +77,25 @@ export function BookCallHero() {
             </div>
           </div>
 
-          {/* Right column — form */}
+          {/* Right column — booking widget */}
           <div className="md:col-span-5">
             <div className="md:sticky md:top-24">
               <div className="rounded-2xl border border-rule bg-surface p-1 shadow-[0_30px_80px_-30px_rgba(15,20,30,0.18)]">
-                <LeadForm
-                  submitLabel="Book my call"
-                  thankYouHref="/unlock-growth-audit/thank-you/"
-                  className="rounded-[14px] border-0 bg-surface p-6 shadow-none ring-0 sm:p-7"
-                />
+                {calendlyUrl ? (
+                  <CalendlyEmbed
+                    url={calendlyUrl}
+                    className="overflow-hidden rounded-[14px]"
+                  />
+                ) : (
+                  <LeadForm
+                    formId="strategy_call_form"
+                    formName="Book call lead form"
+                    leadType="strategy_call"
+                    submitLabel="Book my call"
+                    thankYouHref="/unlock-growth-audit/thank-you/"
+                    className="rounded-[14px] border-0 bg-surface p-6 shadow-none ring-0 sm:p-7"
+                  />
+                )}
               </div>
               <p className="mt-5 text-xs leading-relaxed text-ink-500">
                 Prefer email? Write to{' '}

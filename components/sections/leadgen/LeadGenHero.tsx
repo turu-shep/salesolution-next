@@ -50,6 +50,8 @@ export function LeadGenHero({
               {primaryCta && (
                 <Link
                   href={primaryCta.href}
+                  data-cta={ctaIdForHref(primaryCta.href, 'leadgen_hero')}
+                  data-cta-location="hero"
                   className="inline-flex items-center justify-center rounded-md bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-cta transition hover:bg-brand-700"
                 >
                   {primaryCta.label}
@@ -58,6 +60,8 @@ export function LeadGenHero({
               {secondaryCta && (
                 <Link
                   href={secondaryCta.href}
+                  data-cta={ctaIdForHref(secondaryCta.href, 'leadgen_hero_secondary')}
+                  data-cta-location="hero"
                   className={`inline-flex items-center justify-center rounded-md border px-5 py-3 text-sm font-semibold transition ${
                     tone === 'dark'
                       ? 'border-white/30 text-white hover:border-white hover:bg-white/5'
@@ -75,4 +79,18 @@ export function LeadGenHero({
       </div>
     </section>
   )
+}
+
+/**
+ * Map a CTA href to a stable `data-cta` id so the page-specific copy passed
+ * via `primaryCta` / `secondaryCta` still emits a destination-aware Funnel-D
+ * step-4 event.
+ */
+function ctaIdForHref(href: string, role: string): string | undefined {
+  if (href.startsWith('/book-growth-call/')) return `book_call__${role}`
+  if (href.startsWith('/unlock-growth-audit/')) return `audit__${role}`
+  if (href.startsWith('/constraint-sprint/')) return `sprint__${role}`
+  if (href.startsWith('/contact-me/')) return `contact__${role}`
+  if (href.startsWith('/future-proof-your-seo/')) return `checklist__${role}`
+  return undefined
 }

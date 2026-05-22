@@ -65,6 +65,9 @@ export function SprintApply() {
 
         <div className="md:col-span-7">
           <LeadForm
+            formId="sprint_lead_form"
+            formName="Constraint Sprint application"
+            leadType="sprint"
             submitLabel="Apply for a sprint"
             thankYouHref="/constraint-sprint/thank-you/"
           />
