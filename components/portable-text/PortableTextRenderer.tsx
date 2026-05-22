@@ -6,50 +6,54 @@ import { urlFor } from '@/sanity/lib/image'
 import { slugifyHeading } from '@/lib/slug'
 
 /**
- * Render Sanity portable-text into the prose layout used by every long-form
- * route (posts, guides, career paths). Heading nodes get an `id` derived from
- * their text so the TableOfContents can link to them.
+ * Render Sanity portable-text into the long-form `.article-body` layout used by
+ * every editorial route (posts, guides, career paths). Heading nodes get an
+ * `id` derived from their text so the TableOfContents can link to them.
+ *
+ * Typography (margins, list bullets, link colors, code chip, etc.) lives in
+ * `.article-body` in `app/globals.css` — the renderer only owns node-level
+ * concerns (heading anchors, custom blockquote chrome, image/code/callout
+ * blocks). The `prose` utility chain isn't used because the project doesn't
+ * ship `@tailwindcss/typography`.
  */
 const components: PortableTextComponents = {
   block: {
     h2: ({ children, value }) => (
-      <h2 id={slugifyHeading(value?.children)} className="mt-12 scroll-mt-24">
+      <h2 id={slugifyHeading(value?.children)} className="scroll-mt-24">
         {children}
       </h2>
     ),
     h3: ({ children, value }) => (
-      <h3 id={slugifyHeading(value?.children)} className="mt-10 scroll-mt-24">
+      <h3 id={slugifyHeading(value?.children)} className="scroll-mt-24">
         {children}
       </h3>
     ),
-    h4: ({ children }) => <h4 className="mt-8">{children}</h4>,
+    h4: ({ children }) => <h4>{children}</h4>,
     blockquote: ({ children }) => (
-      <blockquote className="my-6 border-l-4 border-brand-600 bg-surface-tint-blue px-5 py-4 italic text-ink-700">
+      <blockquote className="my-6 border-l-4 border-brand-600 bg-surface-tint-blue px-5 py-4 not-italic text-ink-700">
         {children}
       </blockquote>
     ),
   },
 
   marks: {
+    // strong / em / underline don't need overrides — @portabletext/react
+    // emits the right native tags and the `.article-body` CSS styles them.
     link: ({ children, value }) => {
       const href = value?.href || '#'
       const external = /^https?:\/\//.test(href) && !href.includes('salesolution.net')
       if (external || value?.newTab) {
         return (
-          <a href={href} target="_blank" rel="noopener noreferrer" className="underline hover:text-brand-600">
+          <a href={href} target="_blank" rel="noopener noreferrer">
             {children}
           </a>
         )
       }
-      return (
-        <Link href={href} className="underline hover:text-brand-600">
-          {children}
-        </Link>
-      )
+      return <Link href={href}>{children}</Link>
     },
-    code: ({ children }) => (
-      <code className="rounded bg-surface-alt px-1.5 py-0.5 font-mono text-[0.9em]">{children}</code>
-    ),
+    // Inline code is styled by `.article-body code` — this override only
+    // exists so the renderer emits `<code>` without spurious wrapping spans.
+    code: ({ children }) => <code>{children}</code>,
   },
 
   types: {
@@ -99,7 +103,7 @@ const components: PortableTextComponents = {
 export function PortableTextRenderer({ value }: { value: unknown }) {
   if (!value || !Array.isArray(value)) return null
   return (
-    <div className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-ink-900 prose-p:text-ink-700">
+    <div className="article-body">
       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <PortableText value={value as any} components={components} />
     </div>

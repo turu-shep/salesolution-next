@@ -25,6 +25,12 @@ const nextConfig: NextConfig = {
         hostname: 'salesolution.net',
         pathname: '/wp-content/**',
       },
+      // Sanity-hosted assets: post/guide covers and inline body images.
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        pathname: '/images/**',
+      },
     ],
   },
 

@@ -67,27 +67,14 @@ export function Analytics() {
 }
 
 /**
- * Inline `<script>` that runs BEFORE any tracking tag to set Consent Mode v2
- * defaults. Must be rendered as high in the document as possible — we use
- * `strategy="beforeInteractive"` so Next.js injects it into the document head.
+ * Loads `/consent-default.js` to set Consent Mode v2 defaults before any
+ * tracking tag fires. Uses a raw `<script async src>` (not next/script):
+ * next/script with `beforeInteractive` always renders a JSX `<script>`
+ * runtime-loader element that triggers React 19's "Encountered a script tag"
+ * warning. React 19 auto-hoists `<script async src>` to <head> as a Resource
+ * without warning, and `async` executes before any `afterInteractive`
+ * tracking tag (which can't load until after hydration).
  */
 export function ConsentDefault() {
-  return (
-    <Script id="consent-default" strategy="beforeInteractive">
-      {`
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('consent', 'default', {
-          'ad_storage': 'denied',
-          'ad_user_data': 'denied',
-          'ad_personalization': 'denied',
-          'analytics_storage': 'denied',
-          'functionality_storage': 'granted',
-          'personalization_storage': 'denied',
-          'security_storage': 'granted',
-          'wait_for_update': 500
-        });
-      `}
-    </Script>
-  )
+  return <script async src="/consent-default.js" />
 }

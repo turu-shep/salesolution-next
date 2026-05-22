@@ -57,11 +57,11 @@ export default function RootLayout({
       lang="en"
       className={`${geist.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <head>
-        {/* Consent Mode v2 default-deny — must execute BEFORE any tracking tag. */}
-        <ConsentDefault />
-      </head>
       <body className="min-h-full flex flex-col bg-surface text-ink-700 font-sans">
+        {/* Consent Mode v2 default-deny — must execute BEFORE any tracking tag.
+            next/script `beforeInteractive` is always injected into <head> by
+            Next regardless of where it's placed, so it lives in <body> here. */}
+        <ConsentDefault />
         {/* Tracking — each component self-gates on its env var. */}
         <Analytics />
         <MetaPixel />

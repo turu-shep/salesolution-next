@@ -25,7 +25,7 @@ export function PathHero({ path }: { path: CareerPath }) {
 
   return (
     <section data-section-tone="light" className="relative bg-paper">
-      <div className="mx-auto max-w-6xl px-4 pb-12 pt-16 sm:px-6 md:pb-16 md:pt-24 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 pb-8 pt-8 sm:px-6 md:pb-10 md:pt-12 lg:px-8">
         {/* Breadcrumb */}
         <nav
           aria-label="Breadcrumb"
@@ -46,7 +46,7 @@ export function PathHero({ path }: { path: CareerPath }) {
         </nav>
 
         {isEntryPoint && (
-          <p className="mt-6 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-600">
+          <p className="mt-4 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-600">
             <span
               aria-hidden
               className="inline-block h-1.5 w-1.5 rounded-full bg-accent-500"
@@ -57,22 +57,22 @@ export function PathHero({ path }: { path: CareerPath }) {
 
         <h1
           className={
-            'font-display font-semibold leading-[1.05] tracking-[-0.02em] text-ink-900 text-balance ' +
-            'text-4xl sm:text-5xl md:text-[3.75rem] ' +
-            (isEntryPoint ? 'mt-4' : 'mt-6')
+            'font-display font-semibold leading-[1.1] tracking-[-0.02em] text-ink-900 text-balance ' +
+            'text-3xl sm:text-4xl md:text-5xl ' +
+            (isEntryPoint ? 'mt-3' : 'mt-5')
           }
         >
           {path.title}
         </h1>
 
         {path.description && (
-          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink-700 md:text-xl">
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-700 md:text-xl">
             {path.description}
           </p>
         )}
 
         {/* Metadata strip — three columns on desktop, hairline-divided */}
-        <dl className="mt-14 grid grid-cols-1 gap-px border-y border-rule sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-rule">
+        <dl className="mt-8 grid grid-cols-1 gap-px border-y border-rule sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-rule">
           <MetaCell label="For">
             {path.role ? (
               <span className="text-ink-900">{path.role}</span>
