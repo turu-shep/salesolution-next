@@ -16,16 +16,19 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    // Pull client logos and any legacy media directly from the WordPress CDN
-    // during transition. Once we re-host assets in /public or R2, narrow
-    // this back down.
+    // Custom loader: see lib/image-loader.ts. Routes Sanity assets straight
+    // through cdn.sanity.io (clean URLs + Sanity-side resize/WebP), passes
+    // everything else through unchanged.
+    loader: 'custom',
+    loaderFile: './lib/image-loader.ts',
+    // remotePatterns is still honored for any explicit `unoptimized={false}`
+    // images that fall back through the proxy in development.
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'salesolution.net',
         pathname: '/wp-content/**',
       },
-      // Sanity-hosted assets: post/guide covers and inline body images.
       {
         protocol: 'https',
         hostname: 'cdn.sanity.io',
