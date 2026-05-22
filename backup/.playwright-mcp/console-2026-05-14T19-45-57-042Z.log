@@ -1,0 +1,25 @@
+[     440ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[     613ms] [LOG] %c[Web Vitals] LCP: 120ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     613ms] [LOG] %c[Web Vitals] CLS: 0.000ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     613ms] [LOG] %c[Web Vitals] FCP: 120ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     613ms] [LOG] %c[Web Vitals] TTFB: 77ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     613ms] [LOG] %c[Web Vitals] LCP: 120ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     613ms] [LOG] %c[Web Vitals] CLS: 0.000ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     613ms] [LOG] %c[Web Vitals] FCP: 120ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     613ms] [LOG] %c[Web Vitals] TTFB: 77ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     691ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:3001/:0
+[     750ms] [LOG] %c[Web Vitals] LCP: 708ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     750ms] [LOG] %c[Web Vitals] LCP: 708ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     762ms] [LOG] %c[Web Vitals] CLS: 0.002ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     762ms] [LOG] %c[Web Vitals] CLS: 0.002ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     767ms] [LOG] %c[Web Vitals] LCP: 724ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     767ms] [LOG] %c[Web Vitals] LCP: 724ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[    1274ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3001/api/csrf:0
+[    1274ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[    1741ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3001/api/hypercredits/wallet:0
+[   11784ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3001/api/csrf:0
+[   11784ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[   11812ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3001/api/hypercredits/wallet:0
+[   36857ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3001/api/csrf:0
+[   36857ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[   36878ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3001/api/hypercredits/wallet:0

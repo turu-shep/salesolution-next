@@ -1,0 +1,79 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e7]:
+          - link "Field Advisor" [ref=e8] [cursor=pointer]:
+            - /url: /
+            - img "Field Advisor" [ref=e9]
+          - generic [ref=e10]:
+            - paragraph [ref=e11]: The preservation layer for trades · 2026
+            - heading "Preserve what trade shops lose every day." [level=1] [ref=e12]
+            - paragraph [ref=e13]: Customer loyalty. And trades knowledge. Field Advisor is the preservation layer for trades — the platform and the playbook.
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - img [ref=e17]
+            - generic [ref=e20]:
+              - heading "Customer loyalty" [level=3] [ref=e21]
+              - paragraph [ref=e22]: Keep the customers you’ve earned. QR, microsites, booking, video, memberships.
+          - generic [ref=e23]:
+            - img [ref=e25]
+            - generic [ref=e28]:
+              - heading "Trades knowledge" [level=3] [ref=e29]
+              - paragraph [ref=e30]: Capture senior expertise before it walks out the door. SOPs, training, live counter assist.
+          - generic [ref=e31]:
+            - img [ref=e33]
+            - generic [ref=e35]:
+              - heading "Founding cohort" [level=3] [ref=e36]
+              - paragraph [ref=e37]: First 50 shops lock $497/mo on Platform forever.
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - img [ref=e75]
+            - text: Account
+          - generic [ref=e79]: Verify
+          - generic [ref=e84]: Role
+        - generic [ref=e86]:
+          - img [ref=e88]
+          - heading "Check your email." [level=1] [ref=e91]
+          - paragraph [ref=e92]: We've sent a verification link to a.shepel+shop2@fieldadvisor.net.
+        - generic [ref=e93]:
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - img [ref=e96]
+              - heading "Should arrive within 5 minutes" [level=3] [ref=e99]
+            - list [ref=e100]:
+              - listitem [ref=e101]: 1. Check your inbox for a message from Field Advisor.
+              - listitem [ref=e102]: 2. Click “Verify Email Address” in the email.
+              - listitem [ref=e103]: 3. You'll be redirected back to continue setup.
+          - generic [ref=e105]:
+            - generic [ref=e106]: Wrong email address?
+            - button "Change email" [ref=e107] [cursor=pointer]:
+              - img [ref=e108]
+              - text: Change email
+          - generic [ref=e110]:
+            - paragraph [ref=e111]: "Didn't receive the email? Check your spam folder, or:"
+            - button "Resend verification email" [ref=e112] [cursor=pointer]:
+              - img [ref=e113]
+              - text: Resend verification email
+          - button "Still having trouble?" [ref=e119] [cursor=pointer]:
+            - generic [ref=e120]:
+              - img [ref=e121]
+              - text: Still having trouble?
+            - img [ref=e124]
+          - paragraph [ref=e126]:
+            - button "Back to sign up" [ref=e127] [cursor=pointer]:
+              - generic [ref=e128]: ←
+              - text: Back to sign up
+  - region "Notifications (F8)":
+    - list [ref=e130]:
+      - listitem [ref=e131]:
+        - generic [ref=e132]:
+          - generic [ref=e133]: Email Already Verified!
+          - generic [ref=e134]: Your email is verified. Redirecting...
+        - button [ref=e135] [cursor=pointer]:
+          - img [ref=e136]
+  - alert [ref=e71]
+  - status [ref=e140]: Notification Email Already Verified!Your email is verified. Redirecting...

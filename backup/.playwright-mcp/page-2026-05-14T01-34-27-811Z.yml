@@ -1,0 +1,288 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - link "Field Advisor Logo":
+            - /url: /
+            - img "Field Advisor Logo"
+          - navigation [ref=e8]:
+            - link "Customer Loyalty" [ref=e9] [cursor=pointer]:
+              - /url: /customer-loyalty
+            - link "Trades Knowledge" [ref=e10] [cursor=pointer]:
+              - /url: /trades-knowledge
+            - button "Who It's For" [ref=e11] [cursor=pointer]:
+              - text: Who It's For
+              - img [ref=e12]
+            - link "FAQ" [ref=e14] [cursor=pointer]:
+              - /url: /#faq
+        - generic [ref=e15]:
+          - button [ref=e16] [cursor=pointer]:
+            - img [ref=e17]
+          - generic [ref=e20]:
+            - link "Sign In" [ref=e21] [cursor=pointer]:
+              - /url: /auth/login
+            - link "Get Started" [ref=e22] [cursor=pointer]:
+              - /url: /auth/signup
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic [ref=e29]:
+              - paragraph [ref=e30]: The preservation layer for trades · 2026
+              - heading "Preserve what trade shops lose every day." [level=1] [ref=e31]:
+                - text: Preserve what trade
+                - text: shops lose every day.
+              - paragraph [ref=e32]: Customer loyalty. And trades knowledge.
+              - paragraph [ref=e34]: Field Advisor is the layer above ServiceTitan and Jobber — built for what your operations stack doesn’t solve. Keep the customers you’ve earned. Capture the expertise your senior techs will take with them when they retire.
+            - generic [ref=e36]:
+              - link "Book a demo" [ref=e37] [cursor=pointer]:
+                - /url: /auth/signup
+                - text: Book a demo
+                - img [ref=e38]
+              - link "Already a customer? Sign in." [ref=e40] [cursor=pointer]:
+                - /url: /auth/login
+          - complementary [ref=e42]:
+            - generic [ref=e47]: Founding Cohort · 2026
+            - paragraph [ref=e48]: The first 50 shops to join lock in founding pricing on everything we ship — forever.
+            - generic [ref=e49]:
+              - generic [ref=e50]:
+                - term [ref=e51]: Platform plan
+                - definition [ref=e52]: $497/mo, locked
+              - generic [ref=e53]:
+                - term [ref=e54]: Managed tier
+                - definition [ref=e55]: 20% off, forever
+              - generic [ref=e56]:
+                - term [ref=e57]: Live Assist beta
+                - definition [ref=e58]: Priority access
+              - generic [ref=e59]:
+                - term [ref=e60]: Spots remaining
+                - definition [ref=e61]: Limited to 50 shops
+            - link "Join the founding cohort" [ref=e62] [cursor=pointer]:
+              - /url: /auth/signup
+              - text: Join the founding cohort
+              - img [ref=e63]
+        - generic [ref=e66]:
+          - paragraph [ref=e67]: Jump to your playbook
+          - generic [ref=e68]:
+            - link "For Shops Service Centers Part Sales Equipment Rental Companies" [ref=e69] [cursor=pointer]:
+              - /url: /for-shops-v2
+              - generic [ref=e70]:
+                - img [ref=e72]
+                - generic [ref=e77]: For Shops
+                - img [ref=e78]
+              - list [ref=e80]:
+                - listitem [ref=e81]:
+                  - generic [ref=e83]: Service Centers
+                - listitem [ref=e84]:
+                  - generic [ref=e86]: Part Sales
+                - listitem [ref=e87]:
+                  - generic [ref=e89]: Equipment Rental Companies
+            - link "For Contractors Residential Commercial Government" [ref=e90] [cursor=pointer]:
+              - /url: /for-contractors-v2
+              - generic [ref=e91]:
+                - img [ref=e93]
+                - generic [ref=e98]: For Contractors
+                - img [ref=e99]
+              - list [ref=e101]:
+                - listitem [ref=e102]:
+                  - generic [ref=e104]: Residential
+                - listitem [ref=e105]:
+                  - generic [ref=e107]: Commercial
+                - listitem [ref=e108]:
+                  - generic [ref=e110]: Government
+            - link "For Independents Semi-retirees Supplemental Income Social influencers" [ref=e111] [cursor=pointer]:
+              - /url: /for-independent-consultants-v2
+              - generic [ref=e112]:
+                - img [ref=e114]
+                - generic [ref=e118]: For Independents
+                - img [ref=e119]
+              - list [ref=e121]:
+                - listitem [ref=e122]:
+                  - generic [ref=e124]: Semi-retirees
+                - listitem [ref=e125]:
+                  - generic [ref=e127]: Supplemental Income
+                - listitem [ref=e128]:
+                  - generic [ref=e130]: Social influencers
+          - link "Back in the Trades Program A program for skilled pros returning after injury, disability, or service — the expertise still counts, the tools don’t have to." [ref=e131] [cursor=pointer]:
+            - /url: /for-independent-consultants-v2
+            - img [ref=e133]
+            - generic [ref=e138]:
+              - generic [ref=e139]:
+                - generic [ref=e140]: Back in the Trades
+                - generic [ref=e141]: Program
+              - generic [ref=e142]: A program for skilled pros returning after injury, disability, or service — the expertise still counts, the tools don’t have to.
+            - img [ref=e143]
+        - generic [ref=e147]:
+          - generic [ref=e150]:
+            - img [ref=e151]
+            - generic [ref=e154]: Field Advisor
+            - generic [ref=e155]: ·
+            - generic [ref=e156]: one network, three roles
+          - img
+          - generic [ref=e157]: Referrals
+          - generic [ref=e158]: Video Call
+          - generic [ref=e159]: Specialist
+          - generic [ref=e163]:
+            - img [ref=e164]
+            - generic [ref=e167]: Customer
+            - generic [ref=e168]: Bob
+            - generic [ref=e169]: Akron, OH
+          - generic:
+            - generic [ref=e172]:
+              - img [ref=e174]
+              - generic [ref=e179]:
+                - generic [ref=e180]:
+                  - img [ref=e181]
+                  - generic [ref=e184]: Field Advisor
+                - generic [ref=e185]: Shops
+                - generic [ref=e186]: Parts and Repair
+            - generic [ref=e189]:
+              - img [ref=e191]
+              - generic [ref=e196]:
+                - generic [ref=e197]:
+                  - img [ref=e198]
+                  - generic [ref=e201]: Field Advisor
+                - generic [ref=e202]: Contractors
+            - generic [ref=e205]:
+              - img [ref=e207]
+              - generic [ref=e211]:
+                - generic [ref=e212]:
+                  - img [ref=e213]
+                  - generic [ref=e216]: Field Advisor
+                - generic [ref=e217]: Consultants
+        - generic [ref=e219]:
+          - generic [ref=e220]:
+            - generic [ref=e223]: What the Field Advisor badge means
+            - paragraph [ref=e225]: Every business above shares the same five standards. That’s why they can hand Bob off to each other without breaking the thread.
+          - generic [ref=e226]:
+            - generic [ref=e227]:
+              - img [ref=e229]
+              - generic [ref=e235]: Pro-to-Pro Referrals
+              - generic [ref=e236]: Hand a customer off with a shareable booking link.
+            - generic [ref=e237]:
+              - img [ref=e239]
+              - generic [ref=e242]: Paid Bookings
+              - generic [ref=e243]: Customers pay up front via Stripe — payouts go to your bank.
+            - generic [ref=e244]:
+              - img [ref=e246]
+              - generic [ref=e248]: AI Session Library
+              - generic [ref=e249]: Every video call ends with an AI-written summary you can re-use.
+      - generic [ref=e251]:
+        - heading "Questions? Answers." [level=2] [ref=e254]
+        - generic [ref=e255]:
+          - group [ref=e257]:
+            - generic "What types of businesses use Field Advisor?" [ref=e258] [cursor=pointer]:
+              - text: What types of businesses use Field Advisor?
+              - img [ref=e259]
+          - group [ref=e262]:
+            - generic "How fast can I get set up?" [ref=e263] [cursor=pointer]:
+              - text: How fast can I get set up?
+              - img [ref=e264]
+          - group [ref=e267]:
+            - generic "How is this different from Thumbtack, Angi, or a website builder?" [ref=e268] [cursor=pointer]:
+              - text: How is this different from Thumbtack, Angi, or a website builder?
+              - img [ref=e269]
+          - group [ref=e272]:
+            - generic "What are membership plans?" [ref=e273] [cursor=pointer]:
+              - text: What are membership plans?
+              - img [ref=e274]
+          - group [ref=e277]:
+            - generic "How much does it cost?" [ref=e278] [cursor=pointer]:
+              - text: How much does it cost?
+              - img [ref=e279]
+      - generic [ref=e283]:
+        - generic [ref=e285]:
+          - paragraph [ref=e286]: Pick your role
+          - heading "See how Field Advisor works for your trade." [level=2] [ref=e287]
+          - paragraph [ref=e288]: Pick the page built for your business. Each one has the pitch, the math, and the proof for how operators like you put Field Advisor to work.
+        - generic [ref=e290]:
+          - link "Contractor companies Field crews, route-based work" [ref=e291] [cursor=pointer]:
+            - /url: /for-contractors-v2
+            - img [ref=e292]
+            - paragraph [ref=e294]: Contractor companies
+            - paragraph [ref=e295]: Field crews, route-based work
+          - link "Shops & supply houses Bench-based repair, parts counters" [ref=e296] [cursor=pointer]:
+            - /url: /for-shops-v2
+            - img [ref=e297]
+            - paragraph [ref=e299]: Shops & supply houses
+            - paragraph [ref=e300]: Bench-based repair, parts counters
+          - link "Independent consultants Solo experts & advisors" [ref=e301] [cursor=pointer]:
+            - /url: /for-independent-consultants-v2
+            - img [ref=e302]
+            - paragraph [ref=e304]: Independent consultants
+            - paragraph [ref=e305]: Solo experts & advisors
+        - generic [ref=e307]:
+          - link "Start 14-day trial" [ref=e308] [cursor=pointer]:
+            - /url: /auth/signup
+            - text: Start 14-day trial
+            - img [ref=e309]
+          - link "Already have an account? Sign in." [ref=e311] [cursor=pointer]:
+            - /url: /auth/login
+          - paragraph [ref=e312]: No credit card · Cancel anytime · Real humans answer the phone.
+      - generic [ref=e314]:
+        - generic [ref=e315]:
+          - generic [ref=e316]:
+            - generic [ref=e317]:
+              - img "Field Advisor"
+            - paragraph [ref=e318]: The platform — and the playbook — for the trade businesses that refuse to be treated like a commodity.
+            - generic [ref=e319]:
+              - link "Start 14-Day Trial" [ref=e320] [cursor=pointer]:
+                - /url: /auth/signup
+              - link "How It Works" [ref=e321] [cursor=pointer]:
+                - /url: /#what-changes
+          - generic [ref=e322]:
+            - heading "Platform" [level=4] [ref=e323]
+            - list [ref=e324]:
+              - listitem [ref=e325]:
+                - link "How It Works" [ref=e326] [cursor=pointer]:
+                  - /url: /#ecosystem-network
+              - listitem [ref=e327]:
+                - link "Customer Stories" [ref=e328] [cursor=pointer]:
+                  - /url: /#stories
+              - listitem [ref=e329]:
+                - link "FAQ" [ref=e330] [cursor=pointer]:
+                  - /url: /#faq
+              - listitem [ref=e331]:
+                - link "Get Started" [ref=e332] [cursor=pointer]:
+                  - /url: /#get-started
+          - generic [ref=e333]:
+            - heading "Industries" [level=4] [ref=e334]
+            - list [ref=e335]:
+              - listitem [ref=e336]:
+                - link "For Shops" [ref=e337] [cursor=pointer]:
+                  - /url: /for-shops-v2
+              - listitem [ref=e338]:
+                - link "Contractor Companies" [ref=e339] [cursor=pointer]:
+                  - /url: /for-contractors-v2
+              - listitem [ref=e340]:
+                - link "Independent Consultants" [ref=e341] [cursor=pointer]:
+                  - /url: /for-independent-consultants-v2
+          - generic [ref=e342]:
+            - heading "Company" [level=4] [ref=e343]
+            - list [ref=e344]:
+              - listitem [ref=e345]:
+                - link "About Us" [ref=e346] [cursor=pointer]:
+                  - /url: "#about"
+              - listitem [ref=e347]:
+                - link "Contact" [ref=e348] [cursor=pointer]:
+                  - /url: "#contact"
+              - listitem [ref=e349]:
+                - link "Privacy Policy" [ref=e350] [cursor=pointer]:
+                  - /url: /privacy
+              - listitem [ref=e351]:
+                - link "Terms of Service" [ref=e352] [cursor=pointer]:
+                  - /url: /terms
+        - generic [ref=e354]:
+          - paragraph [ref=e355]: © 2026 Field Advisor. Built for the trades.
+          - generic [ref=e356]:
+            - link "Privacy" [ref=e357] [cursor=pointer]:
+              - /url: /privacy
+            - link "Terms" [ref=e358] [cursor=pointer]:
+              - /url: /terms
+            - link "Support" [ref=e359] [cursor=pointer]:
+              - /url: "#contact"
+  - region "Notifications (F8)":
+    - list
+  - alert [ref=e360]

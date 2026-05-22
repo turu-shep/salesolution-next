@@ -1,0 +1,243 @@
+{
+  "version": "2.0",
+  "project": "Field Advisor",
+  "last_session": "2026-04-02",
+  "last_commit": "b3514a029d14776c782633794e58ed0fda7625ce",
+  "total_files": 1500,
+  "files_analyzed_this_session": 90,
+  "files_inherited": 0,
+  "files": {
+    "middleware.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 0,
+      "module": "app-shell",
+      "scores": { "completeness": 8, "robustness": 7, "quality": 7, "security": 6, "test_coverage": 0 },
+      "flags": {
+        "architect": ["ARCH-001: 3 DB queries per protected request"],
+        "user": [],
+        "adversary": ["ADV-002: sub-paths not role-checked (unchanged)"]
+      },
+      "cross_persona": false,
+      "milestone_critical": ["M0"]
+    },
+    "app/layout.tsx": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 0,
+      "module": "app-shell",
+      "scores": { "completeness": 9, "robustness": 8, "quality": 9, "security": 8, "test_coverage": 0 },
+      "flags": { "architect": [], "user": [], "adversary": [] },
+      "cross_persona": false,
+      "milestone_critical": []
+    },
+    "app/auth/callback/route.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 3,
+      "module": "auth",
+      "scores": { "completeness": 8, "robustness": 8, "quality": 8, "security": 7, "test_coverage": 0 },
+      "flags": {
+        "architect": [],
+        "user": [],
+        "adversary": ["ADV-001: FIXED 2026-04-02 — now uses signPasswordCookie()"]
+      },
+      "cross_persona": false,
+      "milestone_critical": ["M0", "M1"]
+    },
+    "app/auth/login/page.tsx": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 1,
+      "module": "auth",
+      "scores": { "completeness": 8, "robustness": 7, "quality": 7, "security": 6, "test_coverage": 6 },
+      "flags": {
+        "architect": [],
+        "user": [],
+        "adversary": []
+      },
+      "cross_persona": false,
+      "milestone_critical": ["M0", "M1"]
+    },
+    "app/api/bookings/route.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 2,
+      "module": "booking",
+      "dependencies": ["lib/stripe/booking-payments.ts", "lib/business-rules/booking-transitions.ts"],
+      "dependents": ["components/booking/BookingWizard.tsx"],
+      "scores": { "completeness": 9, "robustness": 8, "quality": 8, "security": 7, "test_coverage": 5 },
+      "flags": {
+        "architect": [],
+        "user": [],
+        "adversary": []
+      },
+      "cross_persona": false,
+      "milestone_critical": ["M0"]
+    },
+    "app/api/bookings/[id]/complete/route.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 3,
+      "module": "booking",
+      "dependencies": ["lib/business-rules/booking-transitions.ts", "lib/stripe/booking-payments.ts", "lib/email/booking-emails.ts"],
+      "dependents": ["app/call/[bookingId]/complete/page.tsx"],
+      "scores": { "completeness": 9, "robustness": 8, "quality": 8, "security": 8, "test_coverage": 5 },
+      "flags": {
+        "architect": ["ARCH: FIXED — full post-call workflow implemented"],
+        "user": ["USER: FIXED — receipt emails + review request"],
+        "adversary": []
+      },
+      "cross_persona": false,
+      "milestone_critical": ["M0"]
+    },
+    "app/api/bookings/[id]/capture/route.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 2,
+      "module": "booking",
+      "scores": { "completeness": 9, "robustness": 8, "quality": 8, "security": 9, "test_coverage": 5 },
+      "flags": { "architect": [], "user": [], "adversary": [] },
+      "cross_persona": false,
+      "milestone_critical": ["M0"]
+    },
+    "app/api/reviews/submit/route.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 3,
+      "module": "reviews",
+      "scores": { "completeness": 9, "robustness": 8, "quality": 9, "security": 7, "test_coverage": 5 },
+      "flags": {
+        "architect": [],
+        "user": [],
+        "adversary": ["ADV-020: no CSRF (moderate — requires auth)"]
+      },
+      "cross_persona": false,
+      "milestone_critical": ["M0"]
+    },
+    "app/api/subscription/checkout/route.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 3,
+      "module": "subscription",
+      "scores": { "completeness": 8, "robustness": 8, "quality": 8, "security": 8, "test_coverage": 3 },
+      "flags": {
+        "architect": [],
+        "user": [],
+        "adversary": ["ADV-030: Stripe price IDs may be NULL in DB (data config issue)"]
+      },
+      "cross_persona": false,
+      "milestone_critical": ["M0"]
+    },
+    "lib/csrf.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 3,
+      "module": "auth",
+      "scores": { "completeness": 9, "robustness": 9, "quality": 9, "security": 9, "test_coverage": 8 },
+      "flags": { "architect": [], "user": [], "adversary": [] },
+      "cross_persona": false,
+      "milestone_critical": ["M0"]
+    },
+    "lib/rate-limit/index.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 3,
+      "module": "infrastructure",
+      "scores": { "completeness": 9, "robustness": 8, "quality": 9, "security": 7, "test_coverage": 0 },
+      "flags": {
+        "architect": [],
+        "user": [],
+        "adversary": ["ADV-003: still fails open without Redis, but env-check now enforces in production (FIXED P1-002)"]
+      },
+      "cross_persona": false,
+      "milestone_critical": ["M0"]
+    },
+    "lib/env-check.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 2,
+      "module": "infrastructure",
+      "scores": { "completeness": 9, "robustness": 9, "quality": 9, "security": 8, "test_coverage": 0 },
+      "flags": {
+        "architect": [],
+        "user": [],
+        "adversary": ["ADV-070: FIXED 2026-04-02 — Upstash promoted to productionSchema"]
+      },
+      "cross_persona": false,
+      "milestone_critical": ["M0"]
+    },
+    "lib/middleware/securityHeaders.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 2,
+      "module": "auth",
+      "scores": { "completeness": 9, "robustness": 9, "quality": 9, "security": 9, "test_coverage": 7 },
+      "flags": { "architect": [], "user": [], "adversary": [] },
+      "cross_persona": false,
+      "milestone_critical": []
+    },
+    "lib/auth/password-cookie.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 3,
+      "module": "auth",
+      "scores": { "completeness": 9, "robustness": 9, "quality": 9, "security": 9, "test_coverage": 8 },
+      "flags": { "architect": [], "user": [], "adversary": [] },
+      "cross_persona": false,
+      "milestone_critical": ["M0"]
+    },
+    "app/api/webhooks/daily/route.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 2,
+      "module": "video",
+      "scores": { "completeness": 8, "robustness": 7, "quality": 7, "security": 8, "test_coverage": 0 },
+      "flags": {
+        "architect": [],
+        "user": [],
+        "adversary": ["ADV-060: FIXED 2026-04-02 — now uses timingSafeEqual"]
+      },
+      "cross_persona": false,
+      "milestone_critical": ["M0"]
+    },
+    "app/api/webhooks/stripe/marketplace/route.ts": {
+      "last_analyzed": "2026-04-02",
+      "descent_level_reached": 2,
+      "module": "subscription",
+      "scores": { "completeness": 8, "robustness": 8, "quality": 8, "security": 8, "test_coverage": 0 },
+      "flags": { "architect": [], "user": [], "adversary": [] },
+      "cross_persona": false,
+      "milestone_critical": []
+    }
+  },
+  "modules": {
+    "auth": {
+      "files": ["middleware.ts", "app/auth/callback/route.ts", "app/auth/login/page.tsx", "app/auth/signup/page.tsx", "app/auth/verify-email/page.tsx", "app/auth/forgot-password/page.tsx", "app/api/auth/register/route.ts", "app/api/auth/login/route.ts", "app/api/auth/reset-password/route.ts", "app/api/csrf/route.ts", "lib/csrf.ts", "lib/auth/password-cookie.ts", "lib/middleware/securityHeaders.ts"],
+      "scores": { "completeness": 8, "robustness": 7, "quality": 8, "security": 5, "test_coverage": 6 },
+      "milestone_relevance": { "M0": "Critical", "M1": "Critical", "M2": "Not needed" },
+      "last_full_descent": "2026-04-02"
+    },
+    "booking": {
+      "files": ["app/api/bookings/route.ts", "app/api/bookings/[id]/capture/route.ts", "app/api/bookings/[id]/complete/route.ts", "app/api/bookings/[id]/refund/route.ts", "components/booking/BookingWizard.tsx", "components/booking/BookingPaymentStep.tsx", "lib/stripe/booking-payments.ts", "lib/validations/booking.ts"],
+      "scores": { "completeness": 9, "robustness": 8, "quality": 8, "security": 7, "test_coverage": 5 },
+      "milestone_relevance": { "M0": "Critical", "M1": "Relevant", "M2": "Relevant" },
+      "last_full_descent": "2026-04-02"
+    },
+    "reviews": {
+      "files": ["app/api/reviews/submit/route.ts", "components/reviews/ReviewSubmissionForm.tsx", "components/microsite/ReviewsSection.tsx", "lib/api/reviews.ts"],
+      "scores": { "completeness": 9, "robustness": 8, "quality": 9, "security": 7, "test_coverage": 5 },
+      "milestone_relevance": { "M0": "Critical", "M1": "Not needed", "M2": "Not needed" },
+      "last_full_descent": "2026-04-02"
+    },
+    "subscription": {
+      "files": ["app/api/subscription/checkout/route.ts", "app/api/subscription/manage/cancel/route.ts", "app/api/subscription/trial/start/route.ts", "app/api/webhooks/stripe/marketplace/route.ts"],
+      "scores": { "completeness": 8, "robustness": 7, "quality": 8, "security": 8, "test_coverage": 3 },
+      "milestone_relevance": { "M0": "Critical", "M1": "Not needed", "M2": "Not needed" },
+      "last_full_descent": "2026-04-02"
+    },
+    "dashboard": {
+      "files": ["app/dashboard/consultant/page.tsx", "app/dashboard/customer/page.tsx", "app/dashboard/contractor/page.tsx", "app/dashboard/shop/page.tsx", "components/dashboard/StripeConnectReminderBanner.tsx"],
+      "scores": { "completeness": 8, "robustness": 8, "quality": 8, "security": 7, "test_coverage": 1 },
+      "milestone_relevance": { "M0": "Critical", "M1": "Critical", "M2": "Not needed" },
+      "last_full_descent": "2026-04-02"
+    },
+    "sop": {
+      "files": ["lib/sop/sop-generator.ts", "lib/jobs/functions/sop-processing.ts", "app/api/webhooks/daily/route.ts"],
+      "scores": { "completeness": 7, "robustness": 5, "quality": 7, "security": 6, "test_coverage": 1 },
+      "milestone_relevance": { "M0": "Relevant", "M1": "Not needed", "M2": "Critical" },
+      "last_full_descent": "2026-04-02"
+    },
+    "infrastructure": {
+      "files": ["lib/rate-limit/index.ts", "lib/env-check.ts", "instrumentation.ts", "vercel.json"],
+      "scores": { "completeness": 8, "robustness": 7, "quality": 9, "security": 7, "test_coverage": 3 },
+      "milestone_relevance": { "M0": "Critical", "M1": "Not needed", "M2": "Not needed" },
+      "last_full_descent": "2026-04-02"
+    }
+  }
+}

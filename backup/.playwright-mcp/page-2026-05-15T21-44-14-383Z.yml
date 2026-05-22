@@ -1,0 +1,50 @@
+- generic [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e143]:
+      - navigation "Registration progress" [ref=e144]:
+        - generic [ref=e145]:
+          - generic [ref=e146]:
+            - img [ref=e147]
+            - text: Account
+          - generic [ref=e150]: Role
+          - generic [ref=e154]: Onboarding
+      - generic [ref=e159]:
+        - paragraph [ref=e160]: How will you use Field Advisor?
+        - heading "Choose how you’ll show up." [level=1] [ref=e161]
+        - paragraph [ref=e162]: You can always add more roles later in settings.
+      - generic [ref=e163]:
+        - button "Get expert help Customer Find verified professionals for consultations and projects." [ref=e164] [cursor=pointer]:
+          - generic [ref=e165]:
+            - img [ref=e167]
+            - generic [ref=e171]: Get expert help
+          - heading "Customer" [level=3] [ref=e172]
+          - paragraph [ref=e173]: Find verified professionals for consultations and projects.
+        - button "Share your expertise Consultant Monetize your skills with remote video consultations." [ref=e174] [cursor=pointer]:
+          - generic [ref=e175]:
+            - img [ref=e177]
+            - generic [ref=e179]: Share your expertise
+          - heading "Consultant" [level=3] [ref=e180]
+          - paragraph [ref=e181]: Monetize your skills with remote video consultations.
+        - button "Grow your business Contractor firm Offer consulting services as a contracting company." [ref=e182] [cursor=pointer]:
+          - generic [ref=e183]:
+            - img [ref=e185]
+            - generic [ref=e189]: Grow your business
+          - heading "Contractor firm" [level=3] [ref=e190]
+          - paragraph [ref=e191]: Offer consulting services as a contracting company.
+        - button "Expand your reach Supplier / Store Provide expert product advice and reach more customers." [active] [pressed] [ref=e192] [cursor=pointer]:
+          - img [ref=e206]
+          - generic [ref=e193]:
+            - img [ref=e195]
+            - generic [ref=e200]: Expand your reach
+          - heading "Supplier / Store" [level=3] [ref=e201]
+          - paragraph [ref=e202]: Provide expert product advice and reach more customers.
+      - generic [ref=e204]:
+        - button "Continue as Supplier / Store" [ref=e209] [cursor=pointer]:
+          - text: Continue as Supplier / Store
+          - img [ref=e210]
+        - paragraph [ref=e205]: Not sure? You can change your role anytime in settings.
+  - region "Notifications (F8)":
+    - list
+  - alert [ref=e71]

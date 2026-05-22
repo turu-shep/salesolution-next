@@ -1,0 +1,440 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - link "Field Advisor Logo" [ref=e8] [cursor=pointer]:
+            - /url: /
+            - img "Field Advisor Logo" [ref=e9]
+          - generic [ref=e11]:
+            - img [ref=e12]
+            - generic [ref=e14]: Loading navigation...
+        - generic [ref=e16]:
+          - img [ref=e17]
+          - generic [ref=e19]: Loading...
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [ref=e25]:
+            - img [ref=e26]
+            - generic [ref=e34]: Pillar 2 — Preserve Trades Knowledge
+          - heading "Skilled techs aren’t coming back. Preserve what your senior people know." [level=1] [ref=e36]:
+            - text: Skilled techs aren’t coming back.
+            - text: Preserve what your senior people know.
+          - paragraph [ref=e38]: Mike’s retiring in 18 months. There’s no Mike Jr. coming. Field Advisor captures what’s in his head — and whispers it into your $18/hr counter person’s ear, on every customer interaction, live.
+        - generic [ref=e41]:
+          - generic [ref=e43]:
+            - paragraph [ref=e44]: 400K+
+            - paragraph [ref=e45]: Skilled trade jobs unfilled in the US right now
+          - generic [ref=e47]:
+            - paragraph [ref=e48]: "53"
+            - paragraph [ref=e49]: Average age of an HVAC tech in 2026
+          - generic [ref=e51]:
+            - paragraph [ref=e52]: 2 of 5
+            - paragraph [ref=e53]: Replacement rate for retiring trades workers
+        - generic [ref=e55]:
+          - generic [ref=e60]: fieldadvisor.com / your-business / knowledge-capture
+          - generic [ref=e61]:
+            - generic [ref=e62]:
+              - generic [ref=e63]:
+                - paragraph [ref=e64]: The capture loop
+                - paragraph [ref=e65]: From conversation to copilot.
+              - generic [ref=e66]: Captured & Operated — coming Q4
+            - generic [ref=e67]:
+              - generic [ref=e68]:
+                - generic [ref=e69]:
+                  - img [ref=e71]
+                  - generic [ref=e74]: Step 1
+                - paragraph [ref=e75]: We capture
+                - paragraph [ref=e76]: Counter mics, phone calls, optional wearable
+              - generic [ref=e77]:
+                - generic [ref=e78]:
+                  - img [ref=e80]
+                  - generic [ref=e82]: Step 2
+                - paragraph [ref=e83]: Pipeline structures it
+                - paragraph [ref=e84]: Transcribe → diarize → extract
+              - generic [ref=e85]:
+                - generic [ref=e86]:
+                  - img [ref=e88]
+                  - generic [ref=e91]: Step 3
+                - paragraph [ref=e92]: You get living SOPs
+                - paragraph [ref=e93]: Reviewed before they go live
+              - generic [ref=e94]:
+                - generic [ref=e95]:
+                  - img [ref=e97]
+                  - generic [ref=e100]: Step 4
+                - paragraph [ref=e101]: New hires ramp 3× faster
+                - paragraph [ref=e102]: Training library written in your voice
+        - generic [ref=e104]:
+          - link "Join the founding cohort" [ref=e105] [cursor=pointer]:
+            - /url: /auth/signup
+            - text: Join the founding cohort
+            - img [ref=e106]
+          - link "See how capture works" [ref=e108] [cursor=pointer]:
+            - /url: "#how-it-works"
+            - text: See how capture works
+            - img [ref=e109]
+        - generic [ref=e112]:
+          - generic [ref=e113]:
+            - img [ref=e114]
+            - text: Voice-to-SOP available today
+          - generic [ref=e117]:
+            - img [ref=e118]
+            - text: Capture pipeline beta — Q3
+          - generic [ref=e121]:
+            - img [ref=e122]
+            - text: Live Assist + Operator — Q4
+      - generic [ref=e126]:
+        - generic [ref=e128]:
+          - heading "The Shortage Isn’t A Phase" [level=2] [ref=e129]
+          - paragraph [ref=e130]: You’re not crazy. You’re not failing at hiring. The world has changed and the math is brutal.
+        - generic [ref=e132]:
+          - generic [ref=e134]:
+            - generic [ref=e135]:
+              - img [ref=e137]
+              - generic [ref=e142]: Field service
+            - heading "Your master tech is retiring." [level=3] [ref=e143]
+            - paragraph [ref=e144]: He's 58. He's been with you 22 years. He carries the diagnostic instinct that closes the hard jobs. When he walks, the knowledge walks — and the kid you hired six months ago is two years from being able to replace him.
+          - generic [ref=e146]:
+            - generic [ref=e147]:
+              - img [ref=e149]
+              - generic [ref=e152]: Service shops
+            - heading "You can't find mechanics." [level=3] [ref=e153]
+            - paragraph [ref=e154]: You've been hiring for the second bay for nine months. Two no-shows. One who lasted three weeks. Meanwhile your A-tech is working 55-hour weeks and starting to look at the door. The labor market isn't getting easier — it's getting structurally worse for the next decade.
+          - generic [ref=e156]:
+            - generic [ref=e157]:
+              - img [ref=e159]
+              - generic [ref=e164]: Counter retail
+            - heading "The 20-year counter person knows things nobody wrote down." [level=3] [ref=e165]
+            - paragraph [ref=e166]: Cross-references, fitment quirks, customer history, the supplier rep on Tuesdays. When she retires, your new hire will stare blankly at half the questions that walk through the door. It will take them three years to rebuild that intuition. You don't have three years.
+          - generic [ref=e168]:
+            - generic [ref=e169]:
+              - img [ref=e171]
+              - generic [ref=e173]: All of you
+            - heading "This is structural, not cyclical." [level=3] [ref=e174]
+            - paragraph [ref=e175]: ~10,000 boomers retire every day. Trade school enrollment cratered after 2008 and hasn't recovered. The replacement ratio is 2 new trades workers entering for every 5 retiring — and that gap widens for the next 10 to 15 years before it bottoms out.
+      - generic [ref=e177]:
+        - generic [ref=e179]:
+          - heading "Where The Knowledge Actually Lives" [level=2] [ref=e180]
+          - paragraph [ref=e181]: It’s not in your CRM. It’s not in ServiceTitan. It’s not in a manual. It’s in the heads of the people you can’t afford to lose.
+        - generic [ref=e182]:
+          - generic [ref=e184]:
+            - img [ref=e185]
+            - heading "In Mike's head" [level=3] [ref=e187]
+            - paragraph [ref=e188]: The instinct that says "check the start capacitor before you touch the board." The questions your senior tech asks the customer that the new hire wouldn't think to ask. The thirty-second mental flowchart that closes diagnostics in ten minutes instead of an hour.
+          - generic [ref=e190]:
+            - img [ref=e191]
+            - heading "In two-minute conversations at the counter" [level=3] [ref=e195]
+            - paragraph [ref=e196]: The fitment cross-reference your master parts person makes from memory. The "while you're here, you'll also want" upsell that lands every time. The way she handles the "is this gonna work on my truck" question without making the customer feel dumb.
+          - generic [ref=e198]:
+            - img [ref=e199]
+            - heading "In quotes and objections nobody wrote down" [level=3] [ref=e202]
+            - paragraph [ref=e203]: The four different ways your best estimator handles "your price is too high." The phone script that converts cold-callers into booked jobs. The exact words your top closer uses when the homeowner says "let me think about it" — which they do, every time.
+          - generic [ref=e205]:
+            - img [ref=e206]
+            - heading "In the SOPs you've been \"meaning to write\" for five years" [level=3] [ref=e208]
+            - paragraph [ref=e209]: The new-hire training nobody has time to build. The install checklist that lives in the shop manager's notebook. The complaint-handling flow that your office manager somehow keeps in her head. Knowledge that exists, but only inside one person — and only while that person still works there.
+      - generic [ref=e211]:
+        - generic [ref=e213]:
+          - heading "How We Capture It" [level=2] [ref=e214]
+          - paragraph [ref=e215]: Three capture inputs feed one pipeline. Four outputs come out the other side. Your team doesn’t change a thing they’re doing today.
+        - paragraph [ref=e217]: Inputs — what we capture
+        - generic [ref=e219]:
+          - generic [ref=e221]:
+            - img [ref=e223]
+            - paragraph [ref=e226]: Counter mics
+            - paragraph [ref=e227]: Always-on capture at every parts counter or service desk. Plugged into power, never charges, never fails. Signage handles consent.
+          - generic [ref=e229]:
+            - img [ref=e231]
+            - paragraph [ref=e233]: Phone calls
+            - paragraph [ref=e234]: VoIP server-side recording with the standard "this call may be recorded" disclosure. Inbound and outbound. Zero hardware on the rep's side.
+          - generic [ref=e236]:
+            - img [ref=e238]
+            - paragraph [ref=e240]: Optional field wearable
+            - paragraph [ref=e241]: For your senior tech on the truck. Shipped with a charging dock. A 5-second nightly habit. Catches the diagnostic moments customers never see.
+        - generic [ref=e244]:
+          - img [ref=e245]
+          - generic [ref=e248]: Pipeline · transcribe → diarize → extract → structure
+        - paragraph [ref=e250]: Outputs — what you actually get
+        - generic [ref=e252]:
+          - generic [ref=e254]:
+            - img [ref=e256]
+            - paragraph [ref=e259]: Living SOPs in your shop's voice
+            - paragraph [ref=e260]: Diagnostic flows, install checklists, objection responses — written from how your senior people actually do the work. Reviewed by you before they go live.
+          - generic [ref=e262]:
+            - img [ref=e264]
+            - paragraph [ref=e266]: A customer-facing knowledge agent
+            - paragraph [ref=e267]: Embedded on your website, trained on your shop's SOPs, products, and policies. Handles tier-1 customer questions. Knows your brand, your prices, your service area.
+          - generic [ref=e269]:
+            - img [ref=e271]
+            - paragraph [ref=e274]: A training library that ramps juniors fast
+            - paragraph [ref=e275]: Same captured material, organized as a "first 30 days at the shop" pathway. New hires read, watch, and listen their way to competence without your senior tech babysitting them.
+          - generic [ref=e277]:
+            - img [ref=e279]
+            - paragraph [ref=e282]: Live Assist for your counter & phones
+            - paragraph [ref=e283]: A tablet copilot that listens to the customer in real time and surfaces your senior person's answer on screen in under 2 seconds. Your $18/hr counter person sounds like your 30-year vet. (Coming Q4.)
+      - generic [ref=e286]:
+        - generic [ref=e288]:
+          - heading "The Compounding Curve" [level=2] [ref=e289]
+          - paragraph [ref=e290]: Every customer conversation you don’t capture today is gone forever. The shops that start now have an advantage their competitors can never catch up to.
+        - generic [ref=e292]:
+          - generic [ref=e294]:
+            - generic [ref=e295]:
+              - img [ref=e297]
+              - generic [ref=e299]: Month 6
+            - heading "Foundation set" [level=3] [ref=e300]
+            - list [ref=e301]:
+              - listitem [ref=e302]:
+                - generic [ref=e303]: ●
+                - generic [ref=e304]: First 10–15 living SOPs in your shop's voice
+              - listitem [ref=e305]:
+                - generic [ref=e306]: ●
+                - generic [ref=e307]: Customer agent answering inbound questions
+              - listitem [ref=e308]:
+                - generic [ref=e309]: ●
+                - generic [ref=e310]: New hires using the training library from day one
+              - listitem [ref=e311]:
+                - generic [ref=e312]: ●
+                - generic [ref=e313]: You can see what's in Mike's head — finally written down
+          - generic [ref=e315]:
+            - generic [ref=e316]:
+              - img [ref=e318]
+              - generic [ref=e322]: Month 12
+            - heading "A year of operations encoded" [level=3] [ref=e323]
+            - list [ref=e324]:
+              - listitem [ref=e325]:
+                - generic [ref=e326]: ●
+                - generic [ref=e327]: Hundreds of captured diagnostic and sales moments
+              - listitem [ref=e328]:
+                - generic [ref=e329]: ●
+                - generic [ref=e330]: Live Assist running on every counter and phone
+              - listitem [ref=e331]:
+                - generic [ref=e332]: ●
+                - generic [ref=e333]: Junior staff performing at senior level on common interactions
+              - listitem [ref=e334]:
+                - generic [ref=e335]: ●
+                - generic [ref=e336]: Onboarding curriculum better than any local trade school's
+          - generic [ref=e338]:
+            - generic [ref=e339]:
+              - img [ref=e341]
+              - generic [ref=e347]: Month 24+
+            - heading "A defensible moat" [level=3] [ref=e348]
+            - list [ref=e349]:
+              - listitem [ref=e350]:
+                - generic [ref=e351]: ●
+                - generic [ref=e352]: Your AI knows your business better than competitors' AI knows theirs
+              - listitem [ref=e353]:
+                - generic [ref=e354]: ●
+                - generic [ref=e355]: Two years of pattern matching on your specific customer base
+              - listitem [ref=e356]:
+                - generic [ref=e357]: ●
+                - generic [ref=e358]: Senior tech can retire — your shop runs at his standard without him
+              - listitem [ref=e359]:
+                - generic [ref=e360]: ●
+                - generic [ref=e361]: A shop joining now can never catch up to your captured knowledge curve
+        - paragraph [ref=e363]: “The best time to start capturing was 20 years ago. The second best time is today.”
+      - generic [ref=e365]:
+        - generic [ref=e367]:
+          - heading "What Gets Captured For You" [level=2] [ref=e368]
+          - paragraph [ref=e369]: Same capture pipeline. Same outputs. Different knowledge worth preserving depending on what your senior people actually do.
+        - generic [ref=e371]:
+          - generic [ref=e373]:
+            - img [ref=e375]
+            - paragraph [ref=e380]: Field service & contractors
+            - heading "HVAC, plumbing, electrical, roofing, landscaping" [level=3] [ref=e381]
+            - paragraph [ref=e382]: "\"Our senior tech is 60. He's the one homeowners ask for by name. When he retires, our hard-job close rate is going to fall off a cliff.\""
+            - paragraph [ref=e383]: What gets captured
+            - list [ref=e384]:
+              - listitem [ref=e385]:
+                - generic [ref=e386]: ●
+                - generic [ref=e387]: Diagnostic flows from your master tech's ride-alongs
+              - listitem [ref=e388]:
+                - generic [ref=e389]: ●
+                - generic [ref=e390]: How he handles "how much will it cost" before he's seen the system
+              - listitem [ref=e391]:
+                - generic [ref=e392]: ●
+                - generic [ref=e393]: The questions he asks that the junior tech doesn't think to ask
+              - listitem [ref=e394]:
+                - generic [ref=e395]: ●
+                - generic [ref=e396]: Quote-to-close objection responses from his actual calls
+          - generic [ref=e398]:
+            - img [ref=e400]
+            - paragraph [ref=e402]: Service & repair shops
+            - heading "Auto, appliance, marine, diesel, small engine" [level=3] [ref=e403]
+            - paragraph [ref=e404]: "\"My A-tech can diagnose a no-start in 15 minutes. The new kid takes two hours. The difference is twenty years of pattern matching nobody wrote down.\""
+            - paragraph [ref=e405]: What gets captured
+            - list [ref=e406]:
+              - listitem [ref=e407]:
+                - generic [ref=e408]: ●
+                - generic [ref=e409]: Diagnostic shortcuts for the top 50 repeated issues
+              - listitem [ref=e410]:
+                - generic [ref=e411]: ●
+                - generic [ref=e412]: Customer-facing explanations that build trust (and close repairs)
+              - listitem [ref=e413]:
+                - generic [ref=e414]: ●
+                - generic [ref=e415]: "Upsell language: \"while we're in there, you'll also want…\""
+              - listitem [ref=e416]:
+                - generic [ref=e417]: ●
+                - generic [ref=e418]: The mental flowcharts your senior people don't even know they have
+          - generic [ref=e420]:
+            - img [ref=e422]
+            - paragraph [ref=e427]: Counter retail & supply
+            - heading "Parts counters, supply houses, specialty retail" [level=3] [ref=e428]
+            - paragraph [ref=e429]: "\"Our 23-year counter person handles the hard questions. New hires either leave or hide. We can't scale because she IS the knowledge base.\""
+            - paragraph [ref=e430]: What gets captured
+            - list [ref=e431]:
+              - listitem [ref=e432]:
+                - generic [ref=e433]: ●
+                - generic [ref=e434]: Cross-reference lore (this part fits that, but not for the 2018+)
+              - listitem [ref=e435]:
+                - generic [ref=e436]: ●
+                - generic [ref=e437]: Fitment questions and how to ask the right qualifying questions back
+              - listitem [ref=e438]:
+                - generic [ref=e439]: ●
+                - generic [ref=e440]: Common upsells and "you'll also need" attachment patterns
+              - listitem [ref=e441]:
+                - generic [ref=e442]: ●
+                - generic [ref=e443]: How she handles "I don't know what part I need" without making the customer feel dumb
+      - generic [ref=e445]:
+        - generic [ref=e447]:
+          - generic [ref=e448]:
+            - img [ref=e449]
+            - generic [ref=e452]: First 50 shops only
+          - heading "The Founding Cohort" [level=2] [ref=e453]
+          - paragraph [ref=e454]: Captured & Operated launches in Q4. The shops on the Platform now will have a year of operations captured by the time their competitors start. There’s no catching up later.
+        - generic [ref=e456]:
+          - generic [ref=e458]:
+            - img [ref=e460]
+            - paragraph [ref=e463]: Platform pricing locked forever
+            - paragraph [ref=e464]: Whatever tier you sign up at today, that's your rate. Never goes up. Even when public pricing does.
+          - generic [ref=e466]:
+            - img [ref=e468]
+            - paragraph [ref=e471]: Priority on Captured & Operated waitlist
+            - paragraph [ref=e472]: When the managed tier launches in Q4, founding-cohort customers get first access. Capacity is finite.
+          - generic [ref=e474]:
+            - img [ref=e476]
+            - paragraph [ref=e479]: Founding-member discount on managed
+            - paragraph [ref=e480]: 20% off the Captured & Operated tier forever, locked at your first invoice. Adds up to five figures over the lifetime of the engagement.
+          - generic [ref=e482]:
+            - img [ref=e484]
+            - paragraph [ref=e489]: Direct line to the team building it
+            - paragraph [ref=e490]: Monthly call with the founder. You shape what gets built next. Your edge cases become our roadmap.
+        - generic [ref=e492]:
+          - link "Lock in founding pricing" [ref=e493] [cursor=pointer]:
+            - /url: /auth/signup
+            - text: Lock in founding pricing
+            - img [ref=e494]
+          - paragraph [ref=e496]: "Spots remaining in the cohort: 38 / 50"
+      - generic [ref=e501]:
+        - img [ref=e503]
+        - generic [ref=e505]:
+          - paragraph [ref=e506]: Pillar 1 — Preserve Customer Loyalty
+          - heading "Knowledge isn’t the only thing leaking." [level=3] [ref=e507]
+          - paragraph [ref=e508]: Every customer you serve walks out the door without a real reason to come back. Field Advisor’s loyalty pillar — QR codes, microsites, video, paid consults, customer agent — is already available on the self-serve Platform plan today.
+        - link "See pillar 1" [ref=e509] [cursor=pointer]:
+          - /url: /customer-loyalty
+          - text: See pillar 1
+          - img [ref=e510]
+      - generic [ref=e513]:
+        - generic [ref=e515]:
+          - heading "Questions" [level=2] [ref=e516]
+          - paragraph [ref=e517]: The honest answers shop owners ask when they’re thinking about this seriously.
+        - generic [ref=e519]:
+          - heading "Is this legal? Can we really record at the counter and on phones?" [level=3] [ref=e521]:
+            - button "Is this legal? Can we really record at the counter and on phones?" [ref=e522] [cursor=pointer]
+          - heading "How does the customer agent get smarter over time?" [level=3] [ref=e524]:
+            - button "How does the customer agent get smarter over time?" [ref=e525] [cursor=pointer]
+          - heading "What about ServiceTitan / Jobber / our existing CRM?" [level=3] [ref=e527]:
+            - button "What about ServiceTitan / Jobber / our existing CRM?" [ref=e528] [cursor=pointer]
+          - heading "My senior tech won't want to be recorded." [level=3] [ref=e530]:
+            - button "My senior tech won't want to be recorded." [ref=e531] [cursor=pointer]
+          - heading "Will this replace my counter staff?" [level=3] [ref=e533]:
+            - button "Will this replace my counter staff?" [ref=e534] [cursor=pointer]
+          - heading "How much will Captured & Operated cost when it launches?" [level=3] [ref=e536]:
+            - button "How much will Captured & Operated cost when it launches?" [ref=e537] [cursor=pointer]
+          - heading "What if I sign up for the Platform now but never upgrade to Captured & Operated?" [level=3] [ref=e539]:
+            - button "What if I sign up for the Platform now but never upgrade to Captured & Operated?" [ref=e540] [cursor=pointer]
+      - generic [ref=e544]:
+        - heading "Mike’s retiring in 18 months. Start preserving what he knows today." [level=2] [ref=e545]:
+          - text: Mike’s retiring in 18 months.
+          - text: Start preserving what he knows today.
+        - paragraph [ref=e546]: Every week you wait is a week of his knowledge that leaves with him.
+        - link "Join the founding cohort" [ref=e547] [cursor=pointer]:
+          - /url: /auth/signup
+          - text: Join the founding cohort
+          - img [ref=e548]
+        - generic [ref=e550]:
+          - generic [ref=e551]:
+            - img [ref=e552]
+            - text: 14-day Platform trial
+          - generic [ref=e555]:
+            - img [ref=e556]
+            - text: "Founding cohort: 38 / 50 spots left"
+          - generic [ref=e559]:
+            - img [ref=e560]
+            - text: Captured & Operated launches Q4
+      - generic [ref=e564]:
+        - generic [ref=e565]:
+          - generic [ref=e566]:
+            - img "Field Advisor" [ref=e568]
+            - paragraph [ref=e569]: The platform — and the playbook — for the trade businesses that refuse to be treated like a commodity.
+            - generic [ref=e570]:
+              - link "Start 14-Day Trial" [ref=e571] [cursor=pointer]:
+                - /url: /auth/signup
+              - link "How It Works" [ref=e572] [cursor=pointer]:
+                - /url: /#what-changes
+          - generic [ref=e573]:
+            - heading "Platform" [level=4] [ref=e574]
+            - list [ref=e575]:
+              - listitem [ref=e576]:
+                - link "How It Works" [ref=e577] [cursor=pointer]:
+                  - /url: /#ecosystem-network
+              - listitem [ref=e578]:
+                - link "Customer Stories" [ref=e579] [cursor=pointer]:
+                  - /url: /#stories
+              - listitem [ref=e580]:
+                - link "FAQ" [ref=e581] [cursor=pointer]:
+                  - /url: /#faq
+              - listitem [ref=e582]:
+                - link "Get Started" [ref=e583] [cursor=pointer]:
+                  - /url: /#get-started
+          - generic [ref=e584]:
+            - heading "Industries" [level=4] [ref=e585]
+            - list [ref=e586]:
+              - listitem [ref=e587]:
+                - link "For Shops" [ref=e588] [cursor=pointer]:
+                  - /url: /for-shops-v2
+              - listitem [ref=e589]:
+                - link "Contractor Companies" [ref=e590] [cursor=pointer]:
+                  - /url: /for-contractors-v2
+              - listitem [ref=e591]:
+                - link "Independent Consultants" [ref=e592] [cursor=pointer]:
+                  - /url: /for-independent-consultants-v2
+          - generic [ref=e593]:
+            - heading "Company" [level=4] [ref=e594]
+            - list [ref=e595]:
+              - listitem [ref=e596]:
+                - link "About Us" [ref=e597] [cursor=pointer]:
+                  - /url: "#about"
+              - listitem [ref=e598]:
+                - link "Contact" [ref=e599] [cursor=pointer]:
+                  - /url: "#contact"
+              - listitem [ref=e600]:
+                - link "Privacy Policy" [ref=e601] [cursor=pointer]:
+                  - /url: /privacy
+              - listitem [ref=e602]:
+                - link "Terms of Service" [ref=e603] [cursor=pointer]:
+                  - /url: /terms
+        - generic [ref=e605]:
+          - paragraph [ref=e606]: © 2026 Field Advisor. Built for the trades.
+          - generic [ref=e607]:
+            - link "Privacy" [ref=e608] [cursor=pointer]:
+              - /url: /privacy
+            - link "Terms" [ref=e609] [cursor=pointer]:
+              - /url: /terms
+            - link "Support" [ref=e610] [cursor=pointer]:
+              - /url: "#contact"
+  - region "Notifications (F8)":
+    - list
+  - alert [ref=e611]

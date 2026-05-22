@@ -1,0 +1,18 @@
+- generic [active] [ref=e1]:
+  - heading "Favicon — actual 64×64, on white & cream & dark" [level=2] [ref=e2]
+  - generic [ref=e3]:
+    - img [ref=e5]
+    - img [ref=e7]
+    - img [ref=e9]
+  - heading "Wordmark — tight viewBox 446×54, no background fill" [level=2] [ref=e10]
+  - img [ref=e13]
+  - img [ref=e16]
+  - img [ref=e19]
+  - heading "Wordmark 2× on grid (red lines = 10px) — verifying nothing clips at edges" [level=2] [ref=e20]
+  - img [ref=e23]
+  - text: Edges of the SVG box should sit just outside the ink. If you see ink touching the dashed outline, expand viewBox.
+  - heading "Lockup — tight viewBox 549×80" [level=2] [ref=e24]
+  - img [ref=e27]
+  - img [ref=e30]
+  - img [ref=e33]
+  - text: Dashed outline shows the SVG box edge. Mark and ink should sit cleanly inside.

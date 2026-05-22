@@ -1,0 +1,346 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - link "Field Advisor Logo" [ref=e8] [cursor=pointer]:
+            - /url: /
+            - img "Field Advisor Logo" [ref=e9]
+          - generic [ref=e11]:
+            - img [ref=e12]
+            - generic [ref=e14]: Loading navigation...
+        - generic [ref=e16]:
+          - img [ref=e17]
+          - generic [ref=e19]: Loading...
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [ref=e25]:
+            - img [ref=e26]
+            - generic [ref=e28]: Pillar 1 — Preserve Customer Loyalty
+          - heading "Your customers aren’t multiplying. Stop losing the ones you have." [level=1] [ref=e30]:
+            - text: Your customers aren’t multiplying.
+            - text: Stop losing the ones you have.
+          - paragraph [ref=e32]: "The HVAC tech finishes the install. The mechanic hands back the keys. The counter person rings up a furnace filter. Then what? For most trade businesses, the answer is: nothing. Field Advisor fixes that."
+        - generic [ref=e35]:
+          - generic [ref=e37]:
+            - paragraph [ref=e38]: ~2×
+            - paragraph [ref=e39]: Avg CAC increase in trades, last 10 years
+            - paragraph [ref=e40]: Google + Yelp + Angi commoditized leads
+          - generic [ref=e42]:
+            - paragraph [ref=e43]: 3–5×
+            - paragraph [ref=e44]: Close rate, repeat customer vs cold lead
+            - paragraph [ref=e45]: Repeats beat ads on every dimension
+          - generic [ref=e47]:
+            - paragraph [ref=e48]: < 15%
+            - paragraph [ref=e49]: Trade businesses with a real retention loop
+            - paragraph [ref=e50]: Most have no system to bring customers back
+        - generic [ref=e52]:
+          - generic [ref=e57]: fieldadvisor.com / your-business / customer-flow
+          - generic [ref=e58]:
+            - generic [ref=e60]:
+              - paragraph [ref=e61]: The retention loop
+              - paragraph [ref=e62]: Four steps. Every customer. Forever.
+            - generic [ref=e63]:
+              - generic [ref=e64]:
+                - generic [ref=e65]:
+                  - img [ref=e67]
+                  - generic [ref=e73]: Step 1
+                - paragraph [ref=e74]: They scan a QR
+                - paragraph [ref=e75]: On the truck, the receipt, the equipment
+              - generic [ref=e76]:
+                - generic [ref=e77]:
+                  - img [ref=e79]
+                  - generic [ref=e81]: Step 2
+                - paragraph [ref=e82]: They land on your microsite
+                - paragraph [ref=e83]: Booking, video, chat, paid consult
+              - generic [ref=e84]:
+                - generic [ref=e85]:
+                  - img [ref=e87]
+                  - generic [ref=e92]: Step 3
+                - paragraph [ref=e93]: They come back
+                - paragraph [ref=e94]: On their terms — and on your radar
+              - generic [ref=e95]:
+                - generic [ref=e96]:
+                  - img [ref=e98]
+                  - generic [ref=e103]: Step 4
+                - paragraph [ref=e104]: They're in your list. Forever.
+                - paragraph [ref=e105]: Remarket without paying Google again
+        - generic [ref=e107]:
+          - link "Start free trial" [ref=e108] [cursor=pointer]:
+            - /url: /auth/signup
+            - text: Start free trial
+            - img [ref=e109]
+          - link "See how it works" [ref=e111] [cursor=pointer]:
+            - /url: "#how-it-works"
+            - text: See how it works
+            - img [ref=e112]
+        - generic [ref=e115]:
+          - generic [ref=e116]:
+            - img [ref=e117]
+            - text: 14-day free trial
+          - generic [ref=e120]:
+            - img [ref=e121]
+            - text: No credit card
+          - generic [ref=e124]:
+            - img [ref=e125]
+            - text: Founding-cohort pricing locked in
+      - generic [ref=e129]:
+        - generic [ref=e131]:
+          - heading "Where Your Customers Go" [level=2] [ref=e132]
+          - paragraph [ref=e133]: You did the work. You earned the trust. Then the relationship evaporates — because nothing was built to keep it alive.
+        - generic [ref=e134]:
+          - generic [ref=e136]:
+            - img [ref=e137]
+            - heading "One-and-done customers" [level=3] [ref=e140]
+            - paragraph [ref=e141]: The HVAC system gets installed. The transmission gets fixed. The customer walks out of the parts counter with their order. There's no system pulling them back — and they don't need you again until something breaks.
+          - generic [ref=e143]:
+            - img [ref=e144]
+            - heading "Acquisition keeps getting more expensive" [level=3] [ref=e146]
+            - paragraph [ref=e147]: Google Ads costs in trades have roughly doubled in a decade. Yelp and Angi commoditized the lead. You're paying more every quarter to find customers you've probably already served once.
+          - generic [ref=e149]:
+            - img [ref=e150]
+            - heading "Your customer list is invisible to your own team" [level=3] [ref=e155]
+            - paragraph [ref=e156]: It's scattered across ServiceTitan exports, the counter person's memory, a spreadsheet someone made in 2021, and a stack of paper invoices in the back office. Nobody can actually use it.
+          - generic [ref=e158]:
+            - img [ref=e159]
+            - heading "Competitors are one Google search away" [level=3] [ref=e163]
+            - paragraph [ref=e164]: When the customer needs you again, they don't remember your name. They search "HVAC repair near me" — and the cheapest ad wins. Your relationship had no anchor in their pocket.
+      - generic [ref=e166]:
+        - generic [ref=e168]:
+          - heading "What You Use To Keep Them" [level=2] [ref=e169]
+          - paragraph [ref=e170]: Eight tools, one platform. None of them ask your customer to learn anything new — they just give them an easier way to come back.
+        - generic [ref=e172]:
+          - generic [ref=e174]:
+            - img [ref=e176]
+            - heading "QR codes everywhere they look" [level=3] [ref=e182]
+            - paragraph [ref=e183]: On the truck wrap. Stuck to the furnace you just installed. Printed on the parts-counter receipt. The bumper of the loaner car. Customers scan once and you're in their phone forever.
+          - generic [ref=e185]:
+            - img [ref=e187]
+            - heading "A microsite that doesn't look like 2014" [level=3] [ref=e190]
+            - paragraph [ref=e191]: Your services, your story, your photos, your booking flow, your reviews — all on a real website your customers can save, share, and come back to. No agency required. No web designer to chase.
+          - generic [ref=e193]:
+            - img [ref=e195]
+            - heading "Book without a phone call" [level=3] [ref=e198]
+            - paragraph [ref=e199]: Customers pick a time, a service, a tech, a tier — on their phone, when they're thinking about it. Not when your office is open. Not after sitting on hold. Bookings happen at 11pm on a Tuesday because they can.
+          - generic [ref=e201]:
+            - img [ref=e203]
+            - heading "Sell expertise over video" [level=3] [ref=e206]
+            - paragraph [ref=e207]: A homeowner sends a 90-second clip of a flickering panel and pays $89 for an answer. A counter customer dials in for a 15-minute fitment consult. Your senior people make money on their experience without leaving the building.
+          - generic [ref=e209]:
+            - img [ref=e211]
+            - heading "A customer agent that knows your shop" [level=3] [ref=e213]
+            - paragraph [ref=e214]: Trained on your services, your products, your hours, your service area. Answers the inbound questions your team is too busy to handle — and politely routes the real ones to the right person.
+          - generic [ref=e216]:
+            - img [ref=e218]
+            - heading "Reviews on autopilot" [level=3] [ref=e220]
+            - paragraph [ref=e221]: Every closed job triggers a review request through the channel the customer actually uses. Your Google rating climbs without anyone on your team chasing it.
+          - generic [ref=e223]:
+            - img [ref=e225]
+            - heading "Re-engagement on your terms" [level=3] [ref=e228]
+            - paragraph [ref=e229]: Send the boiler-tune-up reminder in October. The brake-check email at 50,000 miles. The "your filter is probably due" SMS at the 90-day mark. To your list. Not to Google's ad auction.
+          - generic [ref=e231]:
+            - img [ref=e233]
+            - heading "Get paid before the truck rolls" [level=3] [ref=e237]
+            - paragraph [ref=e238]: Diagnostic fees, deposits, service plans, retainers — all collected on the microsite before any work happens. The relationship and the revenue start on the same screen.
+      - generic [ref=e241]:
+        - generic [ref=e243]:
+          - heading "The Math" [level=2] [ref=e244]
+          - paragraph [ref=e245]: What changes when your customer base stops leaking. Numbers from shops running the platform for 6+ months.
+        - generic [ref=e247]:
+          - generic [ref=e249]:
+            - img [ref=e250]
+            - paragraph [ref=e255]: 3.2×
+            - paragraph [ref=e256]: Repeat bookings
+            - paragraph [ref=e257]: vs. shops without a retention loop
+          - generic [ref=e259]:
+            - img [ref=e260]
+            - paragraph [ref=e262]: −42%
+            - paragraph [ref=e263]: Cost per repeat job
+            - paragraph [ref=e264]: paid acquisition replaced by owned channel
+          - generic [ref=e266]:
+            - img [ref=e267]
+            - paragraph [ref=e271]: +28%
+            - paragraph [ref=e272]: Average customer LTV
+            - paragraph [ref=e273]: because they buy more than once
+          - generic [ref=e275]:
+            - img [ref=e276]
+            - paragraph [ref=e279]: 4.6/5
+            - paragraph [ref=e280]: Google rating lift
+            - paragraph [ref=e281]: reviews on autopilot, not on memory
+        - paragraph [ref=e283]: Aggregated across HVAC, auto repair, appliance repair, plumbing, electrical, and supply-house customers. Individual results vary by service mix and deployment depth.
+      - generic [ref=e285]:
+        - generic [ref=e287]:
+          - heading "What This Looks Like For You" [level=2] [ref=e288]
+          - paragraph [ref=e289]: Same platform. Same retention loop. Different surface area depending on how your customers actually find their way back.
+        - generic [ref=e291]:
+          - generic [ref=e293]:
+            - img [ref=e295]
+            - paragraph [ref=e300]: Field service & contractors
+            - heading "HVAC, plumbing, electrical, roofing, landscaping" [level=3] [ref=e301]
+            - paragraph [ref=e302]: "\"We installed the new system. The homeowner is happy. We won't hear from them again until something breaks — and when it does, they'll Google it.\""
+            - paragraph [ref=e303]: What you turn on
+            - list [ref=e304]:
+              - listitem [ref=e305]:
+                - generic [ref=e306]: ●
+                - generic [ref=e307]: QR sticker on the equipment we installed
+              - listitem [ref=e308]:
+                - generic [ref=e309]: ●
+                - generic [ref=e310]: Microsite with seasonal service plans
+              - listitem [ref=e311]:
+                - generic [ref=e312]: ●
+                - generic [ref=e313]: Video diagnostic for "is it under warranty" calls
+              - listitem [ref=e314]:
+                - generic [ref=e315]: ●
+                - generic [ref=e316]: Reminder flows for filter changes, tune-ups, inspections
+          - generic [ref=e318]:
+            - img [ref=e320]
+            - paragraph [ref=e322]: Service & repair shops
+            - heading "Auto, appliance, marine, diesel, small engine" [level=3] [ref=e323]
+            - paragraph [ref=e324]: "\"They picked up the car. They paid. They left. Statistically, half of them will go to another shop next time — and we won't know why.\""
+            - paragraph [ref=e325]: What you turn on
+            - list [ref=e326]:
+              - listitem [ref=e327]:
+                - generic [ref=e328]: ●
+                - generic [ref=e329]: QR on the receipt and the bumper sticker
+              - listitem [ref=e330]:
+                - generic [ref=e331]: ●
+                - generic [ref=e332]: Microsite with bookable estimates and service plans
+              - listitem [ref=e333]:
+                - generic [ref=e334]: ●
+                - generic [ref=e335]: Customer agent that handles "is my car ready" inquiries
+              - listitem [ref=e336]:
+                - generic [ref=e337]: ●
+                - generic [ref=e338]: Re-engagement campaigns by vehicle, mileage, season
+          - generic [ref=e340]:
+            - img [ref=e342]
+            - paragraph [ref=e347]: Counter retail & supply
+            - heading "Parts counters, supply houses, specialty retail" [level=3] [ref=e348]
+            - paragraph [ref=e349]: "\"Someone walks in for a $40 part. They need that part four times a year. We see them once and never know why they stopped coming.\""
+            - paragraph [ref=e350]: What you turn on
+            - list [ref=e351]:
+              - listitem [ref=e352]:
+                - generic [ref=e353]: ●
+                - generic [ref=e354]: QR on every receipt and product tag
+              - listitem [ref=e355]:
+                - generic [ref=e356]: ●
+                - generic [ref=e357]: Microsite with reorder, fitment lookup, and live chat
+              - listitem [ref=e358]:
+                - generic [ref=e359]: ●
+                - generic [ref=e360]: Customer agent trained on your inventory and cross-references
+              - listitem [ref=e361]:
+                - generic [ref=e362]: ●
+                - generic [ref=e363]: Auto-reorder reminders by SKU, season, and last-purchase date
+      - generic [ref=e368]:
+        - img [ref=e370]
+        - generic [ref=e378]:
+          - paragraph [ref=e379]: Pillar 2 — Preserve Trades Knowledge
+          - heading "Customers aren’t the only thing slipping away." [level=3] [ref=e380]
+          - paragraph [ref=e381]: Your senior tech, your master mechanic, your 20-year counter person — they’re heading for retirement and the knowledge is going with them. Field Advisor captures it before they leave, and turns it into a real-time copilot for the people you can hire.
+        - link "See pillar 2" [ref=e382] [cursor=pointer]:
+          - /url: /trades-knowledge
+          - text: See pillar 2
+          - img [ref=e383]
+      - generic [ref=e386]:
+        - generic [ref=e388]:
+          - heading "Questions" [level=2] [ref=e389]
+          - paragraph [ref=e390]: The ones we hear most often from shop owners thinking about this seriously.
+        - generic [ref=e392]:
+          - heading "Does this replace ServiceTitan, Jobber, or my POS?" [level=3] [ref=e394]:
+            - button "Does this replace ServiceTitan, Jobber, or my POS?" [ref=e395] [cursor=pointer]
+          - heading "Do my customers have to download an app or create an account?" [level=3] [ref=e397]:
+            - button "Do my customers have to download an app or create an account?" [ref=e398] [cursor=pointer]
+          - heading "I'm a parts counter / supply house. Does this work for retail, not just service?" [level=3] [ref=e400]:
+            - button "I'm a parts counter / supply house. Does this work for retail, not just service?" [ref=e401] [cursor=pointer]
+          - heading "How long does setup take?" [level=3] [ref=e403]:
+            - button "How long does setup take?" [ref=e404] [cursor=pointer]
+          - heading "What happens to my customer list if I cancel?" [level=3] [ref=e406]:
+            - button "What happens to my customer list if I cancel?" [ref=e407] [cursor=pointer]
+          - heading "How is this different from email marketing tools like Mailchimp?" [level=3] [ref=e409]:
+            - button "How is this different from email marketing tools like Mailchimp?" [ref=e410] [cursor=pointer]
+          - heading "Pricing?" [level=3] [ref=e412]:
+            - button "Pricing?" [ref=e413] [cursor=pointer]
+      - generic [ref=e417]:
+        - heading "Stop paying Google to find the customers you already had." [level=2] [ref=e418]:
+          - text: Stop paying Google to find
+          - text: the customers you already had.
+        - paragraph [ref=e419]: Get the platform live this week. Watch your repeat rate climb the next.
+        - link "Start free trial" [ref=e420] [cursor=pointer]:
+          - /url: /auth/signup
+          - text: Start free trial
+          - img [ref=e421]
+        - generic [ref=e423]:
+          - generic [ref=e424]:
+            - img [ref=e425]
+            - text: 14-day free trial
+          - generic [ref=e428]:
+            - img [ref=e429]
+            - text: No credit card
+          - generic [ref=e432]:
+            - img [ref=e433]
+            - text: Founding-cohort price locked in
+      - generic [ref=e437]:
+        - generic [ref=e438]:
+          - generic [ref=e439]:
+            - img "Field Advisor" [ref=e441]
+            - paragraph [ref=e442]: The platform — and the playbook — for the trade businesses that refuse to be treated like a commodity.
+            - generic [ref=e443]:
+              - link "Start 14-Day Trial" [ref=e444] [cursor=pointer]:
+                - /url: /auth/signup
+              - link "How It Works" [ref=e445] [cursor=pointer]:
+                - /url: /#what-changes
+          - generic [ref=e446]:
+            - heading "Platform" [level=4] [ref=e447]
+            - list [ref=e448]:
+              - listitem [ref=e449]:
+                - link "How It Works" [ref=e450] [cursor=pointer]:
+                  - /url: /#ecosystem-network
+              - listitem [ref=e451]:
+                - link "Customer Stories" [ref=e452] [cursor=pointer]:
+                  - /url: /#stories
+              - listitem [ref=e453]:
+                - link "FAQ" [ref=e454] [cursor=pointer]:
+                  - /url: /#faq
+              - listitem [ref=e455]:
+                - link "Get Started" [ref=e456] [cursor=pointer]:
+                  - /url: /#get-started
+          - generic [ref=e457]:
+            - heading "Industries" [level=4] [ref=e458]
+            - list [ref=e459]:
+              - listitem [ref=e460]:
+                - link "For Shops" [ref=e461] [cursor=pointer]:
+                  - /url: /for-shops-v2
+              - listitem [ref=e462]:
+                - link "Contractor Companies" [ref=e463] [cursor=pointer]:
+                  - /url: /for-contractors-v2
+              - listitem [ref=e464]:
+                - link "Independent Consultants" [ref=e465] [cursor=pointer]:
+                  - /url: /for-independent-consultants-v2
+          - generic [ref=e466]:
+            - heading "Company" [level=4] [ref=e467]
+            - list [ref=e468]:
+              - listitem [ref=e469]:
+                - link "About Us" [ref=e470] [cursor=pointer]:
+                  - /url: "#about"
+              - listitem [ref=e471]:
+                - link "Contact" [ref=e472] [cursor=pointer]:
+                  - /url: "#contact"
+              - listitem [ref=e473]:
+                - link "Privacy Policy" [ref=e474] [cursor=pointer]:
+                  - /url: /privacy
+              - listitem [ref=e475]:
+                - link "Terms of Service" [ref=e476] [cursor=pointer]:
+                  - /url: /terms
+        - generic [ref=e478]:
+          - paragraph [ref=e479]: © 2026 Field Advisor. Built for the trades.
+          - generic [ref=e480]:
+            - link "Privacy" [ref=e481] [cursor=pointer]:
+              - /url: /privacy
+            - link "Terms" [ref=e482] [cursor=pointer]:
+              - /url: /terms
+            - link "Support" [ref=e483] [cursor=pointer]:
+              - /url: "#contact"
+  - region "Notifications (F8)":
+    - list
+  - alert [ref=e484]

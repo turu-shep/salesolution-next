@@ -1,0 +1,29 @@
+[     144ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3000/auth/login?v=v3:0
+[     422ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[     558ms] [WARNING] Image with src "http://localhost:3000/fa-logo-white.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio. @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     559ms] [LOG] %c[Web Vitals] LCP: 112ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     559ms] [LOG] %c[Web Vitals] FCP: 112ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     559ms] [LOG] %c[Web Vitals] TTFB: 54ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     559ms] [LOG] %c[Web Vitals] LCP: 112ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     559ms] [LOG] %c[Web Vitals] FCP: 112ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     559ms] [LOG] %c[Web Vitals] TTFB: 54ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     641ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:3000/auth/login?v=v3:0
+[   53894ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   54804ms] [LOG] [Fast Refresh] done in 911ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   54806ms] [LOG] %c[Web Vitals] CLS: 0.005ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   54806ms] [LOG] %c[Web Vitals] CLS: 0.005ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   56150ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:3000/auth/login?v=v3:0
+[   71223ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   72424ms] [LOG] [Fast Refresh] done in 1201ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   81220ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   81910ms] [LOG] [Fast Refresh] done in 690ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  140507ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  141129ms] [LOG] [Fast Refresh] done in 623ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  180861ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  181748ms] [LOG] [Fast Refresh] done in 888ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  229245ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  229973ms] [LOG] [Fast Refresh] done in 728ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  257497ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  258060ms] [LOG] [Fast Refresh] done in 563ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  323752ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  324547ms] [LOG] [Fast Refresh] done in 795ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43

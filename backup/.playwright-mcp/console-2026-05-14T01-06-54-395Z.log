@@ -1,0 +1,112 @@
+[     388ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[     490ms] [LOG] %c[Web Vitals] LCP: 100ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     490ms] [LOG] %c[Web Vitals] FCP: 100ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     490ms] [LOG] %c[Web Vitals] TTFB: 47ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     490ms] [LOG] %c[Web Vitals] LCP: 100ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     491ms] [LOG] %c[Web Vitals] FCP: 100ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     491ms] [LOG] %c[Web Vitals] TTFB: 47ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     492ms] [LOG] %c[Web Vitals] CLS: 0.000ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     492ms] [LOG] %c[Web Vitals] CLS: 0.000ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     592ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:3000/:0
+[     622ms] [LOG] %c[Web Vitals] CLS: 0.002ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     622ms] [LOG] %c[Web Vitals] CLS: 0.002ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     649ms] [LOG] %c[Web Vitals] LCP: 612ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     649ms] [LOG] %c[Web Vitals] LCP: 612ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     657ms] [LOG] %c[Web Vitals] LCP: 620ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     657ms] [LOG] %c[Web Vitals] LCP: 620ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     666ms] [LOG] %c[Web Vitals] LCP: 628ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     666ms] [LOG] %c[Web Vitals] LCP: 628ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     684ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/csrf:0
+[     685ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[     718ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/hypercredits/wallet:0
+[    1402ms] [LOG] %c[Web Vitals] LCP: 1364ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[    1402ms] [LOG] %c[Web Vitals] LCP: 1364ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   10764ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/csrf:0
+[   10765ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[   10791ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/hypercredits/wallet:0
+[   33635ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   34236ms] [LOG] [Fast Refresh] done in 612ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   34500ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:3000/:0
+[   35823ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/csrf:0
+[   35824ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[   35853ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/hypercredits/wallet:0
+[   56398ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   66581ms] [LOG] [Fast Refresh] done in 10186ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   71091ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   71691ms] [LOG] [Fast Refresh] done in 600ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   76464ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   76921ms] [LOG] [Fast Refresh] done in 457ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   95989ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   96761ms] [LOG] [Fast Refresh] done in 780ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  106595ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  107139ms] [LOG] [Fast Refresh] done in 544ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  130906ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  132113ms] [LOG] [Fast Refresh] done in 1212ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  142318ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  143132ms] [LOG] [Fast Refresh] done in 814ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  161584ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  162494ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  162526ms] [LOG] [Fast Refresh] done in 33ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  164418ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  165893ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  166012ms] [LOG] %c[Web Vitals] LCP: 1116ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166012ms] [LOG] %c[Web Vitals] FCP: 1116ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166012ms] [LOG] %c[Web Vitals] TTFB: 939ms (needs-improvement) color: #ffa400; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166012ms] [LOG] %c[Web Vitals] LCP: 1116ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166012ms] [LOG] %c[Web Vitals] FCP: 1116ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166012ms] [LOG] %c[Web Vitals] TTFB: 939ms (needs-improvement) color: #ffa400; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166013ms] [LOG] %c[Web Vitals] CLS: 0.000ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166013ms] [LOG] %c[Web Vitals] CLS: 0.000ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166134ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:3000/:0
+[  166186ms] [LOG] %c[Web Vitals] LCP: 1768ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166187ms] [LOG] %c[Web Vitals] LCP: 1768ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166205ms] [LOG] %c[Web Vitals] LCP: 1784ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166205ms] [LOG] %c[Web Vitals] LCP: 1784ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166881ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/csrf:0
+[  166882ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[  166948ms] [LOG] %c[Web Vitals] LCP: 2528ms (needs-improvement) color: #ffa400; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  166948ms] [LOG] %c[Web Vitals] LCP: 2528ms (needs-improvement) color: #ffa400; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  167327ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/hypercredits/wallet:0
+[  177373ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/csrf:0
+[  177374ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[  177398ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/hypercredits/wallet:0
+[  180702ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  182280ms] [LOG] [Fast Refresh] done in 1579ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  182751ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:3000/:0
+[  201379ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  202542ms] [LOG] [Fast Refresh] done in 1171ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  202681ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/csrf:0
+[  202682ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[  202804ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/hypercredits/wallet:0
+[  394154ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  396316ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  396330ms] [LOG] [Fast Refresh] done in 15ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  396382ms] [LOG] [HMR] Detected local css modules. Reload all css @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  397929ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  397941ms] [LOG] [Fast Refresh] done in 12ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  398676ms] [LOG] [Fast Refresh] done in 747ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  400258ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  402650ms] [LOG] [Fast Refresh] done in 2394ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  402878ms] [LOG] %c[Web Vitals] CLS: 0.001ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  402878ms] [LOG] %c[Web Vitals] CLS: 0.001ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  402891ms] [LOG] %c[Web Vitals] CLS: 0.001ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  402891ms] [LOG] %c[Web Vitals] CLS: 0.001ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  433972ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  434646ms] [LOG] [Fast Refresh] done in 674ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  434652ms] [LOG] %c[Web Vitals] CLS: 0.107ms (needs-improvement) color: #ffa400; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  434652ms] [LOG] %c[Web Vitals] CLS: 0.107ms (needs-improvement) color: #ffa400; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  467951ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  468569ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  468626ms] [LOG] [Fast Refresh] done in 57ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  469665ms] [LOG] [Fast Refresh] done in 1096ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  495868ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  496747ms] [LOG] [Fast Refresh] done in 879ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  507005ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[  508234ms] [LOG] [Fast Refresh] done in 1232ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43

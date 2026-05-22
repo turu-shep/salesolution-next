@@ -1,0 +1,20 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - img [ref=e6]
+      - heading "Page not found" [level=1] [ref=e9]
+      - paragraph [ref=e10]: The page you're looking for doesn't exist or has been moved.
+      - generic [ref=e11]:
+        - link "Go Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - img [ref=e13]
+          - text: Go Home
+        - link "Find Experts" [ref=e16] [cursor=pointer]:
+          - /url: /profiles
+          - img [ref=e17]
+          - text: Find Experts
+  - region "Notifications (F8)":
+    - list
+  - alert [ref=e20]

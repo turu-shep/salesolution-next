@@ -1,0 +1,88 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e7]:
+          - link "Field Advisor" [ref=e8] [cursor=pointer]:
+            - /url: /
+            - img "Field Advisor" [ref=e9]
+          - generic [ref=e10]:
+            - paragraph [ref=e11]: The preservation layer for trades · 2026
+            - heading "Preserve what trade shops lose every day." [level=1] [ref=e12]
+            - paragraph [ref=e13]: Customer loyalty. And trades knowledge. Field Advisor is the preservation layer for trades — the platform and the playbook.
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - img [ref=e17]
+            - generic [ref=e20]:
+              - heading "Customer loyalty" [level=3] [ref=e21]
+              - paragraph [ref=e22]: Keep the customers you’ve earned. QR, microsites, booking, video, memberships.
+          - generic [ref=e23]:
+            - img [ref=e25]
+            - generic [ref=e28]:
+              - heading "Trades knowledge" [level=3] [ref=e29]
+              - paragraph [ref=e30]: Capture senior expertise before it walks out the door. SOPs, training, live counter assist.
+          - generic [ref=e31]:
+            - img [ref=e33]
+            - generic [ref=e35]:
+              - heading "Founding cohort" [level=3] [ref=e36]
+              - paragraph [ref=e37]: First 50 shops lock $497/mo on Platform forever.
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - heading "Create an account." [level=1] [ref=e43]
+          - paragraph [ref=e44]: Get started with Field Advisor — it's free.
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - button "Sign in with Google" [ref=e47] [cursor=pointer]:
+              - img [ref=e48]
+              - text: Google
+            - button "Sign in with Apple" [ref=e53] [cursor=pointer]:
+              - img [ref=e54]
+              - text: Apple
+          - generic [ref=e59]: Or sign up with email
+          - form "Create account" [ref=e60]:
+            - generic [ref=e61]:
+              - generic [ref=e62]:
+                - text: First Name
+                - textbox "First Name" [ref=e63]:
+                  - /placeholder: John
+              - generic [ref=e64]:
+                - text: Last Name
+                - textbox "Last Name" [ref=e65]:
+                  - /placeholder: Doe
+            - generic [ref=e66]:
+              - text: Email
+              - textbox "Email" [ref=e67]:
+                - /placeholder: john@example.com
+            - generic [ref=e68]:
+              - text: Password
+              - generic [ref=e69]:
+                - textbox "Password" [ref=e70]
+                - button "Show password" [ref=e71] [cursor=pointer]:
+                  - img [ref=e72]
+              - paragraph [ref=e75]: Must be at least 8 characters with uppercase, lowercase, number, and special character
+            - generic [ref=e76]:
+              - text: Confirm Password
+              - generic [ref=e77]:
+                - textbox "Confirm Password" [ref=e78]
+                - button "Show password confirmation" [ref=e79] [cursor=pointer]:
+                  - img [ref=e80]
+            - generic [ref=e83]:
+              - checkbox "I agree to the Terms of Service and Privacy Policy" [ref=e84] [cursor=pointer]
+              - checkbox
+              - generic [ref=e85]:
+                - text: I agree to the
+                - link "Terms of Service" [ref=e86] [cursor=pointer]:
+                  - /url: /terms
+                - text: and
+                - link "Privacy Policy" [ref=e87] [cursor=pointer]:
+                  - /url: /privacy
+            - button "Create account" [disabled]
+          - paragraph [ref=e88]:
+            - text: Already have an account?
+            - link "Sign in" [ref=e89] [cursor=pointer]:
+              - /url: /auth/login
+  - region "Notifications (F8)":
+    - list
+  - alert [ref=e90]

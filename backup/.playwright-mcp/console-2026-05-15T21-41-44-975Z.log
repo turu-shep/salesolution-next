@@ -1,0 +1,11 @@
+[     853ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[     995ms] [LOG] %c[Web Vitals] FCP: 584ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     995ms] [LOG] %c[Web Vitals] TTFB: 514ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     995ms] [LOG] %c[Web Vitals] FCP: 584ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     995ms] [LOG] %c[Web Vitals] TTFB: 514ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[    1085ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:3000/role-selection:0
+[    4567ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/api/analytics/role-selection:0
+[    4567ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/api/analytics/role-selection:0
+[    4568ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3000/api/analytics/role-selection:0
+[    4819ms] [LOG] %c[Web Vitals] LCP: 4768ms (poor) color: #ff4e42; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[    4819ms] [LOG] %c[Web Vitals] LCP: 4768ms (poor) color: #ff4e42; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43

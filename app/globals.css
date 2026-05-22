@@ -1,26 +1,220 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ────────────────────────────────────────────────────────────────────────────
+ * Design tokens — derived from extracting computed styles off the live site
+ * 2026-05-16. See docs/strategy/design-tokens.md for the full audit.
+ *
+ * Two @theme blocks:
+ *   - `@theme inline` for tokens that reference other CSS vars
+ *     (fonts injected by next/font at runtime).
+ *   - `@theme` for literal hex / size values — Tailwind generates utility
+ *     classes from these (e.g. `--color-brand-600` → `bg-brand-600`).
+ * ────────────────────────────────────────────────────────────────────────── */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Geist is variable and serves both display + UI duties — single family,
+   * tighter system. Sans and display point at the same var. */
+  --font-sans: var(--font-geist), 'Geist', system-ui, sans-serif;
+  --font-display: var(--font-geist), 'Geist', system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), 'Geist Mono', ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  /* ─── Brand ─── */
+  --color-brand-50:  #f0f4ff;
+  --color-brand-100: #f3f5ff;   /* observed: custom-package callout */
+  --color-brand-200: #edf1ff;   /* observed: circular nav arrows    */
+  --color-brand-300: #c8d2ff;
+  --color-brand-500: #4169e1;   /* observed: link accent            */
+  --color-brand-600: #2652ef;   /* observed: PRIMARY CTA            */
+  --color-brand-700: #1e3fcc;
+  --color-brand-900: #050c23;   /* observed: footer + dark CTA      */
+
+  /* ─── Alt CTAs (kept per locked decision D2 — semantic per funnel) ─── */
+  --color-cta-green-500: #09bc8a;   /* "Book My Strategy Call"        */
+  --color-cta-green-600: #07a37a;
+  --color-cta-purple-500: #9826ef;  /* content-packages page CTA      */
+  --color-cta-purple-600: #8419d6;
+
+  /* ─── Semantic ─── */
+  --color-danger-50:  #fef2f2;   /* observed: concern icons backdrop */
+  --color-danger-100: #fff8f8;   /* observed: challenge labels       */
+  --color-danger-500: #ff4242;
+  --color-warning-50: #fff8e8;
+
+  /* ─── Surfaces ─── */
+  --color-surface:           #ffffff;
+  --color-surface-alt:       #f7f7f7;   /* framework phase cards */
+  --color-surface-tint-blue: #f9f9ff;   /* accordion items       */
+  --color-surface-tint-cool: #f5f9ff;   /* icon-block backdrop   */
+  --color-surface-tint-warm: #fff8f8;   /* challenge labels      */
+  --color-surface-result:    #f8fafc;   /* result-widget bg      */
+  --color-surface-dark:      #050c23;   /* footer + dark bands   */
+
+  /* ─── Ink (text) ───
+   * The live site uses 5+ near-blacks inconsistently. Locked to a scale that
+   * passes WCAG AA on paper background. */
+  --color-ink-900: #131415;   /* H1 only — deepest */
+  --color-ink-800: #1c1c1c;   /* H2/H3, primary links */
+  --color-ink-700: #404040;   /* body — DEFAULT */
+  --color-ink-500: #69778b;   /* muted body / lede (5.6:1 on paper, passes AA) */
+  --color-ink-400: #6b7689;   /* footer copy + small mono labels (4.5:1 on paper, passes AA — was #737d9d / 3.94:1) */
+  --color-ink-300: #92979b;   /* input placeholder, decorative-only */
+  --color-ink-200: #cbd0d8;   /* muted text on DARK bands (added 2026-05-20 — used in 17+ components; was silently undefined) */
+  --color-ink-inverse: #ffffff;
+
+  /* ─── Radii ─── */
+  --radius-sm:   6px;   /* badges, chips */
+  --radius-md:   8px;   /* buttons, inputs */
+  --radius-lg:   16px;  /* cards */
+  --radius-xl:   24px;  /* large framework cards */
+  --radius-pill: 9999px;
+
+  /* ─── Shadows ─── */
+  --shadow-sm:  0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-md:  0 10px 40px rgba(0, 0, 0, 0.08); /* dominant card shadow */
+  --shadow-lg:  0 15px 50px rgba(0, 0, 0, 0.12);
+  --shadow-cta: 0 4px 12px rgba(38, 82, 239, 0.25); /* tied to brand-600 */
+
+  /* ─── Editorial layer (added 2026-05-20) ────────────────────────────────
+   * The "technical-editorial" direction collapses card chrome in favor of
+   * hairline rules + numbered sections + warmer paper background. These
+   * tokens are additive — the existing surface/shadow stack still drives
+   * non-homepage routes until they get migrated.
+   * ────────────────────────────────────────────────────────────────────── */
+  --color-paper:        #fbfbfa;   /* warm page bg (replaces #fff on rebuilt sections) */
+  --color-rule:         #e8ebf0;   /* hairline divider */
+  --color-rule-strong:  #cdd3dc;   /* section break */
+  --color-mark:         #fff5d6;   /* highlighter for inline numbers / pull-stats */
+
+  /* Data-state colors. Re-shaded 2026-05-20 to pass WCAG AA when used as
+   * text on white/paper backgrounds (Comparison cells, chart annotations,
+   * status pills). Still reads correctly on dark bands where these double
+   * as chart-line colors.
+   *  - data-up   #047857 = 5.05:1 on white, 4.51:1 on surface-dark (passes both)
+   *  - data-down #c1272d = 5.93:1 on white, 4.06:1 on surface-dark (large/bold passes both)
+   *  Previous bright values (#09bc8a / #ff4242) failed AA as text on white. */
+  --color-data-up:   #047857;
+  --color-data-down: #c1272d;
+  --color-data-flat: #92979b;
+
+  /* Industrial safety orange — single contrast accent against the
+   * dominant brand-blue. Picked deliberately for the hydraulics / MRO /
+   * industrial e-commerce audience (literally the color of hazard signage
+   * they see every day). Reserved for: status warnings between green
+   * and red, "this is the active step" indicators, and the occasional
+   * accent moment that needs to be louder than blue without being alarm. */
+  --color-accent-50:  #fff7ed;
+  --color-accent-100: #ffedd5;
+  --color-accent-500: #f97316;
+  --color-accent-600: #ea580c;
+  --color-accent-700: #c2410c;
+
+  /* Marquee scroll for the logo strip. The 2x duplicated list translates
+   * exactly -50% so the second copy lines up with the first — seamless loop.
+   * 38s is slow enough to read each brand without feeling like a banner ad. */
+  --animate-marquee: marquee 38s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Stroke-dashoffset draw-on-view. Paired with the <InView> wrapper that
+ * sets data-in-view="true" once a section enters the viewport. The SVG
+ * path starts fully offset (invisible), then transitions to 0 over 1.6s. */
+.draw-path {
+  stroke-dashoffset: 1200;
+  transition: stroke-dashoffset 1600ms ease-out;
+}
+
+[data-in-view="true"] .draw-path {
+  stroke-dashoffset: 0;
+}
+
+/* prefers-reduced-motion: skip the animation, show final state */
+@media (prefers-reduced-motion: reduce) {
+  .draw-path {
+    transition: none;
+    stroke-dashoffset: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ────────────────────────────────────────────────────────────────────────────
+ * Base typography. Heading scale chosen from the audit § "Proposed clean
+ * type ramp" in design-tokens.md.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+/* Base element styles. Live inside @layer base so Tailwind utilities applied
+ * directly to an element still win — without this layer wrap, unlayered
+ * element rules (e.g. `a { color: inherit }`) beat every Tailwind utility
+ * regardless of specificity under v4's cascade-layers model, which silently
+ * breaks any `text-*` utility on `<a>` / `<Link>`. */
+@layer base {
+  /* Belt-and-suspenders: animated marquee + future motion components have
+   * w-max children that overflow horizontally. Their parents clip visually
+   * but their layout bounding boxes still expand the body. Without this,
+   * mobile shows a faint horizontal scroll. */
+  html, body {
+    overflow-x: clip;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.625;
+    color: var(--color-ink-700);
+    background: var(--color-surface);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--color-ink-800);
+    letter-spacing: -0.01em;
+  }
+
+  h1 { color: var(--color-ink-900); font-weight: 700; font-size: clamp(2rem, 4.5vw, 3rem);     line-height: 1.1; }
+  h2 { font-weight: 600; font-size: clamp(1.75rem, 3.5vw, 2.25rem); line-height: 1.2; }
+  h3 { font-weight: 600; font-size: clamp(1.375rem, 2.5vw, 1.5rem); line-height: 1.3; }
+  h4 { font-weight: 600; font-size: 1.125rem;                        line-height: 1.4; }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+::selection {
+  background: var(--color-brand-200);
+  color: var(--color-ink-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 2px;
+}
+
+/* Shared form input styling. Used by LeadForm + LeadMagnetForm.
+ * Tailwind's `@apply` works inside globals.css with v4. */
+.input {
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-ink-300);
+  background: var(--color-surface);
+  padding: 0.625rem 0.75rem;
+  font-size: 1rem;
+  color: var(--color-ink-900);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-brand-600);
+  box-shadow: 0 0 0 3px rgb(38 82 239 / 0.18);
+}
+
+.input::placeholder {
+  color: var(--color-ink-300);
 }

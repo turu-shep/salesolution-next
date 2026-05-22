@@ -1,0 +1,10 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - paragraph [ref=e8]: Loading your onboarding experience…
+  - region "Notifications (F8)":
+    - list
+  - alert [ref=e9]

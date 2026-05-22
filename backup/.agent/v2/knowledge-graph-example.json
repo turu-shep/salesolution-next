@@ -1,0 +1,181 @@
+{
+  "version": "2.0",
+  "project": "field-advisor",
+  "last_session": "2026-03-28",
+  "last_commit": "a1b2c3d4e5f6",
+  "total_files": 247,
+  "files_analyzed_this_session": 247,
+  "files_inherited": 0,
+  "files": {
+    "/app/api/bookings/create/route.ts": {
+      "hash": "sha256:8f14e45fceea167a5a36dedd4bea254302ceaac12a",
+      "last_analyzed": "2026-03-28",
+      "descent_level_reached": 3,
+      "module": "booking",
+      "line_count": 89,
+      "dependencies": [
+        "/lib/stripe/create-intent.ts",
+        "/lib/business-rules/booking.ts",
+        "/lib/supabase/server.ts",
+        "/lib/email/booking-confirmation.ts"
+      ],
+      "dependents": [],
+      "scores": {
+        "completeness": 6,
+        "robustness": 3,
+        "quality": 5,
+        "security": 4,
+        "test_coverage": 0
+      },
+      "flags": {
+        "architect": [
+          "ARCH-012: Inline availability check duplicates is_time_slot_available() DB function",
+          "ARCH-013: Stripe intent creation mixed with booking logic — should be separate service"
+        ],
+        "user": [
+          "USER-008: Returns generic 500 error on Stripe failure — user sees 'Something went wrong'",
+          "USER-009: No idempotency — double-click creates duplicate booking"
+        ],
+        "adversary": [
+          "ADV-003: Uses session auth instead of getUser() — Supabase security anti-pattern",
+          "ADV-007: No rate limiting — can spam booking creation",
+          "ADV-011: Booking amount calculated client-side, not verified server-side"
+        ]
+      },
+      "cross_persona": true,
+      "milestone_critical": ["M1", "M2"],
+      "stale": false
+    },
+    "/components/booking/BookingForm.tsx": {
+      "hash": "sha256:2c624232cdd221771294dfbb310aca000a0df6ac8b",
+      "last_analyzed": "2026-03-28",
+      "descent_level_reached": 2,
+      "module": "booking",
+      "line_count": 420,
+      "dependencies": [
+        "/lib/hooks/useBooking.ts",
+        "/lib/stripe/stripe-client.ts",
+        "/components/ui/Button.tsx",
+        "/components/ui/Calendar.tsx",
+        "/lib/store/slices/bookingSlice.ts"
+      ],
+      "dependents": [
+        "/app/(dashboard)/bookings/new/page.tsx"
+      ],
+      "scores": {
+        "completeness": 5,
+        "robustness": 2,
+        "quality": 4,
+        "security": 6,
+        "test_coverage": 0
+      },
+      "flags": {
+        "architect": [
+          "ARCH-014: 420 lines — handles form state, validation, Stripe integration, and layout in one file",
+          "ARCH-015: Price calculation logic embedded in component — belongs in /lib/business-rules/"
+        ],
+        "user": [
+          "USER-010: No loading state during payment processing (2-5 second gap with no feedback)",
+          "USER-011: No error state for card decline — form just stays submitted",
+          "USER-012: No empty state when no time slots available",
+          "USER-013: Calendar not responsive on mobile — requires horizontal scroll"
+        ],
+        "adversary": []
+      },
+      "cross_persona": true,
+      "milestone_critical": ["M1", "M2"],
+      "stale": false
+    },
+    "/lib/supabase/server.ts": {
+      "hash": "sha256:9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b",
+      "last_analyzed": "2026-03-28",
+      "descent_level_reached": 1,
+      "module": "infrastructure",
+      "line_count": 34,
+      "dependencies": [],
+      "dependents": [
+        "/app/api/bookings/create/route.ts",
+        "/app/api/bookings/list/route.ts",
+        "/app/api/auth/callback/route.ts",
+        "/app/api/profiles/update/route.ts"
+      ],
+      "scores": {
+        "completeness": 9,
+        "robustness": 8,
+        "quality": 9,
+        "security": 9,
+        "test_coverage": 0
+      },
+      "flags": {
+        "architect": [],
+        "user": [],
+        "adversary": []
+      },
+      "cross_persona": false,
+      "milestone_critical": [],
+      "stale": false
+    }
+  },
+  "modules": {
+    "booking": {
+      "files": [
+        "/app/api/bookings/create/route.ts",
+        "/app/api/bookings/list/route.ts",
+        "/app/api/bookings/cancel/route.ts",
+        "/app/api/availability/check/route.ts",
+        "/components/booking/BookingForm.tsx",
+        "/components/booking/BookingCard.tsx",
+        "/components/booking/BookingList.tsx",
+        "/components/calendar/CalendarWidget.tsx",
+        "/lib/business-rules/booking.ts",
+        "/lib/hooks/useBooking.ts"
+      ],
+      "scores": {
+        "completeness": 6,
+        "robustness": 3,
+        "quality": 5,
+        "security": 4,
+        "test_coverage": 0
+      },
+      "persona_scores": {
+        "architect": 5,
+        "user": 3,
+        "adversary": 4
+      },
+      "milestone_relevance": {
+        "M1": "critical",
+        "M2": "critical",
+        "M3": "relevant"
+      },
+      "last_full_descent": "2026-03-28",
+      "drift_count": 2
+    },
+    "infrastructure": {
+      "files": [
+        "/lib/supabase/server.ts",
+        "/lib/supabase/client.ts",
+        "/lib/supabase/admin.ts",
+        "/middleware.ts"
+      ],
+      "scores": {
+        "completeness": 9,
+        "robustness": 8,
+        "quality": 9,
+        "security": 8,
+        "test_coverage": 1
+      },
+      "persona_scores": {
+        "architect": 9,
+        "user": 8,
+        "adversary": 8
+      },
+      "milestone_relevance": {
+        "M1": "relevant",
+        "M2": "relevant",
+        "M3": "relevant"
+      },
+      "last_full_descent": "2026-03-28",
+      "drift_count": 0
+    }
+  }
+}

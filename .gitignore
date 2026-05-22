@@ -24,6 +24,18 @@
 .DS_Store
 *.pem
 
+# strategy artifacts (large; regenerable from scripts)
+/docs/strategy/screenshots/
+/docs/strategy/scripts/node_modules/
+/docs/strategy/scripts/package-lock.json
+/docs/strategy/design-tokens.json
+
+# editor / OS
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
 # debug
 npm-debug.log*
 yarn-debug.log*

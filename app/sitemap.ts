@@ -1,0 +1,103 @@
+import type { MetadataRoute } from 'next'
+
+import { business } from '@/lib/business'
+
+/**
+ * Generates /sitemap.xml. Replaces the Rank Math `sitemap_index.xml` from the
+ * WordPress site with a single sitemap (well under the 50k-URL limit).
+ *
+ * Composition:
+ *   - Static marketing routes (this file)
+ *   - Dynamic content from Sanity (posts, guides, career paths) — added once
+ *     the CMS has entries. The fetch is wrapped in try/catch so a Sanity outage
+ *     or unconfigured env still produces a valid sitemap.
+ *
+ * Excludes: /studio/*, /api/*, /dev/*, and the thank-you pages (those are
+ * noindex per their own metadata exports).
+ */
+
+type Entry = {
+  url: string
+  lastModified?: string | Date
+  changeFrequency?:
+    | 'always'
+    | 'hourly'
+    | 'daily'
+    | 'weekly'
+    | 'monthly'
+    | 'yearly'
+    | 'never'
+  priority?: number
+}
+
+const BASE = business.url
+
+// Static marketing routes — sourced from docs/strategy/02-information-architecture.md.
+const STATIC_ROUTES: Entry[] = [
+  { url: `${BASE}/`,                                      changeFrequency: 'weekly',  priority: 1.0 },
+  { url: `${BASE}/services/`,                             changeFrequency: 'monthly', priority: 0.9 },
+  { url: `${BASE}/services/ai-seo/`,                      changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/services/content-writing-services/`,    changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/services/website-content-writing-packages/`, changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/services/website-development-design-services/`, changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/services/outbound-email-marketing-services/`,   changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/contact-me/`,                           changeFrequency: 'yearly',  priority: 0.7 },
+  { url: `${BASE}/unlock-growth-audit/`,                  changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/future-proof-your-seo/`,                changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/book-growth-call/`,                     changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/constraint-sprint/`,                    changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/guides/`,                               changeFrequency: 'weekly',  priority: 0.7 },
+  { url: `${BASE}/guides/seo-guides/`,                    changeFrequency: 'monthly', priority: 0.6 },
+  { url: `${BASE}/guides/website-development-and-design-guides/`, changeFrequency: 'monthly', priority: 0.6 },
+  { url: `${BASE}/guides/email-marketing-guides/`,        changeFrequency: 'monthly', priority: 0.6 },
+  { url: `${BASE}/category/blog/`,                        changeFrequency: 'weekly',  priority: 0.7 },
+  { url: `${BASE}/career-paths/`,                         changeFrequency: 'monthly', priority: 0.6 },
+  { url: `${BASE}/service-areas/`,                        changeFrequency: 'monthly', priority: 0.5 },
+  // Legal — low priority but indexable.
+  { url: `${BASE}/privacy-policy/`,                       changeFrequency: 'yearly',  priority: 0.2 },
+  { url: `${BASE}/terms-of-service/`,                     changeFrequency: 'yearly',  priority: 0.2 },
+  { url: `${BASE}/disclaimer/`,                           changeFrequency: 'yearly',  priority: 0.2 },
+  { url: `${BASE}/opt-out-preferences/`,                  changeFrequency: 'yearly',  priority: 0.2 },
+]
+
+async function fetchSanityRoutes(): Promise<Entry[]> {
+  // Lazy import — fail soft if Sanity isn't configured (env missing in CI etc.)
+  try {
+    const { sanityClient } = await import('@/sanity/lib/client')
+    const docs = await sanityClient.fetch<
+      {
+        _type: 'post' | 'guide' | 'careerPath'
+        slug: { current: string }
+        updatedAt?: string
+        publishedAt?: string
+      }[]
+    >(
+      `*[_type in ["post","guide","careerPath"] && defined(slug.current)]{
+         _type, slug, updatedAt, publishedAt
+       }`,
+    )
+
+    return docs.map((d) => {
+      const lastMod = d.updatedAt ?? d.publishedAt
+      const pathPrefix =
+        d._type === 'post' ? '' : d._type === 'guide' ? '/guides' : '/career-paths'
+      return {
+        url: `${BASE}${pathPrefix}/${d.slug.current}/`,
+        lastModified: lastMod ? new Date(lastMod) : undefined,
+        changeFrequency: 'monthly',
+        priority: d._type === 'post' ? 0.7 : 0.6,
+      }
+    })
+  } catch (err) {
+    console.warn('[sitemap] Sanity fetch failed, returning static-only:', err)
+    return []
+  }
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const dynamic = await fetchSanityRoutes()
+  return [
+    ...STATIC_ROUTES.map((r) => ({ ...r, lastModified: r.lastModified ?? new Date() })),
+    ...dynamic,
+  ]
+}

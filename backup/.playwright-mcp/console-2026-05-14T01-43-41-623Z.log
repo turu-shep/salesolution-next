@@ -1,0 +1,26 @@
+[     599ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[     788ms] [LOG] %c[Web Vitals] LCP: 236ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     788ms] [LOG] %c[Web Vitals] FCP: 236ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     788ms] [LOG] %c[Web Vitals] TTFB: 138ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     788ms] [LOG] %c[Web Vitals] LCP: 236ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     788ms] [LOG] %c[Web Vitals] FCP: 236ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     788ms] [LOG] %c[Web Vitals] TTFB: 138ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     901ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:3000/trades-knowledge?v=v2:0
+[     912ms] [LOG] %c[Web Vitals] CLS: 0.001ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     912ms] [LOG] %c[Web Vitals] CLS: 0.001ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[     952ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/csrf:0
+[     953ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[     977ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/hypercredits/wallet:0
+[    1319ms] [LOG] %c[Web Vitals] LCP: 1252ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[    1319ms] [LOG] %c[Web Vitals] LCP: 1252ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[    1427ms] [LOG] %c[Web Vitals] LCP: 1360ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[    1427ms] [LOG] %c[Web Vitals] LCP: 1360ms (good) color: #0cce6b; font-weight: bold; @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[    6045ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/csrf:0
+[    6045ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[    6069ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/hypercredits/wallet:0
+[   31115ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/csrf:0
+[   31116ms] [ERROR] [csrfFetch] Failed to obtain CSRF token: 401 @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[   31143ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/hypercredits/wallet:0
+[   52782ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   54099ms] [LOG] [Fast Refresh] done in 1322ms @ webpack-internal:///(app-pages-browser)/./node_modules/@sentry/react/node_modules/@sentry/core/build/esm/instrument/console.js:43
+[   57168ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:3000/trades-knowledge?v=v2:0

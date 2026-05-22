@@ -1,0 +1,121 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e72]:
+      - generic [ref=e74]:
+        - generic [ref=e75]:
+          - link "Field Advisor Logo" [ref=e76] [cursor=pointer]:
+            - /url: /
+            - img "Field Advisor Logo" [ref=e77]
+          - navigation "Consultant navigation" [ref=e78]:
+            - link "Dashboard" [ref=e79] [cursor=pointer]:
+              - /url: /dashboard/consultant
+              - img [ref=e80]
+              - generic [ref=e85]: Dashboard
+            - button "Profile" [ref=e87] [cursor=pointer]:
+              - img [ref=e88]
+              - generic [ref=e91]: Profile
+              - img [ref=e92]
+            - button "Orders" [ref=e95] [cursor=pointer]:
+              - img [ref=e96]
+              - generic [ref=e98]: Orders
+              - img [ref=e99]
+            - button "Clients" [ref=e102] [cursor=pointer]:
+              - img [ref=e103]
+              - generic [ref=e108]: Clients
+              - img [ref=e109]
+            - button "Knowledge" [ref=e112] [cursor=pointer]:
+              - img [ref=e113]
+              - generic [ref=e116]: Knowledge
+              - img [ref=e117]
+            - button "Performance" [ref=e120] [cursor=pointer]:
+              - img [ref=e121]
+              - generic [ref=e124]: Performance
+              - img [ref=e125]
+            - button "Platform" [ref=e128] [cursor=pointer]:
+              - img [ref=e129]
+              - generic [ref=e131]: Platform
+              - img [ref=e132]
+        - generic [ref=e134]:
+          - button [ref=e135] [cursor=pointer]:
+            - img [ref=e136]
+          - button "AS" [ref=e139] [cursor=pointer]:
+            - generic [ref=e141]: AS
+            - img [ref=e143]
+      - main [ref=e145]:
+        - generic [ref=e146]:
+          - status [ref=e147]:
+            - generic [ref=e148]:
+              - img [ref=e149]
+              - generic [ref=e151]:
+                - paragraph [ref=e152]: We’ve upgraded your dashboard.
+                - paragraph [ref=e153]: All your data is here — just in a redesigned home.
+            - button "Dismiss migration notice" [ref=e154] [cursor=pointer]:
+              - img [ref=e155]
+          - generic [ref=e159]:
+            - generic [ref=e160]:
+              - heading "Good afternoon, Artur" [level=1] [ref=e161]
+              - paragraph [ref=e162]: Here’s your store overview.
+            - generic [ref=e163]:
+              - button "Take the tour again" [ref=e164] [cursor=pointer]:
+                - img [ref=e165]
+              - button "Dashboard settings" [ref=e168] [cursor=pointer]:
+                - img [ref=e169]
+          - generic [ref=e172]:
+            - generic [ref=e173]:
+              - generic [ref=e174]:
+                - heading "Getting Started" [level=3] [ref=e175]
+                - button "Dismiss checklist" [ref=e176] [cursor=pointer]:
+                  - img [ref=e177]
+              - generic [ref=e180]:
+                - progressbar [ref=e181]
+                - generic [ref=e183]: 0/5 completed
+            - list [ref=e185]:
+              - listitem [ref=e186]:
+                - generic [ref=e187]:
+                  - img [ref=e189]
+                  - generic [ref=e191]:
+                    - paragraph [ref=e192]: Link at least 1 expert
+                    - paragraph [ref=e193]: Invite a contractor or consultant to your shop
+                  - img [ref=e195]
+              - listitem [ref=e200]:
+                - link "List your services Show customers what your shop offers" [ref=e201] [cursor=pointer]:
+                  - /url: /dashboard/consultant/services
+                  - img [ref=e203]
+                  - generic [ref=e205]:
+                    - paragraph [ref=e206]: List your services
+                    - paragraph [ref=e207]: Show customers what your shop offers
+                  - img [ref=e209]
+              - listitem [ref=e212]:
+                - link "Generate and download QR codes Share QR codes so customers can find your shop online" [ref=e213] [cursor=pointer]:
+                  - /url: /settings/profile
+                  - img [ref=e215]
+                  - generic [ref=e217]:
+                    - paragraph [ref=e218]: Generate and download QR codes
+                    - paragraph [ref=e219]: Share QR codes so customers can find your shop online
+                  - img [ref=e221]
+              - listitem [ref=e227]:
+                - link "Connect your payout account Link Stripe to receive payments for orders" [ref=e228] [cursor=pointer]:
+                  - /url: /settings/billing
+                  - img [ref=e230]
+                  - generic [ref=e232]:
+                    - paragraph [ref=e233]: Connect your payout account
+                    - paragraph [ref=e234]: Link Stripe to receive payments for orders
+                  - img [ref=e236]
+              - listitem [ref=e238]:
+                - generic [ref=e239]:
+                  - img [ref=e241]
+                  - generic [ref=e243]:
+                    - paragraph [ref=e244]: Get your first booking
+                    - paragraph [ref=e245]: Start receiving orders from customers
+                  - img [ref=e247]
+          - generic [ref=e251]:
+            - img [ref=e252]
+            - paragraph [ref=e254]: Loading dashboard...
+  - region "Notifications (F8)":
+    - list
+  - alert [ref=e71]
+  - generic:
+    - generic:
+      - img
