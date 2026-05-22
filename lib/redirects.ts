@@ -19,6 +19,9 @@ export const redirects: Redirect[] = [
   // any future legacy singular-path inbound links.
   { source: '/guide/:slug*', destination: '/guides/:slug*', permanent: true },
 
+  // Old WordPress slugs that were renamed in Sanity — catch external backlinks.
+  { source: '/content-marketing-101-guide-2023/', destination: '/content-marketing-101/', permanent: true },
+
   // ── WordPress sitemap URLs → new sitemap ───────────────────────────────
   { source: '/sitemap_index.xml', destination: '/sitemap.xml', permanent: true },
   { source: '/post-sitemap.xml', destination: '/sitemap.xml', permanent: true },
