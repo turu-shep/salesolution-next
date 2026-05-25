@@ -19,7 +19,12 @@ const ENDPOINT = 'https://www.google-analytics.com/mp/collect'
 export async function sendServerEvent(args: {
   clientId: string // GA client_id from _ga cookie
   userId?: string // hashed email
-  eventName: 'generate_lead' | 'audit_request' | 'constraint_sprint_apply' | 'book_growth_call'
+  eventName:
+    | 'generate_lead'
+    | 'audit_request'
+    | 'constraint_sprint_apply'
+    | 'book_growth_call'
+    | 'catalog_snapshot_request'
   params: Record<string, unknown>
 }): Promise<void> {
   const measurementId = process.env.GA4_MEASUREMENT_ID

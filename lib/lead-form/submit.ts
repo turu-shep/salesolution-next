@@ -118,6 +118,12 @@ async function postToHubSpot(data: LeadFormData) {
     { objectTypeId: '0-1', name: 'monthly_revenue', value: data.revenue },
     { objectTypeId: '0-1', name: 'platform',  value: data.platform },
     { objectTypeId: '0-1', name: 'primary_marketing_frustration', value: data.frustration },
+    // Only sent when the catalog-snapshot form populates it. HubSpot will
+    // silently ignore an unknown property name, so this is safe to send even
+    // before the `catalog_sku_count_range` property exists in the portal.
+    ...(data.skuCount
+      ? [{ objectTypeId: '0-1', name: 'catalog_sku_count_range', value: data.skuCount }]
+      : []),
   ]
 
   const res = await fetch(url, {
@@ -157,6 +163,7 @@ function formatPlainText(data: LeadFormData): string {
     `Revenue:     ${data.revenue}`,
     `Platform:    ${data.platform}`,
     `Frustration: ${data.frustration}`,
+    ...(data.skuCount ? [`SKU range:   ${data.skuCount}`] : []),
     '',
     `Source:      ${data.pageSource ?? 'unknown'}`,
   ].join('\n')

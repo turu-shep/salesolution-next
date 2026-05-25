@@ -9,7 +9,7 @@ import { ServicesIndex } from '@/components/sections/services/ServicesIndex'
 export const metadata: Metadata = {
   title: 'Services · All offerings',
   description:
-    'Five services — AI search & GEO, content writing, content packages, web development, outbound email — delivered by one operator-led team for industrial and technical-distribution e-commerce.',
+    'Six services — AI search & GEO, Catalog AI, content writing, content packages, web development, outbound email — delivered by one operator-led team for industrial and technical-distribution e-commerce.',
   alternates: { canonical: 'https://salesolution.net/services/' },
 }
 
@@ -92,12 +92,12 @@ export default function ServicesHubPage() {
     <>
       <ServicesHero
         eyebrow="Services"
-        title="Five services."
+        title="Six services."
         titleAccent="One operator."
         lede={
           <>
             Each runs standalone or as part of a combined retainer.
-            All five are built for industrial and technical-distribution
+            All six are built for industrial and technical-distribution
             e&#8209;commerce &mdash; not generic DTC.
           </>
         }

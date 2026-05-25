@@ -43,6 +43,19 @@ export const FRUSTRATIONS = [
 export type Frustration = (typeof FRUSTRATIONS)[number]['value']
 
 /**
+ * SKU-count ranges for the Catalog Snapshot form. Used only on the
+ * /catalog-snapshot/ funnel — every other lead form skips this field.
+ */
+export const SKU_COUNT_RANGES = [
+  { value: 'under-1k', label: 'Under 1,000 SKUs' },
+  { value: '1k-10k',   label: '1,000 – 10,000 SKUs' },
+  { value: '10k-50k',  label: '10,000 – 50,000 SKUs' },
+  { value: '50k-plus', label: 'Over 50,000 SKUs' },
+] as const
+
+export type SkuCountRange = (typeof SKU_COUNT_RANGES)[number]['value']
+
+/**
  * Lead-magnet form fields for the AI Search Survival Checklist page.
  * Separate config because the field set is different (no name/phone — email
  * + risk-quiz inputs).

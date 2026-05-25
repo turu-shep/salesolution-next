@@ -36,6 +36,18 @@ const SERVICES: Service[] = [
     featured: true,
   },
   {
+    slug: '/services/catalog-ai/',
+    name: 'Catalog AI · product catalog rewrites',
+    badge: 'Productized · per-SKU pricing',
+    lede:
+      'AI-rewritten product catalogs for industrial and equipment distributors. Three tiers from $3/SKU. Free dual-version snapshot.',
+    deliverables: [
+      'AI-rewritten descriptions + schema',
+      'AIO citation engineering (Pro tier)',
+      'CRM-format delivery + ongoing maintenance',
+    ],
+  },
+  {
     slug: '/services/content-writing-services/',
     name: 'Content writing for technical B2B',
     lede:
@@ -89,12 +101,13 @@ export function ServicesIndex({ id }: { id?: string }) {
           What we do
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Five services. <span className="text-ink-500">One operator.</span>
+          Six services. <span className="text-ink-500">One operator.</span>
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           Each runs as a standalone engagement or as part of a combined
-          retainer. AI search is the gravity well &mdash; most clients
-          start there, then layer the rest as they need it.
+          retainer. AI search is the gravity well, Catalog AI is the
+          productized entry point &mdash; most clients start with one of
+          the two, then layer the rest as they need it.
         </p>
       </div>
 

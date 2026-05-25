@@ -23,14 +23,15 @@
  */
 import { readConsent } from '@/lib/consent'
 
-type LeadType = 'audit' | 'sprint' | 'strategy_call' | 'contact'
+type LeadType = 'audit' | 'sprint' | 'strategy_call' | 'contact' | 'catalog_snapshot'
 type FormId =
   | 'audit_lead_form'
   | 'sprint_lead_form'
   | 'contact_lead_form'
   | 'strategy_call_form'
+  | 'catalog_snapshot_form'
 type ErrorType = 'validation' | 'rate_limit' | 'server' | 'network' | 'turnstile'
-type ServiceCategory = 'seo' | 'content' | 'web' | 'email'
+type ServiceCategory = 'seo' | 'content' | 'web' | 'email' | 'catalog'
 
 export type { LeadType, FormId, ErrorType, ServiceCategory }
 
@@ -83,6 +84,15 @@ export type TrackEvent =
     }
   | {
       name: 'audit_request'
+      params: {
+        value: number
+        currency: 'USD'
+        submission_id: string
+        transaction_id?: string
+      }
+    }
+  | {
+      name: 'catalog_snapshot_request'
       params: {
         value: number
         currency: 'USD'

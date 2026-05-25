@@ -72,10 +72,11 @@ export async function POST(req: NextRequest) {
   // GA client_id (consent denied / no cookie / ad-blocker stripped it).
   if (parsed.data.gaClientId && parsed.data.submissionId) {
     const pageSource = parsed.data.pageSource ?? ''
-    const leadType: 'audit' | 'sprint' | 'strategy_call' | 'contact' =
+    const leadType: 'audit' | 'sprint' | 'strategy_call' | 'contact' | 'catalog_snapshot' =
       pageSource.includes('/unlock-growth-audit/') ? 'audit' :
       pageSource.includes('/constraint-sprint/')   ? 'sprint' :
       pageSource.includes('/book-growth-call/')    ? 'strategy_call' :
+      pageSource.includes('/catalog-snapshot/')    ? 'catalog_snapshot' :
       'contact'
 
     const value = computeLeadValue(leadType, parsed.data.revenue)
@@ -97,9 +98,10 @@ export async function POST(req: NextRequest) {
 
     // Page-specific echo, matches the client-side behavior.
     const echo =
-      leadType === 'audit'         ? 'audit_request' :
-      leadType === 'sprint'        ? 'constraint_sprint_apply' :
-      leadType === 'strategy_call' ? 'book_growth_call' :
+      leadType === 'audit'            ? 'audit_request' :
+      leadType === 'sprint'           ? 'constraint_sprint_apply' :
+      leadType === 'strategy_call'    ? 'book_growth_call' :
+      leadType === 'catalog_snapshot' ? 'catalog_snapshot_request' :
       null
     if (echo) {
       await sendServerEvent({
@@ -124,11 +126,15 @@ export async function POST(req: NextRequest) {
  * Unknown revenue values fall through to the smallest tier.
  */
 function computeLeadValue(
-  leadType: 'audit' | 'sprint' | 'strategy_call' | 'contact',
+  leadType: 'audit' | 'sprint' | 'strategy_call' | 'contact' | 'catalog_snapshot',
   revenueBand: string,
 ): number {
   if (leadType === 'sprint') return 2400
   if (leadType === 'contact') return 50
+  // Catalog snapshot sits between audit and sprint: higher intent than a
+  // general audit (committed buyer of a specific productized service), lower
+  // than a sprint applicant who has already named a constraint. Tunable.
+  if (leadType === 'catalog_snapshot') return 300
 
   const auditValue =
     revenueBand === 'under-100k' ? 80  :

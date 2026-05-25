@@ -19,6 +19,7 @@ import {
   FRUSTRATIONS,
   PLATFORMS,
   REVENUE_RANGES,
+  SKU_COUNT_RANGES,
 } from '@/lib/lead-form-config'
 import { leadSchema, type LeadFormData } from '@/lib/lead-form/schema'
 import { useTrackOnView } from '@/lib/use-track-on-view'
@@ -26,6 +27,11 @@ import { useTrackOnView } from '@/lib/use-track-on-view'
 const STEP_FIELDS: Record<1 | 2, (keyof LeadFormData)[]> = {
   1: ['fullName', 'email', 'phone'],
   2: ['website', 'revenue', 'platform', 'frustration'],
+}
+
+const STEP_FIELDS_WITH_SKU: Record<1 | 2, (keyof LeadFormData)[]> = {
+  1: ['fullName', 'email', 'phone'],
+  2: ['website', 'revenue', 'platform', 'skuCount', 'frustration'],
 }
 
 /**
@@ -60,6 +66,7 @@ export function LeadForm({
   submitLabel = 'Submit',
   thankYouHref,
   className,
+  showSkuCount = false,
 }: {
   formId: FormId
   formName: string
@@ -67,6 +74,8 @@ export function LeadForm({
   submitLabel?: string
   thankYouHref: string
   className?: string
+  /** Render the SKU-count select in step 2. Only used by the Catalog Snapshot form. */
+  showSkuCount?: boolean
 }) {
   const [step, setStep] = useState<1 | 2>(1)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -120,11 +129,14 @@ export function LeadForm({
       revenue: '',
       platform: '',
       frustration: '',
+      skuCount: '',
     },
   })
 
+  const stepFields = showSkuCount ? STEP_FIELDS_WITH_SKU : STEP_FIELDS
+
   async function next() {
-    const ok = await trigger(STEP_FIELDS[1])
+    const ok = await trigger(stepFields[1])
     if (ok) {
       track({
         name: 'form_step_complete',
@@ -136,6 +148,14 @@ export function LeadForm({
 
   async function onSubmit(data: LeadFormData) {
     setSubmitError(null)
+    if (showSkuCount && !data.skuCount) {
+      setSubmitError('Pick an approximate SKU count so we can size the snapshot.')
+      track({
+        name: 'form_error',
+        params: { form_id: formId, error_type: 'validation' },
+      })
+      return
+    }
     if (turnstileRequired && !turnstileToken) {
       setSubmitError('Please complete the bot check above.')
       track({
@@ -264,6 +284,16 @@ export function LeadForm({
             transaction_id: submissionId,
           },
         })
+      } else if (leadType === 'catalog_snapshot') {
+        track({
+          name: 'catalog_snapshot_request',
+          params: {
+            value,
+            currency: 'USD',
+            submission_id: submissionId,
+            transaction_id: submissionId,
+          },
+        })
       }
 
       window.location.href = thankYouHref
@@ -353,6 +383,23 @@ export function LeadForm({
               ))}
             </select>
           </Field>
+
+          {showSkuCount && (
+            <Field
+              id="skuCount"
+              label="Approximate SKU count"
+              error={errors.skuCount?.message}
+            >
+              <select id="skuCount" {...register('skuCount')} className="input">
+                <option value="">Pick a range…</option>
+                {SKU_COUNT_RANGES.map((r) => (
+                  <option key={r.value} value={r.value}>
+                    {r.label}
+                  </option>
+                ))}
+              </select>
+            </Field>
+          )}
 
           <Field
             id="frustration"
@@ -508,6 +555,12 @@ function computeLeadValue(leadType: LeadType, revenueBand: string): number {
     case 'contact':
       // §3.2: flat 50.
       return 50
+    case 'catalog_snapshot':
+      // Higher than audit (committed buyer of a specific productized service),
+      // lower than sprint (no named constraint yet). Tunable as the funnel
+      // produces actual closed-deal data. Mirrored server-side in
+      // app/api/lead/route.ts.
+      return 300
   }
 }
 
