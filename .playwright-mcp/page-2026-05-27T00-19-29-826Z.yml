@@ -1,0 +1,533 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to main content" [ref=e3] [cursor=pointer]:
+      - /url: "#primary"
+    - link "Skip to navigation" [ref=e4] [cursor=pointer]:
+      - /url: "#site-navigation"
+    - link "Skip to footer" [ref=e5] [cursor=pointer]:
+      - /url: "#footer"
+  - generic [ref=e8]:
+    - link "Need to contact a Hydraulics Specialist?" [ref=e10] [cursor=pointer]:
+      - /url: /catalog/contact.html
+    - generic [ref=e11]:
+      - link "(800) 823-4937" [ref=e12] [cursor=pointer]:
+        - /url: tel:+18008234937
+        - img [ref=e13]
+        - text: (800) 823-4937
+      - link "sales@northernhydraulics.net" [ref=e14] [cursor=pointer]:
+        - /url: mailto:sales@northernhydraulics.net
+        - img [ref=e15]
+        - text: sales@northernhydraulics.net
+  - banner [ref=e16]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - link "Northern Hydraulics logo" [ref=e24] [cursor=pointer]:
+          - /url: /
+          - img "Northern Hydraulics logo" [ref=e25]
+        - navigation "Main navigation" [ref=e27]:
+          - list [ref=e28]:
+            - listitem [ref=e29]:
+              - link "Fluid Power" [ref=e30] [cursor=pointer]:
+                - /url: "#"
+                - text: Fluid Power
+                - img [ref=e31]
+                - text: 
+            - listitem [ref=e33]:
+              - link "Hose & Fittings" [ref=e34] [cursor=pointer]:
+                - /url: "#"
+                - text: Hose & Fittings
+                - img [ref=e35]
+                - text: 
+            - listitem [ref=e37]:
+              - link "Industrial" [ref=e38] [cursor=pointer]:
+                - /url: "#"
+                - text: Industrial
+                - img [ref=e39]
+                - text: 
+            - listitem [ref=e41]:
+              - link "Brands" [ref=e42] [cursor=pointer]:
+                - /url: "#"
+                - text: Brands
+                - img [ref=e43]
+                - text: 
+            - listitem [ref=e45]:
+              - link "Clearance" [ref=e46] [cursor=pointer]:
+                - /url: /hydraulics-shop/clearance
+      - generic [ref=e47]:
+        - search [ref=e50]:
+          - generic [ref=e51]:
+            - img [ref=e52]
+            - generic [ref=e54]: Products search
+            - searchbox "Products search" [ref=e55]
+        - generic [ref=e58]:
+          - link [ref=e60] [cursor=pointer]:
+            - /url: /my-account
+            - img [ref=e61]
+          - link "0 Cart" [ref=e63] [cursor=pointer]:
+            - /url: https://northernhydraulics.net/cart
+            - generic [ref=e64]: "0"
+            - img [ref=e65]
+            - paragraph [ref=e66]: Cart
+  - main [ref=e67]:
+    - generic [ref=e68]:
+      - article [ref=e69]:
+        - generic [ref=e70]:
+          - paragraph [ref=e72]:
+            - generic [ref=e73]:
+              - link "Home" [ref=e75] [cursor=pointer]:
+                - /url: https://northernhydraulics.net
+              - text: »
+              - link "Hydraulic Cylinder" [ref=e77] [cursor=pointer]:
+                - /url: https://northernhydraulics.net/category/hydraulic-cylinder
+              - text: »
+              - strong [ref=e79]: Hydraulic Cylinder Force Calculator for Precision Tonnage
+          - generic [ref=e80]:
+            - heading "Hydraulic Cylinder Force Calculator for Precision Tonnage" [level=1] [ref=e82]
+            - generic [ref=e83]:
+              - paragraph [ref=e84]: Curious about the force your hydraulic cylinder can generate? This article provides an in-depth guide on using a hydraulic cylinder force calculator. Learn key formulas, understand essential input parameters, and see practical examples to ensure precise and reliable results for your hydraulic systems.
+              - paragraph
+              - paragraph
+              - heading "What You’ll Learn" [level=2] [ref=e85]
+              - paragraph
+              - paragraph
+              - list [ref=e86]:
+                - listitem [ref=e87]:
+                  - list [ref=e88]:
+                    - paragraph
+                    - listitem [ref=e89]: Accurate calculations of hydraulic cylinder force depend on precise measurements of bore diameter, rod diameter, and hydraulic pressure, ensuring efficiency and preventing system failures.
+              - paragraph
+              - list [ref=e90]:
+                - listitem [ref=e91]:
+                  - list [ref=e92]:
+                    - listitem [ref=e93]: The fundamental formula for hydraulic cylinder force is Force = PSI × Effective Area, with distinct formulas for calculating push and pull forces based on cylinder dimensions.
+              - paragraph
+              - list [ref=e94]:
+                - listitem [ref=e95]:
+                  - list [ref=e96]:
+                    - listitem [ref=e97]: Converting hydraulic force to tonnage is essential for practical applications, requiring division of force in pounds by 2,000, and selecting an appropriate safety factor is critical to accommodate unexpected loads and ensure system reliability.
+              - paragraph
+              - paragraph
+            - generic [ref=e98]: May 2, 2025
+            - img "cylinder-force-calculation-2" [ref=e101]
+            - generic [ref=e102]:
+              - heading "Understanding Hydraulic Cylinder Force" [level=2] [ref=e103]
+              - paragraph [ref=e104]: Hydraulic cylinders are powerful tools found in many machines like bulldozers and factory equipment. They use liquid pressure to create force that can lift heavy loads or move parts.
+              - paragraph [ref=e105]: "The force that a hydraulic cylinder makes depends on three main things:"
+              - list [ref=e106]:
+                - listitem [ref=e107]: The hydraulic pressure inside the cylinder (measured in PSI)
+                - listitem [ref=e108]: The size of the piston diameter (the wide part inside)
+                - listitem [ref=e109]: The rod diameter (the metal bar that moves in and out)
+              - paragraph [ref=e110]: When you know these measurements, you can calculate hydraulic cylinder force using simple math!
+              - heading "How to Calculate Hydraulic Cylinder Force" [level=2] [ref=e111]
+              - paragraph [ref=e112]: Force = Pressure × Area
+              - paragraph [ref=e113]: "The basic rule for finding cylinder force is:"
+              - paragraph [ref=e114]: This means the force produced depends on how much pressure is pushing and how big the area is where the pressure acts.
+              - paragraph [ref=e115]: "There are two types of force your hydraulic cylinder can make:"
+              - list [ref=e116]:
+                - listitem [ref=e117]:
+                  - strong [ref=e118]: Push force
+                  - text: – when the cylinder extends (pushes out)
+                - listitem [ref=e119]:
+                  - strong [ref=e120]: Pull force
+                  - text: – when the cylinder retracts (pulls in)
+              - heading "Push Force" [level=3] [ref=e121]
+              - paragraph [ref=e122]: "When your hydraulic cylinder pushes, the pressure acts on the full piston area. To calculate this:"
+              - list [ref=e123]:
+                - listitem [ref=e124]: Measure the cylinder bore diameter (the inside width)
+                - listitem [ref=e125]: Find the area using a simple formula
+                - listitem [ref=e126]: Multiply by the pressure
+              - paragraph [ref=e127]: "There are two ways to understand how to calculate push force in a hydraulic cylinder:"
+              - paragraph [ref=e128]:
+                - strong [ref=e129]: "The Basic Formula:"
+                - text: Push Force = Pressure × Piston Area
+              - paragraph [ref=e130]: This shows that the force created depends on how much pressure is applied and the size of the area it’s pushing against.
+              - paragraph [ref=e131]:
+                - strong [ref=e132]: "The Calculation Formula:"
+                - text: Push Force = (Pressure × π × Bore Diameter²) ÷ 4
+              - paragraph [ref=e133]: This is the same formula written out to show exactly how to calculate the piston area when you know the bore diameter. The term (π × Bore Diameter² ÷ 4) is just the mathematical way to find the area of a circle.
+              - paragraph [ref=e134]: "For example, if you have:"
+              - list [ref=e135]:
+                - listitem [ref=e136]: "Hydraulic pressure: 1,000 PSI"
+                - listitem [ref=e137]: "Bore diameter: 3 inches"
+              - paragraph [ref=e138]: "Your push force would be: (1,000 × 3.14 × 3² ÷ 4) = 7,065 pounds of force"
+              - paragraph [ref=e139]: The bigger your cylinder bore diameter and the higher your hydraulic pressure, the more push force your hydraulic cylinder will produce!
+              - heading "Pull Force" [level=3] [ref=e140]
+              - paragraph [ref=e141]: "When a hydraulic cylinder pulls, the calculation is different from push force because the rod takes up some of the area:"
+              - paragraph [ref=e142]:
+                - strong [ref=e143]: "The Basic Formula:"
+                - text: Pull Force = Pressure × (Piston Area – Rod Area)
+              - paragraph [ref=e144]: This shows that pull force is created by pressure acting on the available area, which is reduced by the rod’s presence.
+              - paragraph [ref=e145]:
+                - strong [ref=e146]: "The Calculation Formula:"
+                - text: Pull Force = (Pressure × π × (Bore Diameter² – Rod Diameter²)) ÷ 4
+              - paragraph [ref=e147]: This expanded formula shows exactly how to calculate the effective area when you know both the bore and rod diameters. The pull force is typically smaller than the push force because the rod reduces the area where pressure can act.
+              - heading "Example" [level=3] [ref=e148]
+              - paragraph [ref=e149]: "Let’s try an example:"
+              - list [ref=e150]:
+                - listitem [ref=e151]: "Cylinder bore diameter: 4 inches"
+                - listitem [ref=e152]: "Rod diameter: 2 inches"
+                - listitem [ref=e153]: "Hydraulic pressure: 2,000 PSI"
+              - paragraph [ref=e154]: "Using our formulas:"
+              - paragraph [ref=e155]:
+                - strong [ref=e156]: "Push Force:"
+                - text: (2,000 PSI × π × 4² inches) ÷ 4 = 25,133 pounds of force
+              - paragraph [ref=e157]:
+                - strong [ref=e158]: "Pull Force:"
+                - text: (2,000 PSI × π × (4² – 2²) inches) ÷ 4 = 18,850 pounds of force
+              - paragraph [ref=e159]: Now you can figure out both the push and pull force for any hydraulic cylinder!
+              - figure [ref=e160]
+              - heading "Using a Hydraulic Cylinder Force Calculator" [level=2] [ref=e161]
+              - paragraph [ref=e162]: "The easiest way to figure out your cylinder force is to use a hydraulic cylinder force calculator. Just follow these steps:"
+              - list [ref=e163]:
+                - listitem [ref=e164]: Measure your cylinder bore diameter
+                - listitem [ref=e165]: Measure your rod diameter
+                - listitem [ref=e166]: Note your hydraulic pressure (in PSI)
+                - listitem [ref=e167]: Enter these numbers in the calculator
+                - listitem [ref=e168]: Click calculate to get your answer
+              - paragraph [ref=e169]:
+                - text: This saves time and helps avoid mistakes when working with
+                - link "hydraulic cylinders" [ref=e170] [cursor=pointer]:
+                  - /url: /hydraulics-shop/hydraulic-cylinders
+                - text: .
+              - heading "Why Accurate Calculations Matter" [level=2] [ref=e171]
+              - paragraph [ref=e172]: "Getting the right measurements and calculations is important because:"
+              - list [ref=e173]:
+                - listitem [ref=e174]: It prevents damage to your hydraulic cylinder
+                - listitem [ref=e175]: It ensures your machine can lift the weight it needs to
+                - listitem [ref=e176]: It helps your equipment last longer
+                - listitem [ref=e177]: It keeps everyone safe when using powerful hydraulic systems
+              - paragraph [ref=e178]: Now you can figure out the force of any hydraulic cylinder with confidence!
+              - 'heading "Input Parameters: Bore Diameter, Rod Diameter, and Hydraulic Pressure" [level=2] [ref=e179]'
+              - heading "Bore Diameter" [level=3] [ref=e180]
+              - paragraph [ref=e181]: The bore diameter is how wide the inside of your hydraulic cylinder is. Think of it like measuring across the inside of a tube. This measurement is super important because it helps decide how much force your hydraulic cylinder can make.
+              - paragraph [ref=e182]: When you know the exact cylinder bore diameter, you can figure out how strong your hydraulic cylinder will be. The wider the bore, the more force it can create!
+              - heading "Rod Diameter" [level=3] [ref=e183]
+              - paragraph [ref=e184]:
+                - text: The rod diameter (guide on
+                - link "how to measure a hydraulic cylinder" [ref=e185] [cursor=pointer]:
+                  - /url: https://northernhydraulics.net/catalog/how-to-measure-hydraulic-cylinder.html
+                - text: ) is how thick the metal rod is that moves in and out of your hydraulic cylinder. Measuring this correctly is really important too. You can use a tool called calipers to get the exact rod diameter.
+              - paragraph [ref=e186]: The rod diameter affects how much pull force your hydraulic cylinder can make. When calculating hydraulic cylinder force, you need to know both the bore diameter and rod diameter to get the right answer.
+              - heading "Hydraulic Pressure" [level=3] [ref=e187]
+              - paragraph [ref=e188]: Hydraulic pressure is how hard the fluid inside your cylinder is pushing. It’s measured in PSI (pounds per square inch). To find out the pressure, you need to use a special tool called a pressure gauge.
+              - paragraph [ref=e189]: When you know the pressure and the size of your piston, you can calculate the force produced by your hydraulic cylinder. Higher pressure means more force!
+              - heading "Why These Measurements Matter" [level=3] [ref=e190]
+              - paragraph [ref=e191]: "Getting all three measurements right (bore diameter, rod diameter, and hydraulic pressure) helps you:"
+              - list [ref=e192]:
+                - listitem [ref=e193]: Know exactly how strong your hydraulic cylinder is
+                - listitem [ref=e194]: Make sure you don’t try to lift too much weight
+                - listitem [ref=e195]: Keep your equipment working safely
+              - paragraph [ref=e196]: Always double-check your measurements when using a hydraulic cylinder force calculator!
+              - heading "Converting Hydraulic Cylinder Force to Tonnage" [level=2] [ref=e197]
+              - paragraph [ref=e198]: "When working with hydraulic cylinders, sometimes it’s easier to talk about force in tons instead of pounds. Converting from pounds to tons is simple:"
+              - paragraph [ref=e199]:
+                - strong [ref=e200]: Tonnage = Force in Pounds ÷ 2,000
+              - paragraph [ref=e201]: This conversion helps people understand how strong a hydraulic cylinder is, especially when working with heavy equipment.
+              - heading "Example" [level=3] [ref=e202]
+              - paragraph [ref=e203]: "Let’s say your hydraulic cylinder force calculator shows that your cylinder can produce 51,000 pounds of force:"
+              - paragraph [ref=e204]: 51,000 pounds ÷ 2,000 = 25.5 tons
+              - paragraph [ref=e205]: That means your hydraulic cylinder can lift as much as 25.5 tons!
+              - heading "Why Tonnage Matters" [level=3] [ref=e206]
+              - paragraph [ref=e207]: "In construction and heavy equipment jobs, people often talk about lift capacity in tons. Converting hydraulic cylinder force to tonnage helps:"
+              - list [ref=e208]:
+                - listitem [ref=e209]: Compare different machines
+                - listitem [ref=e210]: Make sure your equipment is strong enough for the job
+                - listitem [ref=e211]: Plan work more easily
+                - listitem [ref=e212]: Talk with other workers using measurements everyone understands
+              - paragraph [ref=e213]: When you know how to convert between pounds and tons, you can better understand the force produced by your hydraulic cylinders and use them safely for big jobs.
+              - figure [ref=e214]
+              - heading "Metric Unit Conversion Table (bar, MPa, kN, tonnes)" [level=2] [ref=e215]
+              - paragraph [ref=e216]: When working with hydraulic cylinders, you need to know how to convert between different measurement units. This helps you understand hydraulic cylinder force no matter where you are in the world.
+              - figure "Metric Unit Conversion Table" [ref=e217]:
+                - table [ref=e218]:
+                  - rowgroup [ref=e219]:
+                    - row "To Convert From To Multiply By" [ref=e220]:
+                      - cell "To Convert From" [ref=e221]
+                      - cell "To" [ref=e222]
+                      - cell "Multiply By" [ref=e223]
+                    - row "Bar PSI 14.5" [ref=e224]:
+                      - cell "Bar" [ref=e225]
+                      - cell "PSI" [ref=e226]
+                      - cell "14.5" [ref=e227]
+                    - row "MPa PSI 145" [ref=e228]:
+                      - cell "MPa" [ref=e229]
+                      - cell "PSI" [ref=e230]
+                      - cell "145" [ref=e231]
+                    - row "kN Pounds force 225" [ref=e232]:
+                      - cell "kN" [ref=e233]
+                      - cell "Pounds force" [ref=e234]
+                      - cell "225" [ref=e235]
+                    - row "Metric ton Pounds 2,205" [ref=e236]:
+                      - cell "Metric ton" [ref=e237]
+                      - cell "Pounds" [ref=e238]
+                      - cell "2,205" [ref=e239]
+                    - row "Metric ton Kilograms 1,000" [ref=e240]:
+                      - cell "Metric ton" [ref=e241]
+                      - cell "Kilograms" [ref=e242]
+                      - cell "1,000" [ref=e243]
+                    - row "PSI Bar 0.069" [ref=e244]:
+                      - cell "PSI" [ref=e245]
+                      - cell "Bar" [ref=e246]
+                      - cell "0.069" [ref=e247]
+                    - row "Pounds force kN 0.0044" [ref=e248]:
+                      - cell "Pounds force" [ref=e249]
+                      - cell "kN" [ref=e250]
+                      - cell "0.0044" [ref=e251]
+                    - row "Pounds Metric ton 0.00045" [ref=e252]:
+                      - cell "Pounds" [ref=e253]
+                      - cell "Metric ton" [ref=e254]
+                      - cell "0.00045" [ref=e255]
+                - generic [ref=e256]: Metric Unit Conversion Table
+              - paragraph [ref=e257]:
+                - link "ISO 1219-1:2012 Fluid power systems and components" [ref=e258] [cursor=pointer]:
+                  - /url: https://www.iso.org/standard/60184.html
+              - heading "Pressure Conversions" [level=3] [ref=e259]
+              - paragraph [ref=e260]: "Different countries use different units to measure hydraulic pressure:"
+              - list [ref=e261]:
+                - listitem [ref=e262]: 1 bar = 14.5 PSI
+                - listitem [ref=e263]: 1 megapascal (MPa) = 145 PSI
+              - paragraph [ref=e264]: "For example, if someone tells you the cylinder pressure is 10 bar, you can convert it to PSI: 10 bar × 14.5 = 145 PSI"
+              - heading "Force Conversions" [level=3] [ref=e265]
+              - paragraph [ref=e266]: "For force measurements:"
+              - list [ref=e267]:
+                - listitem [ref=e268]: 1 kilonewton (kN) = about 225 pounds of force
+                - listitem [ref=e269]: 1 metric ton = 1,000 kilograms = about 2,205 pounds
+              - heading "Why These Conversions Matter" [level=3] [ref=e270]
+              - paragraph [ref=e271]: "Knowing how to convert between these units helps you:"
+              - list [ref=e272]:
+                - listitem [ref=e273]: Work with hydraulic equipment from different countries
+                - listitem [ref=e274]: Understand manuals written with different measurement systems
+                - listitem [ref=e275]: Calculate hydraulic cylinder force correctly no matter what units you start with
+                - listitem [ref=e276]: Compare different hydraulic cylinders easily
+              - paragraph [ref=e277]: When you understand these conversions, you can work with any hydraulic cylinder force calculator, even if it uses units you’re not familiar with.
+              - heading "Static vs Dynamic Force and Flow‑Rate Impact" [level=2] [ref=e278]
+              - heading "Two Types of Pressure" [level=3] [ref=e279]
+              - paragraph [ref=e280]: "In hydraulic systems, there are two important types of pressure to understand:"
+              - paragraph [ref=e281]:
+                - strong [ref=e282]: Static Pressure
+                - text: Static pressure is the force that fluid puts on the walls of pipes or containers when it’s not moving. This is like the pressure you feel at the bottom of a swimming pool when you’re just standing still.
+              - paragraph [ref=e283]:
+                - strong [ref=e284]: Dynamic Pressure
+                - text: Dynamic pressure happens when fluid is moving. The faster the fluid moves, the more dynamic pressure it creates. This is like the pressure you feel when water from a hose sprays against your hand.
+              - heading "Why These Matter for Hydraulic Cylinders" [level=3] [ref=e285]
+              - paragraph [ref=e286]: "Understanding both types of pressure helps you:"
+              - list [ref=e287]:
+                - listitem [ref=e288]:
+                  - strong [ref=e289]: Measure Flow Properly
+                  - text: ": Static pressure measurements tell you if there’s enough pressure in your hydraulic cylinder to do the job."
+                - listitem [ref=e290]:
+                  - strong [ref=e291]: Calculate Flow Speed
+                  - text: ": Dynamic pressure helps you figure out how fast the fluid is moving through your hydraulic system."
+                - listitem [ref=e292]:
+                  - strong [ref=e293]: Design Better Systems
+                  - text: ": Knowing both pressures helps engineers build hydraulic systems that work better and last longer."
+                - listitem [ref=e294]:
+                  - strong [ref=e295]: Improve Efficiency
+                  - text: ": When both pressures are balanced correctly, your hydraulic cylinder will use less energy and work more smoothly."
+              - paragraph [ref=e296]: For a hydraulic cylinder force calculator to give you the right answers, it needs to account for both static pressure (when the cylinder isn’t moving) and dynamic pressure (when it’s working).
+              - heading "Real‑World Force Losses (Friction, Back‑Pressure, Side‑Load)" [level=2] [ref=e297]
+              - paragraph [ref=e298]: "When using a hydraulic cylinder force calculator, you need to know that the actual force will be less than what you calculate. This happens because of three main problems that occur in real hydraulic cylinders:"
+              - heading "Friction Losses" [level=3] [ref=e299]
+              - paragraph [ref=e300]: "When parts inside the hydraulic cylinder rub against each other, they create friction. This friction:"
+              - list [ref=e301]:
+                - listitem [ref=e302]: Reduces the force your cylinder can produce
+                - listitem [ref=e303]: Makes the system need more pressure to do the same job
+                - listitem [ref=e304]: Causes parts to wear out faster
+              - heading "Back-Pressure Losses" [level=3] [ref=e305]
+              - paragraph [ref=e306]: "Back-pressure happens when fluid can’t flow freely through the system. When this happens:"
+              - list [ref=e307]:
+                - listitem [ref=e308]: The fluid pushes back against itself
+                - listitem [ref=e309]: The cylinder can’t reach its full force
+                - listitem [ref=e310]: The system uses more energy than it should
+              - heading "Side-Load Losses" [level=3] [ref=e311]
+              - paragraph [ref=e312]: "Side-loading occurs when force pushes against the cylinder from the wrong direction:"
+              - list [ref=e313]:
+                - listitem [ref=e314]: The force should push straight through the center of the rod
+                - listitem [ref=e315]: If it pushes at an angle, it creates a side-load
+                - listitem [ref=e316]: This causes one side of the cylinder to wear out faster
+                - listitem [ref=e317]: The cylinder might bend or break early
+              - paragraph [ref=e318]:
+                - text: Read more about
+                - link "why cylinder drifts here" [ref=e319] [cursor=pointer]:
+                  - /url: https://northernhydraulics.net/hydraulic-cylinder-drift-causes
+              - heading "Preventing Force Losses" [level=3] [ref=e320]
+              - paragraph [ref=e321]: "To keep your hydraulic cylinder working at full strength:"
+              - list [ref=e322]:
+                - listitem [ref=e323]: Make sure it’s installed correctly and lined up straight
+                - listitem [ref=e324]: Check for leaks that cause pressure loss
+                - listitem [ref=e325]: Keep all parts clean and well-maintained
+                - listitem [ref=e326]:
+                  - link "Replace worn seals that might cause friction" [ref=e327] [cursor=pointer]:
+                    - /url: https://northernhydraulics.net/catalog/how-to-find-seal-kit-for-hydraulic-cylinder.html
+              - paragraph [ref=e328]: When calculating hydraulic cylinder force, remember that these losses mean your real-world force will be about 10-15% less than what the math says!
+              - heading "Selecting an Appropriate Safety Factor" [level=2] [ref=e329]
+              - paragraph [ref=e330]: When using a hydraulic cylinder force calculator, you need to add extra strength to stay safe. This is called a “safety factor.”
+              - paragraph [ref=e331]:
+                - link "NFPA T2.13.13 – Fluid Power Systems Safety" [ref=e332] [cursor=pointer]:
+                  - /url: https://webstore.ansi.org/preview-pages/NFPA-Fluid/preview_NFPA+T2.13.13-2002.pdf
+              - heading "What Is a Safety Factor?" [level=3] [ref=e333]
+              - paragraph [ref=e334]: "A safety factor means choosing a hydraulic cylinder that’s stronger than you actually need. This extra strength helps when:"
+              - list [ref=e335]:
+                - listitem [ref=e336]: Pressure suddenly increases
+                - listitem [ref=e337]: You need to lift something heavier than expected
+                - listitem [ref=e338]: Something unusual happens during operation
+              - heading "How Much Safety Do You Need?" [level=3] [ref=e339]
+              - paragraph [ref=e340]: "Most engineers recommend making your hydraulic cylinder 25% to 100% stronger than needed:"
+              - list [ref=e341]:
+                - listitem [ref=e342]: 125% (1.25 times) for light-duty work
+                - listitem [ref=e343]: 150% (1.5 times) for normal operations
+                - listitem [ref=e344]: 200% (2 times) for difficult or dangerous jobs
+              - heading "Choosing Your Safety Factor" [level=3] [ref=e345]
+              - paragraph [ref=e346]: "When deciding on your safety factor, think about:"
+              - list [ref=e347]:
+                - listitem [ref=e348]: What you’re lifting or pushing
+                - listitem [ref=e349]: Where you’re using it (hot, cold, wet, dusty)
+                - listitem [ref=e350]: How important safety is for your job
+                - listitem [ref=e351]: What might happen if the cylinder fails
+              - heading "Why Safety Factors Matter" [level=3] [ref=e352]
+              - paragraph [ref=e353]: "Using the right safety factor helps your hydraulic cylinder:"
+              - list [ref=e354]:
+                - listitem [ref=e355]: Work reliably without breaking
+                - listitem [ref=e356]: Last longer before wearing out
+                - listitem [ref=e357]: Handle unexpected situations safely
+                - listitem [ref=e358]: Prevent accidents and injuries
+              - paragraph [ref=e359]: When calculating hydraulic cylinder force, always multiply your result by your safety factor to find out how strong your cylinder really needs to be!
+              - heading "Summary" [level=2] [ref=e360]
+              - paragraph [ref=e361]: To get the best performance from hydraulic systems, you need to correctly calculate hydraulic cylinder force. This means understanding the basic formulas, knowing how to convert between different measurement units, and accounting for real-world force losses.
+              - paragraph [ref=e362]: By following the steps and formulas we’ve covered, you can reliably figure out how much force your hydraulic cylinder can produce. This knowledge helps you improve your hydraulic projects and choose the right equipment.
+              - paragraph [ref=e363]: Remember that accurate calculations help your hydraulic systems last longer and work more reliably. Always include a safety factor to handle unexpected situations, and be aware that friction, back-pressure, and side-loading will reduce your actual force.
+              - paragraph [ref=e364]: With this knowledge, you’re well-prepared to work with hydraulic cylinders and solve any hydraulic challenges that come your way!
+              - heading "Frequently Asked Questions" [level=2] [ref=e365]
+              - generic [ref=e366]:
+                - generic [ref=e367]:
+                  - strong [ref=e368]: What is the basic formula for calculating hydraulic cylinder force?
+                  - paragraph [ref=e369]:
+                    - text: The basic formula is
+                    - strong [ref=e370]: Force = Pressure × Area
+                    - text: . This shows how hydraulic pressure creates mechanical force.
+                - generic [ref=e371]:
+                  - strong [ref=e372]: How do I convert hydraulic force from pounds to tons?
+                  - paragraph [ref=e373]: "Divide the force in pounds by 2,000. For example: 10,000 pounds ÷ 2,000 = 5 tons."
+                - generic [ref=e374]:
+                  - strong [ref=e375]: What causes force losses in hydraulic systems?
+                  - paragraph [ref=e376]:
+                    - text: "Three main things reduce force: friction between moving parts, back-pressure from restricted flow, and side-loading when force isn’t applied straight."
+                    - text: More details on
+                    - link "how to repair hydraulic cylinder failures here" [ref=e377] [cursor=pointer]:
+                      - /url: https://northernhydraulics.net/catalog/how-to-repair-hydraulic-cylinder.html
+                - generic [ref=e378]:
+                  - strong [ref=e379]: How much safety factor should I add to my hydraulic cylinder?
+                  - paragraph [ref=e380]: Choose a hydraulic cylinder that’s 25-100% stronger than you need. For normal use, 50% extra (1.5 times) works well.
+                - generic [ref=e381]:
+                  - strong [ref=e382]: What’s the difference between static and dynamic pressure?
+                  - paragraph [ref=e383]:
+                    - text: Static pressure comes from fluid that isn’t moving, like water in a tank. Dynamic pressure happens when fluid moves, like water flowing through a pipe.
+                    - text: Grasping these differences is essential for managing hydraulic systems with efficiency.
+              - paragraph [ref=e384]
+          - generic [ref=e385]:
+            - link "Hydraulic Cylinders Find the perfect hydraulic cylinder for your force requirements! Our selection includes various bore and rod diameters to match your exact needs. Shop Now →" [ref=e387] [cursor=pointer]:
+              - /url: "https://northernhydraulics.net/hydraulics-shop/hydraulic-cylinders "
+              - generic [ref=e388]: Hydraulic Cylinders
+              - paragraph [ref=e390]: Find the perfect hydraulic cylinder for your force requirements! Our selection includes various bore and rod diameters to match your exact needs.
+              - generic [ref=e391]: Shop Now →
+            - link "how to identify type of cylinder How to Identify Type of Cylinder" [ref=e394] [cursor=pointer]:
+              - /url: https://northernhydraulics.net/catalog/cylinders-identify-terms.html
+              - img "how to identify type of cylinder" [ref=e395]
+              - generic [ref=e396]: How to Identify Type of Cylinder
+        - generic [ref=e397]:
+          - heading "Related Guides and Documentation" [level=3] [ref=e398]
+          - generic [ref=e399]:
+            - 'link "hydraulic product safety cheat sheet Hydraulic Product Safety Cheat Sheet VALVE SAFETY: Read and follow instructions carefully. Failure to observe instructions and guidelines may cause serious injury, death, or equipment..." [ref=e402] [cursor=pointer]':
+              - /url: https://northernhydraulics.net/catalog/hydraulic-product-safety.html
+              - img "hydraulic product safety cheat sheet" [ref=e403]
+              - generic [ref=e404]:
+                - generic [ref=e405]: Hydraulic Product Safety Cheat Sheet
+                - paragraph [ref=e406]: "VALVE SAFETY: Read and follow instructions carefully. Failure to observe instructions and guidelines may cause serious injury, death, or equipment..."
+            - link "hydraulic troubleshooting tips cheat sheet Hydraulics Troubleshooting Tips Cheat Sheet Finding and solving problems 1. SYSTEM INOPERATIVE• No oil in the system, insufficient oil in the system. Fill system. Check for leaks.•..." [ref=e409] [cursor=pointer]:
+              - /url: https://northernhydraulics.net/catalog/troubleshooting-tips.html
+              - img "hydraulic troubleshooting tips cheat sheet" [ref=e410]
+              - generic [ref=e411]:
+                - generic [ref=e412]: Hydraulics Troubleshooting Tips Cheat Sheet
+                - paragraph [ref=e413]: Finding and solving problems 1. SYSTEM INOPERATIVE• No oil in the system, insufficient oil in the system. Fill system. Check for leaks.•...
+            - link "How to rebuild hydraulic cylinder guide cover image How to Rebuild a Hydraulic Cylinder Rebuilding a hydraulic cylinder is both an art and a science. It’s a very delicate process that needs skill, understanding,..." [ref=e416] [cursor=pointer]:
+              - /url: https://northernhydraulics.net/catalog/how-to-rebuild-hydraulic-cylinder.html
+              - img "How to rebuild hydraulic cylinder guide cover image" [ref=e417]
+              - generic [ref=e418]:
+                - generic [ref=e419]: How to Rebuild a Hydraulic Cylinder
+                - paragraph [ref=e420]: Rebuilding a hydraulic cylinder is both an art and a science. It’s a very delicate process that needs skill, understanding,...
+      - navigation "Posts":
+        - heading "Post navigation" [level=2] [ref=e421]
+  - contentinfo [ref=e422]:
+    - generic [ref=e424]:
+      - generic [ref=e425]:
+        - paragraph [ref=e426]: Information
+        - list [ref=e427]:
+          - listitem [ref=e428]:
+            - link "About Us" [ref=e429] [cursor=pointer]:
+              - /url: /about-us
+          - listitem [ref=e430]:
+            - link "Do It Yourself - Support" [ref=e431] [cursor=pointer]:
+              - /url: /catalog/support.html
+          - listitem [ref=e432]:
+            - link "Privacy Policy" [ref=e433] [cursor=pointer]:
+              - /url: /privacy-policy
+          - listitem [ref=e434]:
+            - link "Terms and Conditions" [ref=e435] [cursor=pointer]:
+              - /url: /terms-conditions
+          - listitem [ref=e436]:
+            - link "Returning a product" [ref=e437] [cursor=pointer]:
+              - /url: /returning-a-product
+      - generic [ref=e438]:
+        - paragraph [ref=e439]: Customer Service
+        - list [ref=e440]:
+          - listitem [ref=e441]:
+            - link "Services" [ref=e442] [cursor=pointer]:
+              - /url: /catalog/services.html
+          - listitem [ref=e443]:
+            - link "Deals" [ref=e444] [cursor=pointer]:
+              - /url: /deals
+          - listitem [ref=e445]:
+            - link "Contact us" [ref=e446] [cursor=pointer]:
+              - /url: /catalog/contact.html
+          - listitem [ref=e447]:
+            - link "Site map" [ref=e448] [cursor=pointer]:
+              - /url: /sitemap
+          - listitem [ref=e449]:
+            - link "Apply for credit (credit application)" [ref=e450] [cursor=pointer]:
+              - /url: /apply-for-credit
+              - text: Apply for credit
+              - text: (credit application)
+      - generic [ref=e451]:
+        - paragraph [ref=e452]: My Account
+        - list [ref=e453]:
+          - listitem [ref=e454]:
+            - link "My Account" [ref=e455] [cursor=pointer]:
+              - /url: /my-account
+          - listitem [ref=e456]:
+            - link "Order History" [ref=e457] [cursor=pointer]:
+              - /url: /my-account/orders
+      - generic [ref=e458]:
+        - paragraph [ref=e459]: Contacts
+        - list [ref=e460]:
+          - listitem [ref=e461]:
+            - link " Black Eagle (Great Falls), MT" [ref=e462] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e463]: 
+              - text: Black Eagle (Great Falls), MT
+          - listitem [ref=e464]:
+            - link "1-406-761-8079" [ref=e465] [cursor=pointer]:
+              - /url: tel:14067618079
+              - text: 1-406-761-8079
+          - listitem [ref=e466]:
+            - link " 800-823-4937" [ref=e467] [cursor=pointer]:
+              - /url: tel:+18008234937
+              - generic: 
+              - text: 800-823-4937
+          - listitem [ref=e468]:
+            - link " sales@northernhydraulics.net" [ref=e469] [cursor=pointer]:
+              - /url: mailto:sales@northernhydraulics.net
+              - generic [ref=e470]: 
+              - text: sales@northernhydraulics.net
+  - generic [ref=e475]: Northern Hydraulics ©Copyright 2026 Northern Hydraulics Inc.
+  - text: ✖ ✓ ✓ ✓ ✓ ✓ ✓ 
+  - status [ref=e485]

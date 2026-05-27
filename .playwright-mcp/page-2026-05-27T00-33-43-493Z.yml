@@ -1,0 +1,204 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to main content" [ref=e3] [cursor=pointer]:
+      - /url: "#primary"
+    - link "Skip to navigation" [ref=e4] [cursor=pointer]:
+      - /url: "#site-navigation"
+    - link "Skip to footer" [ref=e5] [cursor=pointer]:
+      - /url: "#footer"
+  - generic [ref=e8]:
+    - link "Need to contact a Hydraulics Specialist?" [ref=e10] [cursor=pointer]:
+      - /url: /catalog/contact.html
+    - generic [ref=e11]:
+      - link "(800) 823-4937" [ref=e12] [cursor=pointer]:
+        - /url: tel:+18008234937
+        - img [ref=e13]
+        - text: (800) 823-4937
+      - link "sales@northernhydraulics.net" [ref=e14] [cursor=pointer]:
+        - /url: mailto:sales@northernhydraulics.net
+        - img [ref=e15]
+        - text: sales@northernhydraulics.net
+  - banner [ref=e16]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - link "Northern Hydraulics logo" [ref=e24] [cursor=pointer]:
+          - /url: /
+          - img "Northern Hydraulics logo" [ref=e25]
+        - navigation "Main navigation" [ref=e27]:
+          - list [ref=e28]:
+            - listitem [ref=e29]:
+              - link "Fluid Power" [ref=e30] [cursor=pointer]:
+                - /url: "#"
+                - text: Fluid Power
+                - img [ref=e31]
+                - text: 
+            - listitem [ref=e33]:
+              - link "Hose & Fittings" [ref=e34] [cursor=pointer]:
+                - /url: "#"
+                - text: Hose & Fittings
+                - img [ref=e35]
+                - text: 
+            - listitem [ref=e37]:
+              - link "Industrial" [ref=e38] [cursor=pointer]:
+                - /url: "#"
+                - text: Industrial
+                - img [ref=e39]
+                - text: 
+            - listitem [ref=e41]:
+              - link "Brands" [ref=e42] [cursor=pointer]:
+                - /url: "#"
+                - text: Brands
+                - img [ref=e43]
+                - text: 
+            - listitem [ref=e45]:
+              - link "Clearance" [ref=e46] [cursor=pointer]:
+                - /url: /hydraulics-shop/clearance
+      - generic [ref=e47]:
+        - search [ref=e50]:
+          - generic [ref=e51]:
+            - img [ref=e52]
+            - generic [ref=e54]: Products search
+            - searchbox "Products search" [ref=e55]
+        - generic [ref=e58]:
+          - link [ref=e60] [cursor=pointer]:
+            - /url: /my-account
+            - img [ref=e61]
+          - link "0 Cart" [ref=e63] [cursor=pointer]:
+            - /url: https://northernhydraulics.net/cart
+            - generic [ref=e64]: "0"
+            - img [ref=e65]
+            - paragraph [ref=e66]: Cart
+  - main [ref=e67]:
+    - generic [ref=e68]:
+      - article [ref=e69]:
+        - generic [ref=e70]:
+          - paragraph [ref=e72]:
+            - generic [ref=e73]:
+              - link "Home" [ref=e75] [cursor=pointer]:
+                - /url: https://northernhydraulics.net
+              - text: »
+              - link "Hydraulic Cylinder" [ref=e77] [cursor=pointer]:
+                - /url: https://northernhydraulics.net/category/hydraulic-cylinder
+              - text: »
+              - strong [ref=e79]: "Frequently Asked Questions: Cylinders FAQ"
+          - generic [ref=e80]:
+            - 'heading "Frequently Asked Questions: Cylinders FAQ" [level=1] [ref=e82]'
+            - generic [ref=e83]: January 6, 2024
+            - img "hydraulic cylinder FAQ category guides" [ref=e86]
+            - generic [ref=e88]:
+              - generic [ref=e89]:
+                - strong [ref=e90]: Can I use a double-acting cylinder as a single-acting cylinder?
+                - paragraph [ref=e91]: Yes, you will need to add a vent to the top fitting or plumb the top hose back into the tank.
+              - generic [ref=e92]:
+                - strong [ref=e93]: Are repair kits available for welded hydraulic cylinders?
+                - paragraph [ref=e94]: Yes, we stock repair kits containing the necessary seals for most of the bore sizes for the welded cylinders.
+              - generic [ref=e95]:
+                - strong [ref=e96]: What seals do I need for my cylinder?
+                - paragraph [ref=e97]: If you do not have enough identification on the cylinder for an OEM seal kit, the best thing to do is bring the seals into a local hydraulic shop or send them to us to match them up.
+          - generic [ref=e98]:
+            - link "Ready to Find Your Perfect Hydraulic Cylinder? Discover the Best Selection! Explore Our Hydraulic Cylinders" [ref=e100] [cursor=pointer]:
+              - /url: ""
+              - generic [ref=e101]: Ready to Find Your Perfect Hydraulic Cylinder?
+              - paragraph [ref=e103]: Discover the Best Selection!
+              - generic [ref=e104]: Explore Our Hydraulic Cylinders
+            - link "how to identify type of cylinder How to Identify Type of Cylinder" [ref=e107] [cursor=pointer]:
+              - /url: https://northernhydraulics.net/catalog/cylinders-identify-terms.html
+              - img "how to identify type of cylinder" [ref=e108]
+              - generic [ref=e109]: How to Identify Type of Cylinder
+        - generic [ref=e110]:
+          - heading "Related Guides and Documentation" [level=3] [ref=e111]
+          - generic [ref=e112]:
+            - link "how to bleed a hydraulic cylinder guide cover image How to Bleed a Hydraulic Cylinder From construction equipment to automobile parts, hydraulic cylinders are essential. Like any fluid dynamics system, hydraulic cylinders work best when..." [ref=e115] [cursor=pointer]:
+              - /url: https://northernhydraulics.net/catalog/how-to-bleed-hydraulic-cylinder.html
+              - img "how to bleed a hydraulic cylinder guide cover image" [ref=e116]
+              - generic [ref=e117]:
+                - generic [ref=e118]: How to Bleed a Hydraulic Cylinder
+                - paragraph [ref=e119]: From construction equipment to automobile parts, hydraulic cylinders are essential. Like any fluid dynamics system, hydraulic cylinders work best when...
+            - link "how to choose seal kit for your hydraulic cylinder How to Find Seal Kit for your Hydraulic Cylinder Like all components, seals wear out over time, which can lead to reduced performance or even system failures. This is..." [ref=e122] [cursor=pointer]:
+              - /url: https://northernhydraulics.net/catalog/how-to-find-seal-kit-for-hydraulic-cylinder.html
+              - img "how to choose seal kit for your hydraulic cylinder" [ref=e123]
+              - generic [ref=e124]:
+                - generic [ref=e125]: How to Find Seal Kit for your Hydraulic Cylinder
+                - paragraph [ref=e126]: Like all components, seals wear out over time, which can lead to reduced performance or even system failures. This is...
+            - link "cylinder-mounting-style How to Pick Mounting Style for Your Hydraulic Cylinder The first step in selecting a replacement cylinder is identifying what style of cylinder that you currently have. While many..." [ref=e129] [cursor=pointer]:
+              - /url: https://northernhydraulics.net/hydraulic-cylinder-mounting-styles
+              - img "cylinder-mounting-style" [ref=e130]
+              - generic [ref=e131]:
+                - generic [ref=e132]: How to Pick Mounting Style for Your Hydraulic Cylinder
+                - paragraph [ref=e133]: The first step in selecting a replacement cylinder is identifying what style of cylinder that you currently have. While many...
+      - navigation "Posts":
+        - heading "Post navigation" [level=2] [ref=e134]
+  - contentinfo [ref=e135]:
+    - generic [ref=e137]:
+      - generic [ref=e138]:
+        - paragraph [ref=e139]: Information
+        - list [ref=e140]:
+          - listitem [ref=e141]:
+            - link "About Us" [ref=e142] [cursor=pointer]:
+              - /url: /about-us
+          - listitem [ref=e143]:
+            - link "Do It Yourself - Support" [ref=e144] [cursor=pointer]:
+              - /url: /catalog/support.html
+          - listitem [ref=e145]:
+            - link "Privacy Policy" [ref=e146] [cursor=pointer]:
+              - /url: /privacy-policy
+          - listitem [ref=e147]:
+            - link "Terms and Conditions" [ref=e148] [cursor=pointer]:
+              - /url: /terms-conditions
+          - listitem [ref=e149]:
+            - link "Returning a product" [ref=e150] [cursor=pointer]:
+              - /url: /returning-a-product
+      - generic [ref=e151]:
+        - paragraph [ref=e152]: Customer Service
+        - list [ref=e153]:
+          - listitem [ref=e154]:
+            - link "Services" [ref=e155] [cursor=pointer]:
+              - /url: /catalog/services.html
+          - listitem [ref=e156]:
+            - link "Deals" [ref=e157] [cursor=pointer]:
+              - /url: /deals
+          - listitem [ref=e158]:
+            - link "Contact us" [ref=e159] [cursor=pointer]:
+              - /url: /catalog/contact.html
+          - listitem [ref=e160]:
+            - link "Site map" [ref=e161] [cursor=pointer]:
+              - /url: /sitemap
+          - listitem [ref=e162]:
+            - link "Apply for credit (credit application)" [ref=e163] [cursor=pointer]:
+              - /url: /apply-for-credit
+              - text: Apply for credit
+              - text: (credit application)
+      - generic [ref=e164]:
+        - paragraph [ref=e165]: My Account
+        - list [ref=e166]:
+          - listitem [ref=e167]:
+            - link "My Account" [ref=e168] [cursor=pointer]:
+              - /url: /my-account
+          - listitem [ref=e169]:
+            - link "Order History" [ref=e170] [cursor=pointer]:
+              - /url: /my-account/orders
+      - generic [ref=e171]:
+        - paragraph [ref=e172]: Contacts
+        - list [ref=e173]:
+          - listitem [ref=e174]:
+            - link " Black Eagle (Great Falls), MT" [ref=e175] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e176]: 
+              - text: Black Eagle (Great Falls), MT
+          - listitem [ref=e177]:
+            - link "1-406-761-8079" [ref=e178] [cursor=pointer]:
+              - /url: tel:14067618079
+              - text: 1-406-761-8079
+          - listitem [ref=e179]:
+            - link " 800-823-4937" [ref=e180] [cursor=pointer]:
+              - /url: tel:+18008234937
+              - generic: 
+              - text: 800-823-4937
+          - listitem [ref=e181]:
+            - link " sales@northernhydraulics.net" [ref=e182] [cursor=pointer]:
+              - /url: mailto:sales@northernhydraulics.net
+              - generic [ref=e183]: 
+              - text: sales@northernhydraulics.net
+  - generic [ref=e188]: Northern Hydraulics ©Copyright 2026 Northern Hydraulics Inc.
+  - text: ✖ ✓ ✓ ✓ ✓ ✓ ✓ 
+  - status [ref=e198]

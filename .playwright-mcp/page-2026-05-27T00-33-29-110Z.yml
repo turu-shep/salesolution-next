@@ -1,0 +1,234 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to main content" [ref=e3] [cursor=pointer]:
+      - /url: "#primary"
+    - link "Skip to navigation" [ref=e4] [cursor=pointer]:
+      - /url: "#site-navigation"
+    - link "Skip to footer" [ref=e5] [cursor=pointer]:
+      - /url: "#footer"
+  - generic [ref=e8]:
+    - link "Need to contact a Hydraulics Specialist?" [ref=e10] [cursor=pointer]:
+      - /url: /catalog/contact.html
+    - generic [ref=e11]:
+      - link "(800) 823-4937" [ref=e12] [cursor=pointer]:
+        - /url: tel:+18008234937
+        - img [ref=e13]
+        - text: (800) 823-4937
+      - link "sales@northernhydraulics.net" [ref=e14] [cursor=pointer]:
+        - /url: mailto:sales@northernhydraulics.net
+        - img [ref=e15]
+        - text: sales@northernhydraulics.net
+  - banner [ref=e16]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - link "Northern Hydraulics logo" [ref=e24] [cursor=pointer]:
+          - /url: /
+          - img "Northern Hydraulics logo" [ref=e25]
+        - navigation "Main navigation" [ref=e27]:
+          - list [ref=e28]:
+            - listitem [ref=e29]:
+              - link "Fluid Power" [ref=e30] [cursor=pointer]:
+                - /url: "#"
+                - text: Fluid Power
+                - img [ref=e31]
+                - text: 
+            - listitem [ref=e33]:
+              - link "Hose & Fittings" [ref=e34] [cursor=pointer]:
+                - /url: "#"
+                - text: Hose & Fittings
+                - img [ref=e35]
+                - text: 
+            - listitem [ref=e37]:
+              - link "Industrial" [ref=e38] [cursor=pointer]:
+                - /url: "#"
+                - text: Industrial
+                - img [ref=e39]
+                - text: 
+            - listitem [ref=e41]:
+              - link "Brands" [ref=e42] [cursor=pointer]:
+                - /url: "#"
+                - text: Brands
+                - img [ref=e43]
+                - text: 
+            - listitem [ref=e45]:
+              - link "Clearance" [ref=e46] [cursor=pointer]:
+                - /url: /hydraulics-shop/clearance
+      - generic [ref=e47]:
+        - search [ref=e50]:
+          - generic [ref=e51]:
+            - img [ref=e52]
+            - generic [ref=e54]: Products search
+            - searchbox "Products search" [ref=e55]
+        - generic [ref=e58]:
+          - link [ref=e60] [cursor=pointer]:
+            - /url: /my-account
+            - img [ref=e61]
+          - link "0 Cart" [ref=e63] [cursor=pointer]:
+            - /url: https://northernhydraulics.net/cart
+            - generic [ref=e64]: "0"
+            - img [ref=e65]
+            - paragraph [ref=e66]: Cart
+  - main [ref=e67]:
+    - generic [ref=e68]:
+      - article [ref=e69]:
+        - generic [ref=e70]:
+          - paragraph [ref=e72]:
+            - generic [ref=e73]:
+              - link "Home" [ref=e75] [cursor=pointer]:
+                - /url: https://northernhydraulics.net
+              - text: »
+              - link "Hydraulic 101" [ref=e77] [cursor=pointer]:
+                - /url: https://northernhydraulics.net/category/hydraulic-101
+              - text: »
+              - strong [ref=e79]: How to Pick Mounting Style for Your Hydraulic Cylinder
+          - generic [ref=e80]:
+            - heading "How to Pick Mounting Style for Your Hydraulic Cylinder" [level=1] [ref=e82]
+            - generic [ref=e83]: May 13, 2025
+            - img "cylinder-mounting-style" [ref=e86]
+            - generic [ref=e87]:
+              - paragraph [ref=e88]: The first step in selecting a replacement cylinder is identifying what style of cylinder that you currently have. While many manufacturers utilize common style cylinders, many do not. Please see the figures below for the most readily available styles.
+              - paragraph [ref=e89]:
+                - text: If your cylinder is held together with four large bolts, you are in luck because this is the most common
+                - strong [ref=e90]: tie-rod style cylinder
+                - text: . The cylinder will have a clevis mount on the barrel end of the cylinder. The rod end mount is usually threaded to accept a clevis or possibly some other style of end. There are not as many options in this style of cylinder.
+              - figure [ref=e92]
+              - paragraph [ref=e93]:
+                - text: If your cylinder has a welded body and has a clevis mount on each end it is a
+                - strong [ref=e94]: welded-clevis
+                - text: style cylinder. The cylinder will have a clevis mount on the barrel end of the cylinder, with the rod-end mount is usually threaded to accept a clevis or possibly some other style of end.
+              - figure [ref=e96]
+              - paragraph [ref=e97]:
+                - text: If your cylinder has a welded body and has a short piece of pipe on each end it is
+                - strong [ref=e98]: a welded-cross tube
+                - text: style cylinder. The cylinder will have different widths on each end. You will want to place close attention to mounting widths and pin hole sizes to insure compatibility.
+              - figure [ref=e100]
+              - paragraph [ref=e101]:
+                - text: If your cylinder has a hole drilled through the rod end of the cylinder, this is what is called a
+                - strong [ref=e102]: pin-eye
+                - text: style cylinder. These cylinders are commonly available with either a clevis mount or a cross-tube on the barrel end. You will want to place close attention to mounting widths and pin hole sizes to insure compatibility.
+              - figure [ref=e104]
+              - paragraph [ref=e105]:
+                - text: If your cylinder has a swivel socket welded onto both ends of the cylinder, this is what is called a
+                - strong [ref=e106]: Swivel-eye
+                - text: style cylinder. These cylinders are commonly used where there is lateral movement between mounting points. You will want to place close attention to mounting widths and pin hole sizes to insure compatibility.
+              - figure [ref=e108]
+              - paragraph [ref=e109]:
+                - text: If your cylinder has a welded body and has a short piece of pipe on the rod end and a thick flat piece with a pin hole through it on the barrel end, it is
+                - strong [ref=e110]: a welded-tang
+                - text: style cylinder. The cylinder will typically have the same width on each end. You will want to place close attention to mounting widths and pin hole sizes to insure compatibility.
+              - figure [ref=e112]
+              - paragraph [ref=e113]:
+                - text: If your cylinder is mounted on lugs coming out of the side of the cylinder, this is what they would call a
+                - strong [ref=e114]: trunnion
+                - text: style cylinder. Trunnion mount cylinders are almost entirely exclusive to the manufacturer. You will need to get a replacement from the original manufacturer or contact a machine shop to recreate the mounts on a more common cylinder.
+              - figure [ref=e116]
+              - paragraph [ref=e117]:
+                - text: Once you have determined the style of cylinder you are looking for, you will need to determine bore size, the mounting pin to pin length (both collapsed and extended), the rod diameter, and pin hole sizes. Drawings are usually available for individual cylinders to insure a proper fit. It might be necessary to have a local shop alter your frame to accept the cylinder, or alter the cylinder to fit your machine.
+                - strong [ref=e118]: WARNING! Altering the cylinder in anyway will void any factory warranty.
+          - generic [ref=e119]:
+            - link "Find Your Match! Whether it’s for rugged or precise applications, our collection offers the best in class. Get the reliability you need. Shop Hydraulic Cylinders Now" [ref=e121] [cursor=pointer]:
+              - /url: "https://northernhydraulics.net/hydraulics-shop/hydraulic-cylinders "
+              - generic [ref=e122]: Find Your Match!
+              - paragraph [ref=e124]: Whether it’s for rugged or precise applications, our collection offers the best in class. Get the reliability you need.
+              - generic [ref=e125]: Shop Hydraulic Cylinders Now
+            - link "valve closer center conversion guide Closer Center Conversion" [ref=e128] [cursor=pointer]:
+              - /url: https://northernhydraulics.net/catalog/closed-center-conversion.html
+              - img "valve closer center conversion guide" [ref=e129]
+              - generic [ref=e130]: Closer Center Conversion
+        - generic [ref=e131]:
+          - heading "Related Guides and Documentation" [level=3] [ref=e132]
+          - generic [ref=e133]:
+            - 'link "hydraulic cylinder FAQ category guides Frequently Asked Questions: Cylinders FAQ" [ref=e136] [cursor=pointer]':
+              - /url: https://northernhydraulics.net/catalog/cylinders-faq.html
+              - img "hydraulic cylinder FAQ category guides" [ref=e137]
+              - generic [ref=e138]:
+                - generic [ref=e139]: "Frequently Asked Questions: Cylinders FAQ"
+                - paragraph
+            - link "How to measure a hydraulic cylinder How to Measure a Hydraulic Cylinder How To Measure Your Hydraulic Cylinder Check out this (link) to let us know what kind of cylinder you have..." [ref=e142] [cursor=pointer]:
+              - /url: https://northernhydraulics.net/catalog/how-to-measure-hydraulic-cylinder.html
+              - img "How to measure a hydraulic cylinder" [ref=e143]
+              - generic [ref=e144]:
+                - generic [ref=e145]: How to Measure a Hydraulic Cylinder
+                - paragraph [ref=e146]: How To Measure Your Hydraulic Cylinder Check out this (link) to let us know what kind of cylinder you have...
+            - link "How to rebuild hydraulic cylinder guide cover image How to Rebuild a Hydraulic Cylinder Rebuilding a hydraulic cylinder is both an art and a science. It’s a very delicate process that needs skill, understanding,..." [ref=e149] [cursor=pointer]:
+              - /url: https://northernhydraulics.net/catalog/how-to-rebuild-hydraulic-cylinder.html
+              - img "How to rebuild hydraulic cylinder guide cover image" [ref=e150]
+              - generic [ref=e151]:
+                - generic [ref=e152]: How to Rebuild a Hydraulic Cylinder
+                - paragraph [ref=e153]: Rebuilding a hydraulic cylinder is both an art and a science. It’s a very delicate process that needs skill, understanding,...
+      - navigation "Posts":
+        - heading "Post navigation" [level=2] [ref=e154]
+  - contentinfo [ref=e155]:
+    - generic [ref=e157]:
+      - generic [ref=e158]:
+        - paragraph [ref=e159]: Information
+        - list [ref=e160]:
+          - listitem [ref=e161]:
+            - link "About Us" [ref=e162] [cursor=pointer]:
+              - /url: /about-us
+          - listitem [ref=e163]:
+            - link "Do It Yourself - Support" [ref=e164] [cursor=pointer]:
+              - /url: /catalog/support.html
+          - listitem [ref=e165]:
+            - link "Privacy Policy" [ref=e166] [cursor=pointer]:
+              - /url: /privacy-policy
+          - listitem [ref=e167]:
+            - link "Terms and Conditions" [ref=e168] [cursor=pointer]:
+              - /url: /terms-conditions
+          - listitem [ref=e169]:
+            - link "Returning a product" [ref=e170] [cursor=pointer]:
+              - /url: /returning-a-product
+      - generic [ref=e171]:
+        - paragraph [ref=e172]: Customer Service
+        - list [ref=e173]:
+          - listitem [ref=e174]:
+            - link "Services" [ref=e175] [cursor=pointer]:
+              - /url: /catalog/services.html
+          - listitem [ref=e176]:
+            - link "Deals" [ref=e177] [cursor=pointer]:
+              - /url: /deals
+          - listitem [ref=e178]:
+            - link "Contact us" [ref=e179] [cursor=pointer]:
+              - /url: /catalog/contact.html
+          - listitem [ref=e180]:
+            - link "Site map" [ref=e181] [cursor=pointer]:
+              - /url: /sitemap
+          - listitem [ref=e182]:
+            - link "Apply for credit (credit application)" [ref=e183] [cursor=pointer]:
+              - /url: /apply-for-credit
+              - text: Apply for credit
+              - text: (credit application)
+      - generic [ref=e184]:
+        - paragraph [ref=e185]: My Account
+        - list [ref=e186]:
+          - listitem [ref=e187]:
+            - link "My Account" [ref=e188] [cursor=pointer]:
+              - /url: /my-account
+          - listitem [ref=e189]:
+            - link "Order History" [ref=e190] [cursor=pointer]:
+              - /url: /my-account/orders
+      - generic [ref=e191]:
+        - paragraph [ref=e192]: Contacts
+        - list [ref=e193]:
+          - listitem [ref=e194]:
+            - link " Black Eagle (Great Falls), MT" [ref=e195] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e196]: 
+              - text: Black Eagle (Great Falls), MT
+          - listitem [ref=e197]:
+            - link "1-406-761-8079" [ref=e198] [cursor=pointer]:
+              - /url: tel:14067618079
+              - text: 1-406-761-8079
+          - listitem [ref=e199]:
+            - link " 800-823-4937" [ref=e200] [cursor=pointer]:
+              - /url: tel:+18008234937
+              - generic: 
+              - text: 800-823-4937
+          - listitem [ref=e201]:
+            - link " sales@northernhydraulics.net" [ref=e202] [cursor=pointer]:
+              - /url: mailto:sales@northernhydraulics.net
+              - generic [ref=e203]: 
+              - text: sales@northernhydraulics.net
+  - generic [ref=e208]: Northern Hydraulics ©Copyright 2026 Northern Hydraulics Inc.
+  - text: ✖ ✓ ✓ ✓ ✓ ✓ ✓ 
+  - status [ref=e218]
