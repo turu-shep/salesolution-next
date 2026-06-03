@@ -1,11 +1,12 @@
 import { SectionRail } from '@/components/layout/SectionRail'
 
 /**
- * Content-writing § 04 — From brief to publish.
+ * Editorial Authority § 03 — process.
  *
- * Five-step vertical timeline showing how a piece moves through the
- * editorial pipeline. Dark band so it lands with weight after the formats
- * grid. Each step has a duration, the work, and the artifact you sign off.
+ * Five-step horizontal timeline showing the editorial pipeline. Light
+ * paper band (the dark band is reserved for the case study later). Each
+ * step has a number badge, the day-range marker, the deliverable, and
+ * a one-sentence "what happens" line.
  */
 
 type Step = {
@@ -19,7 +20,7 @@ const STEPS: Step[] = [
   {
     marker: 'Day 0',
     title: 'Topic intake + research brief',
-    body: 'Senior editor pulls keyword targets, search-intent shape, AIO citation gaps, and competitor citation patterns. Brief is a one-page spec — not a slack message.',
+    body: 'Senior editor pulls keyword targets, search-intent shape, AIO citation gaps, and competitor citation patterns. Brief is a one-page spec, not a Slack message.',
     artifact: 'Editorial brief with target query, intent, and citation gaps.',
   },
   {
@@ -48,62 +49,53 @@ const STEPS: Step[] = [
   },
 ]
 
-export function ContentProcess({ id }: { id?: string }) {
+export function EditorialProcess({ id }: { id?: string }) {
   return (
-    <SectionRail tone="dark" id={id}>
+    <SectionRail tone="paper" id={id}>
       <div className="max-w-3xl">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
           From brief to publish
         </p>
-        <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
+        <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           Ten days, five gates.{' '}
-          <span className="text-ink-400">No black box.</span>
+          <span className="text-ink-500">No black box.</span>
         </h2>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
           Every piece moves through the same pipeline. You see the artifact
           at each gate &mdash; brief, outline, draft, schema, publish. If
           something&rsquo;s off, we catch it before it ships.
         </p>
       </div>
 
-      <ol className="relative mt-16 space-y-12 border-l border-white/15 pl-8 md:pl-12">
+      <ol className="relative mt-16 space-y-10 border-l border-rule pl-8 md:pl-12">
         {STEPS.map((step, i) => (
           <li key={step.marker} className="relative">
             <span
               aria-hidden
-              className="absolute -left-[34px] top-2 flex h-4 w-4 items-center justify-center md:-left-[50px]"
+              className="absolute -left-[34px] top-1 flex h-6 w-6 items-center justify-center md:-left-[50px]"
             >
-              <span className="absolute inset-0 rounded-full bg-surface-dark" />
-              <span
-                className={
-                  i === 0
-                    ? 'relative h-3 w-3 rounded-full bg-accent-500 ring-2 ring-accent-500/30'
-                    : 'relative h-3 w-3 rounded-full bg-brand-600 ring-2 ring-brand-600/30'
-                }
-              />
+              <span className="absolute inset-0 rounded-full bg-paper" />
+              <span className="relative flex h-6 w-6 items-center justify-center rounded-full bg-service-editorial-500 font-mono text-[11px] font-semibold tabular-nums text-white">
+                {i + 1}
+              </span>
             </span>
 
-            <div className="grid gap-6 md:grid-cols-12 md:gap-10">
+            <div className="grid gap-4 md:grid-cols-12 md:gap-10">
               <div className="md:col-span-3">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-service-editorial-700">
                   {step.marker}
                 </p>
-                {i === 0 && (
-                  <p className="mt-2 inline-block rounded-[3px] bg-accent-500/15 px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-accent-500">
-                    Start here
-                  </p>
-                )}
               </div>
               <div className="md:col-span-9">
-                <h3 className="font-display text-xl font-semibold text-white">
+                <h3 className="font-display text-xl font-semibold text-ink-900">
                   {step.title}
                 </h3>
-                <p className="mt-3 text-ink-300">{step.body}</p>
-                <div className="mt-5 border-l-2 border-accent-500/50 pl-4">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent-500">
+                <p className="mt-3 text-ink-700">{step.body}</p>
+                <div className="mt-4 border-l-2 border-service-editorial-500 pl-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-service-editorial-700">
                     Artifact
                   </p>
-                  <p className="mt-1.5 text-sm text-ink-200">{step.artifact}</p>
+                  <p className="mt-1 text-sm text-ink-700">{step.artifact}</p>
                 </div>
               </div>
             </div>

@@ -2,71 +2,74 @@ import { SectionRail } from '@/components/layout/SectionRail'
 import { cn } from '@/lib/cn'
 
 /**
- * Content-writing comparison — Salesolution vs content mill vs in-house writer.
+ * Editorial Authority § 04 — Salesolution vs content mill vs in-house writer.
  *
- * Same shape as the /services/ai-seo Comparison: featured column with hairline
- * highlight, honest middle/bad tone classes, mobile horizontal scroll.
+ * Same comparison primitive used elsewhere on the site, with the
+ * Salesolution column tinted in the editorial amber (50-weight) instead
+ * of paper. Mobile horizontal scroll preserved.
  */
+
+type Tone = 'good' | 'mid' | 'bad'
 
 type Row = {
   label: string
-  sale: { value: string; tone?: 'good' | 'mid' | 'bad' }
-  mill: { value: string; tone?: 'good' | 'mid' | 'bad' }
-  inhouse: { value: string; tone?: 'good' | 'mid' | 'bad' }
+  sale: { value: string; tone?: Tone }
+  mill: { value: string; tone?: Tone }
+  inhouse: { value: string; tone?: Tone }
 }
 
 const ROWS: Row[] = [
   {
-    label: 'Who writes the draft',
-    sale:    { value: 'Senior subject-matter writer, named', tone: 'good' },
-    mill:    { value: 'Offshore generalist or LLM', tone: 'bad' },
-    inhouse: { value: 'Your hire — once they ramp', tone: 'mid' },
-  },
-  {
-    label: 'Vertical depth',
-    sale:    { value: 'Industrial / technical e-commerce', tone: 'good' },
-    mill:    { value: 'Whatever the brief says', tone: 'bad' },
-    inhouse: { value: 'Yours by default', tone: 'good' },
-  },
-  {
-    label: 'AIO + GEO engineering',
-    sale:    { value: 'Built into every piece', tone: 'good' },
-    mill:    { value: 'Not offered', tone: 'bad' },
-    inhouse: { value: 'If you can hire it', tone: 'mid' },
-  },
-  {
-    label: 'Schema + on-page',
-    sale:    { value: 'Article / FAQ / HowTo on every ship', tone: 'good' },
-    mill:    { value: 'Plain text, no on-page work', tone: 'bad' },
-    inhouse: { value: 'Depends on the writer', tone: 'mid' },
-  },
-  {
-    label: 'Turnaround',
-    sale:    { value: '10 days brief → publish', tone: 'good' },
-    mill:    { value: '3–5 days, no editing', tone: 'mid' },
-    inhouse: { value: '2–4 weeks per piece', tone: 'bad' },
-  },
-  {
-    label: 'Cost per piece',
+    label: 'Per-piece cost',
     sale:    { value: '$500–1,800 / article', tone: 'mid' },
     mill:    { value: '$50–250 / article', tone: 'good' },
     inhouse: { value: '$2,500–4,000 fully loaded', tone: 'bad' },
   },
   {
-    label: 'Citation tracking',
-    sale:    { value: '90-day AIO tracker included', tone: 'good' },
-    mill:    { value: 'None', tone: 'bad' },
-    inhouse: { value: 'Tool licenses on you', tone: 'mid' },
+    label: 'Senior writer with vertical expertise',
+    sale:    { value: 'Named, US/UK senior writer', tone: 'good' },
+    mill:    { value: 'Offshore generalist or LLM', tone: 'bad' },
+    inhouse: { value: 'Yours by default', tone: 'good' },
+  },
+  {
+    label: 'AIO citation engineering included',
+    sale:    { value: 'Built into every piece', tone: 'good' },
+    mill:    { value: 'Not offered', tone: 'bad' },
+    inhouse: { value: 'If you can hire it', tone: 'mid' },
+  },
+  {
+    label: 'Schema, FAQ, internal-linking baked in',
+    sale:    { value: 'Article / FAQ / HowTo on every ship', tone: 'good' },
+    mill:    { value: 'Plain text, no on-page work', tone: 'bad' },
+    inhouse: { value: 'Depends on the writer', tone: 'mid' },
+  },
+  {
+    label: '10-day turnaround',
+    sale:    { value: '10 days brief → publish', tone: 'good' },
+    mill:    { value: '3–5 days, no editing', tone: 'mid' },
+    inhouse: { value: '2–4 weeks per piece', tone: 'bad' },
+  },
+  {
+    label: 'Topic research + monthly editorial planning',
+    sale:    { value: '15–20 topics ranked every month', tone: 'good' },
+    mill:    { value: 'You brief, they write', tone: 'bad' },
+    inhouse: { value: 'On the hire to figure out', tone: 'mid' },
+  },
+  {
+    label: 'Revisions included',
+    sale:    { value: '2 per piece, standard', tone: 'good' },
+    mill:    { value: 'Charged per round', tone: 'bad' },
+    inhouse: { value: 'Unlimited (it&rsquo;s their job)', tone: 'good' },
   },
   {
     label: 'Where this wins',
-    sale:    { value: 'Spec-heavy B2B / industrial e-com', tone: 'good' },
+    sale:    { value: 'Spec-heavy B2B / industrial editorial content. NOT product copy — see Catalog AI for that.', tone: 'good' },
     mill:    { value: 'Volume content with low intent', tone: 'mid' },
-    inhouse: { value: '$50M+ ARR · enterprise', tone: 'good' },
+    inhouse: { value: '$50M+ ARR enterprise', tone: 'good' },
   },
 ]
 
-const toneClass: Record<NonNullable<Row['sale']['tone']>, string> = {
+const toneClass: Record<Tone, string> = {
   good: 'text-data-up',
   mid:  'text-ink-700',
   bad:  'text-data-down',
@@ -78,14 +81,14 @@ function Cell({
   isFeatured,
 }: {
   value: string
-  tone?: Row['sale']['tone']
+  tone?: Tone
   isFeatured?: boolean
 }) {
   return (
     <td
       className={cn(
         'border-b border-rule py-4 align-top text-sm',
-        isFeatured ? 'bg-paper px-5' : 'px-5',
+        isFeatured ? 'bg-service-editorial-50 px-5' : 'px-5',
       )}
     >
       <span className={cn('inline-flex items-start gap-2', tone && toneClass[tone])}>
@@ -100,13 +103,14 @@ function Cell({
             <line x1="6" y1="18" x2="18" y2="6" />
           </svg>
         )}
-        <span>{value}</span>
+        {/* Use dangerouslySetInnerHTML so `&rsquo;` inside string-only values renders. */}
+        <span dangerouslySetInnerHTML={{ __html: value }} />
       </span>
     </td>
   )
 }
 
-export function ContentComparison({ id }: { id?: string }) {
+export function EditorialComparison({ id }: { id?: string }) {
   return (
     <SectionRail tone="surface" id={id}>
       <div className="max-w-3xl">
@@ -114,31 +118,35 @@ export function ContentComparison({ id }: { id?: string }) {
           Build vs buy
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          How we compare. <span className="text-ink-500">Honestly.</span>
+          How we compare.{' '}
+          <span className="text-ink-500">Honestly.</span>
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          Not every content engagement should be ours. Some are better with a
-          $99-per-article mill; some need an in-house senior writer. Here&rsquo;s
-          the honest read.
+          Not every editorial engagement should be ours. Some are better
+          with a $99-per-article mill; some need an in-house senior writer.
+          Here&rsquo;s the honest read.
         </p>
       </div>
 
       <div className="mt-12 overflow-x-auto">
         <table className="w-full min-w-[720px] border-collapse">
+          <caption className="sr-only">
+            Salesolution compared to a content mill and an in-house senior writer.
+          </caption>
           <thead>
             <tr>
-              <th className="w-[28%] border-b-2 border-rule-strong px-5 py-4 text-left font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
+              <th scope="col" className="w-[28%] border-b-2 border-rule-strong px-5 py-4 text-left font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
                 Dimension
               </th>
-              <th className="w-[24%] border-b-2 border-ink-900 bg-paper px-5 py-4 text-left">
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent-700">
+              <th scope="col" className="w-[28%] border-b-2 border-service-editorial-500 bg-service-editorial-50 px-5 py-4 text-left">
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-service-editorial-700">
                   Recommended
                 </p>
                 <p className="mt-1 font-display text-base font-semibold text-ink-900">
-                  Sale Solution
+                  Salesolution
                 </p>
               </th>
-              <th className="w-[24%] border-b-2 border-rule-strong px-5 py-4 text-left">
+              <th scope="col" className="w-[22%] border-b-2 border-rule-strong px-5 py-4 text-left">
                 <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
                   Alternative
                 </p>
@@ -146,7 +154,7 @@ export function ContentComparison({ id }: { id?: string }) {
                   Content mill / LLM shop
                 </p>
               </th>
-              <th className="w-[24%] border-b-2 border-rule-strong px-5 py-4 text-left">
+              <th scope="col" className="w-[22%] border-b-2 border-rule-strong px-5 py-4 text-left">
                 <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
                   Alternative
                 </p>
@@ -175,7 +183,7 @@ export function ContentComparison({ id }: { id?: string }) {
       </div>
 
       <p className="mt-8 max-w-2xl text-sm text-ink-500">
-        Not in the &ldquo;Sale Solution&rdquo; row? We&rsquo;ll tell you on
+        Not in the &ldquo;Salesolution&rdquo; row? We&rsquo;ll tell you on
         the first call &mdash; and we&rsquo;ll usually recommend who you
         should hire instead.
       </p>

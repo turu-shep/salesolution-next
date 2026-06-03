@@ -71,4 +71,9 @@ export const redirects: Redirect[] = [
     destination: '/career-paths/',
     permanent: true,
   },
+
+  // ── 2026-05-25: content-writing-services + website-content-writing-packages
+  // merged into editorial-authority. Preserve SEO equity from both old URLs.
+  { source: '/services/content-writing-services/', destination: '/services/editorial-authority/', permanent: true },
+  { source: '/services/website-content-writing-packages/', destination: '/services/editorial-authority/', permanent: true },
 ]

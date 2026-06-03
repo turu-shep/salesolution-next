@@ -110,6 +110,42 @@
   --color-accent-600: #ea580c;
   --color-accent-700: #c2410c;
 
+  /* ─── Service identity colors (added 2026-05-25) ─────────────────────────
+   * Five service families plus the composite signature for Full Growth
+   * Ownership. Per the shared system reference: colors appear ONLY in
+   * accent strips, tier-card top borders, color dots, and divider lines.
+   * Body text, headings, primary CTAs, and forms stay neutral.
+   *
+   * Each family ships 3 stops:
+   *  - DEFAULT (-600): the primary identity, top-border thickness 2px
+   *  - light  (-50):  background tint for callouts on paper
+   *  - dark   (-700): for text on the light tint (passes AA on light bg)
+   * ────────────────────────────────────────────────────────────────────── */
+  --color-service-search-50:  #DBEAFE;
+  --color-service-search-500: #1E3A8A;   /* AI Search & GEO — deep blue */
+  --color-service-search-600: #1E40AF;
+  --color-service-search-700: #1E3A8A;
+
+  --color-service-catalog-50:  #CFFAFE;
+  --color-service-catalog-500: #0E7490;  /* Catalog AI — teal */
+  --color-service-catalog-600: #0E7490;
+  --color-service-catalog-700: #155E75;
+
+  --color-service-editorial-50:  #FFEDD5;
+  --color-service-editorial-500: #C2410C; /* Editorial Authority — warm amber */
+  --color-service-editorial-600: #C2410C;
+  --color-service-editorial-700: #9A3412;
+
+  --color-service-dev-50:  #F3F4F6;
+  --color-service-dev-500: #374151;       /* Website Development — slate */
+  --color-service-dev-600: #374151;
+  --color-service-dev-700: #1F2937;
+
+  --color-service-outbound-50:  #DCFCE7;
+  --color-service-outbound-500: #15803D;  /* Outbound Email — forest green */
+  --color-service-outbound-600: #15803D;
+  --color-service-outbound-700: #166534;
+
   /* Marquee scroll for the logo strip. The 2x duplicated list translates
    * exactly -50% so the second copy lines up with the first — seamless loop.
    * 38s is slow enough to read each brand without feeling like a banner ad. */
