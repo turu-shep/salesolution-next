@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
+import { CatalogBeyondCallout } from '@/components/sections/catalog-ai/CatalogBeyondCallout'
 import { CatalogCaseStudyCallout } from '@/components/sections/catalog-ai/CatalogCaseStudyCallout'
 import { CatalogDeliverablesTable } from '@/components/sections/catalog-ai/CatalogDeliverablesTable'
 import { CatalogExclusions } from '@/components/sections/catalog-ai/CatalogExclusions'
@@ -10,6 +12,7 @@ import { CatalogProcess } from '@/components/sections/catalog-ai/CatalogProcess'
 import { CatalogSnapshotCTA } from '@/components/sections/catalog-ai/CatalogSnapshotCTA'
 import { CatalogTiers } from '@/components/sections/catalog-ai/CatalogTiers'
 import { CatalogVolumePricing } from '@/components/sections/catalog-ai/CatalogVolumePricing'
+import { CatalogWhereAIUsed } from '@/components/sections/catalog-ai/CatalogWhereAIUsed'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { serviceSchema } from '@/lib/schema'
@@ -90,6 +93,35 @@ const CATALOG_FAQ: QA[] = [
           your approval gate before full processing. Post-delivery errors
           get reprocessed at no charge. Our error rate has run under 2% on
           the work we&rsquo;ve shipped.
+        </p>
+      </>
+    ),
+  },
+  {
+    q: 'Wait — you use AI for this but not for your other content service?',
+    a: (
+      <>
+        <p>
+          Different work, different tools. Catalog work is structural at
+          scale &mdash; 10,000 products with schema, FAQs, internal links, all
+          delivered in 30 days. No human team writes 10,000 product
+          descriptions in 30 days at $3/SKU. AI handles drafting; editors
+          review at scale. The output ships at a price humans can&rsquo;t
+          match.
+        </p>
+        <p className="mt-3">
+          Editorial content (pillar pages, cluster posts, category authority
+          content) is judgment-based at lower volume &mdash; 10&ndash;20 pieces per
+          month, each requiring argument construction and primary research.
+          Senior writers produce better outputs there than AI does, and the
+          per-piece economics make human writing viable.
+        </p>
+        <p className="mt-3">
+          We use the right tool for each kind of work. See{' '}
+          <Link href="/services/editorial-authority/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+            Editorial Authority
+          </Link>{' '}
+          for the senior-writer service.
         </p>
       </>
     ),
@@ -176,6 +208,8 @@ export default function CatalogAIServicePage() {
         })}
       />
 
+      <div className="h-1 w-full bg-service-catalog-500" aria-hidden />
+
       <ServicesHero
         eyebrow="Services / Catalog AI"
         title="Your product catalog."
@@ -204,6 +238,8 @@ export default function CatalogAIServicePage() {
       <CatalogMarketProblem id="why-now" />
       <CatalogTiers id="tiers" />
       <CatalogVolumePricing />
+      <CatalogBeyondCallout />
+      <CatalogWhereAIUsed id="positioning" />
       <CatalogDeliverablesTable id="what-we-build" />
       <CatalogProcess id="how" />
       <CatalogCaseStudyCallout />

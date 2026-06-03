@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
+import { SectionRail } from '@/components/layout/SectionRail'
 import { EngagementModel } from '@/components/sections/EngagementModel'
 import { Evidence } from '@/components/sections/Evidence'
 import { FAQ, type QA } from '@/components/sections/FAQ'
@@ -11,12 +13,13 @@ import { MarketReality } from '@/components/sections/services/MarketReality'
 import { ProcessTimeline } from '@/components/sections/services/ProcessTimeline'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { CrossServiceCallout } from '@/components/services/CrossServiceCallout'
 import { serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'AI Search & Generative-Engine Optimization (GEO)',
   description:
-    'Engineer your store to be cited inside Google AI Overviews, ChatGPT, and Perplexity. Schema depth, citation engineering, AI-readable content, and AIO-aware PPC — one operator-led team. Published prices, written 24-hour proposals, 90-day exit.',
+    'Get cited inside Google AI Overviews, ChatGPT, and Perplexity. Operator-led GEO with published prices, 24-hour proposals, and a 90-day exit. Schema depth + citation engineering.',
   alternates: { canonical: 'https://salesolution.net/services/ai-seo/' },
 }
 
@@ -128,6 +131,41 @@ const SERVICES_FAQ: QA[] = [
       </>
     ),
   },
+  {
+    q: 'How does AI Search work with your other services?',
+    a: (
+      <>
+        <p>
+          AI Search &amp; GEO is the gravity well &mdash; most engagements
+          start here because schema and citation engineering produce the
+          fastest visible wins. From there, two natural expansions:
+        </p>
+        <ul className="mt-3 space-y-2 pl-4 text-ink-700">
+          <li>
+            &middot;{' '}
+            <Link href="/services/editorial-authority/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+              Editorial Authority
+            </Link>{' '}
+            for pillar pages and category content that feed AIO citation authority
+          </li>
+          <li>
+            &middot;{' '}
+            <Link href="/services/catalog-ai/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+              Catalog AI
+            </Link>{' '}
+            for product-level schema, FAQ blocks, and internal linking at scale
+          </li>
+        </ul>
+        <p className="mt-3">
+          About 70% of AI Search engagements pair with one of these within 90
+          days. If you want all three coordinated under one operator, see{' '}
+          <Link href="/services/full-growth-ownership/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+            Full Growth Ownership
+          </Link>.
+        </p>
+      </>
+    ),
+  },
 ]
 
 export default function AISEOServicePage() {
@@ -142,6 +180,7 @@ export default function AISEOServicePage() {
         })}
       />
 
+      <div className="h-1.5 w-full bg-service-search-500" aria-hidden />
       <ServicesHero
         eyebrow="Services / AI search · GEO"
         title="Be cited inside AI search,"
@@ -169,7 +208,17 @@ export default function AISEOServicePage() {
       <ServicesTabs id="practice-areas" />
       <FrameworkTimeline id="framework" />
       <Comparison id="comparison" />
-      <EngagementModel id="engagement" />
+      <SectionRail tone="paper" size="sm">
+        <CrossServiceCallout
+          eyebrow="Related services"
+          intro={<>AI Search is the gravity well &mdash; most engagements start here. Two natural expansions when schema and citation engineering are in place:</>}
+          links={[
+            { service: 'editorial', note: 'Pillar pages and category content that feed citation authority' },
+            { service: 'catalog', note: 'Product-level schema, FAQs, internal linking at SKU scale' },
+          ]}
+        />
+      </SectionRail>
+      <EngagementModel id="engagement" serviceColorKey="search" />
       <ProcessTimeline />
       <Evidence />
       <FAQ

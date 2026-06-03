@@ -51,7 +51,7 @@ const STEPS: Step[] = [
   },
   {
     n: '04',
-    title: 'You get it in your platform&rsquo;s import format.',
+    title: 'You get it in your platform’s import format.',
     body: (
       <>
         Shopify CSV, Magento XML, BigCommerce, custom &mdash; we map to

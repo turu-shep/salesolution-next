@@ -32,13 +32,13 @@ const PRINCIPLES: Principle[] = [
     code: '03',
     title: 'In-person on request, not by default.',
     body:
-      'For multi-quarter retainers we travel to the client site for kickoff or a quarterly review &mdash; billed at cost. Most engagements run start-to-finish remote.',
+      'For multi-quarter retainers we travel to the client site for kickoff or a quarterly review — billed at cost. Most engagements run start-to-finish remote.',
   },
   {
     code: '04',
     title: 'Compliance and contracts are US-domiciled.',
     body:
-      'Delaware C-corp, Florida office, US tax residency. EU/UK/CA clients sign a standard SOW with W-9 attached &mdash; no offshore entity routing.',
+      'Delaware C-corp, Florida office, US tax residency. EU/UK/CA clients sign a standard SOW with W-9 attached — no offshore entity routing.',
   },
 ]
 

@@ -1,14 +1,17 @@
 import Link from 'next/link'
 
 import { SectionRail } from '@/components/layout/SectionRail'
+import { FullGrowthTierCard } from '@/components/services/FullGrowthTierCard'
 import { cn } from '@/lib/cn'
 
 /**
  * /services/outbound-email/ § 7 — Engagement model.
  *
- * Mirrors the homepage EngagementModel shape (three tiers, middle one
- * featured) so the buying decision feels consistent across rebuilt routes.
- * The outbound copy is its own: pilot · retainer · embedded program.
+ * Mirrors the homepage EngagementModel shape: Outbound Pilot + Operator
+ * Retainer as service-specific sibling tiers, with the third slot being the
+ * standardized Full Growth Ownership card from the shared services system.
+ * The featured badge and accent strips use the outbound green so this page
+ * reads as a single color story top-to-bottom.
  */
 
 type Engagement = {
@@ -49,19 +52,6 @@ const ENGAGEMENTS: Engagement[] = [
       'Monthly outcome review · direct Slack, no PMs',
     ],
   },
-  {
-    key: 'embedded',
-    name: 'Embedded program',
-    cadence: 'Multi-quarter · by scope',
-    price: 'From $22k / month',
-    forWhom: '"We need a head-of-outbound until we hire one."',
-    includes: [
-      'Owns the outbound function end-to-end',
-      'Hires + trains your in-house SDR / RevOps team',
-      'Builds the playbook, tooling, and reporting in your stack',
-      'Quarterly board-level pipeline reporting',
-    ],
-  },
 ]
 
 export function OutboundEngagement({ id }: { id?: string }) {
@@ -86,14 +76,16 @@ export function OutboundEngagement({ id }: { id?: string }) {
           <li
             key={e.key}
             className={cn(
-              'relative flex flex-col border bg-surface transition-shadow duration-200',
+              'relative flex flex-col overflow-hidden border bg-surface transition-shadow duration-200',
               e.featured
                 ? 'border-ink-900 shadow-[0_30px_80px_-30px_rgba(15,20,30,0.25)]'
                 : 'border-rule hover:border-ink-700',
             )}
           >
+            <span aria-hidden className="h-1 w-full bg-service-outbound-500" />
+
             {e.featured && (
-              <span className="absolute -top-3 left-6 inline-flex items-center rounded-[3px] bg-accent-500 px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
+              <span className="absolute -top-3 left-6 inline-flex items-center rounded-[3px] bg-service-outbound-500 px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
                 Most engagements start here
               </span>
             )}
@@ -136,19 +128,11 @@ export function OutboundEngagement({ id }: { id?: string }) {
 
             <div className="border-t border-rule px-6 py-4">
               <Link
-                href={
-                  e.key === 'pilot'
-                    ? '/unlock-growth-audit/'
-                    : e.key === 'retainer'
-                      ? '/book-growth-call/'
-                      : '/contact-me/'
-                }
+                href={e.key === 'pilot' ? '/unlock-growth-audit/' : '/book-growth-call/'}
                 data-cta={
                   e.key === 'pilot'
                     ? 'audit__outbound_engagement'
-                    : e.key === 'retainer'
-                      ? 'book_call__outbound_engagement'
-                      : 'contact__outbound_engagement'
+                    : 'book_call__outbound_engagement'
                 }
                 data-cta-location="mid_body"
                 className={cn(
@@ -160,12 +144,15 @@ export function OutboundEngagement({ id }: { id?: string }) {
               >
                 {e.key === 'pilot' && 'Scope a pilot'}
                 {e.key === 'retainer' && 'Book a strategy call'}
-                {e.key === 'embedded' && 'Talk to Artur directly'}
                 <span aria-hidden>→</span>
               </Link>
             </div>
           </li>
         ))}
+
+        <li className="flex">
+          <FullGrowthTierCard className="w-full" />
+        </li>
       </ul>
 
       <p className="mt-10 max-w-2xl text-sm text-ink-500">

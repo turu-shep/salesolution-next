@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
+import { SectionRail } from '@/components/layout/SectionRail'
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { DeliverabilityPillars } from '@/components/sections/outbound-email/DeliverabilityPillars'
@@ -10,6 +12,7 @@ import { OutboundEngagement } from '@/components/sections/outbound-email/Outboun
 import { SequenceFramework } from '@/components/sections/outbound-email/SequenceFramework'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { CrossServiceCallout } from '@/components/services/CrossServiceCallout'
 import { serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
@@ -131,6 +134,48 @@ const OUTBOUND_FAQ: QA[] = [
       </>
     ),
   },
+  {
+    q: 'How does outbound work with your other services?',
+    a: (
+      <>
+        <p>
+          Outbound is most effective as a multi-channel motion, not a
+          standalone channel. Three services that materially lift outbound
+          reply rates:
+        </p>
+        <ul className="mt-3 space-y-2 pl-4 text-ink-700">
+          <li>
+            &middot;{' '}
+            <Link href="/services/ai-seo/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+              AI Search &amp; GEO
+            </Link>{' '}
+            &mdash; so when prospects Google you, they find substance
+          </li>
+          <li>
+            &middot;{' '}
+            <Link href="/services/editorial-authority/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+              Editorial Authority
+            </Link>{' '}
+            &mdash; so you have content to reference in sequences
+          </li>
+          <li>
+            &middot;{' '}
+            <Link href="/services/catalog-ai/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+              Catalog AI
+            </Link>{' '}
+            &mdash; for distributors where outbound + catalog quality both matter
+          </li>
+        </ul>
+        <p className="mt-3">
+          If you want outbound coordinated with these &mdash; one operator
+          running the whole growth function &mdash; see{' '}
+          <Link href="/services/full-growth-ownership/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+            Full Growth Ownership
+          </Link>.
+        </p>
+      </>
+    ),
+  },
 ]
 
 export default function OutboundEmailServicePage() {
@@ -145,6 +190,7 @@ export default function OutboundEmailServicePage() {
         })}
       />
 
+      <div className="h-1.5 w-full bg-service-outbound-500" aria-hidden />
       <ServicesHero
         eyebrow="Services / Outbound email"
         title="Outbound that reads like a peer,"
@@ -176,6 +222,17 @@ export default function OutboundEmailServicePage() {
       <DeliverabilityReality id="reality" />
 
       <DeliverabilityPillars id="approach" />
+
+      <SectionRail tone="paper" size="sm">
+        <CrossServiceCallout
+          eyebrow="Related services"
+          intro={<>Outbound earns better reply rates when prospects can verify you exist beyond the inbox. Two services that compound with outbound:</>}
+          links={[
+            { service: 'search', note: 'When prospects Google you after your cold email, what they find determines reply rate' },
+            { service: 'editorial', note: 'Pillar content that prospects find when they research you' },
+          ]}
+        />
+      </SectionRail>
 
       <DeliverabilityScorePanel id="deliverability" />
 

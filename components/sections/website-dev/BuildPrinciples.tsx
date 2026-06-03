@@ -33,7 +33,7 @@ const PRINCIPLES: Principle[] = [
   {
     number: '03',
     title: 'Plugin-thin by policy',
-    body: 'Plugins are technical debt. We write what you need in code your team can read &mdash; not a chain of 40 plugins that break on the next platform update.',
+    body: 'Plugins are technical debt. We write what you need in code your team can read — not a chain of 40 plugins that break on the next platform update.',
     proof: 'Average plugin count at launch: 4 (Shopify) / 14 (WooCommerce).',
   },
   {

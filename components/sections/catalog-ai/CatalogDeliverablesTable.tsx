@@ -12,7 +12,7 @@ import { cn } from '@/lib/cn'
  * Same table mechanics as Comparison.tsx on /services/ai-seo/.
  */
 
-type Cell = { tone: 'yes' | 'no' | 'value'; value?: string }
+type Cell = { tone: 'yes' | 'no' | 'value'; value?: string; emphasize?: boolean }
 
 type Row = {
   label: string
@@ -24,6 +24,7 @@ type Row = {
 const yes = (value?: string): Cell => ({ tone: 'yes', value })
 const no = (): Cell => ({ tone: 'no' })
 const v = (value: string): Cell => ({ tone: 'value', value })
+const emph = (value: string): Cell => ({ tone: 'value', value, emphasize: true })
 
 const ROWS: Row[] = [
   {
@@ -81,6 +82,12 @@ const ROWS: Row[] = [
     enterprise: yes(),
   },
   {
+    label: 'Editor review',
+    standard:   v('5% sampled'),
+    pro:        emph('100% reviewed by senior editor'),
+    enterprise: v('100% reviewed + dedicated operator'),
+  },
+  {
     label: 'QA sampling rate',
     standard:   v('5%'),
     pro:        v('20%'),
@@ -125,11 +132,16 @@ function RenderedCell({
   cell: Cell
   isFeatured?: boolean
 }) {
+  const emphasized = isFeatured && cell.emphasize
   return (
     <td
       className={cn(
-        'border-b border-rule py-4 align-top text-sm',
-        isFeatured ? 'bg-paper px-5' : 'px-5',
+        'border-b border-rule py-4 align-top text-sm px-5',
+        emphasized
+          ? 'bg-service-catalog-50'
+          : isFeatured
+            ? 'bg-paper'
+            : '',
       )}
     >
       {cell.tone === 'yes' && (
@@ -155,7 +167,13 @@ function RenderedCell({
         </span>
       )}
       {cell.tone === 'value' && (
-        <span className="text-ink-700">{cell.value}</span>
+        <span
+          className={cn(
+            emphasized ? 'font-semibold text-service-catalog-700' : 'text-ink-700',
+          )}
+        >
+          {cell.value}
+        </span>
       )}
     </td>
   )

@@ -56,16 +56,16 @@ const TIERS: Tier[] = [
     price: '$7.00',
     priceCadence: '/ SKU',
     forWhom:
-      '"We want AI Overviews and ChatGPT shopping to cite us — not the manufacturer."',
+      '"We want every product reviewed by a senior editor before delivery — at scale we can\'t get from any SaaS tool."',
     featured: true,
     includes: [
+      '100% editor review — every product reviewed by a senior editor before delivery',
       '500–800 word structured descriptions (Overview / Specs / Applications / Compatibility / FAQ)',
       'Manufacturer spec sheet integration — your operator pulls PDFs',
       '4–6 schema-marked FAQ Q&A pairs per product, citation-engineered',
       'Application content grounded in real industry context',
       'Comparison content for top 20% of SKUs by revenue',
       'Product + FAQ + HowTo + AggregateRating + technicalSpec schema',
-      '20% manual QA sampling · quarterly performance review',
     ],
     cta: { label: 'Scope a Pro project', href: '/catalog-snapshot/?tier=pro' },
   },
@@ -78,8 +78,8 @@ const TIERS: Tier[] = [
     forWhom:
       '"We have 50K+ SKUs. We don\'t want a project — we want someone running it."',
     includes: [
+      '100% reviewed + dedicated operator',
       'Pro-depth content for the entire catalog',
-      'Dedicated operator assigned to the account',
       'Top 50 category pages rewritten for AIO scannability',
       'Programmatic SEO build (comparison + application landing pages)',
       'Monthly outcome reviews on citation share + qualified-lead inflows',
@@ -118,8 +118,10 @@ export function CatalogTiers({ id }: { id?: string }) {
                 : 'border-rule hover:border-ink-700',
             )}
           >
+            <div className="h-1 w-full bg-service-catalog-500" aria-hidden />
+
             {t.featured && (
-              <span className="absolute -top-3 left-6 inline-flex items-center rounded-[3px] bg-accent-500 px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
+              <span className="absolute -top-3 left-6 inline-flex items-center rounded-[3px] bg-service-catalog-500 px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
                 Most common
               </span>
             )}

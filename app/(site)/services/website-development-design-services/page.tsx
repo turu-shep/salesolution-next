@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
-import { EngagementModel } from '@/components/sections/EngagementModel'
+import { SectionRail } from '@/components/layout/SectionRail'
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
@@ -9,7 +10,9 @@ import { BuildReality } from '@/components/sections/website-dev/BuildReality'
 import { PerformanceScorecard } from '@/components/sections/website-dev/PerformanceScorecard'
 import { PortfolioGrid } from '@/components/sections/website-dev/PortfolioGrid'
 import { StackTypes } from '@/components/sections/website-dev/StackTypes'
+import { WebDevPricing } from '@/components/sections/website-dev/WebDevPricing'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { CrossServiceCallout } from '@/components/services/CrossServiceCallout'
 import { serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
@@ -140,6 +143,45 @@ const WEBDEV_FAQ: QA[] = [
       </>
     ),
   },
+  {
+    q: 'How does a build pair with your other services?',
+    a: (
+      <>
+        <p>
+          Most builds ship with platform-level capability for content,
+          schema, and AIO citations &mdash; but the <em className="not-italic font-semibold text-ink-900">content itself</em>{' '}
+          gets added separately. Three natural pairings:
+        </p>
+        <ul className="mt-3 space-y-2 pl-4 text-ink-700">
+          <li>
+            &middot; Build +{' '}
+            <Link href="/services/catalog-ai/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+              Catalog AI
+            </Link>: we build the platform, Catalog AI handles 1,000&ndash;50,000 product pages
+          </li>
+          <li>
+            &middot; Build +{' '}
+            <Link href="/services/editorial-authority/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+              Editorial Authority
+            </Link>: we build the platform, senior writers ship the pillar content
+          </li>
+          <li>
+            &middot; Build +{' '}
+            <Link href="/services/ai-seo/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+              AI Search retainer
+            </Link>: post-launch, ongoing GEO optimization keeps you cited
+          </li>
+        </ul>
+        <p className="mt-3">
+          About 60% of builds are paired with at least one of these within 6
+          months. For coordinated multi-service engagements, see{' '}
+          <Link href="/services/full-growth-ownership/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+            Full Growth Ownership
+          </Link>.
+        </p>
+      </>
+    ),
+  },
 ]
 
 export default function WebDevServicePage() {
@@ -154,6 +196,8 @@ export default function WebDevServicePage() {
           category: 'Web Development',
         })}
       />
+
+      <div className="h-1.5 w-full bg-service-dev-500" aria-hidden />
 
       <ServicesHero
         eyebrow="Services / Website development · design"
@@ -185,9 +229,20 @@ export default function WebDevServicePage() {
       <BuildReality />
       <StackTypes id="stacks" />
       <BuildPrinciples id="principles" />
+      <SectionRail tone="paper" size="sm">
+        <CrossServiceCallout
+          eyebrow="What we don't include in a build"
+          intro={<>Three things that look like part of a website project but ship better as separate services:</>}
+          links={[
+            { service: 'catalog', note: 'Product descriptions, FAQs, schema on every SKU. We build the platform; Catalog AI handles per-product content at scale' },
+            { service: 'editorial', note: 'Pillar pages, category authority content. Editorial Authority writes the content; the build provides the platform' },
+            { service: 'search', note: 'The build ships AIO-ready. AI Search & GEO keeps it current as the search surface evolves post-launch' },
+          ]}
+        />
+      </SectionRail>
       <PerformanceScorecard id="performance" />
       <PortfolioGrid id="portfolio" />
-      <EngagementModel id="engagement" />
+      <WebDevPricing id="engagement" />
       <FAQ
         id="faq"
         eyebrow="Build FAQ"
