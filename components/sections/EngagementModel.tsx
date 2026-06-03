@@ -1,6 +1,8 @@
 import Link from 'next/link'
 
 import { SectionRail } from '@/components/layout/SectionRail'
+import { FullGrowthTierCard } from '@/components/services/FullGrowthTierCard'
+import { SERVICE_CLASSES, type ServiceKey } from '@/components/services/service-colors'
 import { cn } from '@/lib/cn'
 
 /**
@@ -13,6 +15,11 @@ import { cn } from '@/lib/cn'
  *
  * The middle option is emphasized — it's the most common entry point
  * for new engagements and the operator wants the eye to land there.
+ *
+ * The third tier is the standardized Full Growth Ownership card from the
+ * shared services system (replaces the legacy "Embedded" copy). When the
+ * caller passes `serviceColorKey`, the Sprint + Retainer cards pick up a
+ * thin accent strip and the featured badge recolors to match.
  */
 
 type Engagement = {
@@ -53,22 +60,27 @@ const ENGAGEMENTS: Engagement[] = [
       'Direct Slack to the operator (no PMs)',
     ],
   },
-  {
-    key: 'embedded',
-    name: 'Embedded',
-    cadence: 'Multi-quarter · by scope',
-    price: 'From $28k / month',
-    forWhom: '"We need fractional Head-of-AI-Search seniority."',
-    includes: [
-      'Acts as your AI-search lead',
-      'Hires + trains your in-house team',
-      'Owns the org-level GEO strategy',
-      'Quarterly board-level reporting',
-    ],
-  },
 ]
 
-export function EngagementModel({ id }: { id?: string }) {
+type Props = {
+  id?: string
+  /**
+   * Optional service color key. When set, the Sprint + Retainer cards get
+   * a thin top accent strip in the matching color and the featured badge
+   * recolors to match. Leave undefined on the homepage to preserve the
+   * default treatment.
+   */
+  serviceColorKey?: Exclude<ServiceKey, 'composite'>
+}
+
+export function EngagementModel({ id, serviceColorKey }: Props) {
+  const accentBarClass = serviceColorKey
+    ? SERVICE_CLASSES[serviceColorKey].accentBar
+    : null
+  const featuredBadgeClass = serviceColorKey
+    ? SERVICE_CLASSES[serviceColorKey].bg500
+    : 'bg-accent-500'
+
   return (
     <SectionRail tone="paper" id={id}>
       <div className="max-w-3xl">
@@ -90,14 +102,24 @@ export function EngagementModel({ id }: { id?: string }) {
           <li
             key={e.key}
             className={cn(
-              'relative flex flex-col border bg-surface transition-shadow duration-200',
+              'relative flex flex-col overflow-hidden border bg-surface transition-shadow duration-200',
               e.featured
                 ? 'border-ink-900 shadow-[0_30px_80px_-30px_rgba(15,20,30,0.25)]'
                 : 'border-rule hover:border-ink-700',
             )}
           >
+            {accentBarClass && (
+              <span aria-hidden className={accentBarClass} />
+            )}
+
             {e.featured && (
-              <span className="absolute -top-3 left-6 inline-flex items-center rounded-[3px] bg-accent-500 px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
+              <span
+                className={cn(
+                  'absolute left-6 inline-flex items-center rounded-[3px] px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white',
+                  accentBarClass ? '-top-3' : '-top-3',
+                  featuredBadgeClass,
+                )}
+              >
                 Most engagements start here
               </span>
             )}
@@ -140,19 +162,11 @@ export function EngagementModel({ id }: { id?: string }) {
 
             <div className="border-t border-rule px-6 py-4">
               <Link
-                href={
-                  e.key === 'sprint'
-                    ? '/constraint-sprint/'
-                    : e.key === 'retainer'
-                      ? '/book-growth-call/'
-                      : '/contact-me/'
-                }
+                href={e.key === 'sprint' ? '/constraint-sprint/' : '/book-growth-call/'}
                 data-cta={
                   e.key === 'sprint'
                     ? 'sprint__engagement_card'
-                    : e.key === 'retainer'
-                      ? 'book_call__engagement_card'
-                      : 'contact__engagement_card'
+                    : 'book_call__engagement_card'
                 }
                 data-cta-location="mid_body"
                 className={cn(
@@ -164,12 +178,15 @@ export function EngagementModel({ id }: { id?: string }) {
               >
                 {e.key === 'sprint' && 'Scope a sprint'}
                 {e.key === 'retainer' && 'Book a strategy call'}
-                {e.key === 'embedded' && 'Talk to Artur directly'}
                 <span aria-hidden>→</span>
               </Link>
             </div>
           </li>
         ))}
+
+        <li className="flex">
+          <FullGrowthTierCard className="w-full" />
+        </li>
       </ul>
 
       <p className="mt-10 max-w-2xl text-sm text-ink-500">

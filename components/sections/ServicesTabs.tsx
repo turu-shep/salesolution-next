@@ -4,21 +4,27 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 import { SectionRail } from '@/components/layout/SectionRail'
+import { CompositeBar } from '@/components/services/CompositeBar'
+import { SERVICE_CLASSES, type ServiceKey } from '@/components/services/service-colors'
 import { cn } from '@/lib/cn'
 
 /**
- * Home § 04 — replaces the 4-up ServicesGrid + the adjacent AuthorityGEO
- * and PPC sections (both redundant on the homepage; their content lives on
- * the /services/ai-seo, /services/content-*, /services/ppc-* detail pages).
+ * Home § 04 — Six services, one team.
  *
- * Single tabbed block: 4 service categories surfaced as monospace tab
- * labels along a hairline rail, content swaps below. Replaces 12+ visually
- * identical white cards with one editorial slab.
+ * Surfaces all five productized services as service-colored tabs (per the
+ * 2026-05 color system rollout), plus a Full Growth Ownership callout
+ * below for buyers who want everything coordinated under one operator.
+ *
+ * Each tab uses its destination service's identity color on the active
+ * underline + the artifact strip, so the buyer can visually thread the
+ * homepage to the detail page they end up on.
  */
+
+type ServiceTabKey = Exclude<ServiceKey, 'composite'>
 
 type Item = { title: string; body: string }
 type Tab = {
-  key: string
+  key: ServiceTabKey
   label: string
   title: string
   description: string
@@ -28,95 +34,99 @@ type Tab = {
 
 const TABS: Tab[] = [
   {
-    key: 'foundations',
-    label: 'Foundations',
-    title: 'AI-Ready Technical Foundations',
+    key: 'search',
+    label: 'AI Search & GEO',
+    title: 'Be cited inside AI Overviews, not just ranked underneath.',
     description:
-      'Engineering your e-commerce platform so AI crawlers can read it without ambiguity, and so AI Overviews and shopping surfaces have the structured signal they prefer to cite.',
+      'Schema rewrites, citation engineering, AIO-aware paid acceleration. The gravity well — most engagements start here because schema + citation work produces the fastest visible wins.',
     detailHref: '/services/ai-seo/',
     items: [
       { title: 'Advanced schema', body: 'Product specs, compatibility matrices, technical documentation marked up for LLM comprehension.' },
-      { title: 'Core Web Vitals', body: 'Sub-second loads — the table-stakes preference for AI surfaces and technical buyers.' },
+      { title: 'Citation engineering', body: 'Engineered to be the source AI Overviews and ChatGPT cite ahead of the manufacturer.' },
       { title: 'B2B feed engineering', body: 'Google Merchant Center, Amazon Business, Thomasnet, GlobalSpec — feed quality, not just feed coverage.' },
-      { title: 'JS-rendered data', body: 'Real-time inventory, pricing, and spec updates that AI parsers can still consume.' },
+      { title: 'AIO-aware PPC', body: 'Bid and creative adapted to AIO-triggering queries; conversational long-tail coverage.' },
     ],
   },
   {
-    key: 'content',
-    label: 'Content & Authority',
-    title: 'Content Strategy for AI Visibility & Engagement',
+    key: 'catalog',
+    label: 'Catalog AI',
+    title: 'Product catalogs rewritten at SKU scale.',
     description:
-      'Content engineered for AI scannability and citation: H-E-E-A-T signals, engineering query coverage, multimodal preparation. Past keywords, into authority.',
-    detailHref: '/services/content-writing-services/',
+      'AI-drafted product descriptions, schema, FAQ blocks, and internal linking — with senior-editor review on every product at Pro tier. Built for industrial distributors with 1,000+ SKUs.',
+    detailHref: '/services/catalog-ai/',
     items: [
-      { title: 'H-E-E-A-T optimization', body: 'Engineering expertise, case studies, certifications — the trust signals AI surfaces weight heavily.' },
-      { title: 'Engineering query coverage', body: 'Long-tail technical and problem-solution content that captures B2B intent before the click.' },
-      { title: 'AI-scannable documentation', body: 'Spec sheets, install guides, troubleshooting structured for LLM parsing.' },
-      { title: 'Video & 3D model SEO', body: 'Demos, CAD previews, install videos prepared for multimodal AI surfaces.' },
+      { title: 'AI-drafted descriptions', body: '200–800 word product descriptions structured for AIO citation, in your brand voice.' },
+      { title: '100% editor review (Pro)', body: 'Senior editors review every product before delivery. Not sampled QA — every page.' },
+      { title: 'Schema + FAQ at scale', body: 'Product + Offer + FAQ + HowTo + technicalSpec schema, 4–6 FAQ pairs per product.' },
+      { title: 'CRM-format delivery', body: 'Shopify CSV, Magento XML, BigCommerce, or custom — we map to your import.' },
     ],
   },
   {
-    key: 'channels',
-    label: 'Channels & Paid',
-    title: 'Platform Diversification & Intelligent PPC',
+    key: 'editorial',
+    label: 'Editorial Authority',
+    title: 'Pillar pages and category content. Senior writers, no LLM drafting.',
     description:
-      "Break single-source dependency. We extend your brand presence across the platforms technical buyers actually use — and run paid acceleration that's tuned for AI Overview ad surfaces.",
-    detailHref: '/services/outbound-email-marketing-services/',
+      'Pillar pages, cluster posts, engineering Q&A hubs, and category-level content written by senior subject-matter writers. The layer above the catalog — built to be cited, not just published.',
+    detailHref: '/services/editorial-authority/',
     items: [
-      { title: 'YouTube technical channel', body: 'Product demos, engineering tutorials, thought leadership built for technical audiences.' },
-      { title: 'Industrial marketplaces', body: 'Thomasnet, GlobalSpec, vertical directory presence engineered to convert.' },
-      { title: 'LinkedIn B2B authority', body: 'Engineering community engagement, technical content distribution, lead generation.' },
-      { title: 'AI-Overview-aware PPC', body: 'Bid and creative adapted to AIO-triggering queries; conversational long-tail coverage.' },
+      { title: 'Pillar + cluster system', body: '3,000–6,000 word pillars supported by 6–16 clusters per category. Built for AIO citation.' },
+      { title: 'Engineering Q&A hubs', body: 'Long-tail technical and problem-solution content that captures B2B intent before the click.' },
+      { title: 'No LLM ghostwriting', body: '78% of LLM-drafted content earns zero AIO citations in 90 days. We don’t ship work that doesn’t earn its keep.' },
+      { title: 'Editorial calendars', body: 'Monthly topic research, schema, and 12-month plans. Volume discounts at 6 and 12 months.' },
     ],
   },
   {
-    key: 'conversion',
-    label: 'Conversion & Data',
-    title: 'Conversion, CX & First-Party Data Strategy',
+    key: 'dev',
+    label: 'Website Development',
+    title: 'Performance-engineered e-commerce. You own the code.',
     description:
-      "Turn visitors into accounts. We optimize the on-site experience and the first-party data flywheel so each engagement compounds the next.",
+      'Headless Next.js, Shopify Plus, or WooCommerce. Core Web Vitals committed in the SOW, schema baked in, plugin-thin by policy. Zero-lock-in clause in every SOW since 2021.',
     detailHref: '/services/website-development-design-services/',
     items: [
+      { title: 'Core Web Vitals SLA', body: 'LCP < 2.0s, INP < 200ms, CLS < 0.05 — committed in the SOW, held for 30 days post-launch.' },
+      { title: 'AIO-ready from commit 1', body: 'Schema graph (Product, Offer, FAQ, HowTo, Breadcrumb), entity disambiguation, machine-readable answer blocks.' },
       { title: 'B2B checkout', body: 'Quote requests, PO processing, net terms, multi-user accounts — built for procurement workflows.' },
-      { title: 'AI-powered recommendations', body: 'Compatible parts, project bundles, maintenance reminders — context-aware suggestions.' },
-      { title: 'Technical-buyer intelligence', body: 'Engineer behavior tracking, spec preferences, project-based intent signals.' },
-      { title: 'Community building', body: 'Forums, knowledge bases, loyalty programs for repeat technical buyers.' },
+      { title: 'Own the code', body: 'Git repo in your org, hosting in your account, credentials handed over on launch day.' },
+    ],
+  },
+  {
+    key: 'outbound',
+    label: 'Outbound Email',
+    title: 'Deliverability-first cold outbound for technical B2B.',
+    description:
+      'Sender-reputation engineering, hand-built lists, multi-touch sequences with branching logic. We don’t spray-and-pray; we engineer the infrastructure so replies land.',
+    detailHref: '/services/outbound-email-marketing-services/',
+    items: [
+      { title: 'Sender domain engineering', body: '2–5 dedicated outbound domains, 4-week warm-up, isolated IP pools. Your primary domain stays clean.' },
+      { title: 'Vertical-specific lists', body: 'Hand-built ICP lists from primary sources. No bought databases, no spray contact buys.' },
+      { title: 'Multi-touch sequences', body: '5-touch sequences with branching logic. We report sends, positive replies, meetings, sourced pipeline.' },
+      { title: 'Honest reply targets', body: '8–15% positive reply rate by week six. Under 5% means the offer or list needs work — we say so.' },
     ],
   },
 ]
 
-/**
- * Per-tab artifact panel — a small visual demonstrating what the practice
- * produces. JSON-LD code for Foundations, citation card for Content, channel
- * presence for Channels, funnel for Conversion. Each lives inline because
- * each is one-off and shares the dark-tab styling context.
- */
-function TabArtifact({ tabKey }: { tabKey: string }) {
-  switch (tabKey) {
-    case 'foundations':
-      return <SchemaArtifact />
-    case 'content':
-      return <CitationArtifact />
-    case 'channels':
-      return <ChannelArtifact />
-    case 'conversion':
-      return <FunnelArtifact />
-    default:
-      return null
-  }
+const ARTIFACT: Record<ServiceTabKey, React.ReactNode> = {
+  search: <SchemaArtifact />,
+  catalog: <CatalogArtifact />,
+  editorial: <CitationArtifact />,
+  dev: <CWVArtifact />,
+  outbound: <DeliverabilityArtifact />,
 }
 
 function ArtifactShell({
   label,
   meta,
+  accentClass,
   children,
 }: {
   label: string
   meta?: string
+  accentClass: string
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-md border border-white/10 bg-black/30 backdrop-blur">
+    <div className="overflow-hidden rounded-md border border-white/10 bg-black/30 backdrop-blur">
+      <div className={cn('h-1', accentClass)} aria-hidden />
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
         <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-300">
           {label}
@@ -134,32 +144,24 @@ function ArtifactShell({
 
 function SchemaArtifact() {
   return (
-    <ArtifactShell label="schema.org/Product · JSON-LD" meta="excerpt">
+    <ArtifactShell label="schema.org/Product · JSON-LD" meta="excerpt" accentClass="bg-service-search-500">
       <pre className="overflow-x-auto font-mono text-[12px] leading-relaxed text-ink-300">
         <code>
           <span className="text-ink-500">{'{'}</span>
           {'\n  '}
-          <span className="text-accent-500">&quot;@context&quot;</span>: <span className="text-data-up">&quot;schema.org&quot;</span>,
+          <span className="text-service-search-500">&quot;@type&quot;</span>: <span className="text-data-up">&quot;Product&quot;</span>,
           {'\n  '}
-          <span className="text-accent-500">&quot;@type&quot;</span>: <span className="text-data-up">&quot;Product&quot;</span>,
+          <span className="text-service-search-500">&quot;name&quot;</span>: <span className="text-data-up">&quot;1/2&quot; NPT–JIC Fitting&quot;</span>,
           {'\n  '}
-          <span className="text-accent-500">&quot;name&quot;</span>: <span className="text-data-up">&quot;1/2&quot; NPT–JIC Hydraulic Fitting&quot;</span>,
+          <span className="text-service-search-500">&quot;brand&quot;</span>: <span className="text-data-up">&quot;Parker Hannifin&quot;</span>,
           {'\n  '}
-          <span className="text-accent-500">&quot;brand&quot;</span>: <span className="text-data-up">&quot;Parker Hannifin&quot;</span>,
+          <span className="text-service-search-500">&quot;sku&quot;</span>: <span className="text-data-up">&quot;P-37-NPT-08&quot;</span>,
           {'\n  '}
-          <span className="text-accent-500">&quot;sku&quot;</span>: <span className="text-data-up">&quot;P-37-NPT-08&quot;</span>,
-          {'\n  '}
-          <span className="text-accent-500">&quot;description&quot;</span>: <span className="text-data-up">&quot;37° flare seal, 3000 PSI working pressure...&quot;</span>,
-          {'\n  '}
-          <span className="text-accent-500">&quot;offers&quot;</span>: <span className="text-ink-500">{'{'}</span>
+          <span className="text-service-search-500">&quot;offers&quot;</span>: <span className="text-ink-500">{'{'}</span>
           {'\n    '}
-          <span className="text-accent-500">&quot;@type&quot;</span>: <span className="text-data-up">&quot;Offer&quot;</span>,
+          <span className="text-service-search-500">&quot;price&quot;</span>: <span className="text-data-up">&quot;24.50&quot;</span>,
           {'\n    '}
-          <span className="text-accent-500">&quot;price&quot;</span>: <span className="text-data-up">&quot;24.50&quot;</span>,
-          {'\n    '}
-          <span className="text-accent-500">&quot;priceCurrency&quot;</span>: <span className="text-data-up">&quot;USD&quot;</span>,
-          {'\n    '}
-          <span className="text-accent-500">&quot;availability&quot;</span>: <span className="text-data-up">&quot;InStock&quot;</span>
+          <span className="text-service-search-500">&quot;availability&quot;</span>: <span className="text-data-up">&quot;InStock&quot;</span>
           {'\n  '}
           <span className="text-ink-500">{'}'}</span>
           {'\n'}
@@ -178,16 +180,40 @@ function SchemaArtifact() {
   )
 }
 
+function CatalogArtifact() {
+  return (
+    <ArtifactShell label="Catalog rewrite · before / after" meta="1 SKU sample" accentClass="bg-service-catalog-500">
+      <div className="space-y-4">
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">Before · manufacturer copy</p>
+          <p className="mt-2 text-sm text-ink-300">
+            1/2&quot; NPT-to-JIC hydraulic adapter. 37° flare. Steel.
+          </p>
+        </div>
+        <div className="border-t border-white/10 pt-4">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-service-catalog-500">After · Pro tier rewrite</p>
+          <p className="mt-2 text-sm text-ink-200">
+            Carbon steel adapter connecting 1/2&quot; female NPT to male JIC 37° flare. Used in high-pressure hydraulic systems above 3,000 PSI where a secure metal-to-metal seal is required — pumps, presses, mobile equipment.
+          </p>
+        </div>
+        <div className="border-t border-white/10 pt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-400">
+          + 4 FAQ pairs, application content, structured schema. <span className="text-service-catalog-500">100% editor reviewed.</span>
+        </div>
+      </div>
+    </ArtifactShell>
+  )
+}
+
 function CitationArtifact() {
   return (
-    <ArtifactShell label="AI Overview · citation slot" meta="ranked #1">
+    <ArtifactShell label="AI Overview · citation slot" meta="ranked #1" accentClass="bg-service-editorial-500">
       <p className="text-sm leading-relaxed text-ink-200">
         For high-pressure hydraulic systems, JIC fittings are ideal due to their
         37° flare seal design.{' '}
-        <span className="rounded-[3px] bg-accent-500/20 px-1.5 py-0.5 font-semibold text-accent-500 ring-1 ring-accent-500/40">
+        <span className="rounded-[3px] bg-service-editorial-500/20 px-1.5 py-0.5 font-semibold text-service-editorial-500 ring-1 ring-service-editorial-500/40">
           Northern Hydraulics
         </span>
-        <sup className="ml-0.5 font-mono text-[10px] text-accent-500">[1]</sup>{' '}
+        <sup className="ml-0.5 font-mono text-[10px] text-service-editorial-500">[1]</sup>{' '}
         notes that the 1/2&quot; NPT-to-JIC adapter is the most commonly
         specified connector above 3,000 PSI.
       </p>
@@ -199,21 +225,21 @@ function CitationArtifact() {
         <ul className="mt-3 space-y-2 font-mono text-[11px]">
           <li className="flex items-center justify-between">
             <span className="flex items-center gap-2 text-white">
-              <span className="rounded-[2px] bg-accent-500 px-1 text-[9px] text-white">[1]</span>
+              <span className="rounded-[2px] bg-service-editorial-500 px-1 text-[9px] text-white">[1]</span>
               northernhydraulics.com
             </span>
             <span className="text-ink-400">87%</span>
           </li>
           <li className="flex items-center justify-between text-ink-400">
             <span className="flex items-center gap-2">
-              <span className="text-ink-400">[2]</span>
+              <span>[2]</span>
               parker.com
             </span>
             <span>9%</span>
           </li>
           <li className="flex items-center justify-between text-ink-400">
             <span className="flex items-center gap-2">
-              <span className="text-ink-400">[3]</span>
+              <span>[3]</span>
               eaton.com
             </span>
             <span>4%</span>
@@ -224,94 +250,87 @@ function CitationArtifact() {
   )
 }
 
-function ChannelArtifact() {
-  const channels = [
-    { name: 'Thomasnet', presence: 92, kind: 'Marketplace' },
-    { name: 'GlobalSpec', presence: 78, kind: 'Marketplace' },
-    { name: 'LinkedIn',  presence: 88, kind: 'Authority' },
-    { name: 'YouTube',   presence: 64, kind: 'Demo / Tech' },
-    { name: 'Google Merchant', presence: 95, kind: 'Feed' },
+function CWVArtifact() {
+  const metrics = [
+    { label: 'LCP',  value: '1.4s',  target: '< 2.0s', pct: 70 },
+    { label: 'INP',  value: '142ms', target: '< 200ms', pct: 71 },
+    { label: 'CLS',  value: '0.02',  target: '< 0.05', pct: 40 },
   ]
   return (
-    <ArtifactShell label="Channel presence · index" meta="last refresh · 12h">
-      <ul className="space-y-3.5">
-        {channels.map((c) => (
-          <li key={c.name} className="grid grid-cols-12 items-center gap-3">
-            <span className="col-span-4 truncate text-sm font-medium text-white">{c.name}</span>
-            <div className="col-span-6 h-2 overflow-hidden bg-white/10">
-              <div
-                className="h-full bg-accent-500"
-                style={{ width: `${c.presence}%` }}
-              />
-            </div>
-            <span className="col-span-2 text-right font-mono text-[11px] tabular-nums text-ink-300">
-              {c.presence}
+    <ArtifactShell label="Core Web Vitals · 4-build median" meta="CrUX p75" accentClass="bg-service-dev-500">
+      <ul className="space-y-4">
+        {metrics.map((m) => (
+          <li key={m.label} className="grid grid-cols-12 items-center gap-3">
+            <span className="col-span-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
+              {m.label}
             </span>
-          </li>
-        ))}
-      </ul>
-    </ArtifactShell>
-  )
-}
-
-function FunnelArtifact() {
-  const stages = [
-    { label: 'Spec view',      count: 12480, pct: 100 },
-    { label: 'Compat. check',  count:  4920, pct: 39 },
-    { label: 'Quote request',  count:  1620, pct: 13 },
-    { label: 'PO issued',      count:   312, pct: 2.5 },
-  ]
-  return (
-    <ArtifactShell label="Technical buyer funnel · 28d" meta="qualified only">
-      <ul className="space-y-3">
-        {stages.map((s, i) => (
-          <li key={s.label} className="grid grid-cols-12 items-center gap-3">
-            <span className="col-span-4 text-sm text-white">{s.label}</span>
-            <div className="col-span-5 h-3 bg-white/10">
-              <div
-                className={i === 0 ? 'h-full bg-brand-600' : 'h-full bg-accent-500'}
-                style={{ width: `${s.pct}%` }}
-              />
+            <div className="col-span-6 h-2 overflow-hidden bg-white/10">
+              <div className="h-full bg-service-dev-500" style={{ width: `${m.pct}%` }} />
             </div>
-            <span className="col-span-3 text-right font-mono text-[11px] tabular-nums text-ink-300">
-              {s.count.toLocaleString()}
+            <span className="col-span-2 text-right font-mono text-[11px] tabular-nums text-white">
+              {m.value}
+            </span>
+            <span className="col-span-2 text-right font-mono text-[10px] tabular-nums text-data-up">
+              {m.target}
             </span>
           </li>
         ))}
       </ul>
       <div className="mt-4 border-t border-white/10 pt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-400">
-        Conversion · Spec → PO &nbsp;·&nbsp; <span className="text-data-up">2.5%</span>
+        SLA in every SOW. <span className="text-data-up">Held for 30 days post-launch.</span>
+      </div>
+    </ArtifactShell>
+  )
+}
+
+function DeliverabilityArtifact() {
+  const items = [
+    { label: 'SPF / DKIM / DMARC', status: 'PASS' },
+    { label: 'Sender reputation',  status: '94 / 100' },
+    { label: 'Spam complaint rate', status: '0.02%' },
+    { label: 'Inbox placement',    status: '96%' },
+  ]
+  return (
+    <ArtifactShell label="Sender health · week 5" meta="2 domains" accentClass="bg-service-outbound-500">
+      <ul className="space-y-3">
+        {items.map((it) => (
+          <li key={it.label} className="flex items-center justify-between border-b border-white/10 pb-2 last:border-b-0 last:pb-0">
+            <span className="text-sm text-ink-200">{it.label}</span>
+            <span className="font-mono text-[11px] tabular-nums text-service-outbound-500">{it.status}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-4 border-t border-white/10 pt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-400">
+        Reply rate target · <span className="text-service-outbound-500">8–15%</span> by week six.
       </div>
     </ArtifactShell>
   )
 }
 
 export function ServicesTabs({ id }: { id?: string }) {
-  const [active, setActive] = useState(TABS[0].key)
+  const [active, setActive] = useState<ServiceTabKey>(TABS[0].key)
   const tab = TABS.find((t) => t.key === active) ?? TABS[0]
-
   return (
     <SectionRail tone="dark" id={id}>
       <div className="max-w-3xl">
-        <h2 className="font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-          Four practice areas. One team.
-        </h2>
-        <p className="mt-6 text-lg leading-relaxed text-ink-300">
-          A single engineering-and-content team across the full discovery
-          stack &mdash; technical foundations, content authority, channel
-          diversification, conversion data. No handoffs, no agencies of
-          agencies.
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
+          What we ship
         </p>
+        <h2 className="mt-3 font-display text-balance text-3xl font-semibold leading-[1.1] tracking-[-0.015em] text-white sm:text-4xl">
+          Six services. <span className="text-ink-400">One operator-led team.</span>
+        </h2>
       </div>
 
-      {/* Tab rail */}
+      {/* Tab rail — active tab gets a thicker color underline + faint background
+          tint so the selected state is unmistakable at a glance. */}
       <div
         role="tablist"
         aria-label="Service practice areas"
-        className="mt-14 flex flex-wrap gap-x-6 gap-y-1 border-b border-white/15"
+        className="mt-10 flex flex-wrap gap-x-2 gap-y-1 border-b border-white/15"
       >
         {TABS.map((t) => {
           const isActive = t.key === tab.key
+          const c = SERVICE_CLASSES[t.key]
           return (
             <button
               key={t.key}
@@ -320,16 +339,17 @@ export function ServicesTabs({ id }: { id?: string }) {
               aria-selected={isActive}
               onClick={() => setActive(t.key)}
               className={cn(
-                'group relative -mb-px cursor-pointer px-1 py-3 font-display text-sm font-semibold transition-colors duration-200',
+                'group relative -mb-px inline-flex cursor-pointer items-center gap-2 px-3 py-3 font-display text-sm font-semibold transition-colors duration-200',
                 isActive ? 'text-white' : 'text-ink-300 hover:text-white',
               )}
             >
+              <span aria-hidden className={cn('inline-block h-2 w-2 rounded-full', c.dot)} />
               {t.label}
               <span
                 aria-hidden
                 className={cn(
-                  'absolute inset-x-0 bottom-0 h-px transition-colors',
-                  isActive ? 'bg-accent-500' : 'bg-transparent',
+                  'absolute inset-x-0 bottom-0 h-[3px] transition-colors',
+                  isActive ? c.bg500 : 'bg-transparent',
                 )}
               />
             </button>
@@ -337,37 +357,62 @@ export function ServicesTabs({ id }: { id?: string }) {
         })}
       </div>
 
-      <div className="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
         {/* `min-w-0` on both columns so the JSON-LD <pre> artifact's intrinsic
             min-content can't push the grid track past its track-size cap. */}
-        <div className="min-w-0 lg:col-span-7">
-          <h3 className="font-display text-2xl font-semibold leading-tight text-white sm:text-3xl">
+        <div className="min-w-0 lg:col-span-6">
+          <h3 className="font-display text-2xl font-semibold leading-[1.15] tracking-[-0.01em] text-white sm:text-[2rem]">
             {tab.title}
           </h3>
-          <p className="mt-4 max-w-xl text-ink-300">{tab.description}</p>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-300">
+            {tab.description}
+          </p>
           <Link
             href={tab.detailHref}
-            className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-white underline decoration-white/30 underline-offset-[6px] transition-colors duration-200 hover:text-accent-500 hover:decoration-accent-500"
+            className="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-white underline decoration-white/30 underline-offset-[6px] transition-colors duration-200 hover:decoration-white hover:decoration-2"
           >
-            See the {tab.label.toLowerCase()} detail page
+            See the {tab.label} page
             <span aria-hidden>→</span>
           </Link>
-
-          <ul className="mt-10 grid gap-x-10 gap-y-7 border-t border-white/10 pt-8 sm:grid-cols-2">
-            {tab.items.map((item) => (
-              <li key={item.title}>
-                <h4 className="font-display text-base font-semibold text-white">
-                  {item.title}
-                </h4>
-                <p className="mt-1.5 text-sm text-ink-300">{item.body}</p>
-              </li>
-            ))}
-          </ul>
         </div>
 
-        {/* Artifact: a small visual proof of what the practice produces */}
-        <div className="min-w-0 lg:col-span-5">
-          <TabArtifact tabKey={tab.key} />
+        {/* Artifact: a small visual proof of what the practice produces.
+            This replaces the redundant 4-bullet capability grid — the detail
+            page already covers capabilities; the homepage tab should tease. */}
+        <div className="min-w-0 lg:col-span-6">{ARTIFACT[tab.key]}</div>
+      </div>
+
+      {/* Full Growth Ownership callout — the 6th service, surfaced below the
+          five productized tabs because it's a different shape (coordinated
+          multi-service engagement) and shouldn't share the tab UI. */}
+      <div className="mt-16 overflow-hidden border border-white/10 bg-black/30 backdrop-blur">
+        <CompositeBar weight="hero" />
+        <div className="grid gap-6 px-6 py-7 md:grid-cols-12 md:items-center md:gap-8 md:px-8">
+          <div className="md:col-span-8">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
+              The sixth service
+            </p>
+            <h3 className="mt-2 font-display text-2xl font-semibold leading-tight text-white sm:text-3xl">
+              Need all five coordinated under one operator?
+            </h3>
+            <p className="mt-3 max-w-2xl text-ink-300">
+              Full Growth Ownership runs AI search, catalog, editorial,
+              dev, and outbound as a single accountable engagement.
+              Fractional GTM Engineer (Shape A) from $20K/mo, or 4-in-1
+              Coordinated Retainer (Shape B) from $12K/mo.
+            </p>
+          </div>
+          <div className="md:col-span-4 md:text-right">
+            <Link
+              href="/services/full-growth-ownership/"
+              data-cta="full_growth_ownership__home_tabs"
+              data-cta-location="mid_body"
+              className="inline-flex items-center gap-1.5 rounded-[4px] border border-white/30 bg-transparent px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:border-white hover:bg-white/5"
+            >
+              See Full Growth Ownership
+              <span aria-hidden>→</span>
+            </Link>
+          </div>
         </div>
       </div>
     </SectionRail>
