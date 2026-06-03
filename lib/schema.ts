@@ -22,6 +22,7 @@ export function organizationSchema() {
     '@type': 'Organization',
     '@id': orgId,
     name: business.name,
+    alternateName: ['Sales Solution', 'Sales Solutions'],
     url: business.url,
     logo: {
       '@type': 'ImageObject',
@@ -55,6 +56,7 @@ export function websiteSchema() {
     '@id': websiteId,
     url: business.url,
     name: business.name,
+    alternateName: ['Sales Solution', 'Sales Solutions'],
     publisher: { '@id': orgId },
     inLanguage: 'en-US',
   } as const
