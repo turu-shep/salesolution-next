@@ -3,18 +3,20 @@ import { mkdirSync, existsSync, rmSync } from 'node:fs'
 import path from 'node:path'
 
 // Full-res per-section element captures (desktop). One browser, serial.
+// Usage: node scripts/_re-sections.mjs <baseUrl> <route> <tag> <comma-ids>
 const baseUrl = process.argv[2] || 'http://localhost:3000'
-const tag = process.argv[3] || 'r2'
+const route = process.argv[3] || '/revenue-engine/'
+const tag = process.argv[4] || 'r2'
+const ids = (process.argv[5] || 'leak,engine,system,prove,pricing,guarantee,audit').split(',')
+
 const outDir = path.resolve('screenshots/revenue-engine', `${tag}-sections`)
 if (existsSync(outDir)) rmSync(outDir, { recursive: true })
 mkdirSync(outDir, { recursive: true })
 
-const ids = ['leak', 'engine', 'system', 'prove', 'pricing', 'guarantee', 'audit']
-
 const browser = await chromium.launch({ headless: true })
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' })
 const p = await ctx.newPage()
-await p.goto(`${baseUrl}/revenue-engine/`, { waitUntil: 'networkidle', timeout: 60000 })
+await p.goto(`${baseUrl}${route}`, { waitUntil: 'networkidle', timeout: 60000 })
 await p.waitForTimeout(600)
 
 for (const id of ids) {

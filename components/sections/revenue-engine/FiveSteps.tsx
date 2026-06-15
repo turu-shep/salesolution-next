@@ -2,16 +2,20 @@ import { cn } from '@/lib/cn'
 import { SectionRail } from '@/components/layout/SectionRail'
 
 /**
- * Revenue Engine pillar § 4 — the 5-step system.
+ * Revenue Engine § the 5-step system — shared timeline.
  *
  * Canonical names and order (spec §1.3 — do not rename, reorder, or
  * merge): CAPTURE → RESPOND → BOOK → RECOVER → PROVE. Rendered as a
- * numbered timeline: a connected vertical rail of nodes, each with what
- * the step is and the metric it moves. The final node (PROVE) is filled
- * to read as the outcome. Vertical by construction — no mobile reflow bug.
+ * numbered timeline (connected nodes; PROVE filled as the outcome).
+ * Vertical by construction, so no mobile reflow bug.
+ *
+ * The pillar uses the generic defaults; the vertical pages pass their own
+ * `steps` (the same five names, applied to that trade) + heading/intro.
  */
 
-const STEPS = [
+export type FiveStep = { n: string; key: string; what: string; metric: string }
+
+const DEFAULT_STEPS: FiveStep[] = [
   {
     n: '01',
     key: 'CAPTURE',
@@ -44,32 +48,50 @@ const STEPS = [
   },
 ]
 
-export function FiveSteps({ id }: { id?: string }) {
+export function FiveSteps({
+  id,
+  eyebrow = 'The system',
+  headline,
+  intro,
+  steps = DEFAULT_STEPS,
+}: {
+  id?: string
+  eyebrow?: string
+  headline?: React.ReactNode
+  intro?: React.ReactNode
+  steps?: FiveStep[]
+}) {
   return (
     <SectionRail tone="paper" id={id}>
       <div className="max-w-3xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-          The system
+          {eyebrow}
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Five steps,{' '}
-          <span className="text-ink-500">one engine.</span>
+          {headline ?? (
+            <>
+              Five steps, <span className="text-ink-500">one engine.</span>
+            </>
+          )}
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          The same system runs whether you are a roofer or a dental practice.
-          The skin changes; the engine does not.
+          {intro ?? (
+            <>
+              The same system runs whether you are a roofer or a dental
+              practice. The skin changes; the engine does not.
+            </>
+          )}
         </p>
       </div>
 
       <ol className="mt-14 max-w-4xl">
-        {STEPS.map((step, i) => {
-          const isLast = i === STEPS.length - 1
+        {steps.map((step, i) => {
+          const isLast = i === steps.length - 1
           return (
             <li
               key={step.key}
               className="grid grid-cols-[auto_1fr] gap-x-5 sm:gap-x-8"
             >
-              {/* Node + connector rail */}
               <div className="flex flex-col items-center">
                 <span
                   className={cn(
@@ -84,7 +106,6 @@ export function FiveSteps({ id }: { id?: string }) {
                 {!isLast && <span aria-hidden className="w-px flex-1 bg-rule-strong" />}
               </div>
 
-              {/* Content */}
               <div className={cn(isLast ? 'pb-0' : 'pb-12')}>
                 <h3 className="font-display text-xl font-semibold leading-tight tracking-[-0.01em] text-ink-900">
                   {step.key}
