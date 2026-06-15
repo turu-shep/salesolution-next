@@ -111,11 +111,13 @@ const OUTBOUND_FAQ: QA[] = [
     a: (
       <>
         <p>
-          We don&rsquo;t run B2C, e-commerce DTC, or under-$10k ACV high-velocity
-          outbound &mdash; the volume math wants a different agency. We also
-          decline anything in the consumer-finance, supplements, or
-          gambling categories. Everything else inside technical-B2B is on the
-          table.
+          We don&rsquo;t run consumer (B2C) outbound, e-commerce DTC, or
+          under-$10k ACV high-velocity outbound &mdash; the volume math
+          wants a different agency. We also decline consumer-finance,
+          supplements, and gambling. Everything B2B or B2B2C is on the
+          table: technical distribution, dental groups, commercial roofing,
+          and multi-location home-services selling to property managers and
+          GCs.
         </p>
       </>
     ),
@@ -185,7 +187,7 @@ export default function OutboundEmailServicePage() {
         data={serviceSchema({
           name: 'Outbound Email Marketing',
           description:
-            'Deliverability-first cold outbound for technical B2B. Hand-built lists, sender-reputation engineering, multi-touch sequences with branching logic, and honest reporting on replies and sourced pipeline.',
+            'Deliverability-first cold outbound for B2B and B2B2C. Hand-built lists, sender-reputation engineering, multi-touch sequences with branching logic, and honest reporting on replies and sourced pipeline.',
           category: 'Digital Marketing',
         })}
       />
@@ -197,7 +199,7 @@ export default function OutboundEmailServicePage() {
         titleAccent="not an SDR sequence."
         lede={
           <>
-            Deliverability-first cold outbound for technical B2B.
+            Deliverability-first cold outbound for B2B and B2B2C.
             Sender-reputation engineering, hand-built lists, multi-touch
             sequences with branching logic, and honest reporting on replies
             and sourced pipeline &mdash; one operator-led team, no agency

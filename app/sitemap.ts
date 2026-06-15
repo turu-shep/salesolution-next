@@ -45,12 +45,14 @@ const STATIC_ROUTES: Entry[] = [
   { url: `${BASE}/future-proof-your-seo/`,                changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/book-growth-call/`,                     changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/constraint-sprint/`,                    changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/case-studies/`,                         changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/guides/`,                               changeFrequency: 'weekly',  priority: 0.7 },
   { url: `${BASE}/guides/seo-guides/`,                    changeFrequency: 'monthly', priority: 0.6 },
   { url: `${BASE}/guides/website-development-and-design-guides/`, changeFrequency: 'monthly', priority: 0.6 },
   { url: `${BASE}/guides/email-marketing-guides/`,        changeFrequency: 'monthly', priority: 0.6 },
   { url: `${BASE}/category/blog/`,                        changeFrequency: 'weekly',  priority: 0.7 },
   { url: `${BASE}/career-paths/`,                         changeFrequency: 'monthly', priority: 0.6 },
+  { url: `${BASE}/glossary/`,                             changeFrequency: 'weekly',  priority: 0.6 },
   { url: `${BASE}/service-areas/`,                        changeFrequency: 'monthly', priority: 0.5 },
   // Legal — low priority but indexable.
   { url: `${BASE}/privacy-policy/`,                       changeFrequency: 'yearly',  priority: 0.2 },
@@ -65,26 +67,43 @@ async function fetchSanityRoutes(): Promise<Entry[]> {
     const { sanityClient } = await import('@/sanity/lib/client')
     const docs = await sanityClient.fetch<
       {
-        _type: 'post' | 'guide' | 'careerPath'
+        _type: 'post' | 'guide' | 'careerPath' | 'caseStudy' | 'glossaryTerm'
         slug: { current: string }
         updatedAt?: string
         publishedAt?: string
       }[]
     >(
-      `*[_type in ["post","guide","careerPath"] && defined(slug.current)]{
+      `*[_type in ["post","guide","careerPath","caseStudy","glossaryTerm"] && defined(slug.current)]{
          _type, slug, updatedAt, publishedAt
        }`,
     )
 
+    // Glossary term pages are individually indexable as soon as they publish;
+    // the /glossary/ hub itself is held out of the sitemap (and noindexed by
+    // its own route) until it clears the term threshold — see that route.
+    const PATH_PREFIX: Record<string, string> = {
+      post: '',
+      guide: '/guides',
+      careerPath: '/career-paths',
+      caseStudy: '/case-studies',
+      glossaryTerm: '/glossary',
+    }
+
+    const PRIORITY: Record<string, number> = {
+      post: 0.7,
+      caseStudy: 0.7,
+      guide: 0.6,
+      careerPath: 0.6,
+      glossaryTerm: 0.5,
+    }
+
     return docs.map((d) => {
       const lastMod = d.updatedAt ?? d.publishedAt
-      const pathPrefix =
-        d._type === 'post' ? '' : d._type === 'guide' ? '/guides' : '/career-paths'
       return {
-        url: `${BASE}${pathPrefix}/${d.slug.current}/`,
+        url: `${BASE}${PATH_PREFIX[d._type] ?? ''}/${d.slug.current}/`,
         lastModified: lastMod ? new Date(lastMod) : undefined,
         changeFrequency: 'monthly',
-        priority: d._type === 'post' ? 0.7 : 0.6,
+        priority: PRIORITY[d._type] ?? 0.6,
       }
     })
   } catch (err) {

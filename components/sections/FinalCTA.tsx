@@ -12,19 +12,19 @@ export function FinalCTA() {
       <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 lg:px-8 md:py-28">
         <Eyebrow className="text-brand-300">Let&rsquo;s talk</Eyebrow>
         <h2 className="mt-3 text-balance text-white">
-          Secure Your E-commerce Future in the AI Search Era
+          Find the one constraint capping your growth
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-lg text-ink-300">
           15 minutes is enough to find the single biggest constraint on your
-          growth engine. Free. No sales pitch — just the audit.
+          growth engine. No sales pitch — just a straight read on what to fix.
         </p>
         <Link
-          href="/unlock-growth-audit/"
-          data-cta="audit__final_rail"
+          href="/book-growth-call/"
+          data-cta="book_call__final_cta"
           data-cta-location="final_rail"
           className="mt-8 inline-flex items-center justify-center rounded-md bg-brand-600 px-7 py-3.5 text-sm font-semibold text-white shadow-cta transition hover:bg-brand-700"
         >
-          Get Your Free Growth Audit
+          Book a strategy call
         </Link>
       </div>
     </section>

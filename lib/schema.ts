@@ -85,6 +85,49 @@ export function breadcrumbListSchema(items: Breadcrumb[]) {
   }
 }
 
+const glossaryTermSetId = `${SITE}/glossary/#termset`
+
+/**
+ * DefinedTermSet for the /glossary/ hub. One stable node the per-term
+ * DefinedTerm entries point back to via `inDefinedTermSet`.
+ */
+export function definedTermSetSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    '@id': glossaryTermSetId,
+    name: 'AI-search glossary',
+    url: `${SITE}/glossary/`,
+    publisher: { '@id': orgId },
+    inLanguage: 'en-US',
+  }
+}
+
+/**
+ * DefinedTerm for a single /glossary/[term]/ page. `description` should be the
+ * term's short definition — the passage AI engines lift. Anchors the term to
+ * the set above so the glossary reads as one coherent entity to crawlers.
+ */
+export function definedTermSchema({
+  term,
+  slug,
+  definition,
+}: {
+  term: string
+  slug: string
+  definition: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTerm',
+    '@id': `${SITE}/glossary/${slug}/#term`,
+    name: term,
+    description: definition,
+    url: `${SITE}/glossary/${slug}/`,
+    inDefinedTermSet: { '@id': glossaryTermSetId },
+  }
+}
+
 export function faqPageSchema(faq: { question: string; answer: string }[]) {
   return {
     '@context': 'https://schema.org',

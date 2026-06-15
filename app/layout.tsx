@@ -57,7 +57,14 @@ export default function RootLayout({
       lang="en"
       className={`${geist.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-surface text-ink-700 font-sans">
+      {/* suppressHydrationWarning: browser extensions (Grammarly, ClickUp, …)
+          inject attributes/classes onto <body> before React hydrates, which
+          otherwise trips a spurious hydration-mismatch warning. This only
+          suppresses warnings for <body>'s own attributes, not its subtree. */}
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col bg-surface text-ink-700 font-sans"
+      >
         {/* Consent Mode v2 default-deny — must execute BEFORE any tracking tag.
             next/script `beforeInteractive` is always injected into <head> by
             Next regardless of where it's placed, so it lives in <body> here. */}

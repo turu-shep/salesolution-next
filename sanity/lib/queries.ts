@@ -156,6 +156,65 @@ export const guidesInSeriesQuery = `
   }
 `
 
+// ── Case-study fields ─────────────────────────────────────────────────────
+
+const CASE_STUDY_CARD_FIELDS = `
+  _id,
+  title,
+  titleMuted,
+  "slug": slug.current,
+  summary,
+  primaryService,
+  supportingServices,
+  engagementWindow,
+  durationLabel,
+  disclosure,
+  keyMetric,
+  stats,
+  featured,
+  publishedAt,
+  client->{
+    _id,
+    publicName,
+    descriptor,
+    industry,
+    scale,
+    region
+  }
+`
+
+const CASE_STUDY_FIELDS = `
+  ${CASE_STUDY_CARD_FIELDS},
+  updatedAt,
+  situation,
+  constraint,
+  approach,
+  mechanism,
+  resultsNarrative,
+  chart,
+  quote,
+  methodology,
+  disclosureNote,
+  seo
+`
+
+export const allCaseStudiesQuery = `
+  *[_type == "caseStudy" && defined(slug.current)] |
+    order(featured desc, publishedAt desc) {
+    ${CASE_STUDY_CARD_FIELDS}
+  }
+`
+
+export const allCaseStudySlugsQuery = `
+  *[_type == "caseStudy" && defined(slug.current)][].slug.current
+`
+
+export const caseStudyBySlugQuery = `
+  *[_type == "caseStudy" && slug.current == $slug][0] {
+    ${CASE_STUDY_FIELDS}
+  }
+`
+
 // ── Career-path fields ────────────────────────────────────────────────────
 
 const CAREER_PATH_CARD_FIELDS = `
@@ -177,9 +236,21 @@ const CAREER_PATH_FIELDS = `
   role,
   level,
   duration,
+  aliases,
+  status,
+  seniorityMatrix,
   body,
+  buyerSection,
+  lastReviewed,
   publishedAt,
-  seo
+  seo,
+  "relatedTerms": relatedTerms[]->{
+    _id,
+    term,
+    "slug": slug.current,
+    shortDefinition,
+    cluster
+  }
 `
 
 export const allCareerPathsQuery = `
@@ -196,4 +267,55 @@ export const careerPathBySlugQuery = `
   *[_type == "careerPath" && slug.current == $slug][0] {
     ${CAREER_PATH_FIELDS}
   }
+`
+
+// ── Glossary-term fields ──────────────────────────────────────────────────
+
+const GLOSSARY_TERM_CARD_FIELDS = `
+  _id,
+  term,
+  "slug": slug.current,
+  shortDefinition,
+  cluster,
+  aliases
+`
+
+const GLOSSARY_TERM_FIELDS = `
+  _id,
+  term,
+  "slug": slug.current,
+  shortDefinition,
+  cluster,
+  aliases,
+  body,
+  lastReviewed,
+  publishedAt,
+  seo,
+  "relatedTerms": relatedTerms[]->{
+    _id,
+    term,
+    "slug": slug.current,
+    shortDefinition,
+    cluster
+  }
+`
+
+export const allGlossaryTermsQuery = `
+  *[_type == "glossaryTerm" && defined(slug.current)] | order(term asc) {
+    ${GLOSSARY_TERM_CARD_FIELDS}
+  }
+`
+
+export const allGlossaryTermSlugsQuery = `
+  *[_type == "glossaryTerm" && defined(slug.current)][].slug.current
+`
+
+export const glossaryTermBySlugQuery = `
+  *[_type == "glossaryTerm" && slug.current == $slug][0] {
+    ${GLOSSARY_TERM_FIELDS}
+  }
+`
+
+export const glossaryTermCountQuery = `
+  count(*[_type == "glossaryTerm" && defined(slug.current)])
 `

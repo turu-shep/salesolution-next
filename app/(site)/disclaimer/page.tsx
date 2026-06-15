@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { LegalPageLayout } from '@/components/sections/legal/LegalPageLayout'
 import type { LegalTOCItem } from '@/components/sections/legal/LegalTOC'
+import { business } from '@/lib/business'
 
 export const metadata: Metadata = {
   title: 'Disclaimer',
@@ -22,7 +23,7 @@ const TOC: LegalTOCItem[] = [
     id: 'affiliate-and-partner-relationships',
     label: 'Affiliate & partner relationships',
   },
-  { id: 'composite-examples', label: 'Composite examples' },
+  { id: 'composite-examples', label: 'Anonymized & composite examples' },
   { id: 'forward-looking-statements', label: 'Forward-looking statements' },
   { id: 'intellectual-property', label: 'Intellectual property' },
   { id: 'external-references', label: 'External references' },
@@ -126,13 +127,27 @@ export default function DisclaimerPage() {
         Advertising</em> (16 CFR Part 255).
       </p>
 
-      <h2 id="composite-examples">Composite examples</h2>
+      <h2 id="composite-examples">Anonymized &amp; composite examples</h2>
       <p>
-        Some illustrations on the site use composite stories — patterns drawn
-        from multiple client engagements rather than a single attributed case.
-        These are clearly marked where they appear. Names, numbers, and details
-        in composites have been altered or aggregated to protect client
-        confidentiality while preserving the lesson.
+        Most case studies on this site are <strong>anonymized</strong>: they
+        describe a single, real engagement, but the client&rsquo;s name is
+        withheld at their request — most industrial distributors prefer the case
+        study without the logo. In these, the vertical, scale, timeline, and
+        reported metrics are as measured; only identifying details are removed.
+        Each case study states its disclosure mode on the page.
+      </p>
+      <p>
+        A smaller number of illustrations are <strong>composites</strong> —
+        patterns drawn from multiple client engagements rather than a single
+        attributed case. Where a story is a composite it is labeled as one, and
+        the names, numbers, and details have been altered or aggregated to
+        protect client confidentiality while preserving the lesson. We do not
+        present a composite as if it were a single client.
+      </p>
+      <p>
+        Where a client is <strong>named</strong>, it is published with their
+        written consent, and the quoted figures are as measured in the sources
+        cited on that page.
       </p>
 
       <h2 id="forward-looking-statements">Forward-looking statements</h2>
@@ -233,11 +248,12 @@ export default function DisclaimerPage() {
         <strong>IT Sale Solution LLC</strong> (d/b/a Sale Solution /
         SaleSolution)
         <br />
-        200 Kings Point Dr., apt. 1208
+        {business.address.street}
         <br />
-        Sunny Isles Beach, FL 33160, USA
+        {business.address.city}, {business.address.region}{' '}
+        {business.address.postalCode}, USA
         <br />
-        <a href="mailto:leads@salesolution.net">leads@salesolution.net</a>
+        <a href={`mailto:${business.emails.leads}`}>{business.emails.leads}</a>
       </p>
     </LegalPageLayout>
   )

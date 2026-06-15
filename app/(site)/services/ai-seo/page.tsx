@@ -30,9 +30,10 @@ const SERVICES_FAQ: QA[] = [
       <>
         <p>
           One operator owns strategy, schema, content, and reporting &mdash;
-          not four sub-agencies stitched together. Vertical specialisation
-          (industrial / technical-distribution e&#8209;commerce, not generalist).
-          Published prices, 24-hour SOWs, 90-day exit.
+          not four sub-agencies stitched together. Specialisation in
+          considered-purchase verticals (industrial distribution, technical
+          B2B, local service businesses), not generalist. Published prices,
+          24-hour SOWs, 90-day exit.
         </p>
       </>
     ),
@@ -72,9 +73,10 @@ const SERVICES_FAQ: QA[] = [
     a: (
       <>
         <p>
-          Yes to all three. Our hydraulics / industrial clients run mostly
-          on WooCommerce or headless setups; DTC-adjacent clients are
-          largely Shopify. The framework adapts to the stack &mdash; the
+          Yes to all three &mdash; and non-commerce marketing sites too.
+          Industrial clients run mostly on WooCommerce or headless setups;
+          DTC-adjacent clients are largely Shopify; service businesses run
+          on lean marketing stacks. The framework adapts to the stack; the
           schema layer is where we spend our work.
         </p>
       </>
@@ -110,23 +112,26 @@ const SERVICES_FAQ: QA[] = [
     a: (
       <>
         <p>
-          We see the best results above $200k/month in e-commerce
-          revenue, roughly $2.5M ARR. Below that, our pricing is hard to
-          justify against simpler agencies &mdash; we&rsquo;ll tell you
-          so on the first call.
+          We see the best results above $200k/month in revenue, roughly
+          $2.5M ARR, or at multi-location and franchise scale. Below that,
+          our standalone pricing is hard to justify against simpler
+          agencies &mdash; we&rsquo;ll tell you so on the first call.
         </p>
       </>
     ),
   },
   {
-    q: 'What if we\'re not in hydraulics or industrial?',
+    q: 'What if we\'re not in industrial or e-commerce?',
     a: (
       <>
         <p>
-          The playbook works for any specification-heavy e&#8209;commerce:
-          electronics, contract manufacturing, fluid power, lab supply,
-          fasteners, abrasives, industrial automation. If your buyers
-          read a spec sheet before they purchase, the mechanics apply.
+          The playbook works for any considered purchase &mdash; where
+          buyers research before they commit. Industrial distribution
+          (hydraulics, fluid power, lab supply, fasteners), technical B2B,
+          and local service businesses where AI Overviews now answer
+          &ldquo;best [service] near me&rdquo; before the click. If your
+          buyers read a spec sheet or compare options before they buy, the
+          mechanics apply.
         </p>
       </>
     ),
@@ -175,7 +180,7 @@ export default function AISEOServicePage() {
         data={serviceSchema({
           name: 'AI-Search & Generative-Engine Optimization',
           description:
-            'GEO, technical SEO, content authority, channel diversification, and conversion data — delivered by one senior operator for industrial e-commerce.',
+            'GEO, technical SEO, content authority, channel diversification, and conversion data — delivered by one senior operator for considered-purchase businesses: industrial distribution, technical B2B, and local service brands.',
           category: 'Digital Marketing',
         })}
       />
@@ -187,7 +192,7 @@ export default function AISEOServicePage() {
         titleAccent="not just ranked underneath."
         lede={
           <>
-            We engineer your store to be the source generative engines pull
+            We engineer your site to be the source generative engines pull
             from. Schema depth, citation engineering, AI-readable content,
             and AIO-aware PPC &mdash; one operator-led team, no agency layer.
           </>

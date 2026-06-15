@@ -21,7 +21,16 @@ export async function sanityFetch<T>({
   tags?: string[]
   revalidate?: number | false
 }): Promise<T> {
-  const { isEnabled: isDraft } = await draftMode()
+  // draftMode() throws outside a request scope — notably in
+  // generateStaticParams, which used to make every slug fetch silently
+  // return [] at build time (no detail pages were ever prerendered).
+  // Out of request scope there is no preview cookie, so draft is off.
+  let isDraft = false
+  try {
+    isDraft = (await draftMode()).isEnabled
+  } catch {
+    isDraft = false
+  }
   const client = isDraft ? draftClient : sanityClient
 
   return client.fetch<T>(query, params, {

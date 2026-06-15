@@ -2,6 +2,9 @@ import type { SchemaTypeDefinition } from 'sanity'
 
 import { author } from './author'
 import { careerPath } from './career-path'
+import { caseStudy } from './case-study'
+import { caseStudyClient } from './case-study-client'
+import { glossaryTerm } from './glossary-term'
 import { guide } from './guide'
 import { faqItem } from './objects/faq-item'
 import { portableText } from './objects/portable-text'
@@ -17,6 +20,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   post,
   guide,
   careerPath,
+  glossaryTerm,
+  caseStudy,
+  caseStudyClient,
   service,
   testimonial,
   author,

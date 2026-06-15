@@ -134,11 +134,12 @@ const WEBDEV_FAQ: QA[] = [
     a: (
       <>
         <p>
-          For headless / replatform work we look for $2M+ in e&#8209;commerce
-          revenue. Below that the build economics don&rsquo;t justify the
-          ceiling. Smaller stores get a more honest answer from a Shopify
-          Plus partner or a vetted freelancer &mdash; we&rsquo;ll usually
-          name two on the first call.
+          For headless / replatform commerce work we look for $2M+ in
+          revenue &mdash; below that the build economics don&rsquo;t justify
+          the ceiling. Marketing-site and lead-gen builds for service
+          businesses run at a smaller scope; ask on the first call and
+          we&rsquo;ll tell you honestly whether we&rsquo;re the fit or point
+          you to a vetted partner.
         </p>
       </>
     ),

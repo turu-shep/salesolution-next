@@ -87,7 +87,7 @@ const CARDS: Card[] = [
 
 export function HomeV2ServicesGrid() {
   return (
-    <SectionRail tone="paper">
+    <SectionRail tone="paper" id="services-grid">
       <div className="max-w-3xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
           What we ship

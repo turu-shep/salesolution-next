@@ -3,8 +3,11 @@ import { notFound } from 'next/navigation'
 
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { PathBody } from '@/components/sections/career-path-detail/PathBody'
+import { PathBuyer } from '@/components/sections/career-path-detail/PathBuyer'
 import { PathHero } from '@/components/sections/career-path-detail/PathHero'
 import { PathRelated } from '@/components/sections/career-path-detail/PathRelated'
+import { PathSeniority } from '@/components/sections/career-path-detail/PathSeniority'
+import { PathTerms } from '@/components/sections/career-path-detail/PathTerms'
 import { PathTOC } from '@/components/sections/career-path-detail/PathTOC'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbListSchema } from '@/lib/schema'
@@ -60,6 +63,18 @@ export default async function CareerPathPage({ params }: Props) {
   let siblings = await getAllCareerPaths().catch(() => [])
   siblings = siblings.filter((p) => p.slug !== slug)
 
+  const MATRIX_ID = 'at-each-level'
+  const BUYER_ID = 'hiring-this-role'
+  const hasMatrix = (path.seniorityMatrix ?? []).some((r) => r?.level)
+  const b = path.buyerSection
+  const hasBuyer = Boolean(
+    b &&
+      (b.whatTheyDo ||
+        (b.signsYouNeedOne && b.signsYouNeedOne.length > 0) ||
+        (Array.isArray(b.inHouseVsAgency) && b.inHouseVsAgency.length > 0) ||
+        b.costReality),
+  )
+
   return (
     <>
       <JsonLd
@@ -77,18 +92,45 @@ export default async function CareerPathPage({ params }: Props) {
           <div className="grid gap-10 md:grid-cols-[220px_minmax(0,1fr)] md:gap-12 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-16">
             <aside className="hidden md:block">
               <div className="sticky top-24">
-                <PathTOC body={path.body} />
+                <PathTOC
+                  body={path.body}
+                  topAnchor={hasMatrix ? { text: 'At each level', id: MATRIX_ID } : undefined}
+                  bottomAnchor={hasBuyer ? { text: 'Hiring this role?', id: BUYER_ID } : undefined}
+                />
               </div>
             </aside>
 
-            <PathBody body={path.body} />
+            <div className="min-w-0">
+              {path.lastReviewed && (
+                <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
+                  Reviewed {formatReviewed(path.lastReviewed)}
+                </p>
+              )}
+              {hasMatrix && (
+                <PathSeniority matrix={path.seniorityMatrix!} id={MATRIX_ID} />
+              )}
+              <PathBody body={path.body} />
+              {hasBuyer && <PathBuyer section={b!} id={BUYER_ID} />}
+            </div>
           </div>
         </div>
       </section>
+
+      <PathTerms terms={path.relatedTerms} />
 
       <PathRelated paths={siblings} />
 
       <FinalCTARail />
     </>
   )
+}
+
+function formatReviewed(date: string): string {
+  const [year, month] = date.split('-')
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ]
+  const name = months[Number(month) - 1]
+  return name ? `${name} ${year}` : year
 }

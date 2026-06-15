@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { SectionRail } from '@/components/layout/SectionRail'
 
 /**
@@ -76,6 +78,14 @@ export function EditorialCaseStudy({ id }: { id?: string }) {
               </li>
             ))}
           </ul>
+
+          <Link
+            href="/case-studies/automation-distributor-editorial-authority-aio-citations/"
+            className="mt-10 inline-flex items-center gap-1.5 text-sm font-semibold text-white/85 underline decoration-white/20 underline-offset-[6px] transition-colors duration-200 hover:text-white hover:decoration-white"
+          >
+            Read the full case study
+            <span aria-hidden>→</span>
+          </Link>
         </div>
       </div>
     </SectionRail>

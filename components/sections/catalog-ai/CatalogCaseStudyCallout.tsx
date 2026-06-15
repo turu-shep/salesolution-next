@@ -59,15 +59,24 @@ export function CatalogCaseStudyCallout() {
             {CLIENT.window}
           </p>
 
-          <Link
-            href="/book-growth-call/"
-            data-cta="book_call__catalog_case_study"
-            data-cta-location="mid_body"
-            className="mt-10 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[6px] transition hover:text-brand-600 hover:decoration-brand-600"
-          >
-            Book a similar audit
-            <span aria-hidden>→</span>
-          </Link>
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Link
+              href="/case-studies/hydraulics-distributor-catalog-ai-qualified-leads/"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[6px] transition hover:text-brand-600 hover:decoration-brand-600"
+            >
+              Read the full case study
+              <span aria-hidden>→</span>
+            </Link>
+            <Link
+              href="/book-growth-call/"
+              data-cta="book_call__catalog_case_study"
+              data-cta-location="mid_body"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[6px] transition hover:text-brand-600 hover:decoration-brand-600"
+            >
+              Book a similar audit
+              <span aria-hidden>→</span>
+            </Link>
+          </div>
         </div>
 
         <div className="md:col-span-7">

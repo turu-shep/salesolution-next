@@ -11,6 +11,7 @@ export type NavItem = { label: string; href: string; children?: NavChild[] }
 
 export const primaryNav: NavItem[] = [
   { label: 'Services', href: '/services/' },
+  { label: 'Case Studies', href: '/case-studies/' },
   { label: 'Framework', href: '/future-proof-your-seo/' },
   { label: 'Insights', href: '/category/blog/' },
   {
@@ -20,14 +21,15 @@ export const primaryNav: NavItem[] = [
       { label: 'AI Search Readiness Checklist', href: '/future-proof-your-seo/' },
       { label: 'Guides', href: '/guides/' },
       { label: 'Learning Hub', href: '/career-paths/' },
+      { label: 'Glossary', href: '/glossary/' },
     ],
   },
   { label: 'Contact', href: '/contact-me/' },
 ]
 
 export const primaryCta = {
-  label: 'Get Your Free Growth Audit',
-  href: '/unlock-growth-audit/',
+  label: 'Book a Growth Call',
+  href: '/book-growth-call/',
 } as const
 
 export const footerColumns = [
@@ -36,6 +38,7 @@ export const footerColumns = [
     items: [
       { label: 'Insights', href: '/category/blog/' },
       { label: 'Career Paths', href: '/career-paths/' },
+      { label: 'Glossary', href: '/glossary/' },
       { label: 'Guides', href: '/guides/' },
     ],
   },
@@ -43,6 +46,7 @@ export const footerColumns = [
     title: 'Work with us',
     items: [
       { label: 'Services', href: '/services/' },
+      { label: 'Case Studies', href: '/case-studies/' },
       { label: 'Book a strategy call', href: '/book-growth-call/' },
       { label: 'Contact', href: '/contact-me/' },
     ],

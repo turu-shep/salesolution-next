@@ -36,10 +36,11 @@ export function Operator() {
           <div className="mt-8 max-w-xl space-y-5 text-ink-300">
             <p>
               I&rsquo;m {business.founder.name} &mdash; the person who writes
-              the schema, reviews the citation paths, and tells you which
-              category page to fix first. Fourteen years inside industrial
-              and technical-distribution e&#8209;commerce. Hydraulics,
-              MRO, contract manufacturing, electronics.
+              the schema, builds the systems, and tells you which constraint
+              to fix first. Fourteen years operating growth systems across
+              industrial distribution, dental practices, and home-services
+              contractors &mdash; catalog rewrites, AI receptionists,
+              citation engineering, recovered revenue.
             </p>
             <p>
               Sale Solution is small on purpose. No account managers, no
@@ -103,9 +104,9 @@ export function Operator() {
                 Operator stance
               </p>
               <p className="mt-2 text-sm leading-relaxed text-ink-200">
-                &ldquo;The product detail page is now an answer source.
-                If your schema can&rsquo;t describe a JIC fitting in 9
-                fields, you don&rsquo;t exist in the AI Overview for it.&rdquo;
+                &ldquo;Build the engine, run the engine, prove it pays.
+                A 9-field schema for a fitting or a 24/7 receptionist for a
+                roofer &mdash; the operator stance doesn&rsquo;t change.&rdquo;
               </p>
             </div>
           </div>

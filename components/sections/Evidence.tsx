@@ -66,15 +66,24 @@ export function Evidence() {
             &mdash; not impressions, not raw sessions.
           </p>
 
-          <Link
-            href="/book-growth-call/"
-            data-cta="book_call__evidence"
-            data-cta-location="mid_body"
-            className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[6px] transition hover:text-brand-600 hover:decoration-brand-600"
-          >
-            Book a similar audit
-            <span aria-hidden>→</span>
-          </Link>
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Link
+              href="/case-studies/hydraulics-distributor-catalog-ai-qualified-leads/"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[6px] transition hover:text-brand-600 hover:decoration-brand-600"
+            >
+              Read the full case study
+              <span aria-hidden>→</span>
+            </Link>
+            <Link
+              href="/book-growth-call/"
+              data-cta="book_call__evidence"
+              data-cta-location="mid_body"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[6px] transition hover:text-brand-600 hover:decoration-brand-600"
+            >
+              Book a similar audit
+              <span aria-hidden>→</span>
+            </Link>
+          </div>
         </div>
 
         <LeadChart className="md:col-span-7" />

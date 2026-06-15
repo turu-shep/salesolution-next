@@ -18,8 +18,35 @@ export type CareerPathCard = {
   publishedAt?: string
 }
 
+export type SeniorityRow = {
+  level?: 'Entry' | 'Mid' | 'Senior'
+  focus?: string
+  mustLearn?: string[]
+}
+
+export type BuyerSection = {
+  whatTheyDo?: string
+  signsYouNeedOne?: string[]
+  inHouseVsAgency?: unknown[]
+  costReality?: string
+}
+
+export type RelatedTermCard = {
+  _id: string
+  term: string
+  slug: string
+  shortDefinition: string
+  cluster?: string
+}
+
 export type CareerPath = CareerPathCard & {
+  aliases?: string[]
+  status?: 'drafting' | 'published' | 'archived'
+  seniorityMatrix?: SeniorityRow[]
   body?: unknown[]
+  buyerSection?: BuyerSection
+  relatedTerms?: RelatedTermCard[]
+  lastReviewed?: string
   seo?: {
     metaTitle?: string
     metaDescription?: string

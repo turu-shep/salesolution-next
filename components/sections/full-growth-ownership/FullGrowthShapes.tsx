@@ -46,7 +46,7 @@ const SHAPES: Shape[] = [
         agencies, looking for one accountable owner.
       </>
     ),
-    cta: { label: 'Get a quote', href: '/contact-me/' },
+    cta: { label: 'Get a quote', href: '/full-growth-quote/' },
   },
   {
     key: 'retainer',
@@ -68,7 +68,7 @@ const SHAPES: Shape[] = [
         work &mdash; instead of stitching five separate agencies together.
       </>
     ),
-    cta: { label: 'Get a quote', href: '/contact-me/' },
+    cta: { label: 'Get a quote', href: '/full-growth-quote/' },
   },
 ]
 

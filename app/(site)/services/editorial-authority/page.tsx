@@ -106,15 +106,16 @@ const EDITORIAL_FAQ: QA[] = [
     a: (
       <>
         <p>
-          Industrial e-commerce (hydraulics, fluid power, pneumatics,
+          Industrial distribution (hydraulics, fluid power, pneumatics,
           industrial automation, MRO), technical B2B SaaS, contract
-          manufacturing, lab supply, electronics distribution,
-          fasteners, abrasives. If buyers read a spec sheet before they
-          purchase, our writers know how to talk to them.
+          manufacturing, lab supply, electronics, fasteners, abrasives,
+          and local service categories (dental, roofing, home services)
+          where buyers compare cost and options before they call.
         </p>
         <p className="mt-3">
-          Outside those verticals we&rsquo;ll tell you on the first call
-          &mdash; we&rsquo;d rather pass than fake the depth.
+          If buyers research before they commit, our writers know how to
+          talk to them. Outside that we&rsquo;ll tell you on the first
+          call &mdash; we&rsquo;d rather pass than fake the depth.
         </p>
       </>
     ),
@@ -190,7 +191,7 @@ export default function EditorialAuthorityServicePage() {
           name: 'Editorial Authority',
           slug: 'editorial-authority',
           description:
-            'Senior-writer editorial content for technical B2B and industrial e-commerce: pillar pages, cluster posts, engineering Q&A hubs, category-level content, and trade-press editorial — all built for AI-search citation. Editorial Retainer from $4K/mo, Pillar Pack from $6K fixed, $500 single-piece trial.',
+            'Senior-writer editorial content for considered-purchase businesses — industrial distribution, technical B2B, and local service brands: pillar pages, cluster posts, Q&A hubs, category-level content, and trade-press editorial, all built for AI-search citation. Editorial Retainer from $4K/mo, Pillar Pack from $6K fixed, $500 single-piece trial.',
           category: 'Content Marketing',
         })}
       />
@@ -203,10 +204,10 @@ export default function EditorialAuthorityServicePage() {
         titleAccent="to be cited, not just published."
         lede={
           <>
-            Senior subject-matter writers turn your engineering depth
+            Senior subject-matter writers turn your domain expertise
             into pillar pages, cluster posts, and category-level content
             that AI&nbsp;Overviews and ChatGPT cite ahead of the
-            manufacturers. No offshoring. No LLM ghostwriting. No upsell
+            competition. No offshoring. No LLM ghostwriting. No upsell
             on schema.
           </>
         }

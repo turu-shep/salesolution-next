@@ -132,9 +132,11 @@ const FULL_GROWTH_FAQ: QA[] = [
     a: (
       <>
         <p>
-          We see the best results at $5M+ ARR. Below that, the price
-          point is hard to justify against simpler agency retainers.
-          We&rsquo;ll tell you so on the first call.
+          We see the best results at $5M+ ARR, or at multi-location and
+          multi-site group scale (dental groups, roofing roll-ups,
+          multi-location home services). Below that, the price point is
+          hard to justify against simpler retainers &mdash; we&rsquo;ll
+          tell you so on the first call.
         </p>
       </>
     ),
@@ -199,7 +201,7 @@ export default function FullGrowthOwnershipPage() {
             a full-time hire.
           </>
         }
-        primaryCta={{ label: 'Get a quote — 3 minutes', href: '/contact-me/' }}
+        primaryCta={{ label: 'Get a quote — 3 minutes', href: '/full-growth-quote/' }}
         secondaryCta={{ label: 'See the two shapes', href: '#shapes' }}
         anchors={[
           { label: 'The problem', href: '#problem' },

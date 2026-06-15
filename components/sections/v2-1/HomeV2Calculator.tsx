@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { SectionRail } from '@/components/layout/SectionRail'
 import { cn } from '@/lib/cn'
@@ -32,15 +32,35 @@ const USD = new Intl.NumberFormat('en-US', {
 
 const NUM = new Intl.NumberFormat('en-US')
 
+// Industry-realistic assumption: distributors typically add 200-500 new SKUs
+// per month on a 5-10K catalog (~5% velocity). Surfaced in UI so buyers can
+// verify the math themselves.
+const NEW_SKU_VELOCITY = 0.05
+
 function priceForTier(sku: number, tier: TierKey): TierPrice | null {
   if (tier === 'standard') {
     const rate = sku >= 50000 ? 2.0 : sku >= 10000 ? 2.5 : 3.0
-    // Maintenance: roughly $1/SKU per quarter — divide by 3 for monthly.
-    return { initial: sku * rate, monthly: (sku * 1.0) / 3, rate, cadence: 'per-sku' }
+    // Ongoing = new-SKU processing on ~5% of catalog/mo + quarterly
+    // re-optimization at 25% of tier price, amortized over 3 months.
+    const newSkuCost = sku * NEW_SKU_VELOCITY * 1.0
+    const monthlyReopt = (sku * rate * 0.25) / 3
+    return {
+      initial: sku * rate,
+      monthly: newSkuCost + monthlyReopt,
+      rate,
+      cadence: 'per-sku',
+    }
   }
   if (tier === 'pro') {
     const rate = sku >= 50000 ? 5.0 : sku >= 10000 ? 6.0 : 7.0
-    return { initial: sku * rate, monthly: (sku * 2.5) / 3, rate, cadence: 'per-sku' }
+    const newSkuCost = sku * NEW_SKU_VELOCITY * 2.5
+    const monthlyReopt = (sku * rate * 0.25) / 3
+    return {
+      initial: sku * rate,
+      monthly: newSkuCost + monthlyReopt,
+      rate,
+      cadence: 'per-sku',
+    }
   }
   // Enterprise only unlocks at 50K+ SKUs.
   if (sku < 50000) return null
@@ -52,13 +72,23 @@ function priceForTier(sku: number, tier: TierKey): TierPrice | null {
 const MIN_SKU = 500
 const MAX_SKU = 250000
 const DEFAULT_SKU = 5000
+const PRESETS = [1000, 5000, 25000, 100000] as const
 
 export function HomeV2Calculator() {
   const [sku, setSku] = useState<number>(DEFAULT_SKU)
+  const [recentlyChanged, setRecentlyChanged] = useState(false)
 
   const standard = useMemo(() => priceForTier(sku, 'standard'), [sku])
   const pro = useMemo(() => priceForTier(sku, 'pro'), [sku])
   const enterprise = useMemo(() => priceForTier(sku, 'enterprise'), [sku])
+
+  // Brief border flash on tier cards whenever the SKU count changes — gives
+  // visual confirmation that the input is wired to the output.
+  useEffect(() => {
+    setRecentlyChanged(true)
+    const t = setTimeout(() => setRecentlyChanged(false), 600)
+    return () => clearTimeout(t)
+  }, [sku])
 
   // Summary line under the input — gives the user instant confirmation that
   // the number they typed actually drives the cards.
@@ -85,10 +115,42 @@ export function HomeV2Calculator() {
       <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:gap-10">
         {/* Input column — 40% on desktop */}
         <div className="lg:col-span-5">
-          <div className="border border-rule bg-surface p-6">
+          <div className="relative border border-rule bg-surface p-6">
+            <div className="absolute right-4 top-4 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-service-catalog-700">
+              <span
+                className="inline-block h-1.5 w-1.5 rounded-full bg-service-catalog-500 animate-pulse"
+                aria-hidden
+              />
+              Interactive &middot; try any number
+            </div>
+
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
+              Try a preset:
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {PRESETS.map((preset) => {
+                const selected = preset === sku
+                return (
+                  <button
+                    key={preset}
+                    type="button"
+                    onClick={() => setSku(preset)}
+                    className={cn(
+                      'inline-flex items-center rounded-[3px] border px-3 py-1.5 font-mono text-xs uppercase tracking-[0.18em] transition-colors',
+                      selected
+                        ? 'border-service-catalog-500 bg-service-catalog-50 text-service-catalog-700'
+                        : 'border-rule bg-surface text-ink-700 hover:border-ink-900 hover:bg-ink-900 hover:text-white',
+                    )}
+                  >
+                    {NUM.format(preset)}
+                  </button>
+                )
+              })}
+            </div>
+
             <label
               htmlFor="sku-count"
-              className="block font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500"
+              className="mt-6 block font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500"
             >
               Your SKU count
             </label>
@@ -140,34 +202,66 @@ export function HomeV2Calculator() {
         </div>
 
         {/* Tier cards column — 60% on desktop */}
-        <div className="grid gap-5 lg:col-span-7 md:grid-cols-3">
-          <TierCard
-            tierKey="standard"
-            name="Standard"
-            label="Per-SKU"
-            price={standard}
-            summary="AI-rewritten descriptions, Product + Offer schema, brand-voice trained, 5% manual QA, CRM-format delivery."
-          />
-          <TierCard
-            tierKey="pro"
-            name="Pro"
-            label="Per-SKU"
-            featured
-            price={pro}
-            summary="100% editor review on every SKU. Manufacturer spec ingestion, 4–6 FAQ pairs, comparison content, AIO citation engineering."
-          />
-          <TierCard
-            tierKey="enterprise"
-            name="Enterprise"
-            label="Managed service"
-            price={enterprise}
-            summary="50K+ SKUs only. Dedicated operator, programmatic SEO build, category page rewrites, monthly outcome reviews."
-            disabledReason={
-              sku < 50000
-                ? 'Enterprise unlocks at 50,000+ SKUs. Below that, Standard or Pro is the better fit.'
-                : undefined
-            }
-          />
+        <div className="lg:col-span-7">
+          <div className="grid gap-5 md:grid-cols-3">
+            <TierCard
+              tierKey="standard"
+              name="Standard"
+              label="Per-SKU"
+              price={standard}
+              summary="AI-rewritten descriptions, Product + Offer schema, brand-voice trained, 5% manual QA, CRM-format delivery."
+              recentlyChanged={recentlyChanged}
+            />
+            <TierCard
+              tierKey="pro"
+              name="Pro"
+              label="Per-SKU"
+              featured
+              price={pro}
+              summary="100% editor review on every SKU. Manufacturer spec ingestion, 4–6 FAQ pairs, comparison content, AIO citation engineering."
+              recentlyChanged={recentlyChanged}
+            />
+            <TierCard
+              tierKey="enterprise"
+              name="Enterprise"
+              label="Managed service"
+              price={enterprise}
+              summary="50K+ SKUs only. Dedicated operator, programmatic SEO build, category page rewrites, monthly outcome reviews."
+              disabledReason={
+                sku < 50000
+                  ? 'Enterprise unlocks at 50,000+ SKUs. Below that, Standard or Pro is the better fit.'
+                  : undefined
+              }
+              recentlyChanged={recentlyChanged}
+            />
+          </div>
+
+          <details className="group mt-5 border border-rule bg-surface">
+            <summary className="flex cursor-pointer list-none items-center justify-between px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-700 transition-colors hover:text-ink-900">
+              How the ongoing cost is calculated
+              <span
+                className="ml-3 text-ink-500 transition-transform group-open:rotate-45"
+                aria-hidden
+              >
+                +
+              </span>
+            </summary>
+            <div className="space-y-3 border-t border-rule px-5 py-4 text-sm leading-relaxed text-ink-700">
+              <p>
+                Monthly ongoing = new-SKU processing ($1/SKU Standard or
+                $2.50/SKU Pro) on ~5% of catalog per month, plus quarterly
+                re-optimization at 25% of initial tier price amortized over 3
+                months.
+              </p>
+              <p>
+                Example: a 10,000-SKU catalog on Pro lands in the 10K&ndash;49,999
+                bracket at $6/SKU. Adds ~500 SKUs/month at $2.50 ($1,250/mo) and
+                re-optimizes quarterly at 25% &times; $6 &times; 10,000 / 3
+                = $5,000/mo. Total ~$6,250/mo &mdash; matches what the calculator
+                shows above.
+              </p>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -208,6 +302,7 @@ function TierCard({
   summary,
   featured = false,
   disabledReason,
+  recentlyChanged = false,
 }: {
   tierKey: TierKey
   name: string
@@ -216,17 +311,19 @@ function TierCard({
   summary: string
   featured?: boolean
   disabledReason?: string
+  recentlyChanged?: boolean
 }) {
   const isDisabled = !price && Boolean(disabledReason)
 
   return (
     <div
       className={cn(
-        'relative flex flex-col border bg-surface',
+        'relative flex flex-col border bg-surface transition-shadow duration-300',
         featured
           ? 'border-ink-900 shadow-[0_30px_80px_-30px_rgba(15,20,30,0.25)]'
           : 'border-rule',
         isDisabled && 'opacity-60',
+        recentlyChanged && !isDisabled && 'ring-2 ring-service-catalog-500',
       )}
     >
       <div className="h-1.5 w-full bg-service-catalog-500" aria-hidden />
@@ -261,6 +358,9 @@ function TierCard({
                 </p>
                 <p className="mt-3 text-sm text-ink-700">
                   + ~{USD.format(Math.round(price.monthly))} / mo ongoing
+                </p>
+                <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500">
+                  Assumes 5% new SKUs/mo + quarterly re-optimization
                 </p>
               </>
             ) : (

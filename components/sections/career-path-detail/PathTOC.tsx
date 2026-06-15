@@ -23,19 +23,38 @@ type BodyBlock = {
  * highlighting via IntersectionObserver is intentionally deferred until
  * we have a real path with enough chapters to need it.
  */
-export function PathTOC({ body }: { body: unknown }) {
-  if (!Array.isArray(body)) return null
-  const blocks = body as BodyBlock[]
+type Anchor = { text: string; id: string }
 
-  const headings = blocks
+export function PathTOC({
+  body,
+  topAnchor,
+  bottomAnchor,
+}: {
+  body: unknown
+  /** Fixed-id section rendered above the body (e.g. "At each level"). */
+  topAnchor?: Anchor
+  /** Fixed-id section rendered below the body (e.g. "Hiring this role?"). */
+  bottomAnchor?: Anchor
+}) {
+  const blocks = Array.isArray(body) ? (body as BodyBlock[]) : []
+
+  const bodyHeadings = blocks
     .filter(
       (b) => b._type === 'block' && (b.style === 'h2' || b.style === 'h3'),
     )
     .map((b) => ({
-      level: b.style,
+      level: b.style as string,
       text: (b.children ?? []).map((c) => c?.text ?? '').join(''),
+      id: slugifyHeading((b.children ?? []).map((c) => c?.text ?? '').join('')),
     }))
     .filter((h) => h.text.trim().length > 0)
+
+  // Compose: [matrix] → body chapters → [buyer]. Each carries an explicit id.
+  const headings: { level: string; text: string; id: string }[] = [
+    ...(topAnchor ? [{ level: 'h2', text: topAnchor.text, id: topAnchor.id }] : []),
+    ...bodyHeadings,
+    ...(bottomAnchor ? [{ level: 'h2', text: bottomAnchor.text, id: bottomAnchor.id }] : []),
+  ]
 
   if (headings.length === 0) return null
 
@@ -55,7 +74,7 @@ export function PathTOC({ body }: { body: unknown }) {
               className={isH3 ? 'pl-4 border-l border-rule' : ''}
             >
               <a
-                href={`#${slugifyHeading(h.text)}`}
+                href={`#${h.id}`}
                 className="group flex items-baseline gap-2 text-sm leading-snug text-ink-700 transition-colors duration-200 hover:text-brand-600"
               >
                 {isFirst && (
@@ -80,7 +99,7 @@ export function PathTOC({ body }: { body: unknown }) {
       </ol>
 
       <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
-        {headings.filter((h) => h.level === 'h2').length} chapters
+        {bodyHeadings.filter((h) => h.level === 'h2').length} chapters
       </p>
     </nav>
   )

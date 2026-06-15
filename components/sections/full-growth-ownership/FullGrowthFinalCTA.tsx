@@ -26,7 +26,7 @@ export function FullGrowthFinalCTA() {
 
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
           <Link
-            href="/contact-me/"
+            href="/full-growth-quote/"
             data-cta="full_growth__final_rail"
             data-cta-location="final_rail"
             className="inline-flex items-center justify-center rounded-[4px] bg-white px-6 py-3 text-sm font-semibold text-ink-900 transition-colors duration-200 hover:bg-paper"
