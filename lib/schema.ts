@@ -147,26 +147,32 @@ export function faqPageSchema(faq: { question: string; answer: string }[]) {
 export function serviceSchema({
   name,
   slug,
+  url,
   description,
   category,
   areaServed = 'United States',
 }: {
   name: string
   slug?: string
+  /** Explicit absolute page URL. Overrides the default `/services/<slug>/`
+   *  path for service pages that don't live under `/services/`
+   *  (e.g. `/revenue-engine/`). Keep it in sync with the page's canonical. */
+  url?: string
   description: string
   category?: string
   areaServed?: string
 }) {
+  const pageUrl = url ?? (slug ? `${SITE}/services/${slug}/` : `${SITE}/services/`)
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': slug ? `${SITE}/services/${slug}/#service` : `${SITE}/services/#service`,
+    '@id': `${pageUrl}#service`,
     name,
     description,
     serviceType: category ?? 'Digital Marketing',
     provider: { '@id': orgId },
     areaServed,
-    url: slug ? `${SITE}/services/${slug}/` : `${SITE}/services/`,
+    url: pageUrl,
   }
 }
 

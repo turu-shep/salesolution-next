@@ -146,7 +146,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Link
             href={primaryCta.href}
-            data-cta="audit__primary_nav"
+            data-cta="book_call__primary_nav"
             data-cta-location="header"
             className={cn(
               'hidden items-center gap-2 rounded-[4px] px-4 py-2 text-sm font-semibold transition-colors duration-200 md:inline-flex',
@@ -159,7 +159,7 @@ export function Header() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-500 opacity-60" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-500" />
             </span>
-            Free audit
+            {primaryCta.label}
           </Link>
           <MobileNav />
         </div>
