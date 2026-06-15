@@ -4,6 +4,7 @@ import { SectionRail } from '@/components/layout/SectionRail'
 import { CaseStudyCard } from '@/components/sections/case-studies/CaseStudyCard'
 import { CaseStudyCTA } from '@/components/sections/case-studies/CaseStudyCTA'
 import { CaseStudyFeature } from '@/components/sections/case-studies/CaseStudyFeature'
+import { CaseStudyIndex } from '@/components/sections/case-studies/CaseStudyIndex'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { business } from '@/lib/business'
@@ -58,7 +59,6 @@ export default async function CaseStudiesPage() {
   // the rest fill the grid below.
   const featured = studies.find((s) => s.featured) ?? studies[0]
   const rest = featured ? studies.filter((s) => s._id !== featured._id) : []
-  const count = studies.length
 
   return (
     <>
@@ -74,9 +74,11 @@ export default async function CaseStudiesPage() {
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
             Case studies · Industrial distribution &amp; technical B2B
           </p>
-          <h1 className="mt-4 font-display text-balance text-5xl font-semibold leading-[1.06] tracking-[-0.02em] text-ink-900 sm:text-6xl">
-            The work, with receipts.{' '}
-            <span className="text-ink-500">Baselines, timeframes, sources.</span>
+          <h1 className="mt-4 font-display text-5xl font-semibold leading-[1.06] tracking-[-0.02em] text-ink-900 sm:text-6xl">
+            The work, with receipts.
+            <span className="mt-1 block text-ink-500">
+              Baselines, timeframes, sources.
+            </span>
           </h1>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink-700">
             Every study here is a mid-market industrial distributor or technical
@@ -90,11 +92,18 @@ export default async function CaseStudiesPage() {
             not buried as fine print. */}
         <div className="mt-14 border-t border-rule pt-8">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-            {count > 0 ? `${count} engagements · ` : ''}The standard every page is held to
+            The standard every page is held to
           </p>
           <dl className="mt-6 grid gap-y-8 sm:grid-cols-3 sm:gap-x-0 sm:divide-x sm:divide-rule">
             {PROOF_STANDARDS.map((s, i) => (
-              <div key={s.label} className={i > 0 ? 'sm:pl-8' : 'sm:pr-8'}>
+              <div
+                key={s.label}
+                className={
+                  i > 0
+                    ? 'border-t border-rule pt-8 sm:border-t-0 sm:pl-8 sm:pt-0'
+                    : 'sm:pr-8'
+                }
+              >
                 <dt className="font-display text-base font-semibold text-ink-900">
                   {s.label}
                 </dt>
@@ -105,6 +114,9 @@ export default async function CaseStudiesPage() {
             ))}
           </dl>
         </div>
+
+        {/* Self-identification — let the reader jump to their peer. */}
+        <CaseStudyIndex studies={studies} />
       </SectionRail>
 
       {studies.length === 0 ? (
@@ -128,7 +140,7 @@ export default async function CaseStudiesPage() {
         </>
       ) : (
         <>
-          {featured && <CaseStudyFeature study={featured} />}
+          {featured && <CaseStudyFeature study={featured} id={featured.slug} />}
 
           {rest.length > 0 && (
             <SectionRail tone="paper">
@@ -136,9 +148,11 @@ export default async function CaseStudiesPage() {
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
                   More case studies
                 </p>
-                <h2 className="mt-3 font-display text-balance text-3xl font-semibold leading-[1.08] tracking-[-0.015em] text-ink-900 sm:text-4xl">
-                  Other distributors.{' '}
-                  <span className="text-ink-500">Same standard of proof.</span>
+                <h2 className="mt-3 font-display text-3xl font-semibold leading-[1.08] tracking-[-0.015em] text-ink-900 sm:text-4xl">
+                  Other distributors.
+                  <span className="block text-ink-500">
+                    Different problems, one standard of proof.
+                  </span>
                 </h2>
               </div>
               <ul className="mt-12 grid gap-6 md:grid-cols-2 md:gap-8">

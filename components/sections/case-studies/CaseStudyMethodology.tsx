@@ -44,7 +44,7 @@ export function CaseStudyMethodology({ study, id }: { study: CaseStudy; id?: str
                   key={item._key}
                   className="grid gap-2 border-t border-rule py-5 first:border-t-0 first:pt-0 sm:grid-cols-[200px_minmax(0,1fr)] sm:gap-6"
                 >
-                  <dt className="font-mono text-[11px] uppercase leading-relaxed tracking-[0.16em] text-ink-500">
+                  <dt className="font-mono text-[11px] uppercase leading-relaxed tracking-[0.18em] text-ink-500">
                     {item.metric}
                   </dt>
                   <dd className="text-sm leading-relaxed text-ink-700">{item.method}</dd>
@@ -53,8 +53,8 @@ export function CaseStudyMethodology({ study, id }: { study: CaseStudy; id?: str
             </dl>
           )}
 
-          <p className="mt-2 border-t border-rule-strong pt-5 text-sm leading-relaxed text-ink-500">
-            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">
+          <p className="mt-2 border-t border-rule-strong pt-5 text-sm leading-relaxed text-ink-700">
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
               {study.disclosure === 'composite'
                 ? 'Composite disclosure. '
                 : study.disclosure === 'named'

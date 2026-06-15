@@ -6,7 +6,11 @@ import { Fragment } from 'react'
  * prefix-equivalent of a "+" or "×" — keeping the "accent = the symbol of
  * change" rule while stopping prefix-less metrics from looking dead.
  */
-export function MetricValue({ value }: { value: string }) {
+export function MetricValue({ value }: { value?: string }) {
+  // A draft/preview document can carry a metric object whose `value` was never
+  // filled (Sanity does not block saving on required-field validation), which
+  // would throw on `.includes` below. Render nothing rather than crash the page.
+  if (!value) return null
   if (!value.includes('→')) return <>{value}</>
   const parts = value.split('→')
   return (

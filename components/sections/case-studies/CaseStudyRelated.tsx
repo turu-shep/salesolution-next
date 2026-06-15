@@ -45,8 +45,9 @@ export function CaseStudyRelated({
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
               More case studies
             </p>
-            <h2 className="mt-3 font-display text-balance text-3xl font-semibold leading-[1.08] tracking-[-0.015em] text-ink-900 sm:text-4xl">
-              Adjacent verticals, same standard of proof.
+            <h2 className="mt-3 font-display text-3xl font-semibold leading-[1.08] tracking-[-0.015em] text-ink-900 sm:text-4xl">
+              Other distributors.{' '}
+              <span className="text-ink-500">Same standard of proof.</span>
             </h2>
           </div>
           <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

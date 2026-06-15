@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { CaseStudyApproach } from '@/components/sections/case-studies/CaseStudyApproach'
+import { CaseStudyCTA } from '@/components/sections/case-studies/CaseStudyCTA'
 import { CaseStudyHero } from '@/components/sections/case-studies/CaseStudyHero'
 import { CaseStudyMethodology } from '@/components/sections/case-studies/CaseStudyMethodology'
 import { CaseStudyProofBand } from '@/components/sections/case-studies/CaseStudyProofBand'
@@ -9,7 +10,6 @@ import { CaseStudyProseSection } from '@/components/sections/case-studies/CaseSt
 import { CaseStudyRelated } from '@/components/sections/case-studies/CaseStudyRelated'
 import { CaseStudyResults } from '@/components/sections/case-studies/CaseStudyResults'
 import { serviceMeta } from '@/components/sections/case-studies/service-meta'
-import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { business } from '@/lib/business'
 import { breadcrumbListSchema } from '@/lib/schema'
@@ -121,6 +121,7 @@ export default async function CaseStudyPage({ params }: Props) {
       <CaseStudyHero study={study} />
 
       <CaseStudyProseSection
+        id="situation"
         tone="surface"
         blocks={[
           {
@@ -136,9 +137,10 @@ export default async function CaseStudyPage({ params }: Props) {
         ]}
       />
 
-      <CaseStudyApproach study={study} />
+      <CaseStudyApproach study={study} id="approach" />
 
       <CaseStudyProseSection
+        id="mechanism"
         tone="surface"
         blocks={[
           {
@@ -150,15 +152,15 @@ export default async function CaseStudyPage({ params }: Props) {
         ]}
       />
 
-      <CaseStudyResults study={study} />
+      <CaseStudyResults study={study} id="results" />
 
-      <CaseStudyProofBand study={study} />
+      <CaseStudyProofBand study={study} id="proof" />
 
-      <CaseStudyMethodology study={study} />
+      <CaseStudyMethodology study={study} id="measurement" />
 
       <CaseStudyRelated sameClient={sameClient} others={others} />
 
-      <FinalCTARail />
+      <CaseStudyCTA />
     </>
   )
 }

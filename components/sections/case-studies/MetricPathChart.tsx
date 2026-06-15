@@ -56,7 +56,9 @@ export function MetricPathChart({
   const areaPath = `${linePath} L ${xAt(points.length - 1).toFixed(1)} ${(H - PAD_B).toFixed(1)} L ${xAt(0).toFixed(1)} ${(H - PAD_B).toFixed(1)} Z`
 
   return (
-    <figure className={`border border-rule bg-surface p-5 ${className}`}>
+    <figure
+      className={`border border-rule bg-surface p-5 shadow-[0_24px_60px_-34px_rgba(15,20,30,0.30)] ${className}`}
+    >
       <figcaption className="mb-4 font-mono text-[11px] text-ink-500">
         <span className="uppercase tracking-[0.18em]">{chart.title}</span>
         <span className="mt-1.5 block normal-case tracking-normal text-ink-400">
@@ -78,8 +80,8 @@ export function MetricPathChart({
               y={yAt(v) + 3}
               textAnchor="end"
               fontFamily="var(--font-mono)"
-              fontSize="9"
-              fill="var(--color-ink-400)"
+              fontSize="11"
+              fill="var(--color-ink-500)"
             >
               {v.toLocaleString()}
             </text>
@@ -108,8 +110,8 @@ export function MetricPathChart({
               <circle
                 cx={xAt(i)}
                 cy={yAt(p.value)}
-                r={i === points.length - 1 ? 4.5 : 2.5}
-                fill="var(--color-brand-600)"
+                r={i === points.length - 1 ? 5 : 2.5}
+                fill={i === points.length - 1 ? 'var(--color-accent-500)' : 'var(--color-brand-600)'}
               />
               <circle cx={xAt(i)} cy={yAt(p.value)} r="12" fill="transparent" className="cursor-help">
                 <title>{`${p.label} · ${p.value.toLocaleString()} · ${sign}${delta.toLocaleString()} from baseline`}</title>
@@ -125,7 +127,7 @@ export function MetricPathChart({
             y={H - 16}
             textAnchor="middle"
             fontFamily="var(--font-mono)"
-            fontSize="9"
+            fontSize="11"
             fill="var(--color-ink-400)"
           >
             {p.label}
@@ -134,11 +136,12 @@ export function MetricPathChart({
 
         <text
           x={xAt(points.length - 1)}
-          y={yAt(last) - 10}
+          y={yAt(last) - 12}
           textAnchor="end"
           fontFamily="var(--font-mono)"
-          fontSize="10"
-          fill="var(--color-ink-900)"
+          fontSize="13"
+          fontWeight="600"
+          fill="var(--color-accent-500)"
         >
           {last.toLocaleString()}
         </text>

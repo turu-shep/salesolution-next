@@ -45,7 +45,9 @@ export function CaseStudyProseSection({
               </h2>
             </div>
             <div className="md:col-span-8 lg:col-span-7">
-              <PortableTextRenderer value={block.body} />
+              <div className="max-w-[68ch]">
+                <PortableTextRenderer value={block.body} />
+              </div>
             </div>
           </div>
         ))}
