@@ -145,9 +145,13 @@ ever interrupting a buyer journey.
    `sanity/lib/glossary.ts`, `sanity/lib/queries.ts`, `app/(site)/glossary/page.tsx` +
    `[term]/page.tsx`, `components/sections/glossary/*`, `DefinedTerm`/`DefinedTermSet`
    in `lib/schema.ts`, sitemap wired. tsc + lint + `next build` green.
-2. ⏳ **Deferred** — `termLink` in-body annotation. Shipped `relatedTerms` (reference rail)
-   for interlinking instead; the inline term-link annotation is a later enhancement
-   (needs a shared portable-text + GROQ change).
+2. ✅ **Done (2026-06-14)** — `termLink` in-body annotation shipped as **`glossaryRef`**: a
+   reference annotation on the shared portable-text type (`sanity/schemas/objects/portable-text.ts`),
+   resolved in all four body GROQ projections via the `BODY_WITH_LINKS` snippet
+   (`sanity/lib/queries.ts`), rendered as an inline `<Link>` to `/glossary/<slug>/` in
+   `components/portable-text/PortableTextRenderer.tsx`. Editors can now link terms inline in
+   Studio. (`relatedTerms` rails remain for explicit related-reading.) **Follow-up:** retro-link
+   the 28 existing posts/guides — editorial pass, not yet done.
 3. ✅ **Done (2026-06-14)** — `careerPath` schema extensions (additive): `aliases`, `status`,
    `seniorityMatrix`, `buyerSection`, `relatedTerms` (→ glossaryTerm), `lastReviewed`. Render
    components: `PathSeniority`, `PathBuyer`, `PathTerms`; `PathTOC` extended for the matrix +
@@ -156,6 +160,14 @@ ever interrupting a buyer journey.
    (`scripts/seed-career-paths.mjs`), grounded in [03-roles.md](03-roles.md) + the 2026-06-14
    verification. Talent stance "we don't hire" honored (no recruiting framing). Still to draft:
    the two originally-promised SEO Specialist + Content Strategy paths.
+
+   **Visual-review pass (2026-06-14):** ran a screenshot + 5-dimension critique loop on the
+   path + glossary pages. Fixes applied: path h1 → flagship scale; seniority matrix de-tabled
+   (hairline columns, not a boxed table); buyer panel restyled to the glossary-definition idiom
+   (brand-blue `border-l-2` + tint, constrained to reading measure) — both "emphasis panels" now
+   share one language; glossary definition type bumped (`text-xl`, `border-l-2`); **added a
+   collapsible mobile TOC** (`PathTOC mobile`) since the desktop rail is `hidden md:block`;
+   fixed phantom `text-ink-600`→`ink-500`. All verified via re-screenshot.
 5. 🟡 **In progress** — Glossary batch 1 seeded as **10 Sanity drafts** via
    `scripts/seed-glossary.mjs` (review + voice + publish in Studio). 5 more terms clear the
    15-term hub-index threshold; individual term pages are indexable as soon as published.

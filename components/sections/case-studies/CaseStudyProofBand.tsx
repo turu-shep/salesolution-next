@@ -1,7 +1,7 @@
 import { SectionRail } from '@/components/layout/SectionRail'
 import type { CaseStudy } from '@/sanity/lib/case-studies'
 
-import { MetricValue } from './MetricValue'
+import { CountMetric } from './CountMetric'
 
 /**
  * Dark proof band — the page's one loud moment. The key metric set huge,
@@ -33,9 +33,7 @@ export function CaseStudyProofBand({ study, id }: { study: CaseStudy; id?: strin
             The number that mattered
           </p>
           <p className="mt-8 font-display text-6xl font-semibold leading-none tabular-nums tracking-[-0.03em] text-white sm:text-7xl md:text-8xl">
-            {metric.prefix && <span className="text-accent-500">{metric.prefix}</span>}
-            <MetricValue value={metric.value} />
-            {metric.unit && <span className="text-ink-400">{metric.unit}</span>}
+            <CountMetric prefix={metric.prefix} value={metric.value} unit={metric.unit} />
           </p>
           <p className="mt-5 font-display text-base font-semibold leading-snug text-white">
             {metric.label}

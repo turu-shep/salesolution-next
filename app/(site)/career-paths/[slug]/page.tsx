@@ -88,7 +88,7 @@ export default async function CareerPathPage({ params }: Props) {
       <PathHero path={path} />
 
       <section data-section-tone="light" className="relative bg-paper">
-        <div className="mx-auto max-w-6xl px-4 pb-20 pt-4 sm:px-6 md:pb-28 md:pt-8 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 pb-12 pt-4 sm:px-6 md:pb-16 md:pt-8 lg:px-8">
           <div className="grid gap-10 md:grid-cols-[220px_minmax(0,1fr)] md:gap-12 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-16">
             <aside className="hidden md:block">
               <div className="sticky top-24">
@@ -101,8 +101,16 @@ export default async function CareerPathPage({ params }: Props) {
             </aside>
 
             <div className="min-w-0">
+              <div className="mb-8 md:hidden">
+                <PathTOC
+                  body={path.body}
+                  topAnchor={hasMatrix ? { text: 'At each level', id: MATRIX_ID } : undefined}
+                  bottomAnchor={hasBuyer ? { text: 'Hiring this role?', id: BUYER_ID } : undefined}
+                  mobile
+                />
+              </div>
               {path.lastReviewed && (
-                <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
+                <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
                   Reviewed {formatReviewed(path.lastReviewed)}
                 </p>
               )}

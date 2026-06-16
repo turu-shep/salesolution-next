@@ -2,21 +2,38 @@
 
 > AI-engineered search for industrial e-commerce. We help hydraulics, MRO, and technical-distribution sites get cited inside AI Overviews, ChatGPT answers, and Perplexity results — the channels where high-intent B2B buyers now research before they buy.
 
-We publish primary research, frameworks, and case studies on how to make commerce content extractable, citable, and trustworthy enough to be quoted by generative-search engines. Citations welcome — please link back to the source URL.
+We publish primary research, frameworks, a glossary, and case studies on how to make commerce content extractable, citable, and trustworthy enough to be quoted by generative-search engines. Citations welcome — please link back to the source URL.
 
 ## Services
 
-- [AI SEO / Generative Engine Optimization](https://salesolution.net/services/ai-seo/): Restructure category and product pages so AI Overviews and LLM answer engines cite them.
-- [Content Writing Services](https://salesolution.net/services/content-writing-services/): Long-form, evidence-backed writing for B2B industrial niches.
-- [Website Content Writing Packages](https://salesolution.net/services/website-content-writing-packages/): Tiered packages for category-page rewrites and pillar pages.
+- [AI SEO / Generative Engine Optimization (GEO)](https://salesolution.net/services/ai-seo/): Restructure category and product pages so AI Overviews and LLM answer engines cite them.
+- [Catalog AI](https://salesolution.net/services/catalog-ai/): Product-level schema, attribute normalization, and internal linking at SKU scale so the catalog is retrievable by AI search.
+- [Editorial Authority](https://salesolution.net/services/editorial-authority/): Pillar pages and evidence-backed content that build the citation authority AI engines reward.
 - [Website Development & Design](https://salesolution.net/services/website-development-design-services/): Performance + schema-first site builds.
 - [Outbound Email Marketing](https://salesolution.net/services/outbound-email-marketing-services/): Deliverability-first outbound for B2B distributors.
+- [Full Growth Ownership](https://salesolution.net/services/full-growth-ownership/): One senior operator owning SEO, GEO, content, and conversion end to end.
+
+## Learning hub
+
+- [AI-search glossary](https://salesolution.net/glossary/): Plain-English definitions of AI-search, GEO, and answer-engine terms for industrial e-commerce.
+  - [Generative engine optimization (GEO)](https://salesolution.net/glossary/generative-engine-optimization/)
+  - [Answer engine optimization (AEO)](https://salesolution.net/glossary/answer-engine-optimization/)
+  - [Citation engineering](https://salesolution.net/glossary/citation-engineering/)
+  - [AI visibility](https://salesolution.net/glossary/ai-visibility/)
+  - [AI share of voice](https://salesolution.net/glossary/ai-share-of-voice/)
+  - [Part-number SEO](https://salesolution.net/glossary/part-number-seo/)
+  - [Part-number cross-reference content](https://salesolution.net/glossary/part-number-cross-reference/)
+  - [llms.txt](https://salesolution.net/glossary/llms-txt/)
+- [Career paths](https://salesolution.net/career-paths/): The roles of modern AI search, by seniority, for B2B technical e-commerce teams.
+  - [GEO Specialist](https://salesolution.net/career-paths/geo-specialist/)
+  - [Citation Engineer](https://salesolution.net/career-paths/citation-engineer/)
 
 ## Frameworks & guides
 
 - [Future-Proof Your SEO Checklist](https://salesolution.net/future-proof-your-seo/): AI-search readiness audit.
 - [Guides Library](https://salesolution.net/guides/): Website-launch checklists, SEO, email marketing.
 - [Insights blog](https://salesolution.net/category/blog/): Latest writing on AI search and B2B growth.
+- [Case studies](https://salesolution.net/case-studies/): Engagements and measured outcomes.
 
 ## Engagement options
 
@@ -26,7 +43,7 @@ We publish primary research, frameworks, and case studies on how to make commerc
 
 ## About
 
-Sale Solution is the trade name of IT Sale Solution LLC, a Florida company operating from Sunny Isles Beach, FL. Founded by Artur Shepel.
+Sale Solution is the trade name of IT Sale Solution LLC, a Florida company operating from North Miami Beach, FL. Founded by Artur Shepel.
 
 - [Contact](https://salesolution.net/contact-me/)
 - [Service areas](https://salesolution.net/service-areas/)

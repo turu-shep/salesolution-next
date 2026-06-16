@@ -27,6 +27,11 @@ const geistMono = Geist_Mono({
   display: 'swap',
 })
 
+// Google Search Console site-verification token. Set NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+// (the value from GSC's "HTML tag" verification method) to render the meta tag and verify the
+// property via tag. Alternatively verify by DNS and leave this unset. See docs/strategy/ga4.md.
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://salesolution.net'),
   title: {
@@ -45,6 +50,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     creator: '@ArturShepel',
   },
+  ...(googleSiteVerification
+    ? { verification: { google: googleSiteVerification } }
+    : {}),
 }
 
 export default function RootLayout({

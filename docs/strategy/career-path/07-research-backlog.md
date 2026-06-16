@@ -54,8 +54,8 @@ this doc stays focused on the hub:
 
 | # | Item | Notes | Effort guess |
 |---|------|-------|--------------|
-| 1 | **GEO Specialist path** | ✅ Drafted 2026-06-14 (`scripts/seed-career-paths.mjs`) — review/voice/publish in Studio | done |
-| 2 | **Citation Engineer path** | ✅ Drafted 2026-06-14 — review/voice/publish | done |
+| 1 | **GEO Specialist path** | ✅ Published 2026-06-14 (voiced, live) | done |
+| 2 | **Citation Engineer path** | ✅ Published 2026-06-14 (voiced, live) | done |
 | 3 | **SEO Specialist path** (originally promised) | Industrial e-commerce flavor; uses new schema (matrix, buyer section, related terms) | 8–15 h |
 | 4 | **Content Strategy Specialist path** (originally promised) | Same structure | 8–15 h |
 | 3 | **Glossary P0 batch** (~15–20 terms from [05-glossary.md](05-glossary.md)) | 🟡 System built + **10 drafts seeded** (`scripts/seed-glossary.mjs`, 2026-06-14). NEXT: review/voice/publish in Studio; add ~5 more to clear the 15-term hub-index threshold | ~1 h/term |

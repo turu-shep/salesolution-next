@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { SectionRail } from '@/components/layout/SectionRail'
+import { CountMetric } from '@/components/sections/case-studies/CountMetric'
 
 /**
  * Editorial Authority § 07 — case study.
@@ -19,7 +20,7 @@ const STATS = [
 
 export function EditorialCaseStudy({ id }: { id?: string }) {
   return (
-    <SectionRail tone="dark" id={id}>
+    <SectionRail tone="dark" glow="strong" id={id}>
       <div className="grid gap-12 md:grid-cols-12 md:gap-16">
         <div className="md:col-span-5">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
@@ -36,7 +37,7 @@ export function EditorialCaseStudy({ id }: { id?: string }) {
           </p>
 
           <p className="mt-10 font-display text-6xl font-semibold leading-none tabular-nums tracking-[-0.03em] text-white sm:text-7xl">
-            <span className="text-service-editorial-500">×</span>8.5
+            <CountMetric prefix="×" value="8.5" prefixClassName="text-service-editorial-500" />
           </p>
           <p className="mt-4 font-display text-base font-semibold leading-snug text-white">
             Lift on AIO citation count, top 50 commercial queries

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 
+import { DemandSystem } from '@/components/sections/DemandSystem'
 import { EngagementModel } from '@/components/sections/EngagementModel'
 import { Evidence } from '@/components/sections/Evidence'
 import { FAQ } from '@/components/sections/FAQ'
@@ -28,6 +29,7 @@ export default function HomePage() {
   return (
     <>
       <HeroProbe />
+      <DemandSystem id="demand-system" />
       <ProblemShift />
       <FrameworkTimeline />
       <ServicesTabs />

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { SectionRail } from '@/components/layout/SectionRail'
 import type { CaseStudyCard as CaseStudyCardData } from '@/sanity/lib/case-studies'
 
+import { CountMetric } from './CountMetric'
 import { MetricValue } from './MetricValue'
 import { disclosureLabel, serviceMeta } from './service-meta'
 
@@ -52,9 +53,7 @@ export function CaseStudyFeature({ study, id }: { study: CaseStudyCardData; id?:
           {metric && (
             <div>
               <p className="font-display text-6xl font-semibold leading-[0.9] tabular-nums tracking-[-0.03em] text-white sm:text-7xl lg:text-8xl">
-                {metric.prefix && <span className="text-accent-500">{metric.prefix}</span>}
-                {metric.value}
-                {metric.unit && <span className="text-ink-400">{metric.unit}</span>}
+                <CountMetric prefix={metric.prefix} value={metric.value} unit={metric.unit} />
               </p>
               <p className="mt-5 font-display text-base font-semibold leading-snug text-white">
                 {metric.label}

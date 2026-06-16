@@ -177,6 +177,102 @@
   }
 }
 
+/* ── Case-study results chart: draw-on-view, then a staggered settle ──────
+ * One attribute (data-in-view on the .metric-chart figure) drives the whole
+ * reveal. The line draws first; fill, dots, the accent endpoint, and the
+ * intervention markers fade in after, so the chart reads as an instrument
+ * plotting once and going still. Paint/compositor-only — no layout. */
+.metric-chart .draw-line {
+  stroke-dasharray: 640;
+  stroke-dashoffset: 640;
+  transition: stroke-dashoffset 1500ms ease-out;
+}
+.metric-chart[data-in-view="true"] .draw-line {
+  stroke-dashoffset: 0;
+}
+.metric-chart .chart-reveal {
+  opacity: 0;
+  transition: opacity 450ms ease-out;
+}
+.metric-chart[data-in-view="true"] .chart-fill {
+  opacity: 1;
+  transition-delay: 650ms;
+}
+.metric-chart[data-in-view="true"] .chart-dots {
+  opacity: 1;
+  transition-delay: 1250ms;
+}
+.metric-chart[data-in-view="true"] .chart-end {
+  opacity: 1;
+  transition-delay: 1500ms;
+}
+.metric-chart[data-in-view="true"] .chart-anno {
+  opacity: 1;
+  transition-delay: 1700ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  .metric-chart .draw-line {
+    transition: none;
+    stroke-dashoffset: 0;
+  }
+  .metric-chart .chart-reveal {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* ── Demand-system diagram (home § 01.5) ─────────────────────────────────────
+ * Two motion ideas, both compositor-only and reduced-motion safe:
+ *  1. .demand-flow — a continuous "marching dash" along the converging
+ *     connectors so traffic reads as flowing down into the funnel mouth.
+ *  2. .demand-rise — a staggered fade/lift for the source chips and funnel
+ *     bands, played once when the section's <InView> wrapper scrolls in.
+ * The funnel bands run full-width on mobile (readable) and narrow on sm+ via
+ * the per-band --w custom property to draw the funnel silhouette. */
+.demand-flow {
+  stroke-dasharray: 4 6;
+  animation: demand-flow 1.1s linear infinite;
+}
+@keyframes demand-flow {
+  to { stroke-dashoffset: -20; }
+}
+
+.demand-rise {
+  opacity: 0;
+  transform: translateY(12px);
+  transition-property: opacity, transform;
+  transition-duration: 600ms;
+  transition-timing-function: ease-out;
+}
+[data-in-view="true"] .demand-rise {
+  opacity: 1;
+  transform: none;
+}
+
+[data-funnel-band] {
+  /* Mobile: a mild taper (softened toward 100%) so the funnel still reads
+   * without squeezing text. Desktop: the full narrowing from --w. */
+  width: calc(100% - (100% - var(--w)) * 0.4);
+}
+@media (min-width: 640px) {
+  [data-funnel-band] {
+    width: var(--w);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demand-flow {
+    animation: none;
+    stroke-dasharray: 4 6;
+  }
+  .demand-rise {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0ms !important;
+  }
+}
+
 /* ────────────────────────────────────────────────────────────────────────────
  * Base typography. Heading scale chosen from the audit § "Proposed clean
  * type ramp" in design-tokens.md.

@@ -9,6 +9,7 @@ import { CaseStudyProofBand } from '@/components/sections/case-studies/CaseStudy
 import { CaseStudyProseSection } from '@/components/sections/case-studies/CaseStudyProseSection'
 import { CaseStudyRelated } from '@/components/sections/case-studies/CaseStudyRelated'
 import { CaseStudyResults } from '@/components/sections/case-studies/CaseStudyResults'
+import { CaseStudyStickyCTA } from '@/components/sections/case-studies/CaseStudyStickyCTA'
 import { serviceMeta } from '@/components/sections/case-studies/service-meta'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { business } from '@/lib/business'
@@ -40,6 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = study.seo?.metaTitle ?? `${fullTitle} — ${study.client?.descriptor ?? 'Case study'}`
   const description = study.seo?.metaDescription ?? study.summary
   const canonical = study.seo?.canonicalUrl ?? `${business.url}/case-studies/${slug}/`
+  const ogImage = study.seo?.ogImage?.asset?.url
 
   return {
     title,
@@ -54,7 +56,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: business.name,
       publishedTime: study.publishedAt,
       modifiedTime: study.updatedAt,
-      images: study.seo?.ogImage?.asset?.url ? [study.seo.ogImage.asset.url] : undefined,
+      // Only override when the CMS supplies an image; otherwise omit so Next
+      // auto-wires the per-study opengraph-image.tsx file convention.
+      ...(ogImage ? { images: [ogImage] } : {}),
     },
   }
 }
@@ -161,6 +165,8 @@ export default async function CaseStudyPage({ params }: Props) {
       <CaseStudyRelated sameClient={sameClient} others={others} />
 
       <CaseStudyCTA />
+
+      <CaseStudyStickyCTA />
     </>
   )
 }

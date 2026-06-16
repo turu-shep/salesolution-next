@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { SectionRail } from '@/components/layout/SectionRail'
+import { CountMetric } from '@/components/sections/case-studies/CountMetric'
 
 /**
  * /services/catalog-ai/ § 6 — Northern Hydraulics case study callout.
@@ -49,8 +50,7 @@ export function CatalogCaseStudyCallout() {
           </p>
 
           <p className="mt-10 font-display text-6xl font-semibold leading-none tabular-nums tracking-[-0.03em] text-ink-900 sm:text-7xl">
-            <span className="text-accent-500">+</span>43.5
-            <span className="text-ink-400">%</span>
+            <CountMetric prefix="+" value="43.5" unit="%" />
           </p>
           <p className="mt-4 font-display text-base font-semibold leading-snug text-ink-900">
             Qualified leads / month

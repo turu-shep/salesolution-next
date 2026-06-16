@@ -189,6 +189,10 @@ const studies = [
         point('Dec', 2480),
         point('Jan', 2640),
       ],
+      annotations: [
+        { _type: 'chartAnnotation', _key: key(), pointLabel: 'Sep', note: 'Schema shipped' },
+        { _type: 'chartAnnotation', _key: key(), pointLabel: 'Oct', note: 'Category pages live' },
+      ],
       yMin: 1500,
       yMax: 3000,
     },

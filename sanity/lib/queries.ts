@@ -3,6 +3,19 @@
  * consistent across server-side fetches.
  */
 
+// Portable-text body with inline glossary links ("termLink") resolved: each
+// `glossaryRef` annotation in markDefs gets the target term's slug so the
+// renderer can link to /glossary/<slug>/. Reused by every body projection.
+const BODY_WITH_LINKS = `
+  body[]{
+    ...,
+    markDefs[]{
+      ...,
+      _type == "glossaryRef" => { "slug": @->slug.current }
+    }
+  }
+`
+
 // ── Post fields ───────────────────────────────────────────────────────────
 
 const POST_FIELDS = `
@@ -23,7 +36,7 @@ const POST_FIELDS = `
     },
     alt
   },
-  body,
+  ${BODY_WITH_LINKS},
   faq,
   seo,
   author->{
@@ -119,7 +132,7 @@ const GUIDE_FIELDS = `
     asset->{ _id, url, metadata { dimensions { width, height } } },
     alt
   },
-  body,
+  ${BODY_WITH_LINKS},
   seo
 `
 
@@ -239,7 +252,7 @@ const CAREER_PATH_FIELDS = `
   aliases,
   status,
   seniorityMatrix,
-  body,
+  ${BODY_WITH_LINKS},
   buyerSection,
   lastReviewed,
   publishedAt,
@@ -287,7 +300,7 @@ const GLOSSARY_TERM_FIELDS = `
   shortDefinition,
   cluster,
   aliases,
-  body,
+  ${BODY_WITH_LINKS},
   lastReviewed,
   publishedAt,
   seo,

@@ -57,8 +57,8 @@ export function PathHero({ path }: { path: CareerPath }) {
 
         <h1
           className={
-            'font-display font-semibold leading-[1.1] tracking-[-0.02em] text-ink-900 text-balance ' +
-            'text-3xl sm:text-4xl md:text-5xl ' +
+            'font-display font-semibold leading-[1.05] tracking-[-0.02em] text-ink-900 text-balance ' +
+            'text-4xl sm:text-5xl md:text-6xl ' +
             (isEntryPoint ? 'mt-3' : 'mt-5')
           }
         >
@@ -66,7 +66,7 @@ export function PathHero({ path }: { path: CareerPath }) {
         </h1>
 
         {path.description && (
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-700 md:text-xl">
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-700 text-pretty md:text-xl">
             {path.description}
           </p>
         )}

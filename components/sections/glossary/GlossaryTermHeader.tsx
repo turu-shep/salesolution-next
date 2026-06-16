@@ -31,7 +31,7 @@ export function GlossaryTermHeader({ term }: { term: GlossaryTerm }) {
           </p>
         )}
 
-        <p className="mt-8 border-l-4 border-brand-600 bg-surface-tint-blue px-5 py-4 text-lg leading-relaxed text-ink-800">
+        <p className="mt-8 border-l-2 border-brand-600 bg-surface-tint-blue px-5 py-4 text-xl leading-[1.6] text-pretty text-ink-800">
           {term.shortDefinition}
         </p>
 

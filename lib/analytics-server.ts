@@ -25,6 +25,7 @@ export async function sendServerEvent(args: {
     | 'constraint_sprint_apply'
     | 'book_growth_call'
     | 'catalog_snapshot_request'
+    | 'full_growth_quote_request'
   params: Record<string, unknown>
 }): Promise<void> {
   const measurementId = process.env.GA4_MEASUREMENT_ID

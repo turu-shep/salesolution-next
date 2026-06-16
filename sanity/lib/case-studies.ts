@@ -44,6 +44,7 @@ export type CaseStudyChart = {
   title: string
   source: string
   points: { _key: string; label: string; value: number }[]
+  annotations?: { _key?: string; pointLabel: string; note: string }[]
   yMin?: number
   yMax?: number
 }

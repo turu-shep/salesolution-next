@@ -20,15 +20,15 @@ export function PathSeniority({
   if (rows.length === 0) return null
 
   return (
-    <section className="mb-12 md:mb-16">
+    <section className="mb-16 md:mb-20">
       <h2
         id={id}
-        className="scroll-mt-24 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900 sm:text-3xl"
+        className="scroll-mt-24 font-display text-2xl font-semibold tracking-[-0.015em] text-ink-900 sm:text-3xl"
       >
         At each level
       </h2>
 
-      <div className="mt-6 grid gap-px overflow-hidden rounded-[4px] border border-rule bg-rule md:grid-cols-3">
+      <div className="mt-6 grid gap-px overflow-hidden border-y border-rule bg-rule md:grid-cols-3">
         {rows.map((r) => (
           <div key={r.level} className="flex flex-col bg-surface p-6">
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
@@ -42,10 +42,10 @@ export function PathSeniority({
                 <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
                   Must learn
                 </p>
-                <ul className="mt-2 space-y-1.5">
+                <ul className="mt-2 space-y-2">
                   {r.mustLearn.map((item, i) => (
                     <li key={i} className="flex gap-2 text-sm leading-relaxed text-ink-700">
-                      <span aria-hidden className="mt-1.5 inline-block h-1 w-1 flex-none rounded-full bg-brand-600" />
+                      <span aria-hidden className="mt-1.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-brand-600" />
                       {item}
                     </li>
                   ))}

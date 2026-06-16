@@ -1,0 +1,3 @@
+# Files excluded from the Vercel deployment (not uploaded, never web-served).
+# /prompts holds local-only operator playbooks — keep them in git, never deploy them.
+prompts/

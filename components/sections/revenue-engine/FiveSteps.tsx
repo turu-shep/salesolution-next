@@ -19,32 +19,32 @@ const DEFAULT_STEPS: FiveStep[] = [
   {
     n: '01',
     key: 'CAPTURE',
-    what: 'Conversion assets you own: dedicated landing pages, an instant quote widget or online booking, and a Google Business Profile overhaul.',
-    metric: 'Conversion rate',
+    what: 'A simple way for visitors to get a quote or book online, plus a tidied-up Google listing — all yours, running alongside the website you already have.',
+    metric: 'More of your visitors turn into calls and forms',
   },
   {
     n: '02',
     key: 'RESPOND',
-    what: 'An AI receptionist answers 100% of calls, 24/7. Missed calls get an instant text back; every form fill gets an AI reply in under 60 seconds.',
-    metric: 'Answer rate · after-hours bookings recovered',
+    what: 'Every call gets answered, 24/7 — even when you are on a job. Missed calls get an instant text back, every form gets a reply in under a minute, and a caller can always reach a human. I tune the scripts against real recordings every week.',
+    metric: 'No more leads lost to a missed call or a slow reply',
   },
   {
     n: '03',
     key: 'BOOK',
-    what: 'AI qualification scripts book straight to the calendar, then run reminder sequences. Every call is recorded, transcribed, and classified.',
-    metric: 'Lead-to-appointment rate · show rate',
+    what: 'Calls get qualified and booked straight to your calendar, with reminders so they show up. Every call is recorded and sorted, so nothing slips through.',
+    metric: 'More leads become booked, kept appointments',
   },
   {
     n: '04',
     key: 'RECOVER',
-    what: 'AI follow-up on unclosed estimates and unaccepted treatment plans, dormant-database reactivation, and a review engine that feeds the map pack.',
-    metric: 'Recovered revenue from leads already paid for',
+    what: 'The quotes that went cold and the customers overdue for a visit get followed up automatically, plus a steady stream of new reviews that lifts you in local search.',
+    metric: 'Revenue won back from work you already chased',
   },
   {
     n: '05',
     key: 'PROVE',
-    what: 'An attribution dashboard splits system-driven revenue from media-driven revenue. Monthly report. For dental, front-desk conversion scoring.',
-    metric: 'System-attributed revenue vs. fee',
+    what: 'A monthly dashboard shows which revenue the system drove versus your ads, so you see exactly what you are paying for.',
+    metric: 'What the system earned, measured against the fee',
   },
 ]
 
@@ -70,15 +70,16 @@ export function FiveSteps({
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           {headline ?? (
             <>
-              Five steps, <span className="text-ink-500">one engine.</span>
+              Here&rsquo;s the whole machine.{' '}
+              <span className="text-ink-500">No black box.</span>
             </>
           )}
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           {intro ?? (
             <>
-              The same system runs whether you are a roofer or a dental
-              practice. The skin changes; the engine does not.
+              I install and run all of it &mdash; the 90-day setup is on me,
+              not another job for you. Here is each piece, in plain terms.
             </>
           )}
         </p>

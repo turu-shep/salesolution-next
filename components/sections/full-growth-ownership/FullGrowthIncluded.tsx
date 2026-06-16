@@ -1,26 +1,25 @@
 import { SectionRail } from '@/components/layout/SectionRail'
 import { CompositeBar } from '@/components/services/CompositeBar'
 import { ServiceColorDot } from '@/components/services/ServiceColorDot'
-import type { ServiceKey } from '@/components/services/service-colors'
+import { SERVICE_CLASSES, type ServiceKey } from '@/components/services/service-colors'
 
 /**
  * /services/full-growth-ownership/ § 4 — Five services. One accountable owner.
  *
- * A 5-segment composite bar (the visual signature for Full Growth
- * Ownership) sits at the top of the section. Each segment is colored with
- * the service color from the spec § 7.1. Below it: short paragraphs per
- * service describing how they fit inside this engagement.
+ * The 5-segment composite bar is the shared brand signature — rendered by
+ * the canonical <CompositeBar> so its color ORDER stays identical to the
+ * hero strip and the tier cards (search, catalog, editorial, dev, outbound).
+ * The legend dots and card-top accents pull from the same SERVICE_CLASSES
+ * token map, so there's no hardcoded hex and nothing can drift out of sync.
  *
- * Colors are inlined here rather than added to tailwind config — these
- * are accent identity only, used in this one place. Section 7 of the spec
- * will roll them out site-wide as a later phase.
+ * SERVICES is intentionally listed in that same canonical order so the
+ * legend, the bar, and the cards all read left-to-right the same way.
  */
 
 type Service = {
   key: string
   serviceKey: Exclude<ServiceKey, 'composite'>
   name: string
-  color: string
   description: React.ReactNode
 }
 
@@ -29,7 +28,6 @@ const SERVICES: Service[] = [
     key: 'ai-search',
     serviceKey: 'search',
     name: 'AI Search & GEO',
-    color: '#1E3A8A',
     description: (
       <>
         Schema rewrites, citation engineering, AIO-aware paid acceleration.
@@ -38,22 +36,9 @@ const SERVICES: Service[] = [
     ),
   },
   {
-    key: 'editorial',
-    serviceKey: 'editorial',
-    name: 'Editorial Authority',
-    color: '#C2410C',
-    description: (
-      <>
-        Pillar pages, cluster posts, engineering Q&amp;A hubs, category-level
-        content. Built to be cited, not just published.
-      </>
-    ),
-  },
-  {
     key: 'catalog',
     serviceKey: 'catalog',
     name: 'Catalog AI',
-    color: '#0E7490',
     description: (
       <>
         Product page rewrites at scale. Per-product schema, internal linking
@@ -62,10 +47,20 @@ const SERVICES: Service[] = [
     ),
   },
   {
+    key: 'editorial',
+    serviceKey: 'editorial',
+    name: 'Editorial Authority',
+    description: (
+      <>
+        Pillar pages, cluster posts, engineering Q&amp;A hubs, category-level
+        content. Built to be cited, not just published.
+      </>
+    ),
+  },
+  {
     key: 'website',
     serviceKey: 'dev',
     name: 'Website Development',
-    color: '#374151',
     description: (
       <>
         Performance-engineered builds and replatforms. Core Web Vitals
@@ -77,7 +72,6 @@ const SERVICES: Service[] = [
     key: 'outbound',
     serviceKey: 'outbound',
     name: 'Outbound Email',
-    color: '#15803D',
     description: (
       <>
         Deliverability-first cold outbound. Multi-touch sequences with
@@ -109,28 +103,17 @@ export function FullGrowthIncluded({ id }: { id?: string }) {
         ))}
       </ul>
 
-      {/* Composite color bar — the visual signature of "all five services as one" */}
-      <div
-        role="img"
-        aria-label="Five-service composite bar"
-        className="mt-12 flex h-3 overflow-hidden rounded-[2px]"
-      >
-        {SERVICES.map((s) => (
-          <span
-            key={s.key}
-            className="flex-1"
-            style={{ backgroundColor: s.color }}
-          />
-        ))}
-      </div>
+      {/* Composite color bar — the shared brand signature. Rendered by the
+          canonical component so the segment order matches the hero + tier
+          cards exactly (search, catalog, editorial, dev, outbound). */}
+      <CompositeBar weight="hero" className="mt-12 overflow-hidden rounded-[2px]" />
 
       <ul className="mt-12 grid gap-px border border-rule bg-rule md:grid-cols-2 lg:grid-cols-5">
         {SERVICES.map((s) => (
-          <li key={s.key} className="flex flex-col bg-paper p-6">
+          <li key={s.key} className="flex h-full flex-col bg-paper p-6">
             <span
               aria-hidden
-              className="h-1 w-10 rounded-full"
-              style={{ backgroundColor: s.color }}
+              className={`h-1 w-10 rounded-full ${SERVICE_CLASSES[s.serviceKey].dot}`}
             />
             <h3 className="mt-4 font-display text-base font-semibold leading-snug text-ink-900">
               {s.name}
@@ -148,8 +131,6 @@ export function FullGrowthIncluded({ id }: { id?: string }) {
         on the first call if Full Growth Ownership isn&rsquo;t the right
         shape for your situation.
       </p>
-
-      <CompositeBar weight="divider" className="mt-12 ml-auto max-w-[180px]" />
     </SectionRail>
   )
 }

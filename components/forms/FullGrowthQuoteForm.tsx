@@ -6,6 +6,13 @@ import { useCallback, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Turnstile } from '@/components/integrations/Turnstile'
+import {
+  getGaClientId,
+  setUserId,
+  setUserProperties,
+  sha256Hex,
+  track,
+} from '@/lib/analytics'
 import { cn } from '@/lib/cn'
 import {
   FGO_HEADCOUNT_RANGES,
@@ -16,6 +23,8 @@ import {
   fgoQuoteSchema,
   type FgoQuoteData,
 } from '@/lib/lead-form/full-growth-quote-schema'
+import { fgoLeadValue } from '@/lib/lead-form/full-growth-quote-value'
+import { useTrackOnView } from '@/lib/use-track-on-view'
 
 /**
  * Full Growth Ownership qualifier form.
@@ -25,12 +34,21 @@ import {
  * thank-you route. Voice and reassurance copy match the FGO landing page
  * — short qualifier, personal reply, no SDR loop.
  *
- * GA4 instrumentation deliberately omitted for the first pass: the FGO
- * conversion model (manual diagnostic → SOW within 48h → first invoice)
- * doesn't fit the productized `generate_lead` value model cleanly, and
- * sending bad data is worse than sending none until the model is right.
- * See /api/full-growth-quote/route.ts.
+ * GA4 instrumentation mirrors LeadForm (see docs/strategy/ga4.md §3.2):
+ *   - `form_view`              — once when the form enters viewport
+ *   - `form_start`             — once on first focus into any field
+ *   - `form_step_complete`     — when each step's validation passes
+ *   - `form_submit`            — on `/api/full-growth-quote/` 2xx, pre-redirect
+ *   - `generate_lead`          — canonical conversion (lead_type=full_growth)
+ *   - `full_growth_quote_request` — page-specific echo carrying shape + count
+ *   - `form_error`             — on each failure branch
+ *
+ * The `submissionId` UUID is sent server-side so the server Measurement
+ * Protocol echo dedups against the client hit on `transaction_id`.
  */
+
+const FORM_ID = 'full_growth_quote_form'
+const FORM_NAME = 'Full Growth Ownership qualifier'
 
 type Step = 1 | 2 | 3
 
@@ -38,6 +56,12 @@ const STEP_FIELDS: Record<Step, (keyof FgoQuoteData)[]> = {
   1: ['shape', 'services'],
   2: ['website', 'revenue', 'headcount', 'marketingSpend', 'notes'],
   3: ['fullName', 'email', 'phone', 'bestTime'],
+}
+
+const STEP_NAME: Record<Step, 'shape' | 'context' | 'contact'> = {
+  1: 'shape',
+  2: 'context',
+  3: 'contact',
 }
 
 export function FullGrowthQuoteForm({
@@ -52,11 +76,36 @@ export function FullGrowthQuoteForm({
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const turnstileRequired = !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
+  const rootRef = useRef<HTMLFormElement>(null)
+  const startedRef = useRef(false)
   const submissionIdRef = useRef<string>(
     typeof crypto !== 'undefined' && 'randomUUID' in crypto
       ? crypto.randomUUID()
       : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
   )
+
+  useTrackOnView(
+    rootRef,
+    useCallback(() => {
+      track({
+        name: 'form_view',
+        params: {
+          form_id: FORM_ID,
+          form_name: FORM_NAME,
+          page_location: window.location.href,
+        },
+      })
+    }, []),
+  )
+
+  const onFirstFocus = useCallback(() => {
+    if (startedRef.current) return
+    startedRef.current = true
+    track({
+      name: 'form_start',
+      params: { form_id: FORM_ID, form_name: FORM_NAME, step: 1 },
+    })
+  }, [])
 
   const {
     register,
@@ -70,9 +119,11 @@ export function FullGrowthQuoteForm({
       shape: undefined,
       services: [],
       website: '',
-      revenue: '',
-      headcount: '',
-      marketingSpend: '',
+      // revenue / headcount / marketingSpend are strict enums (no empty-string
+      // member) — leave them unset so the placeholder <option value=""> shows.
+      revenue: undefined,
+      headcount: undefined,
+      marketingSpend: undefined,
       notes: '',
       fullName: '',
       email: '',
@@ -83,16 +134,26 @@ export function FullGrowthQuoteForm({
 
   const next = useCallback(async () => {
     const ok = await trigger(STEP_FIELDS[step])
-    if (ok) setStep((s) => (Math.min(3, s + 1) as Step))
+    if (!ok) return
+    track({
+      name: 'form_step_complete',
+      params: { form_id: FORM_ID, step, step_name: STEP_NAME[step] },
+    })
+    setStep((s) => (Math.min(3, s + 1) as Step))
   }, [step, trigger])
 
   async function onSubmit(data: FgoQuoteData) {
     setSubmitError(null)
     if (turnstileRequired && !turnstileToken) {
       setSubmitError('Please complete the bot check above.')
+      track({
+        name: 'form_error',
+        params: { form_id: FORM_ID, error_type: 'turnstile' },
+      })
       return
     }
     try {
+      const submissionId = submissionIdRef.current
       const res = await fetch('/api/full-growth-quote/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -100,34 +161,97 @@ export function FullGrowthQuoteForm({
           ...data,
           turnstileToken: turnstileToken ?? undefined,
           pageSource: typeof window !== 'undefined' ? window.location.href : undefined,
-          submissionId: submissionIdRef.current,
+          gaClientId: getGaClientId(),
+          submissionId,
         }),
       })
 
       if (res.status === 429) {
         setSubmitError('Too many attempts. Try again in a few minutes.')
+        track({
+          name: 'form_error',
+          params: { form_id: FORM_ID, error_type: 'rate_limit', status_code: 429 },
+        })
         return
       }
       if (!res.ok) {
         setSubmitError(
           'We hit a snag submitting. Please email leads@salesolution.net directly.',
         )
+        track({
+          name: 'form_error',
+          params: { form_id: FORM_ID, error_type: 'server', status_code: res.status },
+        })
         return
       }
+
+      // Success — fire all tracking BEFORE the redirect destroys the page.
+      const value = fgoLeadValue(data.revenue)
+      const serviceCount = data.services.filter((s) => s !== 'unsure').length
+
+      // Identity: set user_id BEFORE the conversion event so it carries the id.
+      try {
+        const hashed = await sha256Hex(data.email.toLowerCase().trim())
+        setUserId(hashed)
+        setUserProperties({
+          revenue_band: data.revenue,
+          lead_type: 'full_growth',
+          fgo_shape: data.shape,
+          fgo_service_count: serviceCount,
+          has_user_id: true,
+        })
+      } catch {
+        // SubtleCrypto unavailable (very old browsers / non-HTTPS dev) — skip
+        // identity rather than blocking the conversion event.
+      }
+
+      track({
+        name: 'form_submit',
+        params: { form_id: FORM_ID, form_name: FORM_NAME, submission_id: submissionId },
+      })
+      track({
+        name: 'generate_lead',
+        params: {
+          value,
+          currency: 'USD',
+          lead_type: 'full_growth',
+          submission_id: submissionId,
+          form_id: FORM_ID,
+          revenue_band: data.revenue,
+          transaction_id: submissionId,
+        },
+      })
+      track({
+        name: 'full_growth_quote_request',
+        params: {
+          value,
+          currency: 'USD',
+          shape: data.shape,
+          service_count: serviceCount,
+          submission_id: submissionId,
+          transaction_id: submissionId,
+        },
+      })
 
       window.location.href = thankYouHref
     } catch (err) {
       setSubmitError(
         'Network error. Please email leads@salesolution.net or try again.',
       )
+      track({
+        name: 'form_error',
+        params: { form_id: FORM_ID, error_type: 'network' },
+      })
       console.error('[FullGrowthQuoteForm] network error:', err)
     }
   }
 
   return (
     <form
+      ref={rootRef}
       noValidate
       onSubmit={handleSubmit(onSubmit)}
+      onFocus={onFirstFocus}
       className={cn(
         'rounded-xl bg-surface p-6 shadow-md ring-1 ring-ink-300/15 sm:p-8',
         className,

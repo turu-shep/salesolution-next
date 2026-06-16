@@ -318,6 +318,38 @@ export const caseStudy = defineType({
           validation: (rule) => rule.min(3),
         }),
         defineField({
+          name: 'annotations',
+          title: 'Intervention markers',
+          type: 'array',
+          description:
+            'Mark the months where a shipped intervention changed the slope — so the chart shows the cause behind each inflection, not just the curve. Keep notes to ~3 words.',
+          of: [
+            {
+              type: 'object',
+              name: 'chartAnnotation',
+              fields: [
+                defineField({
+                  name: 'pointLabel',
+                  title: 'Point label',
+                  type: 'string',
+                  description: 'Must match a data point’s label exactly, e.g. "Oct".',
+                  validation: (rule) => rule.required(),
+                }),
+                defineField({
+                  name: 'note',
+                  title: 'Note',
+                  type: 'string',
+                  description: 'What shipped, e.g. "Category pages live".',
+                  validation: (rule) => rule.required().max(28),
+                }),
+              ],
+              preview: {
+                select: { title: 'note', subtitle: 'pointLabel' },
+              },
+            },
+          ],
+        }),
+        defineField({
           name: 'yMin',
           title: 'Y-axis minimum',
           type: 'number',

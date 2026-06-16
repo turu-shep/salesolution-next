@@ -29,12 +29,15 @@ export function PathTOC({
   body,
   topAnchor,
   bottomAnchor,
+  mobile = false,
 }: {
   body: unknown
   /** Fixed-id section rendered above the body (e.g. "At each level"). */
   topAnchor?: Anchor
   /** Fixed-id section rendered below the body (e.g. "Hiring this role?"). */
   bottomAnchor?: Anchor
+  /** Render as a collapsible <details> for mobile (the desktop rail is hidden). */
+  mobile?: boolean
 }) {
   const blocks = Array.isArray(body) ? (body as BodyBlock[]) : []
 
@@ -58,12 +61,8 @@ export function PathTOC({
 
   if (headings.length === 0) return null
 
-  return (
-    <nav aria-label="Table of contents" className="border-t border-rule pt-5">
-      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
-        On this path
-      </p>
-
+  const list = (
+    <>
       <ol className="mt-4 space-y-3">
         {headings.map((h, i) => {
           const isFirst = i === 0 && h.level === 'h2'
@@ -101,6 +100,27 @@ export function PathTOC({
       <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
         {bodyHeadings.filter((h) => h.level === 'h2').length} chapters
       </p>
+    </>
+  )
+
+  if (mobile) {
+    return (
+      <details className="md:hidden border-y border-rule [&_summary::-webkit-details-marker]:hidden">
+        <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
+          On this path
+          <span aria-hidden className="text-ink-400 transition-transform duration-200 group-open:rotate-180">▾</span>
+        </summary>
+        <div className="pb-6">{list}</div>
+      </details>
+    )
+  }
+
+  return (
+    <nav aria-label="Table of contents" className="border-t border-rule pt-5">
+      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
+        On this path
+      </p>
+      {list}
     </nav>
   )
 }

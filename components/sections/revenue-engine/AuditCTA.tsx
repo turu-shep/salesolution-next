@@ -19,15 +19,16 @@ export function AuditCTA({ id }: { id?: string }) {
           Book a free Revenue Leak Audit.
         </h2>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-200">
-          I look at your missed calls, response time, Google Business Profile,
-          and the estimate or treatment-plan follow-up gap, then show you
-          where the revenue is leaking. No pitch, no obligation.
+          In about 20 minutes I&rsquo;ll show you your own numbers &mdash; how
+          many calls you&rsquo;re missing, your real response time, how your
+          Google profile is doing, and the follow-up gap on your quotes. Yours
+          to keep whether we work together or not. No pitch, no obligation.
         </p>
 
         {/* TODO Phase 2 (RE-203): replace this button with the GHL audit
             form + calendar embed ({{GHL_AUDIT_EMBED}}); thank-you page at
             /revenue-engine/audit-booked/ (noindex). */}
-        <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+        <div className="mt-10">
           <Link
             href="/book-growth-call/"
             data-cta="revenue_leak_audit__pillar_close"
@@ -35,15 +36,6 @@ export function AuditCTA({ id }: { id?: string }) {
             className="inline-flex items-center justify-center rounded-[4px] bg-white px-6 py-3 text-sm font-semibold text-ink-900 transition-colors duration-200 hover:bg-paper"
           >
             Book a Revenue Leak Audit
-          </Link>
-          <Link
-            href="/revenue-engine/home-services/"
-            data-cta="revenue_engine_vertical__pillar_close"
-            data-cta-location="final_rail"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-white/85 underline decoration-white/20 underline-offset-[6px] transition-colors duration-200 hover:text-white hover:decoration-white"
-          >
-            Or see it for your trade
-            <span aria-hidden>→</span>
           </Link>
         </div>
       </div>

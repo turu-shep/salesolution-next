@@ -60,13 +60,19 @@ export const fgoQuoteSchema = z.object({
   website: z
     .union([z.string().url('Use the full URL with https://'), z.literal('')])
     .optional(),
-  revenue: z.string().min(1, 'Pick a revenue range'),
-  headcount: z.string().min(1, 'Pick a headcount range'),
-  marketingSpend: z.string().min(1, 'Pick a spend range'),
+  revenue: z.enum(['under-2m', '2-5m', '5-10m', '10-25m', '25m-plus'], {
+    message: 'Pick a revenue range',
+  }),
+  headcount: z.enum(['0', '1-2', '3-5', '6-plus'], {
+    message: 'Pick a headcount range',
+  }),
+  marketingSpend: z.enum(['under-5k', '5-15k', '15-30k', '30k-plus'], {
+    message: 'Pick a spend range',
+  }),
   notes: z.string().max(2000).optional(),
 
   // Contact
-  fullName: z.string().min(2, 'Please share your name').max(120),
+  fullName: z.string().trim().min(2, 'Please share your name').max(120),
   email: z.string().email('Use a real email — we reply within 24 hours'),
   phone: z
     .union([z.string().min(7, 'Phone number looks too short').max(40), z.literal('')])

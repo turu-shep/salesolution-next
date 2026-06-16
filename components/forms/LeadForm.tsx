@@ -561,6 +561,11 @@ function computeLeadValue(leadType: LeadType, revenueBand: string): number {
       // produces actual closed-deal data. Mirrored server-side in
       // app/api/lead/route.ts.
       return 300
+    default:
+      // `full_growth` has its own dedicated form + value model
+      // (lib/lead-form/full-growth-quote-value.ts) and never flows through
+      // this productized form. Fall back to the audit value defensively.
+      return auditValue
   }
 }
 

@@ -23,13 +23,20 @@
  */
 import { readConsent } from '@/lib/consent'
 
-type LeadType = 'audit' | 'sprint' | 'strategy_call' | 'contact' | 'catalog_snapshot'
+type LeadType =
+  | 'audit'
+  | 'sprint'
+  | 'strategy_call'
+  | 'contact'
+  | 'catalog_snapshot'
+  | 'full_growth'
 type FormId =
   | 'audit_lead_form'
   | 'sprint_lead_form'
   | 'contact_lead_form'
   | 'strategy_call_form'
   | 'catalog_snapshot_form'
+  | 'full_growth_quote_form'
 type ErrorType = 'validation' | 'rate_limit' | 'server' | 'network' | 'turnstile'
 type ServiceCategory = 'seo' | 'content' | 'web' | 'email' | 'catalog'
 
@@ -52,8 +59,8 @@ export type TrackEvent =
       name: 'form_step_complete'
       params: {
         form_id: FormId
-        step: 1 | 2
-        step_name: 'contact' | 'business'
+        step: 1 | 2 | 3
+        step_name: 'contact' | 'business' | 'shape' | 'context'
       }
     }
   | {
@@ -96,6 +103,19 @@ export type TrackEvent =
       params: {
         value: number
         currency: 'USD'
+        submission_id: string
+        transaction_id?: string
+      }
+    }
+  | {
+      name: 'full_growth_quote_request'
+      params: {
+        value: number
+        currency: 'USD'
+        /** Q1 routing answer — which engagement shape the buyer self-selected. */
+        shape: 'fractional' | 'retainer' | 'unsure'
+        /** Count of services ticked in Q2 (excludes the "not sure" option). */
+        service_count: number
         submission_id: string
         transaction_id?: string
       }

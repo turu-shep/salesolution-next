@@ -54,6 +54,13 @@ const components: PortableTextComponents = {
     // Inline code is styled by `.article-body code` — this override only
     // exists so the renderer emits `<code>` without spurious wrapping spans.
     code: ({ children }) => <code>{children}</code>,
+    // Inline glossary link ("termLink"). The slug is resolved in GROQ
+    // (markDefs[]{..., _type=="glossaryRef" => {"slug": @->slug.current}}).
+    glossaryRef: ({ children, value }) => {
+      const slug = value?.slug
+      if (!slug) return <>{children}</>
+      return <Link href={`/glossary/${slug}/`}>{children}</Link>
+    },
   },
 
   types: {

@@ -44,6 +44,15 @@ export const portableText = defineType({
               },
             ],
           },
+          // Inline link to a glossary term — the wiki "termLink". Editors select
+          // a term; the renderer resolves it to /glossary/<slug>/. Resolved in
+          // GROQ via `markDefs[]{..., _type=="glossaryRef" => {"slug": @->slug.current}}`.
+          {
+            name: 'glossaryRef',
+            type: 'reference',
+            title: 'Glossary term',
+            to: [{ type: 'glossaryTerm' }],
+          },
         ],
       },
     }),

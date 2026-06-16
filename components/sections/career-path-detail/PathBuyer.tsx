@@ -26,19 +26,19 @@ export function PathBuyer({
   if (!hasContent) return null
 
   return (
-    <section className="mt-14 border border-rule bg-surface-tint-blue p-6 md:p-8">
+    <section className="mt-14 max-w-prose border-l-2 border-brand-600 bg-surface-tint-blue p-6 md:p-8">
       <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
         For buyers
       </p>
       <h2
         id={id}
-        className="mt-3 scroll-mt-24 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900 sm:text-3xl"
+        className="mt-3 scroll-mt-24 font-display text-2xl font-semibold tracking-[-0.015em] text-ink-900 sm:text-3xl"
       >
         Hiring this role?
       </h2>
 
       {whatTheyDo && (
-        <p className="mt-5 max-w-2xl text-ink-800">{whatTheyDo}</p>
+        <p className="mt-5 text-ink-800 text-pretty">{whatTheyDo}</p>
       )}
 
       {signsYouNeedOne && signsYouNeedOne.length > 0 && (
@@ -58,19 +58,18 @@ export function PathBuyer({
       )}
 
       {Array.isArray(inHouseVsAgency) && inHouseVsAgency.length > 0 && (
-        <div className="mt-6 max-w-2xl">
+        <div className="mt-6">
           <PortableTextRenderer value={inHouseVsAgency} />
         </div>
       )}
 
       {costReality && (
-        <p className="mt-6 border-t border-rule pt-5 text-sm leading-relaxed text-ink-600">
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
+        <div className="mt-6 border-t border-rule pt-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
             Cost reality
-          </span>
-          <br />
-          {costReality}
-        </p>
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-ink-700">{costReality}</p>
+        </div>
       )}
     </section>
   )

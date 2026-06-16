@@ -46,12 +46,26 @@ cheap, capped-investment authority asset. Full evidence in
   index threshold and is in the sitemap. Talent stance decided: keep "we don't hire."
 - ⚠️ Verification correction: "citation engineering" is **in active public use**, not ours
   to coin — repositioned as a slice of GEO/AEO ([05 §1](05-glossary.md)).
-- 🟡 **Career paths: system built + 2 P0 drafts** (2026-06-14). `careerPath` schema extended
-  (seniority matrix, buyer section, related glossary terms); `/career-paths/[slug]` renders all
-  new sections (verified). **GEO Specialist + Citation Engineer seeded as drafts** for operator
-  voicing (`scripts/seed-career-paths.mjs`). Talent stance "we don't hire" honored.
-- ⏭ Next: review/voice/publish the 2 path drafts; draft the 2 originally-promised SEO/Content
-  paths; wire glossary links into the service/guide pages.
+- ✅ **Career paths: 2 published** (2026-06-14) — GEO Specialist + Citation Engineer, voiced into
+  the operator register and live. `careerPath` schema extended (seniority matrix, buyer section,
+  related glossary terms), detail page visually reviewed + polished. Hub now lists them (empty-hub
+  hygiene issue resolved). Talent stance "we don't hire" honored.
+- ✅ **Interlinking + foundations done (2026-06-14):** `glossaryRef` inline-link annotation shipped
+  (schema + GROQ + renderer); AI-SEO money page links to glossary terms + both paths ("From the
+  learning hub" block + inline lede link); role glossary terms link to their full paths; `llms.txt`
+  corrected (real services, learning hub added, address fixed); `robots.ts` already allows all AI
+  crawlers (WAF/CDN is the owner's manual check). Reusable prompts live in `/prompts/`.
+- ✅ **Revenue track code done (2026-06-14):** SAL-404 — AI-SEO page now targets "geo agency"
+  (title + meta + a "Looking for a GEO agency?" section + industrial long-tail), live. SAL-405 —
+  GSC verification wiring added (`app/layout.tsx` + env example). **GA4 working** (`G-F0DJT7P1RQ`)
+  and **GSC is connected** to the Ahrefs project (id 5379899, verified 2026-06-15 — real monthly
+  data pulls). SAL-405 effectively complete. Pre-launch GSC baseline captured in
+  [08-gsc-baseline-2026-06-15.md](08-gsc-baseline-2026-06-15.md) (~520 impr/mo, ~5 clicks/mo).
+- ⏭ Next: SAL-406 Brand Radar (AI-citation tracking); re-pull `gsc-pages`/`gsc-keywords` once the
+  dimension tables backfill; measure hub impact vs the baseline in ~4 weeks. Optional: confirm GA4
+  in Vercel prod; exclude `/career-paths/*` + `/glossary/*` from GA4 goals/retargeting.
+  Brand Radar; retro-link the 28 posts/guides with `glossaryRef`; the 2 SEO/Content paths; grow
+  the glossary. All have prompts in `/prompts/`.
 
 ## 3. Document index
 
@@ -65,6 +79,7 @@ cheap, capped-investment authority asset. Full evidence in
 | [05-glossary.md](05-glossary.md) | Glossary plan + seed term list with ownership opportunities |
 | [06-wiki-architecture.md](06-wiki-architecture.md) | Content model: URL structure, Sanity schema deltas, interlinking, JSON-LD |
 | [07-research-backlog.md](07-research-backlog.md) | Next research tasks and write-downs, with dates |
+| [08-gsc-baseline-2026-06-15.md](08-gsc-baseline-2026-06-15.md) | Pre-launch GSC baseline — the before/after anchor for the hub's impact |
 
 ## 4. Hard constraints (carry into every decision)
 
