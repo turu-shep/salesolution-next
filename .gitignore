@@ -63,3 +63,6 @@ __pycache__/
 *.pyc
 
 /screenshots
+
+# agent worktree backups (local only — nested git worktrees, noisy)
+backup/
