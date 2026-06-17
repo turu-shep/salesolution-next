@@ -1,0 +1,3 @@
+[submodule ".engine"]
+	path = .engine
+	url = https://github.com/Sale-Solution/ai-content-engine.git

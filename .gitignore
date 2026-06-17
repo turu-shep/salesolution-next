@@ -66,3 +66,5 @@ __pycache__/
 
 # agent worktree backups (local only — nested git worktrees, noisy)
 backup/
+# python venv for .engine content pipeline
+.venv/
