@@ -90,5 +90,50 @@ export const portableText = defineType({
         { name: 'body', type: 'text', title: 'Body', rows: 3 },
       ],
     }),
+    // ── engine-import addition (scripts/engine-to-sanity.mjs) ─────────────────
+    // Minimal comparison table. Rows of plain-text cells; the first row is the
+    // header when `hasHeaderRow`. Kept deliberately small so it's easy to
+    // review/revert — Portable Text has no native table type, and the content
+    // engine emits `<table class="cmp">`. Renderer branch lives in
+    // components/portable-text/PortableTextRenderer.tsx.
+    defineArrayMember({
+      type: 'object',
+      name: 'table',
+      title: 'Table',
+      fields: [
+        {
+          name: 'hasHeaderRow',
+          type: 'boolean',
+          title: 'First row is a header',
+          initialValue: true,
+        },
+        {
+          name: 'rows',
+          type: 'array',
+          title: 'Rows',
+          of: [
+            {
+              type: 'object',
+              name: 'tableRow',
+              fields: [
+                { name: 'cells', type: 'array', of: [{ type: 'string' }] },
+              ],
+              preview: {
+                select: { cells: 'cells' },
+                prepare({ cells }) {
+                  return { title: (cells || []).join(' · ') || 'Empty row' }
+                },
+              },
+            },
+          ],
+        },
+      ],
+      preview: {
+        select: { rows: 'rows' },
+        prepare({ rows }) {
+          return { title: `Table (${(rows || []).length} rows)` }
+        },
+      },
+    }),
   ],
 })

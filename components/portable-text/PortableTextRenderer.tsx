@@ -104,6 +104,47 @@ const components: PortableTextComponents = {
         </aside>
       )
     },
+
+    // ── engine-import addition (see sanity/schemas/objects/portable-text.ts) ──
+    // Renders the minimal `table` object type. First row is the header when
+    // `hasHeaderRow`. Plain text cells only.
+    table: ({ value }) => {
+      const rows: { cells?: string[] }[] = value?.rows ?? []
+      if (!rows.length) return null
+      const head = value?.hasHeaderRow ? rows[0] : null
+      const bodyRows = value?.hasHeaderRow ? rows.slice(1) : rows
+      return (
+        <div className="my-8 overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
+            {head && (
+              <thead>
+                <tr>
+                  {(head.cells ?? []).map((cell, i) => (
+                    <th
+                      key={i}
+                      className="border-b border-ink-300/30 px-3 py-2 text-left font-semibold text-ink-800"
+                    >
+                      {cell}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+            )}
+            <tbody>
+              {bodyRows.map((row, r) => (
+                <tr key={r} className="border-b border-ink-300/15">
+                  {(row.cells ?? []).map((cell, c) => (
+                    <td key={c} className="px-3 py-2 align-top text-ink-700">
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    },
   },
 }
 

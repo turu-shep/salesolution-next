@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How AI Search Picks Sources | Salesolution</title>
+  <meta name="description" content="A plain-language walkthrough of how AI search engines choose which sources to cite, and the three things that make a page quotable.">
+  <meta property="og:title" content="How AI Search Picks Sources">
+  <meta property="og:description" content="How AI search engines choose which sources to cite, and the three things that make a page quotable.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="hero-ai-search.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://salesolution.net/how-ai-search-picks-sources">
+</head>
+<body>
+<article class="article-main">
+
+  <h1>How AI Search Picks Sources</h1>
+  <p class="last-updated"><strong>Last updated:</strong> June 17, 2026 · Reviewed by the Salesolution team</p>
+
+  <p class="lede">AI answer engines don't rank ten blue links. They lift one or two passages and cite them. This walks through how that selection happens and what makes a page quotable.</p>
+
+  <nav class="toc" aria-label="In this guide">
+    <strong>In this guide:</strong>
+    <a href="#retrieval">retrieval</a> · <a href="#quotability">quotability</a>
+  </nav>
+
+  <img src="hero-ai-search.webp" width="100%" alt="Diagram of an AI engine selecting source passages" loading="eager">
+
+  <aside class="key-takeaways">
+    <h3>Key Takeaways</h3>
+    <p><strong>Retrieval first.</strong> A page can't be cited if it isn't retrieved into the model's context.</p>
+    <p><strong>Passage over page.</strong> Engines quote self-contained passages, not whole articles.</p>
+  </aside>
+
+  <h2 id="retrieval">How retrieval works</h2>
+  <p>Before a model writes an answer, a retriever pulls candidate passages from an index. Pages that load clean HTML and answer the question in the <strong>first sentence</strong> get pulled more often. See our <a href="https://salesolution.net/glossary/retrieval">retrieval primer</a> for the mechanics, or this <a href="https://example.com/paper" target="_blank">external paper</a>.</p>
+
+  <p>The retriever cares about a few signals:</p>
+  <ul>
+    <li>Clean, crawlable HTML with real text, not text baked into images.</li>
+    <li>A direct answer near the top of the section.</li>
+    <li>Structured data that confirms what the page is about.</li>
+  </ul>
+
+  <h3 id="quotability">What makes a passage quotable</h3>
+  <p>Write the answer as a standalone sentence. Here's the pattern engines reward:</p>
+  <pre><code class="language-html">&lt;p&gt;Citation engineering is the practice of structuring content so AI engines quote it.&lt;/p&gt;</code></pre>
+
+  <aside class="callout warning">
+    <p><strong>Watch out:</strong> burying the answer three paragraphs down is the most common reason a page never gets cited.</p>
+  </aside>
+
+  <h2 id="comparison-table">Classic SEO vs AI search</h2>
+  <table class="cmp">
+    <thead>
+      <tr><th>What matters</th><th>Classic SEO</th><th>AI search</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Unit of value</td><td>The ranked page</td><td class="win">The quoted passage</td></tr>
+      <tr><td>Winner count</td><td>Ten blue links</td><td class="win">One or two citations</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cta-card" id="try-at-home">
+    <p><strong>Want this audited on your own site?</strong></p>
+    <a class="btn" href="https://salesolution.net/contact?utm_content=mid">Book an audit →</a>
+  </div>
+
+  <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+  <h2 id="faq-1" class="faq-q">Does classic SEO still matter for AI search?</h2>
+  <p>Yes. Retrieval still leans on crawlable HTML and topical authority, so the SEO basics carry over.</p>
+  <h2 id="faq-2" class="faq-q">How fast do AI engines pick up changes?</h2>
+  <p>It varies by engine, from days to a few weeks, depending on how often they re-crawl your pages.</p>
+
+  <div class="cta-card">
+    <p><strong>Ready to get cited?</strong></p>
+    <a class="btn" href="https://salesolution.net/contact?utm_content=end">Talk to us →</a>
+  </div>
+
+</article>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How AI Search Picks Sources"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does classic SEO still matter for AI search?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Retrieval still leans on crawlable HTML and topical authority, so the SEO basics carry over." }
+    },
+    {
+      "@type": "Question",
+      "name": "How fast do AI engines pick up changes?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It varies by engine, from days to a few weeks, depending on how often they re-crawl your pages." }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
