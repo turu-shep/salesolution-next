@@ -26,17 +26,22 @@ export function CountUp({
   className?: string
 }) {
   const ref = useRef<HTMLSpanElement>(null)
-  const [display, setDisplay] = useState(0)
+  // Start at the real value so the static/SSR HTML carries the actual number,
+  // not "0" — crawlers and AI engines read the HTML without running the
+  // count-up. The animation below is a client-only progressive enhancement.
+  const [display, setDisplay] = useState(value)
 
   useEffect(() => {
     const node = ref.current
     if (!node) return
     const prefersReduced = typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) {
-      setDisplay(value)
-      return
-    }
+    if (prefersReduced) return // already showing the final value
+    // Only animate elements that load below the fold. Ones already on screen
+    // keep the static value — no jarring final→0→count-up flash.
+    const rect = node.getBoundingClientRect()
+    if (rect.top < window.innerHeight && rect.bottom > 0) return
+    setDisplay(0)
     let started = false
     const io = new IntersectionObserver(
       (entries) => {

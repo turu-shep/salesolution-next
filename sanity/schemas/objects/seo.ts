@@ -13,8 +13,9 @@ export const seo = defineType({
       name: 'metaTitle',
       title: 'Meta title',
       type: 'string',
-      description: 'Overrides the document title in <title> + OG. Aim for 50–60 chars.',
-      validation: (rule) => rule.max(70),
+      description:
+        'Overrides the document title in <title> + OG. The site appends " · Sale Solution" (~16 chars), so aim for ~45 here to keep the full SERP title under ~60.',
+      validation: (rule) => rule.max(60),
     }),
     defineField({
       name: 'metaDescription',

@@ -42,6 +42,11 @@ export function organizationSchema() {
     },
     telephone: business.phone,
     email: business.emails.leads,
+    founder: {
+      '@type': 'Person',
+      name: business.founder.name,
+      jobTitle: business.founder.role,
+    },
     sameAs: [
       business.social.facebook,
       business.social.twitter,
@@ -82,6 +87,37 @@ export function breadcrumbListSchema(items: Breadcrumb[]) {
       name: item.name,
       item: item.url,
     })),
+  }
+}
+
+/**
+ * ItemList for a hub/index page that lists its child entries (guides,
+ * career paths, …). Gives crawlers and AI engines an explicit, ordered map
+ * of the hub-and-spoke cluster instead of leaving them to infer it from links.
+ */
+export function itemListSchema({
+  name,
+  url,
+  items,
+}: {
+  name: string
+  url: string
+  items: Breadcrumb[]
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name,
+    url,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: items.map((item, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: item.name,
+        url: item.url,
+      })),
+    },
   }
 }
 

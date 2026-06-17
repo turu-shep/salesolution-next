@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 
 import { business } from '@/lib/business'
+import { GLOSSARY_INDEX_THRESHOLD } from '@/lib/glossary-config'
 
 /**
  * Generates /sitemap.xml. Replaces the Rank Math `sitemap_index.xml` from the
@@ -37,7 +38,9 @@ const STATIC_ROUTES: Entry[] = [
   { url: `${BASE}/`,                                      changeFrequency: 'weekly',  priority: 1.0 },
   { url: `${BASE}/services/`,                             changeFrequency: 'monthly', priority: 0.9 },
   { url: `${BASE}/services/ai-seo/`,                      changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/services/catalog-ai/`,                  changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/services/editorial-authority/`,         changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/services/full-growth-ownership/`,       changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/services/website-development-design-services/`, changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/services/outbound-email-marketing-services/`,   changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/contact-me/`,                           changeFrequency: 'yearly',  priority: 0.7 },
@@ -45,14 +48,25 @@ const STATIC_ROUTES: Entry[] = [
   { url: `${BASE}/future-proof-your-seo/`,                changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/book-growth-call/`,                     changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/constraint-sprint/`,                    changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/catalog-snapshot/`,                     changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/case-studies/`,                         changeFrequency: 'monthly', priority: 0.8 },
+  // Industry hub — the proof-led entry for the industrial vertical.
+  { url: `${BASE}/industries/industrial-distribution/`,   changeFrequency: 'monthly', priority: 0.8 },
+  // Revenue Engine cluster — surfaced in nav ("Who We Serve"), so it leaves the
+  // orphan stage and must be indexable.
+  { url: `${BASE}/revenue-engine/`,                       changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/revenue-engine/home-services/`,         changeFrequency: 'monthly', priority: 0.8 },
+  { url: `${BASE}/revenue-engine/dentists/`,              changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/guides/`,                               changeFrequency: 'weekly',  priority: 0.7 },
   { url: `${BASE}/guides/seo-guides/`,                    changeFrequency: 'monthly', priority: 0.6 },
   { url: `${BASE}/guides/website-development-and-design-guides/`, changeFrequency: 'monthly', priority: 0.6 },
   { url: `${BASE}/guides/email-marketing-guides/`,        changeFrequency: 'monthly', priority: 0.6 },
   { url: `${BASE}/category/blog/`,                        changeFrequency: 'weekly',  priority: 0.7 },
   { url: `${BASE}/career-paths/`,                         changeFrequency: 'monthly', priority: 0.6 },
-  { url: `${BASE}/glossary/`,                             changeFrequency: 'weekly',  priority: 0.6 },
+  // NOTE: /glossary/ is added conditionally in sitemap() below — it stays out
+  // until the published-term count clears GLOSSARY_INDEX_THRESHOLD, matching the
+  // hub route's own noindex gate. Listing it unconditionally while the hub is
+  // noindexed triggers a "submitted URL marked noindex" warning in GSC.
   { url: `${BASE}/service-areas/`,                        changeFrequency: 'monthly', priority: 0.5 },
   // Legal — low priority but indexable.
   { url: `${BASE}/privacy-policy/`,                       changeFrequency: 'yearly',  priority: 0.2 },
@@ -114,8 +128,25 @@ async function fetchSanityRoutes(): Promise<Entry[]> {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const dynamic = await fetchSanityRoutes()
+
+  // Add the /glossary/ hub only once it carries enough published terms — the
+  // same gate the hub route applies via GLOSSARY_INDEX_THRESHOLD before it
+  // self-noindexes. Counting the per-term pages already in `dynamic` avoids a
+  // second query and keeps the sitemap fail-soft (no terms fetched → hub omitted
+  // rather than listed-but-noindexed).
+  const glossaryTermCount = dynamic.filter((e) =>
+    e.url.startsWith(`${BASE}/glossary/`),
+  ).length
+  const conditional: Entry[] =
+    glossaryTermCount >= GLOSSARY_INDEX_THRESHOLD
+      ? [{ url: `${BASE}/glossary/`, changeFrequency: 'weekly', priority: 0.6 }]
+      : []
+
   return [
-    ...STATIC_ROUTES.map((r) => ({ ...r, lastModified: r.lastModified ?? new Date() })),
+    ...[...STATIC_ROUTES, ...conditional].map((r) => ({
+      ...r,
+      lastModified: r.lastModified ?? new Date(),
+    })),
     ...dynamic,
   ]
 }

@@ -38,7 +38,7 @@ const PROOF_STANDARDS = [
   {
     label: 'Every source',
     value:
-      'Named on the page — client CRM, Search Console, citation tracker. Enforced by the publishing model, not promised in a footnote.',
+      'Named on the page — client CRM, Search Console, citation tracker. The publishing model won’t let a study go live without it.',
   },
   {
     label: 'Every client',
@@ -64,7 +64,7 @@ export default async function CaseStudiesPage() {
     <>
       <JsonLd
         data={breadcrumbListSchema([
-          { name: 'Home', url: business.url },
+          { name: 'Home', url: `${business.url}/` },
           { name: 'Case Studies', url: `${business.url}/case-studies/` },
         ])}
       />

@@ -56,7 +56,7 @@ export default async function GlossaryTermPage({ params }: Props) {
     <>
       <JsonLd
         data={breadcrumbListSchema([
-          { name: 'Home', url: business.url },
+          { name: 'Home', url: `${business.url}/` },
           { name: 'Glossary', url: `${business.url}/glossary/` },
           { name: doc.term, url: `${business.url}/glossary/${term}/` },
         ])}

@@ -31,7 +31,11 @@ export function CountMetric({
   const decimals = isPlain ? (stripped.split('.')[1]?.length ?? 0) : 0
 
   const ref = useRef<HTMLSpanElement>(null)
-  const [display, setDisplay] = useState(isPlain ? 0 : target)
+  // Start at the real value so the server-rendered HTML carries the actual
+  // number (e.g. "+43.5%"), not "0" — crawlers and AI engines read the static
+  // HTML and never run the count-up. The animation below is a client-only
+  // progressive enhancement.
+  const [display, setDisplay] = useState(target)
 
   useEffect(() => {
     if (!isPlain) return
@@ -40,10 +44,12 @@ export function CountMetric({
     const prefersReduced =
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) {
-      setDisplay(target)
-      return
-    }
+    if (prefersReduced) return // already showing the final value
+    // Only animate elements that load below the fold. Ones already on screen
+    // keep the static value — no jarring final→0→count-up flash.
+    const rect = node.getBoundingClientRect()
+    if (rect.top < window.innerHeight && rect.bottom > 0) return
+    setDisplay(0)
     let started = false
     const io = new IntersectionObserver(
       (entries) => {

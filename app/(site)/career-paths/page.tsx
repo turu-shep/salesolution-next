@@ -4,13 +4,18 @@ import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { CareerPathsGrid } from '@/components/sections/career-paths/CareerPathsGrid'
 import { CareerPathsIntent } from '@/components/sections/career-paths/CareerPathsIntent'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { business } from '@/lib/business'
+import { breadcrumbListSchema, itemListSchema } from '@/lib/schema'
 import {
   getAllCareerPaths,
   type CareerPathCard,
 } from '@/sanity/lib/career-paths'
 
 export const metadata: Metadata = {
-  title: 'Career paths · Sale Solution',
+  // The root layout's title template appends " · Sale Solution" — keep this bare
+  // so it doesn't double-brand.
+  title: 'Career paths',
   description:
     'Free educational paths into digital-marketing careers — SEO, content strategy, and beyond. Self-paced, built by working operators.',
   alternates: { canonical: 'https://salesolution.net/career-paths/' },
@@ -29,6 +34,25 @@ export default async function CareerPathsHubPage() {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: `${business.url}/` },
+          { name: 'Career paths', url: `${business.url}/career-paths/` },
+        ])}
+      />
+      {paths.length > 0 && (
+        <JsonLd
+          data={itemListSchema({
+            name: 'Career paths into modern AI-search',
+            url: `${business.url}/career-paths/`,
+            items: paths.map((p) => ({
+              name: p.title,
+              url: `${business.url}/career-paths/${p.slug}/`,
+            })),
+          })}
+        />
+      )}
+
       <ServicesHero
         eyebrow="Learning hub / career paths"
         title="Career paths into"

@@ -12,7 +12,8 @@ import { MobileNav } from './MobileNav'
 /**
  * Sticky site header. Tone-aware: when the topmost visible section is
  * dark, the header inverts to dark; otherwise stays light. Detection runs
- * client-side via IntersectionObserver against `[data-section-tone]`.
+ * client-side against `[data-section-tone]` via a scroll listener throttled
+ * to one layout read per animation frame.
  */
 export function Header() {
   const [tone, setTone] = useState<'light' | 'dark'>('light')
@@ -36,12 +37,26 @@ export function Header() {
       setTone(chosen)
     }
 
+    // Coalesce scroll/resize bursts into one read per animation frame. Without
+    // this, scroll fires many times per frame and each call does ~13 layout
+    // reads (getBoundingClientRect) — layout thrash on every route, since the
+    // header is in the root layout. The rAF guard caps it at one read per frame.
+    let frame = 0
+    const onScrollOrResize = () => {
+      if (frame) return
+      frame = requestAnimationFrame(() => {
+        frame = 0
+        update()
+      })
+    }
+
     update()
-    window.addEventListener('scroll', update, { passive: true })
-    window.addEventListener('resize', update)
+    window.addEventListener('scroll', onScrollOrResize, { passive: true })
+    window.addEventListener('resize', onScrollOrResize)
     return () => {
-      window.removeEventListener('scroll', update)
-      window.removeEventListener('resize', update)
+      if (frame) cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScrollOrResize)
+      window.removeEventListener('resize', onScrollOrResize)
     }
   }, [])
 
@@ -56,13 +71,13 @@ export function Header() {
           : 'border-rule bg-paper/90',
       )}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div className="flex items-baseline gap-4">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+        <div className="flex shrink-0 items-baseline gap-4">
           <Logo tone={isDark ? 'dark' : 'light'} />
           <span
             aria-hidden
             className={cn(
-              'hidden font-mono text-[10px] uppercase tracking-[0.18em] transition-colors duration-300 lg:inline',
+              'hidden font-mono text-[10px] uppercase tracking-[0.18em] transition-colors duration-300 xl:inline',
               isDark ? 'text-ink-300/70' : 'text-ink-400',
             )}
           >
@@ -70,13 +85,13 @@ export function Header() {
           </span>
         </div>
 
-        <nav aria-label="Primary" className="hidden md:flex md:items-center md:gap-1">
+        <nav aria-label="Primary" className="hidden flex-1 items-center justify-center lg:flex lg:gap-0.5">
           {primaryNav.map((item) => (
             <div key={item.label} className="group relative">
               <Link
                 href={item.href}
                 className={cn(
-                  'relative inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200',
+                  'relative inline-flex items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-2 text-sm font-medium transition-colors duration-200',
                   isDark
                     ? 'text-ink-300 hover:text-white'
                     : 'text-ink-700 hover:text-ink-900',
@@ -143,13 +158,20 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-3">
+          <span
+            aria-hidden
+            className={cn(
+              'hidden h-5 w-px lg:block',
+              isDark ? 'bg-white/15' : 'bg-ink-300/40',
+            )}
+          />
           <Link
             href={primaryCta.href}
             data-cta="book_call__primary_nav"
             data-cta-location="header"
             className={cn(
-              'hidden items-center gap-2 rounded-[4px] px-4 py-2 text-sm font-semibold transition-colors duration-200 md:inline-flex',
+              'hidden items-center gap-2 whitespace-nowrap rounded-[4px] px-4 py-2 text-sm font-semibold transition-colors duration-200 lg:inline-flex',
               isDark
                 ? 'bg-white text-ink-900 hover:bg-accent-500 hover:text-white'
                 : 'bg-ink-900 text-white hover:bg-brand-600',

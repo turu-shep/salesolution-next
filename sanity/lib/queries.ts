@@ -16,6 +16,17 @@ const BODY_WITH_LINKS = `
   }
 `
 
+// Shared SEO projection. Spreads every seo field, but DEREFERENCES the ogImage
+// asset so `seo.ogImage.asset.url` is the real CDN URL — a bare `seo` leaves it
+// as an unresolved {_ref}, so og:image and Article JSON-LD images silently never
+// populate (the TS types already assume the dereferenced `{ asset: { url } }`).
+const SEO_FIELDS = `
+  seo{
+    ...,
+    ogImage{ asset->{ url } }
+  }
+`
+
 // ── Post fields ───────────────────────────────────────────────────────────
 
 const POST_FIELDS = `
@@ -38,7 +49,7 @@ const POST_FIELDS = `
   },
   ${BODY_WITH_LINKS},
   faq,
-  seo,
+  ${SEO_FIELDS},
   author->{
     _id,
     name,
@@ -133,7 +144,7 @@ const GUIDE_FIELDS = `
     alt
   },
   ${BODY_WITH_LINKS},
-  seo
+  ${SEO_FIELDS}
 `
 
 export const allGuidesQuery = `
@@ -191,6 +202,13 @@ const CASE_STUDY_CARD_FIELDS = `
     publicName,
     descriptor,
     industry,
+    "industryRef": industryRef->{
+      _id,
+      title,
+      shortLabel,
+      "slug": slug.current,
+      "parentSlug": parent->slug.current
+    },
     scale,
     region
   }
@@ -208,7 +226,7 @@ const CASE_STUDY_FIELDS = `
   quote,
   methodology,
   disclosureNote,
-  seo
+  ${SEO_FIELDS}
 `
 
 export const allCaseStudiesQuery = `
@@ -228,6 +246,53 @@ export const caseStudyBySlugQuery = `
   }
 `
 
+// Case studies whose client belongs to a given industry — matched against the
+// top-level vertical OR any of its sub-niches (so industrial-distribution also
+// catches its fluid-power / automation / fasteners children). $slug is the
+// top-level industry slug.
+export const caseStudiesByIndustryQuery = `
+  *[_type == "caseStudy" && defined(slug.current) &&
+    (client->industryRef->slug.current == $slug ||
+     client->industryRef->parent->slug.current == $slug)] |
+    order(featured desc, publishedAt desc) {
+    ${CASE_STUDY_CARD_FIELDS}
+  }
+`
+
+// ── Industry fields ───────────────────────────────────────────────────────
+
+const INDUSTRY_FIELDS = `
+  _id,
+  title,
+  shortLabel,
+  "slug": slug.current,
+  description,
+  hubHref,
+  accentColor,
+  order,
+  "parentSlug": parent->slug.current,
+  "caseStudyCount": count(*[_type == "caseStudy" && defined(slug.current) &&
+    (client->industryRef->slug.current == ^.slug.current ||
+     client->industryRef->parent->slug.current == ^.slug.current)])
+`
+
+// Top-level verticals only (no sub-niches), with a live case-study count so a
+// hub/picker can show proof depth and hide empty verticals if desired.
+export const allIndustriesQuery = `
+  *[_type == "industry" && !defined(parent)] | order(order asc, title asc) {
+    ${INDUSTRY_FIELDS}
+  }
+`
+
+export const industryBySlugQuery = `
+  *[_type == "industry" && slug.current == $slug][0] {
+    ${INDUSTRY_FIELDS},
+    "subNiches": *[_type == "industry" && parent._ref == ^._id] | order(order asc, title asc) {
+      _id, title, shortLabel, "slug": slug.current
+    }
+  }
+`
+
 // ── Career-path fields ────────────────────────────────────────────────────
 
 const CAREER_PATH_CARD_FIELDS = `
@@ -235,6 +300,7 @@ const CAREER_PATH_CARD_FIELDS = `
   title,
   "slug": slug.current,
   description,
+  kind,
   role,
   level,
   duration,
@@ -246,17 +312,19 @@ const CAREER_PATH_FIELDS = `
   title,
   "slug": slug.current,
   description,
+  kind,
   role,
   level,
   duration,
   aliases,
   status,
   seniorityMatrix,
+  modules,
   ${BODY_WITH_LINKS},
   buyerSection,
   lastReviewed,
   publishedAt,
-  seo,
+  ${SEO_FIELDS},
   "relatedTerms": relatedTerms[]->{
     _id,
     term,
@@ -303,7 +371,7 @@ const GLOSSARY_TERM_FIELDS = `
   ${BODY_WITH_LINKS},
   lastReviewed,
   publishedAt,
-  seo,
+  ${SEO_FIELDS},
   "relatedTerms": relatedTerms[]->{
     _id,
     term,

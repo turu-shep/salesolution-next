@@ -105,7 +105,7 @@ export default async function PostPage({ params }: Props) {
       <JsonLd data={articleSchema} />
       <JsonLd
         data={breadcrumbListSchema([
-          { name: 'Home', url: business.url },
+          { name: 'Home', url: `${business.url}/` },
           { name: 'Blog', url: `${business.url}/category/blog/` },
           { name: post.title, url: `${business.url}/${slug}/` },
         ])}

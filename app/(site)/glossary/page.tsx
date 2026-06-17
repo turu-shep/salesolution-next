@@ -5,6 +5,7 @@ import { GlossaryHub } from '@/components/sections/glossary/GlossaryHub'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { business } from '@/lib/business'
+import { GLOSSARY_INDEX_THRESHOLD } from '@/lib/glossary-config'
 import { breadcrumbListSchema, definedTermSetSchema } from '@/lib/schema'
 import {
   getAllGlossaryTerms,
@@ -12,20 +13,19 @@ import {
 } from '@/sanity/lib/glossary'
 
 /**
- * Below this many published terms the hub stays out of the index — a thin,
- * mostly-empty glossary is a quality-signal cost. The per-term pages are
- * always indexable on their own (each is a complete definition). Flip to
- * full indexing — and add /glossary/ to app/sitemap.ts — once the count
- * clears the threshold. See docs/strategy/career-path/06-wiki-architecture.md.
+ * Below GLOSSARY_INDEX_THRESHOLD published terms the hub stays out of the index
+ * — a thin, mostly-empty glossary is a quality-signal cost. The per-term pages
+ * are always indexable on their own (each is a complete definition). app/sitemap.ts
+ * reads the same threshold and adds /glossary/ automatically once it clears, so
+ * the two signals can't drift. See docs/strategy/career-path/06-wiki-architecture.md.
  */
-const INDEX_THRESHOLD = 15
-
 export async function generateMetadata(): Promise<Metadata> {
   const terms = await getAllGlossaryTerms().catch(() => [])
-  const live = terms.length >= INDEX_THRESHOLD
+  const live = terms.length >= GLOSSARY_INDEX_THRESHOLD
 
   return {
-    title: 'AI-search glossary · Sale Solution',
+    // Root template appends " · Sale Solution"; keep this bare to avoid double-branding.
+    title: 'AI-search glossary',
     description:
       'Plain-English definitions of AI-search, GEO, and answer-engine terms for industrial e-commerce — generative engine optimization, citation engineering, answer engines, and more.',
     alternates: { canonical: `${business.url}/glossary/` },
@@ -48,7 +48,7 @@ export default async function GlossaryHubPage() {
     <>
       <JsonLd
         data={breadcrumbListSchema([
-          { name: 'Home', url: business.url },
+          { name: 'Home', url: `${business.url}/` },
           { name: 'Glossary', url: `${business.url}/glossary/` },
         ])}
       />

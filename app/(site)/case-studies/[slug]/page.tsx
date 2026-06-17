@@ -101,8 +101,16 @@ export default async function CaseStudyPage({ params }: Props) {
     '@type': 'Article',
     headline: fullTitle,
     description: study.summary,
+    // seo.ogImage asset is dereferenced in the GROQ query (SEO_FIELDS);
+    // JSON.stringify drops this when the CMS has no OG image set.
+    image: study.seo?.ogImage?.asset?.url,
     datePublished: study.publishedAt,
     dateModified: study.updatedAt ?? study.publishedAt,
+    author: {
+      '@type': 'Person',
+      name: business.founder.name,
+      jobTitle: business.founder.role,
+    },
     publisher: { '@id': `${business.url}/#organization` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
     articleSection: 'Case Study',
@@ -113,7 +121,7 @@ export default async function CaseStudyPage({ params }: Props) {
       <JsonLd data={articleSchema} />
       <JsonLd
         data={breadcrumbListSchema([
-          { name: 'Home', url: business.url },
+          { name: 'Home', url: `${business.url}/` },
           { name: 'Case Studies', url: `${business.url}/case-studies/` },
           { name: fullTitle, url: canonical },
         ])}
@@ -149,8 +157,8 @@ export default async function CaseStudyPage({ params }: Props) {
         blocks={[
           {
             eyebrow: 'Why it worked',
-            heading: 'The mechanism,',
-            headingMuted: 'not the magic.',
+            heading: 'The mechanism.',
+            headingMuted: 'What actually moved the number.',
             body: study.mechanism,
           },
         ]}

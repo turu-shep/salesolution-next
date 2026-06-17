@@ -67,7 +67,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (slug in CATEGORY_SLUGS) {
     const cat = CATEGORY_SLUGS[slug]
     return {
-      title: `${cat.label} · Sale Solution`,
+      // Root template appends " · Sale Solution"; keep bare to avoid double-branding.
+      title: cat.label,
       description: cat.description,
       alternates: { canonical: `${business.url}/guides/${slug}/` },
     }
@@ -118,7 +119,7 @@ export default async function GuideOrCategoryPage({ params }: Props) {
       <>
         <JsonLd
           data={breadcrumbListSchema([
-            { name: 'Home', url: business.url },
+            { name: 'Home', url: `${business.url}/` },
             { name: 'Guides', url: `${business.url}/guides/` },
             { name: meta.label, url: `${business.url}/guides/${slug}/` },
           ])}
@@ -206,6 +207,11 @@ export default async function GuideOrCategoryPage({ params }: Props) {
     image: guide.coverImage?.asset?.url,
     datePublished: guide.publishedAt,
     dateModified: guide.updatedAt ?? guide.publishedAt,
+    author: {
+      '@type': 'Person',
+      name: business.founder.name,
+      jobTitle: business.founder.role,
+    },
     publisher: { '@id': `${business.url}/#organization` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${business.url}/guides/${slug}/` },
     articleSection: 'Guide',
@@ -216,7 +222,7 @@ export default async function GuideOrCategoryPage({ params }: Props) {
       <JsonLd data={articleSchema} />
       <JsonLd
         data={breadcrumbListSchema([
-          { name: 'Home', url: business.url },
+          { name: 'Home', url: `${business.url}/` },
           { name: 'Guides', url: `${business.url}/guides/` },
           { name: guide.title, url: `${business.url}/guides/${slug}/` },
         ])}

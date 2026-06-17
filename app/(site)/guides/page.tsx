@@ -5,10 +5,15 @@ import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { FeaturedGuide } from '@/components/sections/guides/FeaturedGuide'
 import { GuidesLibrary } from '@/components/sections/guides/GuidesLibrary'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { business } from '@/lib/business'
+import { breadcrumbListSchema, itemListSchema } from '@/lib/schema'
 import { getAllGuides, type GuideCard } from '@/sanity/lib/guides'
 
 export const metadata: Metadata = {
-  title: 'Guides · Sale Solution',
+  // The root layout's title template appends " · Sale Solution" — keep this bare
+  // so it doesn't double-brand to "Guides · Sale Solution · Sale Solution".
+  title: 'Guides',
   description:
     'Long-form, field-tested guides on website launches, SEO, e-commerce, and the AI-search transition. Free, no email gate.',
   alternates: { canonical: 'https://salesolution.net/guides/' },
@@ -60,6 +65,25 @@ export default async function GuidesHubPage() {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: `${business.url}/` },
+          { name: 'Guides', url: `${business.url}/guides/` },
+        ])}
+      />
+      {guides.length > 0 && (
+        <JsonLd
+          data={itemListSchema({
+            name: 'Field-tested guides',
+            url: `${business.url}/guides/`,
+            items: guides.map((g) => ({
+              name: g.title,
+              url: `${business.url}/guides/${g.slug}/`,
+            })),
+          })}
+        />
+      )}
+
       <ServicesHero
         eyebrow="The library · Field notes"
         title="Field-tested guides"

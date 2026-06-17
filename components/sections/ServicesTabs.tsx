@@ -336,6 +336,8 @@ export function ServicesTabs({ id }: { id?: string }) {
               key={t.key}
               type="button"
               role="tab"
+              id={`servicetab-${t.key}`}
+              aria-controls={`servicepanel-${t.key}`}
               aria-selected={isActive}
               onClick={() => setActive(t.key)}
               className={cn(
@@ -357,29 +359,46 @@ export function ServicesTabs({ id }: { id?: string }) {
         })}
       </div>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
-        {/* `min-w-0` on both columns so the JSON-LD <pre> artifact's intrinsic
-            min-content can't push the grid track past its track-size cap. */}
-        <div className="min-w-0 lg:col-span-6">
-          <h3 className="font-display text-2xl font-semibold leading-[1.15] tracking-[-0.01em] text-white sm:text-[2rem]">
-            {tab.title}
-          </h3>
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-300">
-            {tab.description}
-          </p>
-          <Link
-            href={tab.detailHref}
-            className="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-white underline decoration-white/30 underline-offset-[6px] transition-colors duration-200 hover:decoration-white hover:decoration-2"
+      {/* All five panels render into the DOM; inactive ones use the `hidden`
+          attribute (display:none) rather than being unmounted. That keeps every
+          service's copy AND its detail-page link in the server-rendered HTML, so
+          crawlers and AI answer engines see all five — not just the active tab.
+          The wrapping panel carries no display utility, so [hidden] wins. */}
+      <div className="mt-10">
+        {TABS.map((t) => (
+          <div
+            key={t.key}
+            id={`servicepanel-${t.key}`}
+            role="tabpanel"
+            aria-labelledby={`servicetab-${t.key}`}
+            hidden={t.key !== tab.key}
           >
-            See the {tab.label} page
-            <span aria-hidden>→</span>
-          </Link>
-        </div>
+            {/* `min-w-0` on both columns so the JSON-LD <pre> artifact's intrinsic
+                min-content can't push the grid track past its track-size cap. */}
+            <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
+              <div className="min-w-0 lg:col-span-6">
+                <h3 className="font-display text-2xl font-semibold leading-[1.15] tracking-[-0.01em] text-white sm:text-[2rem]">
+                  {t.title}
+                </h3>
+                <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-300">
+                  {t.description}
+                </p>
+                <Link
+                  href={t.detailHref}
+                  className="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-white underline decoration-white/30 underline-offset-[6px] transition-colors duration-200 hover:decoration-white hover:decoration-2"
+                >
+                  See the {t.label} page
+                  <span aria-hidden>→</span>
+                </Link>
+              </div>
 
-        {/* Artifact: a small visual proof of what the practice produces.
-            This replaces the redundant 4-bullet capability grid — the detail
-            page already covers capabilities; the homepage tab should tease. */}
-        <div className="min-w-0 lg:col-span-6">{ARTIFACT[tab.key]}</div>
+              {/* Artifact: a small visual proof of what the practice produces.
+                  This replaces the redundant 4-bullet capability grid — the detail
+                  page already covers capabilities; the homepage tab should tease. */}
+              <div className="min-w-0 lg:col-span-6">{ARTIFACT[t.key]}</div>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Full Growth Ownership callout — the 6th service, surfaced below the

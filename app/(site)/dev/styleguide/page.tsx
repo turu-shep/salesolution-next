@@ -98,7 +98,7 @@ function Section({
 
 export default function StyleguidePage() {
   return (
-    <main className="mx-auto max-w-6xl px-6 py-16">
+    <div className="mx-auto max-w-6xl px-6 py-16">
       <header className="mb-10">
         <p className="text-xs font-semibold tracking-[0.18em] uppercase text-brand-600">
           Internal · noindex
@@ -295,6 +295,6 @@ export default function StyleguidePage() {
           </button>
         </div>
       </Section>
-    </main>
+    </div>
   )
 }

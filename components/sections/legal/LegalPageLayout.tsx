@@ -36,7 +36,9 @@ export function LegalPageLayout({
   const hasTOC = (tocItems?.length ?? 0) >= 5
 
   return (
-    <main data-section-tone="light" className="relative bg-paper">
+    // Plain wrapper, not <main> — the site layout already provides the single
+    // <main> landmark, and nesting two is invalid.
+    <div data-section-tone="light" className="relative bg-paper">
       {/* ── Page header ─────────────────────────────────────────────────── */}
       <header className="border-b border-rule">
         <div className="mx-auto max-w-6xl px-4 pb-12 pt-16 sm:px-6 md:pb-16 md:pt-24 lg:px-8">
@@ -180,6 +182,6 @@ export function LegalPageLayout({
           margin: 2.5rem 0;
         }
       `}</style>
-    </main>
+    </div>
   )
 }

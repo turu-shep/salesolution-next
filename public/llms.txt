@@ -15,18 +15,8 @@ We publish primary research, frameworks, a glossary, and case studies on how to 
 
 ## Learning hub
 
-- [AI-search glossary](https://salesolution.net/glossary/): Plain-English definitions of AI-search, GEO, and answer-engine terms for industrial e-commerce.
-  - [Generative engine optimization (GEO)](https://salesolution.net/glossary/generative-engine-optimization/)
-  - [Answer engine optimization (AEO)](https://salesolution.net/glossary/answer-engine-optimization/)
-  - [Citation engineering](https://salesolution.net/glossary/citation-engineering/)
-  - [AI visibility](https://salesolution.net/glossary/ai-visibility/)
-  - [AI share of voice](https://salesolution.net/glossary/ai-share-of-voice/)
-  - [Part-number SEO](https://salesolution.net/glossary/part-number-seo/)
-  - [Part-number cross-reference content](https://salesolution.net/glossary/part-number-cross-reference/)
-  - [llms.txt](https://salesolution.net/glossary/llms-txt/)
-- [Career paths](https://salesolution.net/career-paths/): The roles of modern AI search, by seniority, for B2B technical e-commerce teams.
-  - [GEO Specialist](https://salesolution.net/career-paths/geo-specialist/)
-  - [Citation Engineer](https://salesolution.net/career-paths/citation-engineer/)
+- [AI-search glossary](https://salesolution.net/glossary/): Plain-English definitions of AI-search, GEO, and answer-engine terms for industrial e-commerce. Browse the hub for every current definition.
+- [Career paths](https://salesolution.net/career-paths/): The roles of modern AI search, by seniority, for B2B technical e-commerce teams. Each path is linked from the hub.
 
 ## Frameworks & guides
 

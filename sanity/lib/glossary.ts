@@ -8,6 +8,11 @@ import {
 } from './queries'
 import { sanityFetch } from './fetch'
 
+// GLOSSARY_INDEX_THRESHOLD lives in lib/glossary-config.ts — a dependency-free
+// module so app/sitemap.ts can import the threshold without pulling the Sanity
+// client (and its env-or-throw module), which would break the sitemap's
+// fail-soft behaviour.
+
 export type GlossaryCluster =
   | 'ai-search-core'
   | 'measurement'

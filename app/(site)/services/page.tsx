@@ -9,6 +9,9 @@ import { PickAService } from '@/components/sections/services/PickAService'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { ServicesIndex } from '@/components/sections/services/ServicesIndex'
 import { CompositeBar } from '@/components/services/CompositeBar'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { business } from '@/lib/business'
+import { breadcrumbListSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Services · Six services. One operator.',
@@ -120,6 +123,13 @@ const HUB_FAQ: QA[] = [
 export default function ServicesHubPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: `${business.url}/` },
+          { name: 'Services', url: `${business.url}/services/` },
+        ])}
+      />
+
       <CompositeBar weight="hero" />
 
       <ServicesHero

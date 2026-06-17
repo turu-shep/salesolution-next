@@ -14,8 +14,21 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <JsonLd data={globalGraph()} />
+      {/* Skip link — first focusable element on every site page. Visually hidden
+          until focused, then pinned top-left. Targets the <main> landmark below. */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Skip to main content
+      </a>
       <Header />
-      <div className="flex flex-1 flex-col">{children}</div>
+      {/* Single <main> landmark for the whole site shell — gives crawlers, AI
+          extractors, and reader/answer-engine parsers a clean primary-content
+          region, and satisfies WCAG 1.3.1 landmark navigation. */}
+      <main id="main-content" className="flex flex-1 flex-col">
+        {children}
+      </main>
       <Footer />
     </>
   )

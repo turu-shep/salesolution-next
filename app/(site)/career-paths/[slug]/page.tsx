@@ -5,6 +5,7 @@ import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { PathBody } from '@/components/sections/career-path-detail/PathBody'
 import { PathBuyer } from '@/components/sections/career-path-detail/PathBuyer'
 import { PathHero } from '@/components/sections/career-path-detail/PathHero'
+import { PathModules } from '@/components/sections/career-path-detail/PathModules'
 import { PathRelated } from '@/components/sections/career-path-detail/PathRelated'
 import { PathSeniority } from '@/components/sections/career-path-detail/PathSeniority'
 import { PathTerms } from '@/components/sections/career-path-detail/PathTerms'
@@ -16,7 +17,9 @@ import {
   getAllCareerPaths,
   getAllCareerPathSlugs,
   getCareerPathBySlug,
+  orderModules,
 } from '@/sanity/lib/career-paths'
+import { slugifyHeading } from '@/lib/slug'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -65,6 +68,17 @@ export default async function CareerPathPage({ params }: Props) {
 
   const MATRIX_ID = 'at-each-level'
   const BUYER_ID = 'hiring-this-role'
+  const kind = path.kind ?? 'role'
+  const buyerHeading =
+    kind === 'specialization' ? 'Need this done?' : 'Hiring this role?'
+  const ordered = orderModules(path.modules ?? [])
+  const hasModules = ordered.length > 0
+  const moduleToc = ordered.map((m) => ({
+    text: `${String(m.n).padStart(2, '0')} · ${m.title}`,
+    id: slugifyHeading(m.title ?? ''),
+    group: m.level,
+  }))
+  const bodyHasContent = Array.isArray(path.body) && path.body.length > 0
   const hasMatrix = (path.seniorityMatrix ?? []).some((r) => r?.level)
   const b = path.buyerSection
   const hasBuyer = Boolean(
@@ -79,7 +93,7 @@ export default async function CareerPathPage({ params }: Props) {
     <>
       <JsonLd
         data={breadcrumbListSchema([
-          { name: 'Home', url: business.url },
+          { name: 'Home', url: `${business.url}/` },
           { name: 'Career paths', url: `${business.url}/career-paths/` },
           { name: path.title, url: `${business.url}/career-paths/${slug}/` },
         ])}
@@ -94,8 +108,9 @@ export default async function CareerPathPage({ params }: Props) {
               <div className="sticky top-24">
                 <PathTOC
                   body={path.body}
-                  topAnchor={hasMatrix ? { text: 'At each level', id: MATRIX_ID } : undefined}
-                  bottomAnchor={hasBuyer ? { text: 'Hiring this role?', id: BUYER_ID } : undefined}
+                  items={hasModules ? moduleToc : undefined}
+                  topAnchor={!hasModules && hasMatrix ? { text: 'At each level', id: MATRIX_ID } : undefined}
+                  bottomAnchor={hasBuyer ? { text: buyerHeading, id: BUYER_ID } : undefined}
                 />
               </div>
             </aside>
@@ -104,8 +119,9 @@ export default async function CareerPathPage({ params }: Props) {
               <div className="mb-8 md:hidden">
                 <PathTOC
                   body={path.body}
-                  topAnchor={hasMatrix ? { text: 'At each level', id: MATRIX_ID } : undefined}
-                  bottomAnchor={hasBuyer ? { text: 'Hiring this role?', id: BUYER_ID } : undefined}
+                  items={hasModules ? moduleToc : undefined}
+                  topAnchor={!hasModules && hasMatrix ? { text: 'At each level', id: MATRIX_ID } : undefined}
+                  bottomAnchor={hasBuyer ? { text: buyerHeading, id: BUYER_ID } : undefined}
                   mobile
                 />
               </div>
@@ -114,11 +130,20 @@ export default async function CareerPathPage({ params }: Props) {
                   Reviewed {formatReviewed(path.lastReviewed)}
                 </p>
               )}
-              {hasMatrix && (
-                <PathSeniority matrix={path.seniorityMatrix!} id={MATRIX_ID} />
+              {hasModules ? (
+                <>
+                  {bodyHasContent && <PathBody body={path.body} />}
+                  <PathModules ordered={ordered} matrix={path.seniorityMatrix} />
+                </>
+              ) : (
+                <>
+                  {hasMatrix && (
+                    <PathSeniority matrix={path.seniorityMatrix!} id={MATRIX_ID} />
+                  )}
+                  <PathBody body={path.body} />
+                </>
               )}
-              <PathBody body={path.body} />
-              {hasBuyer && <PathBuyer section={b!} id={BUYER_ID} />}
+              {hasBuyer && <PathBuyer section={b!} id={BUYER_ID} kind={kind} />}
             </div>
           </div>
         </div>
