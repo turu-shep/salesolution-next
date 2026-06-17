@@ -16,6 +16,10 @@ const SITE = business.url
 
 const orgId = `${SITE}/#organization`
 const websiteId = `${SITE}/#website`
+// Stable @id for the founder's Person entity. Defined once here; referenced by
+// Organization.founder, every Article author, and the /about ProfilePage so the
+// whole site resolves to one author entity (E-E-A-T + AI-citation trust).
+export const personId = `${SITE}/#person`
 
 export function organizationSchema() {
   return {
@@ -42,11 +46,7 @@ export function organizationSchema() {
     },
     telephone: business.phone,
     email: business.emails.leads,
-    founder: {
-      '@type': 'Person',
-      name: business.founder.name,
-      jobTitle: business.founder.role,
-    },
+    founder: { '@id': personId },
     sameAs: [
       business.social.facebook,
       business.social.twitter,
@@ -67,11 +67,39 @@ export function websiteSchema() {
   } as const
 }
 
+/**
+ * The founder as a first-class Person entity. Fully described here (and emitted
+ * sitewide via globalGraph) so Organization.founder, Article authors, and the
+ * /about ProfilePage can all reference it by @id — one author entity for crawlers
+ * and AI answer engines to attribute and trust. `sameAs` ties it to the founder's
+ * real profiles for entity disambiguation.
+ */
+export function personSchema() {
+  const f = business.founder
+  return {
+    '@type': 'Person',
+    '@id': personId,
+    name: f.name,
+    url: f.url,
+    image: `${SITE}${f.image}`,
+    jobTitle: f.role,
+    description: f.bio,
+    worksFor: { '@id': orgId },
+    knowsAbout: [...f.knowsAbout],
+    sameAs: [
+      f.profiles.linkedin,
+      f.profiles.youtube,
+      f.profiles.instagram,
+      f.profiles.twitter,
+    ],
+  } as const
+}
+
 /** Global graph rendered once in the site layout — every page inherits it. */
 export function globalGraph() {
   return {
     '@context': 'https://schema.org',
-    '@graph': [organizationSchema(), websiteSchema()],
+    '@graph': [organizationSchema(), websiteSchema(), personSchema()],
   }
 }
 

@@ -10,7 +10,7 @@ import { PostShare } from '@/components/sections/blog-post/PostShare'
 import { PostTOC } from '@/components/sections/blog-post/PostTOC'
 import { RelatedPosts } from '@/components/sections/blog-post/RelatedPosts'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { breadcrumbListSchema } from '@/lib/schema'
+import { breadcrumbListSchema, personId } from '@/lib/schema'
 import { business } from '@/lib/business'
 import {
   getAllPostSlugs,
@@ -90,9 +90,11 @@ export default async function PostPage({ params }: Props) {
     image: post.coverImage?.asset?.url,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
+    // A CMS author (e.g. a guest) wins; otherwise attribute to the founder
+    // entity so every article resolves to one trusted author for E-E-A-T.
     author: post.author
       ? { '@type': 'Person', name: post.author.name }
-      : undefined,
+      : { '@id': personId },
     publisher: { '@id': `${business.url}/#organization` },
     mainEntityOfPage: {
       '@type': 'WebPage',

@@ -17,6 +17,8 @@
 export const business = {
   name: 'Sale Solution',
   legalName: 'Sale Solution',
+  // ⚠ STALE: industrial-only, predates the multi-vertical pivot (open TODO — owner
+  //   decision). See AGENTS.md → Landmines and docs/strategy/multi-vertical-pivot/.
   tagline: 'AI-Driven SEO for Technical B2B & Industrial E-commerce',
   url: 'https://salesolution.net',
 
@@ -48,6 +50,31 @@ export const business = {
   founder: {
     name: 'Artur Shepel',
     role: 'Founder & AI-Growth Strategist',
+    // Canonical page for the founder entity (Person @id lives here).
+    url: 'https://salesolution.net/about/',
+    // Headshot in /public. Used for Person.image (absolute URL built in schema)
+    // and the /about portrait.
+    image: '/artur-shepel.jpg',
+    // One factual paragraph — reused for the /about lede + Person schema
+    // description. Sourced from the homepage Operator copy (already approved).
+    bio: 'Artur Shepel is the founder of Sale Solution and an AI-growth strategist with 14 years operating growth across industrial distribution, home services, and dental. He builds and runs the AI-search, catalog, and content systems for technical B2B and e-commerce teams — and tells clients which constraint to fix first.',
+    // Personal profiles → the Person entity's sameAs (entity disambiguation).
+    profiles: {
+      linkedin: 'https://www.linkedin.com/in/artur-shepel/',
+      youtube: 'https://www.youtube.com/channel/UCX7raLyA9B1L167Y2bHLTPg',
+      instagram: 'https://www.instagram.com/arthur.shepel/',
+      twitter: 'https://x.com/ArturShepel',
+    },
+    // Expertise areas → Person.knowsAbout.
+    knowsAbout: [
+      'Generative engine optimization',
+      'AI search',
+      'Search engine optimization',
+      'Technical SEO',
+      'Industrial e-commerce',
+      'Citation engineering',
+      'B2B content strategy',
+    ],
   },
 } as const
 

@@ -35,6 +35,7 @@ We publish primary research, frameworks, a glossary, and case studies on how to 
 
 Sale Solution is the trade name of IT Sale Solution LLC, a Florida company operating from North Miami Beach, FL. Founded by Artur Shepel.
 
+- [About — Artur Shepel](https://salesolution.net/about/): Founder of Sale Solution; 14 years operating growth across industrial distribution, home services, and dental.
 - [Contact](https://salesolution.net/contact-me/)
 - [Service areas](https://salesolution.net/service-areas/)
 - [Privacy policy](https://salesolution.net/privacy-policy/)

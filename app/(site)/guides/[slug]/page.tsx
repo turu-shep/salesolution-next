@@ -14,7 +14,7 @@ import { GuideTOC } from '@/components/sections/guide-detail/GuideTOC'
 import { SeriesNav } from '@/components/sections/guide-detail/SeriesNav'
 import { GuideCard } from '@/components/sections/guides/GuideCard'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { breadcrumbListSchema } from '@/lib/schema'
+import { breadcrumbListSchema, personId } from '@/lib/schema'
 import { business } from '@/lib/business'
 import {
   getAllGuideSlugs,
@@ -207,11 +207,7 @@ export default async function GuideOrCategoryPage({ params }: Props) {
     image: guide.coverImage?.asset?.url,
     datePublished: guide.publishedAt,
     dateModified: guide.updatedAt ?? guide.publishedAt,
-    author: {
-      '@type': 'Person',
-      name: business.founder.name,
-      jobTitle: business.founder.role,
-    },
+    author: { '@id': personId },
     publisher: { '@id': `${business.url}/#organization` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${business.url}/guides/${slug}/` },
     articleSection: 'Guide',

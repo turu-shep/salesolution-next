@@ -44,6 +44,7 @@ const STATIC_ROUTES: Entry[] = [
   { url: `${BASE}/services/website-development-design-services/`, changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/services/outbound-email-marketing-services/`,   changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/contact-me/`,                           changeFrequency: 'yearly',  priority: 0.7 },
+  { url: `${BASE}/about/`,                                 changeFrequency: 'yearly',  priority: 0.6 },
   { url: `${BASE}/unlock-growth-audit/`,                  changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/future-proof-your-seo/`,                changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/book-growth-call/`,                     changeFrequency: 'monthly', priority: 0.8 },

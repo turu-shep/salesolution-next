@@ -35,12 +35,12 @@ export function Operator() {
 
           <div className="mt-8 max-w-xl space-y-5 text-ink-300">
             <p>
-              I&rsquo;m {business.founder.name} &mdash; the person who writes
-              the schema, builds the systems, and tells you which constraint
-              to fix first. Fourteen years operating growth systems across
-              industrial distribution, dental practices, and home-services
-              contractors &mdash; catalog rewrites, AI receptionists,
-              citation engineering, recovered revenue.
+              I&rsquo;m {business.founder.name} &mdash; the person who builds
+              the systems and tells you which constraint to fix first. Fourteen
+              years running growth across industrial distribution, home services,
+              and dental: catalog rewrites for distributors, an AI receptionist
+              for the contractor stuck on a roof, recovered revenue for the
+              practice missing calls at chair time.
             </p>
             <p>
               Sale Solution is small on purpose. No account managers, no
@@ -52,7 +52,7 @@ export function Operator() {
 
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
             <Link
-              href={business.social.linkedin}
+              href={business.founder.profiles.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-semibold text-white underline decoration-white/30 underline-offset-[6px] transition-colors duration-200 hover:text-accent-500 hover:decoration-accent-500"
@@ -61,7 +61,7 @@ export function Operator() {
               <span aria-hidden>→</span>
             </Link>
             <Link
-              href="/career-paths/"
+              href="/about/"
               className="inline-flex items-center gap-2 text-sm font-semibold text-ink-300 transition-colors duration-200 hover:text-white"
             >
               Background &amp; track record

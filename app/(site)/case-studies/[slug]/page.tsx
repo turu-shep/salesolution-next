@@ -13,7 +13,7 @@ import { CaseStudyStickyCTA } from '@/components/sections/case-studies/CaseStudy
 import { serviceMeta } from '@/components/sections/case-studies/service-meta'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { business } from '@/lib/business'
-import { breadcrumbListSchema } from '@/lib/schema'
+import { breadcrumbListSchema, personId } from '@/lib/schema'
 import {
   getAllCaseStudies,
   getAllCaseStudySlugs,
@@ -106,11 +106,7 @@ export default async function CaseStudyPage({ params }: Props) {
     image: study.seo?.ogImage?.asset?.url,
     datePublished: study.publishedAt,
     dateModified: study.updatedAt ?? study.publishedAt,
-    author: {
-      '@type': 'Person',
-      name: business.founder.name,
-      jobTitle: business.founder.role,
-    },
+    author: { '@id': personId },
     publisher: { '@id': `${business.url}/#organization` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
     articleSection: 'Case Study',
