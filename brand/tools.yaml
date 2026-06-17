@@ -1,0 +1,22 @@
+# Tools registry — Sale Solution
+# Consumed by: project.yaml -> brand.tools (engine_init.py resolve-tool)
+#
+# Articles reference a tool by SLUG; the resolver turns a slug into:
+#   published -> the live `url` (linked directly)
+#   planned   -> the canonical /tools/{slug} path (rendered "coming soon"), tracked by a Linear issue
+#   missing   -> a slug with no entry: resolver flags needs_issue + supplies the Linear title/team
+#
+# SHAPE
+#   tools:
+#     <slug>:
+#       name:    "<human title>"          # required — link text + Linear issue title
+#       status:  published | planned      # required
+#       url:     "<live url>"             # required IF published
+#       linear:  "SAL-###"               # for planned: the issue tracking the build
+#       kind:    calculator | finder | generator   # optional
+#       inline:  true | false             # optional; may a small inline version embed?
+#       note:    "<free text>"            # optional
+
+# No interactive calculators/finders live on salesolution.net yet.
+# Add entries here as the team ships tools (track planned builds with SAL-### issues).
+tools: {}

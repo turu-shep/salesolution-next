@@ -1,0 +1,57 @@
+# Sale Solution — per-project manifest for the content engine.
+# Site: https://salesolution.net  (Next.js App Router + Sanity CMS / Portable Text)
+# All paths are repo-relative EXCEPT engine_path (the mount point).
+#
+# ADAPTATION NOTE (Sanity): the engine's native output is a self-contained HTML
+# article; this site stores content as Sanity Portable Text (a block array, not
+# raw HTML). Use the engine for research -> draft -> humanize -> verify -> analyze.
+# Publishing the verified article into Sanity needs an HTML -> Portable Text
+# conversion step that does not exist yet (see brand/cms.yaml). The verifier's
+# wrapper_class is pointed at the site's real wrapper ("article-body") so QA runs
+# against the same markup the Next app renders.
+
+engine_path: .engine            # where the engine is mounted (submodule)
+
+brand:
+  name: Sale Solution
+  voice_doc: .agents/product-marketing-context.md   # written by the product-marketing-context skill (TODO: run it)
+  competitor_policy: brand/competitor-policy.yaml
+  trusted_sources: brand/trusted-sources.md
+  tools: brand/tools.yaml                # calculators/finders registry (slug -> status/url/linear)
+  # internal_domains: [salesolution.net] # OPTIONAL: single-host site, so derived from cms.canonical_base.
+  #                                      #   Add a list only if subdomains/extra domains should count as internal.
+  design:
+    css: app/globals.css                 # the article body styles live here as `.article-body` (Tailwind v4 @theme)
+    svg_palette: brand/design/palette.yaml
+
+cms:
+  url_pattern: "/{slug}"                  # blog posts render at /{slug}/ (the engine's article target).
+                                          #   Other types have their own paths: /guides/{slug}/,
+                                          #   /glossary/{slug}/, /career-paths/{slug}/.
+  canonical_base: "https://salesolution.net"
+  deploy: brand/cms.yaml
+
+data:
+  gsc_dir: analysis/gsc                   # drop Google Search Console exports here (see SAL-405)
+  ga_dir: analysis/ga                     # drop Google Analytics exports here
+  inventory: analysis/inventory.md
+
+integrations:
+  linear:
+    team: SAL                             # Salesolution team — issue prefix SAL-### (drives the article-ID prefix)
+    project: SS SEO
+  gsc_property: "sc-domain:salesolution.net"   # TODO: confirm verification method once GSC is connected (SAL-405)
+  sitemaps:
+    - https://salesolution.net/sitemap.xml
+  # serp:                                # OPTIONAL — SERP research provider + verifier gate.
+  #   provider: ahrefs                    #   Ahrefs is the team's tool of record, but left UNSET so the
+  #                                        #   engine defaults to `frase` AND its self-tests stay green (a
+  #                                        #   golden test asserts the host project.yaml has no serp block).
+  #   required: false                     #   true = HARD pre-publish gate (verify fails without a brief).
+  #   brief_file: serp-brief.yml          #   flip provider->ahrefs once SERP briefs + the Ahrefs API are wired.
+
+targets:
+  words: 2000
+  fk_grade: 8.0
+  verifier: pass
+  analyzer: 80

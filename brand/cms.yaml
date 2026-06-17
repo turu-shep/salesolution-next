@@ -1,0 +1,31 @@
+# CMS / deploy — Sale Solution
+# Consumed by: project.yaml -> cms (url_pattern) + cms.deploy
+#
+# THIS SITE IS NEXT.JS + SANITY (Portable Text), not Shopify/WooCommerce/WordPress.
+# The engine has no Sanity platform adapter, so:
+#   - It runs as an AUTHORING + QA pipeline (research/draft/humanize/verify/analyze).
+#   - There is NO CSS-push deploy: the article styles already ship with the Next app
+#     (app/globals.css -> `.article-body`), so source_css/package_script/dist_* are unused.
+#   - PUBLISH GAP: the engine emits a self-contained HTML article; Sanity needs Portable
+#     Text (a block array). Converting verified HTML -> Portable Text (block, image,
+#     codeBlock, callout objects + link/glossaryRef marks; see sanity/schemas/objects/
+#     portable-text.ts) and upserting via writeClient (token: SANITY_API_WRITE_TOKEN)
+#     is a custom step to build. Until then, publish manually in /studio.
+
+platform: "sanity"                       # informational — no Shopify/WP adapter is invoked
+url_pattern: "/{slug}"                    # blog posts render at /{slug}/
+canonical_base: "https://salesolution.net"
+
+deploy:
+  # The ONLY key the verifier actually reads here: the outer wrapper it asserts on the
+  # article HTML. Set to the site's real wrapper so QA matches what the Next app renders:
+  # PortableTextRenderer wraps the body in <div class="article-body"> (components/
+  # portable-text/PortableTextRenderer.tsx); the verifier accepts <article|div class="...article-body...">.
+  wrapper_class: "article-body"
+
+  # CSS deploy is N/A for a Next.js site — the .article-body styles live in the app bundle.
+  source_css: "app/globals.css"          # source of truth for article typography (reference only; not packaged/pushed)
+  # package_script / dist_min / dist_unmin: unused (no theme-asset or child-theme CSS push)
+
+# Product sourcing (Shopify/WooCommerce relevant-products block) does not apply —
+# Sale Solution is a B2B services site with no product catalog.

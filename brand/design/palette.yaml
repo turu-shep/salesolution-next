@@ -1,0 +1,36 @@
+# Brand palette — Sale Solution
+# Consumed by: liori_svg.py (SVG toolkit) + article CSS tokens.
+# Values lifted from app/globals.css @theme tokens (the live design system).
+# The token KEYS are read by the toolkit verbatim — keep them; only values change.
+
+tokens:
+  deep_midnight:   { hex: "#050C23", css_var: "--deep-midnight", role: "primary dark / dark bands / footer" }
+  midnight_light:  { hex: "#1E3FCC", css_var: null,              role: "lighter dark (brand-700), for gradients" }
+  champagne:       { hex: "#2652EF", css_var: "--champagne",     role: "primary accent / borders (brand-600 CTA)" }
+  champagne_light: { hex: "#C8D2FF", css_var: null,              role: "light accent (brand-300, gradient stop)" }
+  deep_rose:       { hex: "#4169E1", css_var: "--deep-rose",     role: "links / secondary accent (brand-500)" }
+  warm_ivory:      { hex: "#FBFBFA", css_var: "--warm-ivory",    role: "article background (paper)" }
+  soft_cream:      { hex: "#F7F7F7", css_var: "--soft-cream",    role: "card / winner-cell bg (surface-alt)" }
+  warm_taupe:      { hex: "#69778B", css_var: "--taupe",         role: "secondary text / captions (ink-500)" }
+  charcoal:        { hex: "#404040", css_var: "--charcoal",      role: "body text (ink-700)" }
+  white:           { hex: "#FFFFFF", css_var: null,              role: "white" }
+  emerald:         { hex: "#047857", css_var: null,              role: "'recommended' / data-up / certified accent" }
+
+font_family: "Geist, system-ui, sans-serif"
+
+# Legacy colors that must NEVER appear in an SVG (verifier palette guard).
+# None locked yet — fill if a deprecated hex must be hard-banned from infographics.
+forbidden: []
+  # - "#FF6F2E"
+
+# One geometry, many fills. Each colorway: tbl(3 stops), gird(2), kA/kB/kC/kD(2 each).
+colorways:
+  colorless:
+    tbl:  ["#FFFFFF", "#050C23", "#2652EF"]   # cell bg, header bg, accent
+    gird: ["#E8EBF0", "#CDD3DC"]              # rule, rule-strong (grid lines)
+    kA:   ["#FFFFFF", "#2652EF"]
+    kB:   ["#F7F7F7", "#050C23"]
+    kC:   ["#2652EF", "#FFFFFF"]
+    kD:   ["#C8D2FF", "#050C23"]
+
+default_colorway: colorless

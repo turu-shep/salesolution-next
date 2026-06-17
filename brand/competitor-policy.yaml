@@ -1,0 +1,17 @@
+# Competitor policy — Sale Solution
+# Consumed by: verify_article.py (project.yaml -> brand.competitor_policy)
+# Match semantics: case-insensitive SUBSTRING match against the article body.
+#
+# NEEDS YOUR INPUT: list the named GEO/AEO/SEO agencies and martech brands that
+# must never appear in published body copy. Banning a name makes the verifier
+# FAIL any article that mentions it, so add only real, deliberate exclusions.
+# (Left empty on purpose — no guesses. Examples below are commented, not active.)
+
+# Modern direct competitors — must NOT appear in body copy (verifier FAILS them).
+banned: []
+  # - Example GEO Agency
+  # - Example SEO Agency
+
+# Heritage / historical brands — allowed ONLY when a historical fact matters
+# (verifier PASSES these). Use the exact substring the verifier should match on.
+heritage_allowed: []
