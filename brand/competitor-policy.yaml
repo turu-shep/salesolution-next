@@ -1,16 +1,53 @@
 # Competitor policy — Sale Solution
 # Consumed by: verify_article.py (project.yaml -> brand.competitor_policy)
 # Match semantics: case-insensitive SUBSTRING match against the article body.
+# Any name below makes the verifier FAIL an article that mentions it.
 #
-# NEEDS YOUR INPUT: list the named GEO/AEO/SEO agencies and martech brands that
-# must never appear in published body copy. Banning a name makes the verifier
-# FAIL any article that mentions it, so add only real, deliberate exclusions.
-# (Left empty on purpose — no guesses. Examples below are commented, not active.)
+# Scope: GEO/AEO + conventional SEO + PPC/paid + full-service growth agencies we
+# compete with. SEO/AEO SaaS tools (Semrush, Ahrefs, etc.) are deliberately NOT
+# here — we cite and reference those, we don't compete with them.
+#
+# False-positive note: substring match is case-insensitive. Common-word brands are
+# written in their full distinctive form ("Thrive Internet Marketing", "Directive
+# Consulting", "Disruptive Advertising", "Ignite Visibility", "Titan Growth") so
+# everyday words ("thrive", "directive", "ignite") don't trip the gate. Watch
+# "Graphite" / "Single Grain" if you ever write about materials or brewing.
 
 # Modern direct competitors — must NOT appear in body copy (verifier FAILS them).
-banned: []
-  # - Example GEO Agency
-  # - Example SEO Agency
+banned:
+  # --- GEO / AEO / AI-search agencies ---
+  - LSEO
+  - Graphite
+  - Victorious
+  - Animalz
+  - SEOProfy
+  - Thrive Internet Marketing
+  - Position Digital
+  - Digital Elevator
+  - iPullRank
+  # --- B2B / conventional SEO agencies ---
+  - Onely
+  - Directive Consulting
+  - Siege Media
+  - MADX Digital
+  - Straight North
+  - WebFX
+  - Seer Interactive
+  - First Page Sage
+  - Grizzle
+  - Virayo
+  - NP Digital
+  - Amsive
+  - Single Grain
+  - Ignite Visibility
+  # --- PPC / paid-search / performance agencies ---
+  - KlientBoost
+  - SmartSites
+  - Disruptive Advertising
+  - Black Propeller
+  - Intero Digital
+  - Titan Growth
+  - JumpFly
 
 # Heritage / historical brands — allowed ONLY when a historical fact matters
 # (verifier PASSES these). Use the exact substring the verifier should match on.

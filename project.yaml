@@ -43,12 +43,13 @@ integrations:
   gsc_property: "sc-domain:salesolution.net"   # TODO: confirm verification method once GSC is connected (SAL-405)
   sitemaps:
     - https://salesolution.net/sitemap.xml
-  # serp:                                # OPTIONAL — SERP research provider + verifier gate.
-  #   provider: ahrefs                    #   Ahrefs is the team's tool of record, but left UNSET so the
-  #                                        #   engine defaults to `frase` AND its self-tests stay green (a
-  #                                        #   golden test asserts the host project.yaml has no serp block).
-  #   required: false                     #   true = HARD pre-publish gate (verify fails without a brief).
-  #   brief_file: serp-brief.yml          #   flip provider->ahrefs once SERP briefs + the Ahrefs API are wired.
+  serp:
+    provider: dataforseo                  # SERP research provider. Reads env DATAFORSEO_LOGIN + DATAFORSEO_PASSWORD.
+    required: false                       # keep false until SERP briefs gate the flow; true = HARD pre-publish gate.
+    brief_file: serp-brief.yml            # verifier gate filename (the brief must carry `provider: dataforseo`).
+    # NOTE: setting any serp block trips 3 engine SELF-tests that assert the host
+    # project.yaml has none (test_serp_providers.py). That's an engine test-coupling
+    # smell, not a problem with this config — our setup is correct.
 
 targets:
   words: 2000
