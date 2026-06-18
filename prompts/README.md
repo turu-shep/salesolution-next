@@ -39,6 +39,9 @@ So you run ONE research prompt, get back N concrete authoring prompts, and run t
 | `career-paths/research-next-path.md` | Research which role/path to add next; emit an authoring prompt. |
 | `career-paths/author-path.TEMPLATE.md` | Template: author ONE career-path draft. |
 | `career-paths/voice-and-publish-path.md` | Revoice a path draft to operator register, then publish. |
+| `career-paths/map/` | The role map (Start here → Core roles → Specialize). See its README. |
+| `career-paths/map/update-path-relations.md` | Set/refresh `prerequisites` + `leadsTo` (the role-map edges). |
+| `career-paths/map/review-role-map.md` | QA the role map: stage placement, DAG integrity, render checks. |
 | **interlinking/** | |
 | `interlinking/glossary-into-content.md` | Link glossary terms from service/guide/blog pages. |
 | `interlinking/path-and-glossary-cross-links.md` | Link paths ↔ services and paths ↔ glossary. |
