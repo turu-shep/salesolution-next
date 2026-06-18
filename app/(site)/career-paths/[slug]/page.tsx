@@ -5,6 +5,7 @@ import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { PathBody } from '@/components/sections/career-path-detail/PathBody'
 import { PathBuyer } from '@/components/sections/career-path-detail/PathBuyer'
 import { PathHero } from '@/components/sections/career-path-detail/PathHero'
+import { PathEnrichments } from '@/components/sections/career-path-detail/PathEnrichments'
 import { PathModules } from '@/components/sections/career-path-detail/PathModules'
 import { PathPrereqs } from '@/components/sections/career-path-detail/PathPrereqs'
 import { PathRelated } from '@/components/sections/career-path-detail/PathRelated'
@@ -143,6 +144,7 @@ export default async function CareerPathPage({ params }: Props) {
                 </p>
               )}
               <PathPrereqs paths={path.prerequisites} />
+              <PathEnrichments enrichments={path.enrichments} placement="top" />
               {hasModules ? (
                 <>
                   {bodyHasContent && <PathBody body={path.body} />}
@@ -156,6 +158,8 @@ export default async function CareerPathPage({ params }: Props) {
                   <PathBody body={path.body} />
                 </>
               )}
+              <PathEnrichments enrichments={path.enrichments} placement="after-modules" />
+              <PathEnrichments enrichments={path.enrichments} placement="buyer" />
               {hasBuyer && <PathBuyer section={b!} id={BUYER_ID} kind={kind} />}
             </div>
           </div>

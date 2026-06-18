@@ -33,8 +33,11 @@ state**, multi-vertical, citation-not-leads.
 > **Status: Phase 1 (T1–T5) shipped (2026-06-17 / -18).** Per-module `weight` tag,
 > `prerequisites`/`leadsTo` relations (DAG seeded across all 7), per-path `ItemList`/`Occupation`
 > JSON-LD, inline per-module glossary links (auto-populated from terms each module uses), and the open
-> role-map artifact (JSON + Markdown, CC BY 4.0, in llms.txt) are all live and verified. Phase 2
-> remains: T6 enrichment mechanism, T7 role-map diagram, T8 salary dataset.
+> role-map artifact (JSON + Markdown, CC BY 4.0, in llms.txt) are all live and verified.
+> **T6 (enrichment mechanism) shipped** at careerPath level + the shared tool registry (first tool:
+> ai-visibility-calculator, live on the AI Visibility Analyst path). Remaining: T7 role-map diagram,
+> T8 salary dataset, plus T6 follow-ons (module-level enrichments, glossaryTerm reuse of the same
+> registry, optional standalone /tools/ pages + softwareToolSchema).
 >
 > **Gotcha (Turbopack):** a route-handler folder with a dot in its name (`map.json/`) placed next to
 > the `[slug]` dynamic route **corrupts the sibling route bundle** ("ReferenceError: require is not
@@ -112,7 +115,7 @@ state**, multi-vertical, citation-not-leads.
 
 ### Phase 2 — The enrichment mechanism (the reusable engine)
 
-#### T6 — `enrichments[]` schema + renderer (reusing the glossary tool registry)  ·  effort: high
+#### T6 — `enrichments[]` schema + renderer (reusing the glossary tool registry)  ·  ✅ shipped (careerPath level)  ·  effort: high
 The mechanism that lets any path/module/term carry an *optional* enrichment.
 
 > **Reuse, don't duplicate.** The interactive-tool half of this already has a locked design — the

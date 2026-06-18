@@ -7,6 +7,7 @@ import { caseStudyClient } from './case-study-client'
 import { glossaryTerm } from './glossary-term'
 import { guide } from './guide'
 import { industry } from './industry'
+import { enrichmentTypes } from './objects/enrichments'
 import { faqItem } from './objects/faq-item'
 import { portableText } from './objects/portable-text'
 import { seo } from './objects/seo'
@@ -34,4 +35,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   seo,
   series,
   faqItem,
+  ...enrichmentTypes,
 ]

@@ -1,5 +1,7 @@
 import { defineField, defineType } from 'sanity'
 
+import { enrichmentArrayMembers } from './objects/enrichments'
+
 export const careerPath = defineType({
   name: 'careerPath',
   title: 'Career path',
@@ -203,6 +205,30 @@ export const careerPath = defineType({
       title: 'Related glossary terms',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'glossaryTerm' }] }],
+    }),
+    defineField({
+      name: 'interactiveAidStatus',
+      title: 'Enrichment status',
+      type: 'string',
+      description:
+        'The enrichment check (doc 10 §3), made auditable. Has this path been assessed for a calculator / dataset / diagram, and what came of it?',
+      options: {
+        list: [
+          { title: 'Not assessed', value: 'not-assessed' },
+          { title: 'None needed', value: 'none-needed' },
+          { title: 'Planned', value: 'planned' },
+          { title: 'Built', value: 'built' },
+        ],
+      },
+      initialValue: 'not-assessed',
+    }),
+    defineField({
+      name: 'enrichments',
+      title: 'Enrichments (optional)',
+      type: 'array',
+      description:
+        'Optional calculators, formulas, tables, checklists, or diagrams — built only when the content needs them (doc 10/11). Each carries a placement.',
+      of: enrichmentArrayMembers,
     }),
     defineField({
       name: 'lastReviewed',

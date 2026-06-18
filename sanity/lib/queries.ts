@@ -197,6 +197,7 @@ const CASE_STUDY_CARD_FIELDS = `
   summary,
   primaryService,
   supportingServices,
+  engagementRole,
   engagementWindow,
   durationLabel,
   disclosure,
@@ -347,6 +348,16 @@ const CAREER_PATH_FIELDS = `
     "slug": slug.current,
     shortDefinition,
     cluster
+  },
+  interactiveAidStatus,
+  enrichments[]{
+    ...,
+    image{
+      "url": asset->url,
+      alt,
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height
+    }
   }
 `
 

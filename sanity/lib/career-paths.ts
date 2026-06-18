@@ -57,6 +57,44 @@ export type RelatedTermCard = {
   cluster?: string
 }
 
+export type EnrichmentPlacement = 'top' | 'after-modules' | 'buyer'
+
+type EnrichmentBase = {
+  _key?: string
+  title?: string
+  intro?: string
+  placement?: EnrichmentPlacement
+  source?: string
+}
+export type EnrichmentTool = EnrichmentBase & { _type: 'enrichmentTool'; toolKey?: string }
+export type EnrichmentFormula = EnrichmentBase & {
+  _type: 'enrichmentFormula'
+  expression?: string
+  plainExplanation?: string
+  variables?: { symbol?: string; meaning?: string }[]
+}
+export type EnrichmentTable = EnrichmentBase & {
+  _type: 'enrichmentTable'
+  columns?: string[]
+  rows?: { cells?: string[] }[]
+  downloadable?: boolean
+}
+export type EnrichmentChecklist = EnrichmentBase & {
+  _type: 'enrichmentChecklist'
+  items?: { text?: string; note?: string }[]
+}
+export type EnrichmentDiagram = EnrichmentBase & {
+  _type: 'enrichmentDiagram'
+  image?: { url?: string; alt?: string; width?: number; height?: number }
+  caption?: string
+}
+export type Enrichment =
+  | EnrichmentTool
+  | EnrichmentFormula
+  | EnrichmentTable
+  | EnrichmentChecklist
+  | EnrichmentDiagram
+
 export type CareerPath = CareerPathCard & {
   aliases?: string[]
   status?: 'drafting' | 'published' | 'archived'
@@ -67,6 +105,8 @@ export type CareerPath = CareerPathCard & {
   prerequisites?: CareerPathCard[]
   leadsTo?: CareerPathCard[]
   relatedTerms?: RelatedTermCard[]
+  interactiveAidStatus?: 'not-assessed' | 'none-needed' | 'planned' | 'built'
+  enrichments?: Enrichment[]
   lastReviewed?: string
   seo?: {
     metaTitle?: string
