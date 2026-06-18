@@ -28,10 +28,13 @@ So you run ONE research prompt, get back N concrete authoring prompts, and run t
 | Prompt | What it does |
 |---|---|
 | `_CONTEXT.md` | Shared backbone — read first, every time. |
-| **glossary/** | |
+| **glossary/** (the citation engine — `/glossary/`; has its own `README.md`) | |
 | `glossary/research-next-terms.md` | Research + prioritize the next glossary terms; emit authoring prompts. |
 | `glossary/author-term.TEMPLATE.md` | Template: author ONE glossary term draft. |
 | `glossary/verify-and-publish-terms.md` | Adversarially fact-check term drafts, then publish. |
+| **tools/** (interactive aids — calculators/scorecards; has its own `README.md`) | |
+| `tools/add-interactive-tool.md` | Build a new tool end-to-end (logic+tests, component, registry, standalone `/tools/` page). |
+| `tools/embed-tool-in-content.md` | Attach an existing tool to glossary terms / career paths via enrichments. |
 | **career-paths/** | |
 | `career-paths/research-next-path.md` | Research which role/path to add next; emit an authoring prompt. |
 | `career-paths/author-path.TEMPLATE.md` | Template: author ONE career-path draft. |
@@ -45,10 +48,17 @@ So you run ONE research prompt, get back N concrete authoring prompts, and run t
 | `revenue-seo/geo-agency-service-page.md` | Target "geo agency" on the AI-SEO service page (SAL-404). |
 | `revenue-seo/connect-gsc-and-analytics.md` | Connect GSC + web analytics so the site is measurable (SAL-405). |
 | `revenue-seo/ai-visibility-brand-radar.md` | Set up AI-visibility / Brand Radar tracking (SAL-406). |
+| **case-study/** (the proof asset — Sanity-backed `/case-studies/`; has its own `README.md`) | |
+| `case-study/research-next-case-study.md` | Pick the next client; decide standalone vs engagement; emit authoring prompts. |
+| `case-study/author-case-study.TEMPLATE.md` | Template: author ONE standalone case study draft. |
+| `case-study/author-engagement.TEMPLATE.md` | Template: author a hub-and-spoke engagement (anchor + cuts) with credit split. |
+| `case-study/verify-and-publish-case-study.md` | Credit-split audit + fact-check + humanize, then publish. |
 
 ## Suggested order
 1. `foundations/llms-txt-and-ai-crawler-audit.md` + `interlinking/*` — activates what's already live.
 2. `revenue-seo/connect-gsc-and-analytics.md` — so anything is measurable.
 3. `revenue-seo/geo-agency-service-page.md` — highest revenue relevance.
-4. `glossary/research-next-terms.md` → author → `verify-and-publish-terms.md` — grow the glossary.
+4. `glossary/research-next-terms.md` → author → `verify-and-publish-terms.md` — grow the glossary
+   (read `glossary/README.md` first). Add an interactive aid where a term warrants one via `tools/*`.
 5. `career-paths/research-next-path.md` → author → `voice-and-publish-path.md` — grow the paths.
+6. `case-study/research-next-case-study.md` → author → `verify-and-publish-case-study.md` — grow the proof set (read `case-study/README.md` first).
