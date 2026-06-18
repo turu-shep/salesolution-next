@@ -75,6 +75,42 @@ export const glossaryTerm = defineType({
       of: [{ type: 'reference', to: [{ type: 'glossaryTerm' }] }],
     }),
     defineField({
+      name: 'relatedResources',
+      title: 'Related paths & services',
+      type: 'array',
+      description:
+        'Outbound funnel: link this term to the career paths and service pages it leads to, so authority circulates out of the glossary instead of pooling. Services are static pages, so these are plain internal links (career paths are Sanity docs but linked the same way for one consistent rail).',
+      of: [
+        {
+          type: 'object',
+          name: 'resourceLink',
+          fields: [
+            { name: 'label', type: 'string', title: 'Label', validation: (r) => r.required() },
+            {
+              name: 'href',
+              type: 'string',
+              title: 'Href (internal path, e.g. /services/catalog-ai/)',
+              validation: (r) => r.required(),
+            },
+            {
+              name: 'kind',
+              type: 'string',
+              title: 'Kind',
+              options: {
+                list: [
+                  { title: 'Career path', value: 'career-path' },
+                  { title: 'Service', value: 'service' },
+                ],
+                layout: 'radio',
+              },
+            },
+            { name: 'blurb', type: 'string', title: 'Blurb (one line)' },
+          ],
+          preview: { select: { title: 'label', subtitle: 'kind' } },
+        },
+      ],
+    }),
+    defineField({
       name: 'opportunity',
       title: 'SEO opportunity (editorial)',
       type: 'string',

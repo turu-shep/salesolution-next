@@ -69,8 +69,9 @@ in the service pages the glossary feeds.
   [GlossaryRelated.tsx](../../../components/sections/glossary/GlossaryRelated.tsx)).
 - **Known gaps:** ~~(a) the 30 drafts aren't published~~ **done** (50 live);
   ~~(b) inline termLinks missing~~ **done** (auto-linker re-run post-publish — ~67 links across
-  glossary terms + career paths + posts); ~~(c) no hovercard~~ **done**; (d) no funnels glossary
-  → career paths/services; (e) no interactive aids on any term; (f) the hub is flat.
+  glossary terms + career paths + posts); ~~(c) no hovercard~~ **done**;
+  ~~(d) no funnels glossary → career paths/services~~ **done** (M4 — `relatedResources` rail on
+  9 role/measurement/catalog terms); (e) no interactive aids on any term; (f) the hub is flat.
 
 ## 4. Locked decisions (do not relitigate without the owner)
 

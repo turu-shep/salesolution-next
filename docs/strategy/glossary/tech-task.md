@@ -140,7 +140,19 @@ double-linking.
 
 ---
 
-## M4 — Bidirectional funnels
+## M4 — Bidirectional funnels  ✅ Shipped 2026-06-18
+
+**Status:** done via a uniform link-object field (services are static pages, not Sanity docs, so
+a mixed reference field wasn't possible). `relatedResources` (`{label, href, kind, blurb}`) on
+[glossary-term.ts](../../../sanity/schemas/glossary-term.ts); resolved in
+[queries.ts](../../../sanity/lib/queries.ts); typed in [glossary.ts](../../../sanity/lib/glossary.ts);
+rendered by [GlossaryResources.tsx](../../../components/sections/glossary/GlossaryResources.tsx)
+(a rail mirroring GlossaryRelated, with CAREER PATH / SERVICE tags) above FinalCTARail in the
+term page. Populated on 9 role/measurement/catalog terms via
+[scripts/glossary-related-resources.mjs](../../../scripts/glossary-related-resources.mjs)
+(geo-specialist, ai-search-specialist, citation-engineer → career paths + AI SEO / editorial
+authority; the AI-visibility measurement cluster → AI SEO + AI visibility analyst;
+ai-ready-product-catalog → Catalog AI). Rail hidden when empty. Visual-loop validated.
 
 **Goal:** role/measurement terms send authority out to career paths and service pages.
 

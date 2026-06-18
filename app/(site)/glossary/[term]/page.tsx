@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { PortableTextRenderer } from '@/components/portable-text/PortableTextRenderer'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { GlossaryRelated } from '@/components/sections/glossary/GlossaryRelated'
+import { GlossaryResources } from '@/components/sections/glossary/GlossaryResources'
 import { GlossaryTermHeader } from '@/components/sections/glossary/GlossaryTermHeader'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { business } from '@/lib/business'
@@ -82,6 +83,8 @@ export default async function GlossaryTermPage({ params }: Props) {
       )}
 
       <GlossaryRelated terms={doc.relatedTerms} />
+
+      <GlossaryResources resources={doc.relatedResources} />
 
       <FinalCTARail />
     </>

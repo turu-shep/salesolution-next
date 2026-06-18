@@ -37,6 +37,12 @@ export type GlossaryTerm = GlossaryTermCard & {
     GlossaryTermCard,
     '_id' | 'term' | 'slug' | 'shortDefinition' | 'cluster'
   >[]
+  relatedResources?: {
+    label: string
+    href: string
+    kind?: 'career-path' | 'service'
+    blurb?: string
+  }[]
   seo?: {
     metaTitle?: string
     metaDescription?: string
