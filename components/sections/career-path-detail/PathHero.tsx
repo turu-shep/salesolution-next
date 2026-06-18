@@ -19,9 +19,17 @@ import type { CareerPath } from '@/sanity/lib/career-paths'
  * the recommended entry point — for now that means `level === 'Entry'`.
  * The hub uses the same heuristic (featured = first/newest), so the
  * editorial signal stays consistent.
+ *
+ * The kind eyebrow ("Role" / "Specialization") tells the reader up front
+ * whether this is a hireable profession with a career ladder or a skill you
+ * usually buy as a project. That distinction also re-labels the middle
+ * metadata cell — "Level" for a role, "Proficiency" for a specialization.
  */
 export function PathHero({ path }: { path: CareerPath }) {
   const isEntryPoint = path.level === 'Entry'
+  const kind = path.kind ?? 'role'
+  const kindLabel = kind === 'specialization' ? 'Specialization' : 'Role'
+  const levelLabel = kind === 'specialization' ? 'Proficiency' : 'Level'
 
   return (
     <section data-section-tone="light" className="relative bg-paper">
@@ -40,26 +48,28 @@ export function PathHero({ path }: { path: CareerPath }) {
           <span aria-hidden className="mx-2 text-ink-300">
             /
           </span>
-          <span className="text-ink-700">
-            {path.level ? `${path.level} path` : 'Path'}
-          </span>
+          <span className="text-ink-700">{path.title}</span>
         </nav>
 
-        {isEntryPoint && (
-          <p className="mt-4 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-600">
-            <span
-              aria-hidden
-              className="inline-block h-1.5 w-1.5 rounded-full bg-accent-500"
-            />
-            Start here
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+            {kindLabel}
           </p>
-        )}
+          {isEntryPoint && (
+            <p className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-600">
+              <span
+                aria-hidden
+                className="inline-block h-1.5 w-1.5 rounded-full bg-accent-500"
+              />
+              Start here
+            </p>
+          )}
+        </div>
 
         <h1
           className={
             'font-display font-semibold leading-[1.05] tracking-[-0.02em] text-ink-900 text-balance ' +
-            'text-4xl sm:text-5xl md:text-6xl ' +
-            (isEntryPoint ? 'mt-3' : 'mt-5')
+            'text-4xl sm:text-5xl md:text-6xl mt-3'
           }
         >
           {path.title}
@@ -80,7 +90,7 @@ export function PathHero({ path }: { path: CareerPath }) {
               <span className="text-ink-500">All roles</span>
             )}
           </MetaCell>
-          <MetaCell label="Level">
+          <MetaCell label={levelLabel}>
             {path.level ? (
               <span className="text-ink-900">{path.level}</span>
             ) : (

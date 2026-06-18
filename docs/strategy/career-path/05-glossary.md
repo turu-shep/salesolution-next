@@ -1,5 +1,10 @@
 # Glossary Plan & Seed Term List
 
+> **Canonical strategy home moved (2026-06-17):** glossary strategy + vision + the
+> engineering plan now live at [../glossary/glossary.md](../glossary/glossary.md) and
+> [../glossary/tech-task.md](../glossary/tech-task.md). This file remains the **research
+> origin** — the 65-term plan, clusters, ownership calls, and measured demand below.
+
 **Researched:** 2026-06-12, live SERP/web checks per term; **volume/KD measured 2026-06-14**
 (Ahrefs, US — see table below).
 **Total: 65 terms — 12 P0, 28 P1, 25 P2.**

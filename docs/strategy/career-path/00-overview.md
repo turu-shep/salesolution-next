@@ -2,10 +2,20 @@
 
 **Status:** Strategy documented; content phase starting
 **Owner:** Artur Shepel (a.shepel@salesolution.net)
-**Asset:** `/career-paths/` (live, code-complete, zero published content) + planned `/glossary/`
+**Asset:** `/career-paths/` (live — 7 paths published) + `/glossary/` (live — 20 terms published)
 **Strategy research date:** 2026-06-12
 
 ---
+
+> **Multi-vertical reframe (2026-06-17, standing):** this folder was written for the *old*
+> industrial-only positioning. Sale Solution now serves **three verticals** — industrial /
+> technical-distribution e-commerce, home-services contractors, and dental practices (memory
+> `multi-vertical-pivot`). **Standard going forward:** career paths and glossary teach the
+> *universal* role/term, with examples that **span all three verticals** and show the
+> vertical-specific flavor where a skill differs — never industrial-only. The reference build is
+> the rebuilt `/career-paths/technical-seo-specialist/`. The industrial-specific docs below
+> (esp. [04-niches.md](04-niches.md)) remain useful as the *industrial* example pool, not the
+> whole picture.
 
 ## 1. What this is
 
@@ -50,6 +60,13 @@ cheap, capped-investment authority asset. Full evidence in
   the operator register and live. `careerPath` schema extended (seniority matrix, buyer section,
   related glossary terms), detail page visually reviewed + polished. Hub now lists them (empty-hub
   hygiene issue resolved). Talent stance "we don't hire" honored.
+- ✅ **Career paths: 7 published** (2026-06-16) — added the next 5 in build order: **AI Search
+  Specialist** + **AEO Specialist** (P0 lane), **AI Visibility Analyst** (P1, the only Entry-level
+  page), **SEO Specialist (industrial)** + **Technical SEO Specialist** (P1). Each researched →
+  authoring-prompt generated (`prompts/career-paths/_generated/`) → drafted → re-voiced through the
+  **humanizer pass** (operator register, 0 AI-tell hits, every verified salary/stat preserved) →
+  published live (all 200, fresh content confirmed). Build order remaining: Content Strategist
+  (industrial, #8), then the P2 adjacent roles.
 - ✅ **Interlinking + foundations done (2026-06-14):** `glossaryRef` inline-link annotation shipped
   (schema + GROQ + renderer); AI-SEO money page links to glossary terms + both paths ("From the
   learning hub" block + inline lede link); role glossary terms link to their full paths; `llms.txt`
@@ -64,8 +81,9 @@ cheap, capped-investment authority asset. Full evidence in
 - ⏭ Next: SAL-406 Brand Radar (AI-citation tracking); re-pull `gsc-pages`/`gsc-keywords` once the
   dimension tables backfill; measure hub impact vs the baseline in ~4 weeks. Optional: confirm GA4
   in Vercel prod; exclude `/career-paths/*` + `/glossary/*` from GA4 goals/retargeting.
-  Brand Radar; retro-link the 28 posts/guides with `glossaryRef`; the 2 SEO/Content paths; grow
-  the glossary. All have prompts in `/prompts/`.
+  Brand Radar; retro-link the 28 posts/guides with `glossaryRef`; the Content Strategist path
+  (SEO/AEO/AI-Visibility/Technical-SEO paths now shipped 2026-06-16); grow the glossary. All have
+  prompts in `/prompts/`.
 
 ## 3. Document index
 
@@ -80,6 +98,9 @@ cheap, capped-investment authority asset. Full evidence in
 | [06-wiki-architecture.md](06-wiki-architecture.md) | Content model: URL structure, Sanity schema deltas, interlinking, JSON-LD |
 | [07-research-backlog.md](07-research-backlog.md) | Next research tasks and write-downs, with dates |
 | [08-gsc-baseline-2026-06-15.md](08-gsc-baseline-2026-06-15.md) | Pre-launch GSC baseline — the before/after anchor for the hub's impact |
+| [09-career-path-build-standard.md](09-career-path-build-standard.md) | **Build standard** — decisions, fixes, and lessons; read before reworking/creating any path |
+| [10-enriched-paths-vision.md](10-enriched-paths-vision.md) | **Enrichment vision** — the roadmap.sh steal/avoid + the lifted cost cap; what an enriched path/term can become and the per-page enrichment principle |
+| [11-enriched-paths-tech-task.md](11-enriched-paths-tech-task.md) | **Enrichment tech task** — engineering spec: foundational steals, the optional-enrichment mechanism, phases, acceptance criteria, open questions |
 
 ## 4. Hard constraints (carry into every decision)
 

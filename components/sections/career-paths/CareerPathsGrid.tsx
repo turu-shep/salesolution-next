@@ -11,11 +11,12 @@ import type { CareerPathCard } from '@/sanity/lib/career-paths'
  * each path as an editorial card: hairline border on paper, mono
  * metadata bar, two-line title, lede, hover lift to brand-blue.
  *
- * Layout rule:
- *  - 0 items   → empty state lockup (parent owns copy, falls through).
- *  - 1 item    → single featured row (md:col-span-2).
- *  - 2+ items  → first card runs featured (md:col-span-2), remaining
- *                items flow as a standard 2-up grid.
+ * Grouping: paths split into **Roles** (hireable professions with a career
+ * ladder) and **Specializations** (skills usually bought as a project or held
+ * inside a role). Each group is its own labelled block, so a reader sees the
+ * two kinds as distinct shelves rather than one flat list. Within the Roles
+ * group the first card runs featured ("Read first"); specializations flow as a
+ * plain 2-up grid. A group with no items is skipped.
  *
  * Why featured-first instead of letting Sanity tag a featured flag:
  * the publishedAt order already encodes editorial weight (newest = most
@@ -88,7 +89,8 @@ export function CareerPathsGrid({
     )
   }
 
-  const [featured, ...rest] = paths
+  const roles = paths.filter((p) => (p.kind ?? 'role') === 'role')
+  const specializations = paths.filter((p) => p.kind === 'specialization')
 
   return (
     <SectionRail tone="paper" id={id}>
@@ -101,19 +103,70 @@ export function CareerPathsGrid({
           <span className="text-ink-500">All free, all self-paced.</span>
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          Each path is a structured reading list with check-yourself
-          prompts at the end of every chapter. No video lock-ins, no
-          email-gate, no upsell ladder.
+          Each path is a numbered run of skill modules &mdash; a real scenario,
+          the edge cases, and a check-yourself prompt at every step. No video
+          lock-ins, no email-gate, no upsell ladder.
         </p>
       </div>
 
-      <ol className="mt-14 grid gap-6 md:grid-cols-2">
-        <PathCard path={featured} featured />
-        {rest.map((p) => (
-          <PathCard key={p._id} path={p} />
-        ))}
-      </ol>
+      {roles.length > 0 && (
+        <PathGroup
+          label="Roles"
+          blurb="Professions you can hire for full-time, each with a career ladder from entry to senior."
+          paths={roles}
+          featureFirst
+        />
+      )}
+
+      {specializations.length > 0 && (
+        <PathGroup
+          label="Specializations"
+          blurb="Skills you usually buy as a project or keep inside a role, not a constant full-time hire."
+          paths={specializations}
+        />
+      )}
     </SectionRail>
+  )
+}
+
+function PathGroup({
+  label,
+  blurb,
+  paths,
+  featureFirst = false,
+}: {
+  label: string
+  blurb: string
+  paths: CareerPathCard[]
+  featureFirst?: boolean
+}) {
+  const [first, ...rest] = paths
+
+  return (
+    <div className="mt-16 first:mt-14">
+      <div className="flex items-baseline justify-between gap-4 border-b border-rule pb-4">
+        <h3 className="font-display text-2xl font-semibold tracking-[-0.015em] text-ink-900 sm:text-3xl">
+          {label}
+        </h3>
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+          {paths.length} {paths.length === 1 ? 'path' : 'paths'}
+        </p>
+      </div>
+      <p className="mt-4 max-w-2xl text-ink-700">{blurb}</p>
+
+      <ol className="mt-8 grid gap-6 md:grid-cols-2">
+        {featureFirst ? (
+          <>
+            <PathCard path={first} featured />
+            {rest.map((p) => (
+              <PathCard key={p._id} path={p} />
+            ))}
+          </>
+        ) : (
+          paths.map((p) => <PathCard key={p._id} path={p} />)
+        )}
+      </ol>
+    </div>
   )
 }
 

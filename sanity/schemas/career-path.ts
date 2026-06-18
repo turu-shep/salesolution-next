@@ -20,6 +20,20 @@ export const careerPath = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'kind',
+      title: 'Kind',
+      type: 'string',
+      description:
+        'Role = a hireable profession with a career ladder (SEO Specialist, GEO Specialist). Specialization = a skill/competency, usually bought as a project or held inside a role, not a constant full-time hire (Technical SEO, Citation Engineering).',
+      options: {
+        list: [
+          { title: 'Role (a profession you can be hired for)', value: 'role' },
+          { title: 'Specialization (a skill / project capability)', value: 'specialization' },
+        ],
+      },
+      initialValue: 'role',
+    }),
+    defineField({
       name: 'role',
       title: 'Role focus',
       type: 'string',
@@ -27,8 +41,9 @@ export const careerPath = defineType({
     }),
     defineField({
       name: 'level',
-      title: 'Level',
+      title: 'Level / proficiency',
       type: 'string',
+      description: 'For roles: career level. For specializations: proficiency depth. "Entry → Senior" for a full-arc path.',
       options: { list: ['Entry', 'Mid', 'Senior'] },
     }),
     defineField({
@@ -73,7 +88,8 @@ export const careerPath = defineType({
               title: 'Level',
               options: { list: ['Entry', 'Mid', 'Senior'] },
             },
-            { name: 'focus', type: 'text', rows: 2, title: 'Focus' },
+            { name: 'label', type: 'string', title: 'Stage descriptor (e.g. "run the checks")' },
+            { name: 'focus', type: 'text', rows: 2, title: 'Focus (the "by the end you can…" outcome)' },
             {
               name: 'mustLearn',
               type: 'array',
@@ -86,10 +102,45 @@ export const careerPath = defineType({
       ],
     }),
     defineField({
+      name: 'modules',
+      title: 'Skill modules',
+      type: 'array',
+      description:
+        'The path as a numbered progression of skills, grouped by level. This is the preferred model (replaces freeform body chapters). Each module = one competency with a real scenario, edge cases, and a proficiency check.',
+      of: [
+        {
+          type: 'object',
+          name: 'skillModule',
+          fields: [
+            {
+              name: 'level',
+              type: 'string',
+              title: 'Level',
+              options: { list: ['Entry', 'Mid', 'Senior'] },
+              validation: (rule) => rule.required(),
+            },
+            { name: 'title', type: 'string', title: 'Skill title', validation: (rule) => rule.required() },
+            { name: 'skill', type: 'text', rows: 2, title: 'The skill (what you must be able to do)' },
+            { name: 'why', type: 'text', rows: 3, title: 'Why it matters' },
+            { name: 'scenario', type: 'text', rows: 3, title: 'In the field (a real scenario)' },
+            {
+              name: 'edgeCases',
+              type: 'array',
+              of: [{ type: 'string' }],
+              title: 'Edge cases (the gotchas)',
+            },
+            { name: 'proficientWhen', type: 'text', rows: 2, title: 'Proficient when…' },
+          ],
+          preview: { select: { title: 'title', subtitle: 'level' } },
+        },
+      ],
+    }),
+    defineField({
       name: 'body',
-      title: 'Body (the walk)',
+      title: 'Body (intro / optional prose)',
       type: 'portableText',
-      description: 'The path walk. Use H2 per chapter — chapters drive the table of contents.',
+      description:
+        'Optional short intro above the modules. (Legacy: older paths put the whole walk here as H2 chapters; new paths use Skill modules instead.)',
     }),
     defineField({
       name: 'buyerSection',

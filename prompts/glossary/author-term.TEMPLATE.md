@@ -11,8 +11,10 @@
 - **Aliases:** {{ALIASES}}  (comma-separated; [] if none)
 - **Angle (our take in one line):** {{ANGLE}}
 - **Who owns the definition today:** {{WHO_OWNS_IT}}  (informs how hard we push / disambiguate)
-- **Industrial example to use:** {{INDUSTRIAL_EXAMPLE}}  (a hydraulics/MRO/distributor scenario or a
-  real verifiable public example — see niches in `docs/strategy/career-path/04-niches.md`)
+- **Example to use:** {{EXAMPLE}}  (a concrete scenario from one of our verticals — industrial
+  e-commerce, home services, or dental — or a real verifiable public example. Vary the vertical
+  across terms; don't make every entry industrial. Industrial niches: `04-niches.md`;
+  home-services/dental: memory `multi-vertical-pivot`)
 - **Related terms to link:** {{RELATED_SLUGS}}  (slugs of existing/sibling glossary terms)
 
 ## Task
@@ -45,11 +47,19 @@ sourced; otherwise write a clearly-illustrative scenario.
 
 ### Voice
 Operator register (see `_CONTEXT.md`): terse, declarative, "X not Y", anti-marketing, concrete.
-No hype, no "in today's fast-paced world." Industrial examples, not generic SaaS ones.
+No hype, no "in today's fast-paced world." Use examples from our verticals (industrial
+e-commerce / home services / dental), not generic SaaS ones; vary which vertical across entries.
 
 ## Definition of done
 - Draft `drafts.glossary-{{SLUG}}` exists in Sanity (verify with a `perspective:'raw'` query).
 - `npx tsc --noEmit` clean (ignore pre-existing `lib/lead-form/*` errors); changed files lint clean.
 - Report the shortDefinition and the example (with its source/illustrative tag) in your reply.
+- **Term capture:** list any *other* domain terms used in the body and run
+  `node scripts/glossary-queue.mjs add "…" --source glossary:{{SLUG}}` (see `_CONTEXT.md`).
+- **Enrichment check (optional):** run the enrichment check (`_CONTEXT.md` → "Enrichment check";
+  full rule in `docs/strategy/career-path/10-enriched-paths-vision.md` §3). Does this concept have a
+  formula, a number worth computing, a dataset, or a relationship worth diagramming? If yes and it's
+  citable + architecture-safe, propose the enrichment (don't skip on cost). State the decision in
+  your reply — "enrichment: none needed" is a valid, common answer.
 - Do NOT publish — leave it as a draft for operator review (publish via
   `prompts/glossary/verify-and-publish-terms.md`).

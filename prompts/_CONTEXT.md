@@ -6,11 +6,20 @@
 > running inside this repo.
 
 ## The company
-**Sale Solution** (salesolution.net). Positioning: **"AI search engineered for industrial
-e-commerce"** — SEO / GEO (generative engine optimization) / AI-search-readiness services for
-B2B industrial distributors (hydraulics, MRO, technical distribution). Tiny, operator-led.
-Site is low-authority (DR ~10) — so the strategy is **citation/authority/AI-answer plays, not
-volume SEO.**
+**Sale Solution** (salesolution.net). SEO / GEO (generative engine optimization) /
+AI-search-readiness services. **Multi-vertical** (do not write as industrial-only — that was the
+old positioning):
+1. **Industrial / technical-distribution e-commerce** (hydraulics, MRO, distributor catalogs) — the `/services/*` book.
+2. **Home-services contractors** (roofing-forward) and **dental practices** — the "Revenue Engine"
+   offer (`/revenue-engine/`). See memory `multi-vertical-pivot`.
+Tiny, operator-led. Site is low-authority (DR ~10), so the strategy is **citation/authority/
+AI-answer plays, not volume SEO.**
+
+**Vertical rule for all content:** roles/terms are universal; teach the universal skill, then make
+examples **span the three verticals** (industrial e-commerce, home services, dental). Show the
+vertical-specific flavor where a skill genuinely differs. Never write a page as if industrial is
+the whole business. (Reference for industrial examples: `docs/strategy/career-path/04-niches.md`;
+home-services/dental context: memory `multi-vertical-pivot`.)
 
 ## The asset these prompts maintain
 A wiki-like **learning hub**: a **glossary** of AI-search terms (`/glossary/`) and **career
@@ -100,6 +109,49 @@ the services pages, the homepage):
   e.g. llms.txt is Markdown introduced 2024, Google declined it; the "~12% of AI-cited URLs rank
   top-10" stat is from Ahrefs). Never publish a fabricated "real-world example" — if you can't
   verify a real one, write a clearly-illustrative scenario instead.
+
+## Term capture — REQUIRED on every content task
+Whenever you generate or edit content (article, page copy, career path, glossary term, guide,
+service page — anything with prose), do two things with the jargon you use:
+1. **Explain each term in plain words right after it** (keep the term, gloss it; e.g. "faceted
+   navigation (the filters that let buyers narrow by size, brand, material)"). Use the humanizer
+   for sentence-level readability; keep the vocabulary.
+2. **Capture the terms** so the glossary can define + cross-link them later. List every domain
+   term you used and run:
+   ```
+   node scripts/glossary-queue.mjs add "term one" "term two" … --source <type>:<slug>
+   ```
+   The script checks each term against the published glossary (Sanity), existing drafts, and the
+   queue, and adds only the genuinely new ones to `docs/strategy/glossary-queue.json`. Idempotent.
+   - Terms it reports as **published** → cross-link to `/glossary/<slug>/` now.
+   - Terms it reports as **draft/queued** → already handled; do nothing.
+   - `node scripts/glossary-queue.mjs check …` is the dry-run; `list` prints the queue.
+The queue feeds `prompts/glossary/research-next-terms.md` (it folds the queue into its candidate pool).
+
+## Enrichment check — consider on every content task (optional by default)
+Cost is no longer the gate for page enrichments (owner decision 2026-06-17). When you create or
+update **any** term, page, or career path, run the **enrichment check** before finalizing — see
+`docs/strategy/career-path/10-enriched-paths-vision.md` §3. Ask: does this page have
+1. a **number** the reader would compute → a **calculator**;
+2. a **formula** central to the concept → **render the formula**;
+3. a **sequence/dependency/relationship** better shown than told → a **diagram** or role map;
+4. a **dataset** we can stand behind (salaries, benchmarks, volumes) → a **table + the open artifact**;
+5. a real **decision** ("which X for me") → a **comparison/decision aid**.
+
+Build the enrichment ONLY if all three hold: it genuinely **helps** the reader, it is **citable**
+(structured, self-contained, sourced), and it is **architecture-safe** (no login, no server state,
+on-discipline/multi-vertical, doesn't become a course feature — guardrails in
+[10 §4](../docs/strategy/career-path/10-enriched-paths-vision.md)). Effort is NOT a reason to skip.
+Most pages stay plain — that's fine. **Either way, record the decision** in your reply
+("enrichment: none needed" / "enrichment: salary table — see tech task 11"), like term capture, so
+it isn't re-litigated. Hard-refused regardless of cost: accounts/login, progress tracking/%,
+gamification, AI chat, community/UGC, teams, portfolio submission ([10 §2.B](../docs/strategy/career-path/10-enriched-paths-vision.md)).
+
+For **glossary terms** this is the already-locked **interactive-aids gate** (`docs/strategy/glossary/`
+§M6): set `interactiveAidStatus` + `toolKey`; tools are real components in `components/tools/registry.ts`
+(reuse `FunnelCalculator.tsx`/`HomeV2Calculator.tsx`). **One tool registry across the whole hub** —
+career-path calculators use the same `toolKey`. Path-specific enrichments (datasets, diagrams, role
+map, JSON-LD) and the full mechanism are specified in `docs/strategy/career-path/11-enriched-paths-tech-task.md` (T6).
 
 ## Standard definition-of-done for any content change
 - tsc clean (`npx tsc --noEmit` — ignore pre-existing `lib/lead-form/*` Zod errors, not ours),

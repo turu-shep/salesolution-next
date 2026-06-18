@@ -56,8 +56,12 @@ this doc stays focused on the hub:
 |---|------|-------|--------------|
 | 1 | **GEO Specialist path** | ✅ Published 2026-06-14 (voiced, live) | done |
 | 2 | **Citation Engineer path** | ✅ Published 2026-06-14 (voiced, live) | done |
-| 3 | **SEO Specialist path** (originally promised) | Industrial e-commerce flavor; uses new schema (matrix, buyer section, related terms) | 8–15 h |
-| 4 | **Content Strategy Specialist path** (originally promised) | Same structure | 8–15 h |
+| 3 | **AI Search Specialist path** (P0, bridge title) | ✅ Published 2026-06-16 (humanizer-voiced, live) | done |
+| 4 | **AEO Specialist path** (P0) | ✅ Published 2026-06-16 (humanizer-voiced, live) | done |
+| 5 | **AI Visibility Analyst path** (P1, only Entry-level page) | ✅ Published 2026-06-16 (humanizer-voiced, live) | done |
+| 6 | **SEO Specialist path** (industrial, originally promised) | ✅ Published 2026-06-16 (humanizer-voiced, live) | done |
+| 7 | **Technical SEO Specialist path** (catalog scale) | ✅ Published 2026-06-16 (humanizer-voiced, live) | done |
+| 8 | **Content Strategy Specialist path** (industrial, originally promised) | ⏭ NEXT unbuilt path (build-order #8); same structure; research via `prompts/career-paths/research-next-path.md` | 8–15 h |
 | 3 | **Glossary P0 batch** (~15–20 terms from [05-glossary.md](05-glossary.md)) | 🟡 System built + **10 drafts seeded** (`scripts/seed-glossary.mjs`, 2026-06-14). NEXT: review/voice/publish in Studio; add ~5 more to clear the 15-term hub-index threshold | ~1 h/term |
 | 4 | **Citation Engineer role page** | The coining move: definition-first, evidence from real postings, buyer section. Glossary term + path can ship together | 6–10 h |
 | 5 | **GEO Specialist path** | P0 lane lead; gated on June-14 sizing only for depth, not existence | 8–15 h |
@@ -79,6 +83,6 @@ this doc stays focused on the hub:
 ## 6. Hygiene (this week)
 
 - [x] ~~Strategy documented~~ (2026-06-12, this folder)
-- [ ] Publish paths #1–2 **or** set `noindex` on `/career-paths/` until they ship —
-      the live empty hub promising "this quarter" is a standing credibility cost.
+- [x] ~~Publish paths #1–2 **or** set `noindex` on `/career-paths/` until they ship~~ — DONE.
+      7 paths published (2 on 2026-06-14, 5 on 2026-06-16); the empty-hub credibility cost is resolved.
 - [ ] Update hub copy if the quarter slips.

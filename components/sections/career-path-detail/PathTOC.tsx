@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 import { slugifyHeading } from '@/lib/slug'
 
 type BodyBlock = {
@@ -9,106 +11,109 @@ type BodyBlock = {
 /**
  * /career-paths/[slug]/ — sticky desktop TOC.
  *
- * Server-rendered list of H2/H3 anchors derived from the path body. Lives
- * in the left rail on desktop (parent owns the sticky positioning + the
- * `hidden md:block` wrapper); the body article runs to its right.
+ * Two modes:
+ *  - module paths pass `items` (the ordered, numbered skills, each with a
+ *    `group` = seniority level). The TOC renders them grouped under Entry /
+ *    Mid / Senior sub-labels so the progression is visible in the nav, not just
+ *    the body.
+ *  - legacy essay paths fall back to parsing H2/H3 headings out of the body.
  *
- * Styled in the editorial mono-eyebrow language so it reads as section
- * chrome, not as a tooltip card. The first heading gets the accent-orange
- * "Start here" marker — the same signal used in PathHero for an entry-
- * level path — which gives a reader scanning the TOC a clear visual anchor
- * for "where does this path begin".
- *
- * No JS — anchor links use native `:target` scroll. Active-section
- * highlighting via IntersectionObserver is intentionally deferred until
- * we have a real path with enough chapters to need it.
+ * Editorial mono-eyebrow styling; the first skill gets the accent-orange
+ * "Start here" marker. No JS — anchors use native scroll.
  */
-type Anchor = { text: string; id: string }
+type Anchor = { text: string; id: string; group?: string }
+type Entry = { text: string; id: string; group?: string; sub: boolean }
 
 export function PathTOC({
   body,
+  items,
   topAnchor,
   bottomAnchor,
   mobile = false,
 }: {
   body: unknown
-  /** Fixed-id section rendered above the body (e.g. "At each level"). */
+  /** Ordered TOC entries for module paths; `group` is the seniority level. */
+  items?: Anchor[]
   topAnchor?: Anchor
-  /** Fixed-id section rendered below the body (e.g. "Hiring this role?"). */
   bottomAnchor?: Anchor
   /** Render as a collapsible <details> for mobile (the desktop rail is hidden). */
   mobile?: boolean
 }) {
   const blocks = Array.isArray(body) ? (body as BodyBlock[]) : []
 
-  const bodyHeadings = blocks
-    .filter(
-      (b) => b._type === 'block' && (b.style === 'h2' || b.style === 'h3'),
-    )
-    .map((b) => ({
-      level: b.style as string,
-      text: (b.children ?? []).map((c) => c?.text ?? '').join(''),
-      id: slugifyHeading((b.children ?? []).map((c) => c?.text ?? '').join('')),
-    }))
-    .filter((h) => h.text.trim().length > 0)
+  const bodyEntries: Entry[] = items
+    ? items.map((it) => ({ text: it.text, id: it.id, group: it.group, sub: false }))
+    : blocks
+        .filter((b) => b._type === 'block' && (b.style === 'h2' || b.style === 'h3'))
+        .map((b) => {
+          const text = (b.children ?? []).map((c) => c?.text ?? '').join('')
+          return { text, id: slugifyHeading(text), sub: b.style === 'h3' }
+        })
+        .filter((h) => h.text.trim().length > 0)
 
-  // Compose: [matrix] → body chapters → [buyer]. Each carries an explicit id.
-  const headings: { level: string; text: string; id: string }[] = [
-    ...(topAnchor ? [{ level: 'h2', text: topAnchor.text, id: topAnchor.id }] : []),
-    ...bodyHeadings,
-    ...(bottomAnchor ? [{ level: 'h2', text: bottomAnchor.text, id: bottomAnchor.id }] : []),
+  const composed: Entry[] = [
+    ...(topAnchor ? [{ text: topAnchor.text, id: topAnchor.id, sub: false }] : []),
+    ...bodyEntries,
+    ...(bottomAnchor ? [{ text: bottomAnchor.text, id: bottomAnchor.id, sub: false }] : []),
   ]
+  if (composed.length === 0) return null
 
-  if (headings.length === 0) return null
+  const skillCount = items ? items.length : bodyEntries.filter((e) => !e.sub).length
 
   const list = (
     <>
       <ol className="mt-4 space-y-3">
-        {headings.map((h, i) => {
-          const isFirst = i === 0 && h.level === 'h2'
-          const isH3 = h.level === 'h3'
+        {composed.map((h, i) => {
+          const isFirst = i === 0 && !h.sub
+          const showGroup = !!h.group && (i === 0 || composed[i - 1].group !== h.group)
           return (
-            <li
-              key={`${i}-${h.text}`}
-              className={isH3 ? 'pl-4 border-l border-rule' : ''}
-            >
-              <a
-                href={`#${h.id}`}
-                className="group flex items-baseline gap-2 text-sm leading-snug text-ink-700 transition-colors duration-200 hover:text-brand-600"
-              >
-                {isFirst && (
-                  <span
-                    aria-hidden
-                    className="mt-1 inline-block h-1.5 w-1.5 flex-none rounded-full bg-accent-500"
-                  />
-                )}
-                <span
-                  className={
-                    isH3
-                      ? 'font-mono text-[12px] tracking-[0.01em] text-ink-500 group-hover:text-brand-600'
-                      : 'font-display font-semibold text-ink-800 group-hover:text-brand-600'
-                  }
+            <Fragment key={`${i}-${h.id}`}>
+              {showGroup && (
+                <li className="pt-4 first:pt-0">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-400">
+                    {h.group}
+                  </p>
+                </li>
+              )}
+              <li className={h.sub ? 'border-l border-rule pl-4' : ''}>
+                <a
+                  href={`#${h.id}`}
+                  className="group flex items-baseline gap-2 text-sm leading-snug text-ink-700 transition-colors duration-200 hover:text-brand-600"
                 >
-                  {h.text}
-                </span>
-              </a>
-            </li>
+                  {isFirst && (
+                    <span
+                      aria-hidden
+                      className="mt-1 inline-block h-1.5 w-1.5 flex-none rounded-full bg-accent-500"
+                    />
+                  )}
+                  <span
+                    className={
+                      h.sub
+                        ? 'font-mono text-[12px] tracking-[0.01em] text-ink-500 group-hover:text-brand-600'
+                        : 'font-display font-semibold text-ink-800 group-hover:text-brand-600'
+                    }
+                  >
+                    {h.text}
+                  </span>
+                </a>
+              </li>
+            </Fragment>
           )
         })}
       </ol>
 
       <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
-        {bodyHeadings.filter((h) => h.level === 'h2').length} chapters
+        {skillCount} {items ? 'skills' : 'chapters'}
       </p>
     </>
   )
 
   if (mobile) {
     return (
-      <details className="md:hidden border-y border-rule [&_summary::-webkit-details-marker]:hidden">
+      <details className="border-y border-rule md:hidden [&_summary::-webkit-details-marker]:hidden">
         <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
           On this path
-          <span aria-hidden className="text-ink-400 transition-transform duration-200 group-open:rotate-180">▾</span>
+          <span aria-hidden className="text-ink-400">▾</span>
         </summary>
         <div className="pb-6">{list}</div>
       </details>

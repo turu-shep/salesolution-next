@@ -16,9 +16,10 @@ filling `prompts/career-paths/author-path.TEMPLATE.md` for that role.
    (industrial)** and **Content Strategy Specialist (industrial)** (P1). Other candidates: AEO
    Specialist, AI Visibility Analyst, Technical SEO (catalog scale), and the P2 adjacent roles
    (PIM/Product Data Manager, Searchandising, etc.).
-3. **Apply scope rules** from `02-scope-and-positioning.md`: P0 AI-search lane leads; P1 established
-   roles only in their **industrial flavor** (never generic "how to become an SEO" — those SERPs
-   are owned); NO sales/general-marketing paths; talent stance "we don't hire."
+3. **Apply scope rules** from `02-scope-and-positioning.md`: P0 AI-search lane leads; established
+   roles taught as the **universal role with examples spanning all three verticals** (industrial
+   e-commerce, home services, dental) — never generic "how to become an SEO" filler, and never
+   industrial-only; NO sales/general-marketing paths; talent stance "we don't hire."
 4. **Pick the next role** (default: the highest-priority not-yet-built one — usually SEO Specialist
    industrial, then Content Strategy Specialist). Note the glossary terms it should link to.
 5. **Optionally re-check** any role-title demand with Ahrefs (expect near-zero — these are

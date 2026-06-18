@@ -1,5 +1,11 @@
 # Industrial E-commerce Niches — The Example Pool
 
+> **Scope note (2026-06-17):** this is the **industrial** example pool only — one of three
+> verticals. Sale Solution also serves **home-services contractors** and **dental practices**
+> (memory `multi-vertical-pivot`). Content must span all three; pull industrial examples from here,
+> and home-services/dental examples from the pivot context. A parallel niches/example pool for
+> those two verticals is still TODO.
+
 **Researched:** 2026-06-12, 14 web searches; grounded in MDM, HARDI/ACHR News,
 Distribution Strategy Group, G2, company sources. Purpose: (a) the verticals whose
 examples saturate every career path and glossary entry, (b) the agency's own targeting

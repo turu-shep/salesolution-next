@@ -161,6 +161,15 @@ ever interrupting a buyer journey.
    verification. Talent stance "we don't hire" honored (no recruiting framing). Still to draft:
    the two originally-promised SEO Specialist + Content Strategy paths.
 
+   **Content-model upgrade (2026-06-16):** the essay-chapter model was rejected — it didn't show
+   progression and wasn't real proficiency material. New model: **skill modules** (`modules`
+   field on `careerPath`: level, title, skill, why, scenario, edgeCases[], proficientWhen),
+   rendered grouped + numbered by seniority (`PathModules`), with the TOC listing the numbered
+   skills. **Prototyped on `technical-seo-specialist`** (schema + render + content, verified).
+   Old layout (matrix + body chapters) kept as fallback for the other 6 paths. PENDING owner
+   approval: roll the model to the other 6 paths + update `prompts/career-paths/author-path.TEMPLATE.md`
+   + research/voice prompts to generate modules. See [[career-path-content-model]] (memory).
+
    **Visual-review pass (2026-06-14):** ran a screenshot + 5-dimension critique loop on the
    path + glossary pages. Fixes applied: path h1 → flagship scale; seniority matrix de-tabled
    (hairline columns, not a boxed table); buyer panel restyled to the glossary-definition idiom

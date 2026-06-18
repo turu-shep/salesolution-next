@@ -4,14 +4,21 @@
  */
 
 // Portable-text body with inline glossary links ("termLink") resolved: each
-// `glossaryRef` annotation in markDefs gets the target term's slug so the
-// renderer can link to /glossary/<slug>/. Reused by every body projection.
+// `glossaryRef` annotation in markDefs gets the target term's slug (to link to
+// /glossary/<slug>/) plus its term + shortDefinition so the renderer can show an
+// in-page hovercard preview without the reader leaving the page. Reused by every
+// body projection. If the target is unpublished, slug resolves null and the
+// renderer falls back to plain text.
 const BODY_WITH_LINKS = `
   body[]{
     ...,
     markDefs[]{
       ...,
-      _type == "glossaryRef" => { "slug": @->slug.current }
+      _type == "glossaryRef" => {
+        "slug": @->slug.current,
+        "term": @->term,
+        "shortDefinition": @->shortDefinition
+      }
     }
   }
 `

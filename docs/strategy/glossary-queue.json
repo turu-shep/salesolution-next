@@ -1,0 +1,641 @@
+{
+  "terms": [
+    {
+      "term": "template",
+      "normalized": "template",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "faceted navigation",
+      "normalized": "faceted navigation",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "facet page",
+      "normalized": "facet page",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "indexable",
+      "normalized": "indexable",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "indexation",
+      "normalized": "indexation",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "server logs",
+      "normalized": "server logs",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "orphaned pages",
+      "normalized": "orphaned pages",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "CDN",
+      "normalized": "cdn",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "robots.txt",
+      "normalized": "robots txt",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "WAF",
+      "normalized": "waf",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "bot protection",
+      "normalized": "bot protection",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "crawl budget",
+      "normalized": "crawl budget",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "canonical tag",
+      "normalized": "canonical tag",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "noindex",
+      "normalized": "noindex",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "JavaScript rendering",
+      "normalized": "javascript rendering",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "server-side rendering",
+      "normalized": "server side rendering",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "redirects",
+      "normalized": "redirects",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "replatform",
+      "normalized": "replatform",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "structured data",
+      "normalized": "structured data",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Core Web Vitals",
+      "normalized": "core web vitals",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "doorway pages",
+      "normalized": "doorway pages",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "LocalBusiness schema",
+      "normalized": "localbusiness schema",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Service schema",
+      "normalized": "service schema",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Review schema",
+      "normalized": "review schema",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "rich results",
+      "normalized": "rich results",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "largest contentful paint",
+      "normalized": "largest contentful paint",
+      "status": "new",
+      "source": "career-path:technical-seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "named attribution",
+      "normalized": "named attribution",
+      "status": "new",
+      "source": "career-path:citation-engineer",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "corroboration network",
+      "normalized": "corroboration network",
+      "status": "new",
+      "source": "career-path:citation-engineer",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "chunk-level structuring",
+      "normalized": "chunk level structuring",
+      "status": "new",
+      "source": "career-path:citation-engineer",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "entity graph",
+      "normalized": "entity graph",
+      "status": "new",
+      "source": "career-path:citation-engineer",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "interchange data",
+      "normalized": "interchange data",
+      "status": "new",
+      "source": "career-path:citation-engineer",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "schema markup",
+      "normalized": "schema markup",
+      "status": "new",
+      "source": "career-path:citation-engineer",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "passage retrieval",
+      "normalized": "passage retrieval",
+      "status": "new",
+      "source": "career-path:citation-engineer",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "hallucination",
+      "normalized": "hallucination",
+      "status": "new",
+      "source": "career-path:citation-engineer",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "citation repair",
+      "normalized": "citation repair",
+      "status": "new",
+      "source": "career-path:citation-engineer",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "citable reference asset",
+      "normalized": "citable reference asset",
+      "status": "new",
+      "source": "career-path:citation-engineer",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "retrieval crawler",
+      "normalized": "retrieval crawler",
+      "status": "new",
+      "source": "career-path:ai-search-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Product schema",
+      "normalized": "product schema",
+      "status": "new",
+      "source": "career-path:ai-search-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "MPN",
+      "normalized": "mpn",
+      "status": "new",
+      "source": "career-path:ai-search-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "GTIN",
+      "normalized": "gtin",
+      "status": "new",
+      "source": "career-path:ai-search-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "duplicate content",
+      "normalized": "duplicate content",
+      "status": "new",
+      "source": "career-path:ai-search-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "citation share",
+      "normalized": "citation share",
+      "status": "new",
+      "source": "career-path:ai-search-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Bing Webmaster Tools",
+      "normalized": "bing webmaster tools",
+      "status": "new",
+      "source": "career-path:ai-search-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Head of Search",
+      "normalized": "head of search",
+      "status": "new",
+      "source": "career-path:ai-search-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Local Service Ads",
+      "normalized": "local service ads",
+      "status": "new",
+      "source": "career-path:ai-search-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Google Business Profile",
+      "normalized": "google business profile",
+      "status": "new",
+      "source": "career-path:ai-search-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "share of local voice",
+      "normalized": "share of local voice",
+      "status": "new",
+      "source": "career-path:ai-search-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "mention rate",
+      "normalized": "mention rate",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "hallucination monitoring",
+      "normalized": "hallucination monitoring",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "share of voice",
+      "normalized": "share of voice",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "city pages",
+      "normalized": "city pages",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "entity gap",
+      "normalized": "entity gap",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "AI brand monitoring",
+      "normalized": "ai brand monitoring",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Brandlight",
+      "normalized": "brandlight",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Profound",
+      "normalized": "profound",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Peec",
+      "normalized": "peec",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Otterly",
+      "normalized": "otterly",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Scrunch",
+      "normalized": "scrunch",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Ahrefs Brand Radar",
+      "normalized": "ahrefs brand radar",
+      "status": "new",
+      "source": "career-path:ai-visibility-analyst",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "keyword research",
+      "normalized": "keyword research",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "search intent",
+      "normalized": "search intent",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "title tag",
+      "normalized": "title tag",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "meta description",
+      "normalized": "meta description",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "internal linking",
+      "normalized": "internal linking",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "category page",
+      "normalized": "category page",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "search volume",
+      "normalized": "search volume",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "long-tail keyword",
+      "normalized": "long tail keyword",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "click-through rate",
+      "normalized": "click through rate",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "city page",
+      "normalized": "city page",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "service page",
+      "normalized": "service page",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "local pack",
+      "normalized": "local pack",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "content gap",
+      "normalized": "content gap",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "SERP",
+      "normalized": "serp",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "thin content",
+      "normalized": "thin content",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "topic cluster",
+      "normalized": "topic cluster",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "JSON-LD",
+      "normalized": "json ld",
+      "status": "new",
+      "source": "career-path:geo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "prompt audit",
+      "normalized": "prompt audit",
+      "status": "new",
+      "source": "career-path:geo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "visibility testing",
+      "normalized": "visibility testing",
+      "status": "new",
+      "source": "career-path:geo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "entity consistency",
+      "normalized": "entity consistency",
+      "status": "new",
+      "source": "career-path:geo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "corroboration",
+      "normalized": "corroboration",
+      "status": "new",
+      "source": "career-path:geo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "extractability",
+      "normalized": "extractability",
+      "status": "new",
+      "source": "career-path:geo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "answer-share",
+      "normalized": "answer share",
+      "status": "new",
+      "source": "career-path:aeo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "extractable answer",
+      "normalized": "extractable answer",
+      "status": "new",
+      "source": "career-path:aeo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "FAQ schema",
+      "normalized": "faq schema",
+      "status": "new",
+      "source": "career-path:aeo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "Q&A schema",
+      "normalized": "q a schema",
+      "status": "new",
+      "source": "career-path:aeo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "machine readability",
+      "normalized": "machine readability",
+      "status": "new",
+      "source": "career-path:aeo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "AI assistant",
+      "normalized": "ai assistant",
+      "status": "new",
+      "source": "career-path:aeo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "answer rate",
+      "normalized": "answer rate",
+      "status": "new",
+      "source": "career-path:aeo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "OAI-SearchBot",
+      "normalized": "oai searchbot",
+      "status": "new",
+      "source": "career-path:geo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "facet pages",
+      "normalized": "facet pages",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    },
+    {
+      "term": "cross-reference content",
+      "normalized": "cross reference content",
+      "status": "new",
+      "source": "career-path:seo-specialist",
+      "addedAt": "2026-06-17"
+    }
+  ]
+}
