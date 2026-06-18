@@ -181,8 +181,8 @@ export default async function CareerPathPage({ params }: Props) {
               {path.title} in the map.
             </h2>
             <p className="mt-4 leading-relaxed text-ink-700">
-              How this path connects to the rest. Follow the arrows to what comes
-              before and after it.
+              The three stages of the hub, with this path marked. The exact paths
+              before and after it are in the rails above.
             </p>
           </div>
           <RoleMap entries={mapEntries} highlightSlug={slug} className="mt-8" />

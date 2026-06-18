@@ -168,16 +168,16 @@ The mechanism that lets any path/module/term carry an *optional* enrichment.
 
 ### Phase 2 — First concrete enrichments (prove the mechanism)
 
-#### T7 — Dependency / role-map diagram  ·  ✅ shipped (hub + path), rebuilt as contained canvas  ·  effort: medium–high
-> Pure layout (`lib/career-path-graph.ts`, longest-path layering on `leadsTo` + barycenter ordering) →
-> `RoleMap.tsx`. **v1 was a full-height static SVG — rejected by the owner (eats the page, ugly
-> diagonals, low utility).** v2 (2026-06-18) is a **contained, fixed-height, draggable client island**:
-> drag-to-pan, zoom +/fit/− buttons, fit-to-view on load, smooth curved (bezier) connectors, and
-> hover/focus a node to trace just its connections (the rest dims). Nodes are real links (a drag
-> doesn't navigate); kind = solid/dashed border (not colour); current path highlighted. Hub (`#map`,
-> neutral) + each path (`#map`, `highlightSlug`). T5 download links sit under the hub map. **Caveat:
-> for only 7 nodes the map's value is marginal — if it still doesn't earn its place, removing the
-> on-page block is two render calls; the relationships also live in the T2 text rails + the T5 artifact.**
+#### T7 — Role map  ·  ✅ shipped (hub + path), final = grouped stage columns  ·  effort: medium
+> Iterated to the owner's pick. **v1** full-height static SVG → rejected (ate the page, ugly diagonals).
+> **v2** contained draggable SVG canvas (pan/zoom/hover-trace) → "better, but still marginal for 7
+> nodes." **v3 (final, 2026-06-18, owner-chosen):** drop the node-graph entirely for **grouped stage
+> columns** — three labelled stages (Start here → Core roles → Specialize) as columns of cards, static,
+> on-brand (matches the hub cards), fully responsive, no arrow spaghetti. `lib/career-path-stages.ts`
+> derives the stages from the data (no prereqs = Start here; +prereqs split by kind into Core roles /
+> Specialize); `RoleMap.tsx` renders them. Each card shows kind + level + links to the path; the current
+> path gets a "You're here" highlight. Hub (`#map`) + each path (`#map`, `highlightSlug`). T5 download
+> links sit under the hub map. (The old SVG layout lib `career-path-graph.ts` was deleted.)
 - **What:** the "graph done right." A build-time **static SVG** map of how the roles and
   specializations connect, generated from the T2 `prerequisites`/`leadsTo` edges — *not* a client
   editor, *not* hand-positioned per node, *not* login-gated. roadmap.sh's structure without its

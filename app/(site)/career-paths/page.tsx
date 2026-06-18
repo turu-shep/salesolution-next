@@ -93,9 +93,9 @@ export default async function CareerPathsHubPage() {
               How the paths connect.
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-ink-700">
-              Start at the top and follow the arrows. The foundations feed the
-              roles; the roles branch into the specializations you buy as a
-              project. Solid = a role you can hire; dashed = a specialization.
+              Three stages: the foundations you start from, the roles you can
+              hire full-time, and the specializations you usually buy as a
+              project. Open any card to read the path.
             </p>
           </div>
 
