@@ -1,5 +1,12 @@
 # SEO Content Strategy — Project Template
 
+> **LEGACY (pre-engine).** This is the original reusable SEO template from before the content
+> engine. For the live content pipeline use `.engine` + `project.yaml` instead (see `AGENTS.md` →
+> "Content engine"). **Still live, though:** `seo-project/data/` (`Queries.csv`, `Pages.csv`) is the
+> GSC baseline-comparison location referenced by `docs/strategy/career-path/08-gsc-baseline-2026-06-15.md`
+> — refresh those CSVs there to measure the learning hub. Don't follow the workflow below as the
+> current playbook.
+
 A reusable framework for launching SEO content projects in Claude Cowork. Works for any niche — e-commerce, SaaS, local services, or content sites.
 
 ## Quickstart

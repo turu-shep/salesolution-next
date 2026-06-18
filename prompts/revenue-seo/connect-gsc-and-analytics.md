@@ -2,6 +2,12 @@
 
 **Read `prompts/_CONTEXT.md` first.** Revenue/ops task, separate from the hub. Linear "SS SEO" **SAL-405**.
 
+> **Status update (supersedes the 2026-06-14 snapshot below):** GSC *is* now connected to the
+> Ahrefs project (`Salesolution`, id 5379899, verified 2026-06-15 — see
+> `docs/strategy/career-path/08-gsc-baseline-2026-06-15.md`). The web-analytics / tracking-install
+> part of this task may still apply; re-check before acting. The "not connected" framing below is
+> the original ticket context, kept for history.
+
 ## Why
 As of 2026-06-14 **nothing on salesolution.net is measurable**: Google Search Console is not
 connected to the Ahrefs project ("No GSC data available"), and Ahrefs Web Analytics shows 0
