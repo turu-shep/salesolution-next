@@ -30,7 +30,12 @@ state**, multi-vertical, citation-not-leads.
 
 ### Phase 1 — Foundational (apply to every path; do as part of the cascade)
 
-#### T1 — Per-module weight tag  ·  effort: low
+> **Status (2026-06-17): T1, T2, T3 shipped.** Per-module `weight` tag, `prerequisites`/`leadsTo`
+> relations (DAG seeded across all 7 — SEO foundation → roles → specializations), and per-path
+> `ItemList`/`Occupation` JSON-LD are live and verified. T4 (inline module glossary links), T5 (open
+> data artifact), then Phase 2 (T6 mechanism, T7 role map, T8 salary dataset) remain.
+
+#### T1 — Per-module weight tag  ·  ✅ shipped  ·  effort: low
 - **Schema** (`sanity/schemas/career-path.ts`, `skillModule` object): add
   `weight` — `string`, options `['core','alternative','flexible']`, `initialValue: 'core'`,
   description "core = required; alternative = swap-in for a core skill; flexible = learn anytime".
@@ -45,7 +50,11 @@ state**, multi-vertical, citation-not-leads.
 - **Acceptance:** a module set to `alternative`/`flexible` shows the badge; `core` reads clean;
   tsc + lint green; the prototype renders correctly.
 
-#### T2 — `prerequisites` / `leadsTo` path relations  ·  effort: medium
+#### T2 — `prerequisites` / `leadsTo` path relations  ·  ✅ shipped  ·  effort: medium
+> Seeded DAG: seo → {technical-seo, geo}; technical-seo → geo; ai-visibility-analyst → {geo,
+> ai-search}; geo → {aeo, citation-engineer, ai-search}; aeo → ai-search; citation-engineer & ai-search
+> are terminal (fall back to the sibling rail). Renders via `PathPrereqs` (top) + `PathRelated`
+> "Where this leads" rail (bottom).
 - **Schema** (`careerPath` document): two self-referential arrays —
   `prerequisites: array of reference -> careerPath`, `leadsTo: array of reference -> careerPath`.
 - **Type** (`sanity/lib/career-paths.ts`): add `prerequisites?: CareerPathCard[]` and
@@ -60,7 +69,7 @@ state**, multi-vertical, citation-not-leads.
 - **Acceptance:** a path with prereqs shows the on-ramp; `leadsTo` drives the bottom rail; no
   reference-integrity errors (targets are published, strong refs fine).
 
-#### T3 — Per-path JSON-LD (`ItemList` + `Occupation`)  ·  effort: low
+#### T3 — Per-path JSON-LD (`ItemList` + `Occupation`)  ·  ✅ shipped  ·  effort: low
 - **Builder** (`lib/schema.ts`): add `careerPathSchema(path)`. Emit an `ItemList` whose
   `itemListElement` maps the ordered modules (`name: title`, `description: skill`, `position: n` via
   `orderModules()`). For `kind === 'role'`, also emit `Occupation` (`name`, `occupationalCategory`,
