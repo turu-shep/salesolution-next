@@ -65,8 +65,8 @@ in the service pages the glossary feeds.
   `ai-share-of-voice` is the live example (inline links → `ai-visibility`, `llm-citation`).
   Bottom-rail cross-linking also exists (`PathTerms`,
   [GlossaryRelated.tsx](../../../components/sections/glossary/GlossaryRelated.tsx)).
-- **Known gaps:** (a) the 30 drafts aren't published; (b) inline termLinks exist only on the
-  one test term — the rest cross-link via the bottom rail only (needs the M3 auto-linker);
+- **Known gaps:** (a) the 30 drafts aren't published; ~~(b) inline termLinks missing~~ **done**
+  (M3 auto-linker — 23 links live across the hub + a GEO post; re-run after the 30 publish);
   ~~(c) no hovercard~~ **done**; (d) no funnels glossary → career paths/services; (e) no
   interactive aids (calculators/converters/scorecards) on any term; (f) the hub is flat.
 

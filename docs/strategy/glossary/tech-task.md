@@ -97,7 +97,16 @@ Lighthouse a11y unaffected; `npx tsc --noEmit` clean; `npx next build` compiles.
 
 ---
 
-## M3 — Inline termLinks everywhere (auto-linker)
+## M3 — Inline termLinks everywhere (auto-linker)  ✅ Shipped 2026-06-17
+
+**Status:** done. [scripts/glossary-autolink.mjs](../../../scripts/glossary-autolink.mjs)
+builds a match table from published terms + aliases and links the first occurrence per target
+per doc (caps per block/doc; skips headings/code/already-linked spans/self-links; acronyms
+match case-sensitively with word boundaries). Applied live: **23 links across 15 docs** (20
+published glossary terms + 7 career paths + 1 GEO post; guides needed none). Dry-run by
+default; `--write` to commit; `--types=guide,post` to widen. Re-run after publishing the
+batch-2 30 to light up their links. (Also fixed the mobile sheet action to left-aligned so it
+clears the site chat FAB.)
 
 **Goal:** every glossary/career-path/guide/service body links the first occurrence of each
 known term (or alias) to its term page.
