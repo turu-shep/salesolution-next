@@ -227,10 +227,17 @@ rather than building a separate one — `enrichments[]` + the shared `components
   crawlability-for-ai-bots. Visual-loop validated (scorecard verdict de-buttonized, mobile stack,
   roomier checklist).
 
-**Deferred (M6 follow-ups):** the **ETIM/UNSPSC class lookup** (needs a real licensed dataset —
-fabricating classes would break the no-fake-data rule) and **standalone `/tools/<key>/` pages**
-with `WebApplication`/`HowTo` schema (link-magnet surfaces). Note: vitest couldn't be installed
-(npm 11.5 / node 20.16 mismatch), so tests use Node's built-in runner on `.mjs` logic.
+**Standalone tool pages — ✅ Shipped 2026-06-18.** `/tools/` index + `/tools/<slug>/` detail
+pages ([app/(site)/tools/](<../../../app/(site)/tools/>)) embed the same tool components as
+link-magnet surfaces, each with `WebApplication` JSON-LD ([softwareToolSchema](../../../lib/schema.ts)),
+breadcrumbs, and "the concepts behind it" links into the glossary. Catalog in
+[lib/tools/pages.ts](../../../lib/tools/pages.ts) (dependency-free → imported by the sitemap);
+listed in [sitemap.ts](../../../app/sitemap.ts) + added to nav/footer ([navigation.ts](../../../lib/navigation.ts)).
+Visual-loop validated. Two tools live: AI-visibility calculator + catalog AI-readiness scorecard.
+
+**Still deferred:** the **ETIM/UNSPSC class lookup** (needs a real licensed dataset — fabricating
+classes would break the no-fake-data rule). Note: vitest couldn't be installed (npm 11.5 / node
+20.16 mismatch), so tool-logic tests use Node's built-in runner on `.mjs` logic.
 
 **Goal:** turn computational/standards/self-assessment terms into embedded tools, and make
 the **assessment** part of the schema so the gate is auditable.

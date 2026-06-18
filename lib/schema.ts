@@ -277,6 +277,36 @@ export function clusterDefinedTermSetSchema({
   }
 }
 
+/**
+ * WebApplication node for a standalone /tools/<slug>/ page — a free, in-browser
+ * tool. Makes the tool a citable, linkable entity (and eligible for richer
+ * treatment in AI answers about "calculate X").
+ */
+export function softwareToolSchema({
+  name,
+  slug,
+  description,
+}: {
+  name: string
+  slug: string
+  description: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    '@id': `${SITE}/tools/${slug}/#app`,
+    name,
+    description,
+    url: `${SITE}/tools/${slug}/`,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    publisher: { '@id': orgId },
+    inLanguage: 'en-US',
+  }
+}
+
 export function faqPageSchema(faq: { question: string; answer: string }[]) {
   return {
     '@context': 'https://schema.org',

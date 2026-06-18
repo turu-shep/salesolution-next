@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 
 import { business } from '@/lib/business'
+import { TOOL_PAGES } from '@/lib/tools/pages'
 import {
   CLUSTER_INDEX_THRESHOLD,
   GLOSSARY_CLUSTERS,
@@ -55,6 +56,8 @@ const STATIC_ROUTES: Entry[] = [
   { url: `${BASE}/constraint-sprint/`,                    changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/catalog-snapshot/`,                     changeFrequency: 'monthly', priority: 0.8 },
   { url: `${BASE}/case-studies/`,                         changeFrequency: 'monthly', priority: 0.8 },
+  // Free tools — standalone link-magnet surfaces (detail pages added below).
+  { url: `${BASE}/tools/`,                                changeFrequency: 'monthly', priority: 0.8 },
   // Industry hub — the proof-led entry for the industrial vertical.
   { url: `${BASE}/industries/industrial-distribution/`,   changeFrequency: 'monthly', priority: 0.8 },
   // Revenue Engine cluster — surfaced in nav ("Who We Serve"), so it leaves the
@@ -174,8 +177,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }))
     : []
 
+  // Standalone tool detail pages — always live (no Sanity dependency).
+  const toolRoutes: Entry[] = TOOL_PAGES.map((t) => ({
+    url: `${BASE}/tools/${t.slug}/`,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
+
   return [
-    ...[...STATIC_ROUTES, ...conditional, ...clusterEntries].map((r) => ({
+    ...[...STATIC_ROUTES, ...conditional, ...clusterEntries, ...toolRoutes].map((r) => ({
       ...r,
       lastModified: r.lastModified ?? new Date(),
     })),
