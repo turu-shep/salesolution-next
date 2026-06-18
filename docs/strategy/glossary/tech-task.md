@@ -207,7 +207,30 @@ term-count micro-label, breadcrumb de-duped).
 
 ---
 
-## M6 — Interactive-aids framework + first tools
+## M6 — Interactive-aids framework + first tools  ✅ Shipped 2026-06-18
+
+**Status:** done by REUSING the career-path **enrichments** framework (which landed in parallel)
+rather than building a separate one — `enrichments[]` + the shared `components/tools/registry.ts`
++ `PathEnrichments` renderer. Glossary additions:
+- `glossaryTerm.enrichments[]` + `interactiveAidStatus` gate (mirrors careerPath) —
+  [glossary-term.ts](../../../sanity/schemas/glossary-term.ts); resolved in
+  [queries.ts](../../../sanity/lib/queries.ts); typed in [glossary.ts](../../../sanity/lib/glossary.ts);
+  rendered via `PathEnrichments` on the term page (after the body).
+- New tool: **catalog AI-readiness scorecard** — pure logic + weights + **unit tests** in
+  [lib/tools/catalog-readiness.mjs](../../../lib/tools/catalog-readiness.mjs) (`.mjs` + JSDoc so it
+  runs under `node --test`; `npm test` added), component
+  [CatalogReadinessScorecard.tsx](../../../components/tools/CatalogReadinessScorecard.tsx),
+  registered in `registry.ts` + the enrichments `toolKey` list.
+- Populated 6 terms via [scripts/glossary-enrichments.mjs](../../../scripts/glossary-enrichments.mjs):
+  the AI-visibility calculator on ai-share-of-voice / ai-citation-tracking / ai-impression-share /
+  mention-rate-vs-citation-rate; the catalog scorecard on ai-ready-product-catalog /
+  crawlability-for-ai-bots. Visual-loop validated (scorecard verdict de-buttonized, mobile stack,
+  roomier checklist).
+
+**Deferred (M6 follow-ups):** the **ETIM/UNSPSC class lookup** (needs a real licensed dataset —
+fabricating classes would break the no-fake-data rule) and **standalone `/tools/<key>/` pages**
+with `WebApplication`/`HowTo` schema (link-magnet surfaces). Note: vitest couldn't be installed
+(npm 11.5 / node 20.16 mismatch), so tests use Node's built-in runner on `.mjs` logic.
 
 **Goal:** turn computational/standards/self-assessment terms into embedded tools, and make
 the **assessment** part of the schema so the gate is auditable.

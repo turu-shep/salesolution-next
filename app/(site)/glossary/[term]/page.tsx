@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { PortableTextRenderer } from '@/components/portable-text/PortableTextRenderer'
+import { PathEnrichments } from '@/components/sections/career-path-detail/PathEnrichments'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { GlossaryRelated } from '@/components/sections/glossary/GlossaryRelated'
 import { GlossaryResources } from '@/components/sections/glossary/GlossaryResources'
@@ -72,12 +73,18 @@ export default async function GlossaryTermPage({ params }: Props) {
 
       <GlossaryTermHeader term={doc} />
 
-      {Array.isArray(doc.body) && doc.body.length > 0 && (
+      {((Array.isArray(doc.body) && doc.body.length > 0) ||
+        (doc.enrichments && doc.enrichments.length > 0)) && (
         <section data-section-tone="light" className="relative bg-paper">
           <div className="mx-auto max-w-3xl px-4 pb-16 sm:px-6 lg:px-8">
-            <article className="min-w-0 max-w-prose">
-              <PortableTextRenderer value={doc.body} />
-            </article>
+            {Array.isArray(doc.body) && doc.body.length > 0 && (
+              <article className="min-w-0 max-w-prose">
+                <PortableTextRenderer value={doc.body} />
+              </article>
+            )}
+            {/* Optional interactive aids (calculators/scorecards) — shared
+                enrichment framework with career paths. */}
+            <PathEnrichments enrichments={doc.enrichments} placement="after-modules" />
           </div>
         </section>
       )}

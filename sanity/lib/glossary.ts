@@ -1,6 +1,7 @@
 import 'server-only'
 
 import type { GlossaryCluster } from '@/lib/glossary-config'
+import type { Enrichment } from './career-paths'
 import {
   allGlossaryTermSlugsQuery,
   allGlossaryTermsQuery,
@@ -39,6 +40,8 @@ export type GlossaryTerm = GlossaryTermCard & {
     kind?: 'career-path' | 'service'
     blurb?: string
   }[]
+  interactiveAidStatus?: 'not-assessed' | 'none-needed' | 'planned' | 'built'
+  enrichments?: Enrichment[]
   seo?: {
     metaTitle?: string
     metaDescription?: string

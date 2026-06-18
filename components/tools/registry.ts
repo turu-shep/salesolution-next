@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react'
 
 import { AiVisibilityCalculator } from './AiVisibilityCalculator'
+import { CatalogReadinessScorecard } from './CatalogReadinessScorecard'
 
 /**
  * The single tool registry for the whole learning hub — maps a stable `toolKey`
@@ -11,6 +12,7 @@ import { AiVisibilityCalculator } from './AiVisibilityCalculator'
  */
 export const toolRegistry: Record<string, ComponentType> = {
   'ai-visibility-calculator': AiVisibilityCalculator,
+  'catalog-readiness-scorecard': CatalogReadinessScorecard,
 }
 
 /** Stable list of valid keys — keep in sync with the Sanity `toolKey` options. */

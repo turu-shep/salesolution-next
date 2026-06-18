@@ -421,7 +421,17 @@ const GLOSSARY_TERM_FIELDS = `
     shortDefinition,
     cluster
   },
-  relatedResources[]{ label, href, kind, blurb }
+  relatedResources[]{ label, href, kind, blurb },
+  interactiveAidStatus,
+  enrichments[]{
+    ...,
+    image{
+      "url": asset->url,
+      alt,
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height
+    }
+  }
 `
 
 export const allGlossaryTermsQuery = `

@@ -29,7 +29,10 @@ const placement = () =>
   })
 
 // Keep this list in sync with components/tools/registry.ts (TOOL_KEYS).
-const TOOL_KEY_OPTIONS = [{ title: 'AI-visibility calculator', value: 'ai-visibility-calculator' }]
+const TOOL_KEY_OPTIONS = [
+  { title: 'AI-visibility calculator', value: 'ai-visibility-calculator' },
+  { title: 'Catalog AI-readiness scorecard', value: 'catalog-readiness-scorecard' },
+]
 
 export const enrichmentTool = defineType({
   name: 'enrichmentTool',

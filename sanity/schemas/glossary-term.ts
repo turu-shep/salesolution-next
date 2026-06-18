@@ -1,5 +1,7 @@
 import { defineField, defineType } from 'sanity'
 
+import { enrichmentArrayMembers } from './objects/enrichments'
+
 /**
  * Glossary term — one concept per document, one URL per concept.
  *
@@ -109,6 +111,30 @@ export const glossaryTerm = defineType({
           preview: { select: { title: 'label', subtitle: 'kind' } },
         },
       ],
+    }),
+    defineField({
+      name: 'interactiveAidStatus',
+      title: 'Interactive-aid status',
+      type: 'string',
+      description:
+        'The interactive-aid check (docs/strategy/glossary §6), made auditable. Has this term been assessed for a calculator / converter / scorecard / formula, and what came of it?',
+      options: {
+        list: [
+          { title: 'Not assessed', value: 'not-assessed' },
+          { title: 'None needed', value: 'none-needed' },
+          { title: 'Planned', value: 'planned' },
+          { title: 'Built', value: 'built' },
+        ],
+      },
+      initialValue: 'not-assessed',
+    }),
+    defineField({
+      name: 'enrichments',
+      title: 'Enrichments (optional)',
+      type: 'array',
+      description:
+        'Optional calculators, formulas, tables, checklists, or diagrams — built only when the term needs them. Each carries a placement. Shares the framework with career paths (components/tools/registry.ts).',
+      of: enrichmentArrayMembers,
     }),
     defineField({
       name: 'opportunity',

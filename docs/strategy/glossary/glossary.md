@@ -71,9 +71,10 @@ in the service pages the glossary feeds.
   ~~(b) inline termLinks missing~~ **done** (auto-linker re-run post-publish — ~67 links across
   glossary terms + career paths + posts); ~~(c) no hovercard~~ **done**;
   ~~(d) no funnels glossary → career paths/services~~ **done** (M4 — `relatedResources` rail on
-  9 role/measurement/catalog terms); (e) no interactive aids on any term;
-  ~~(f) the hub is flat~~ **done** (M5 — cluster intros + `/glossary/cluster/<slug>/` pages with
-  scoped DefinedTermSet). Remaining: **(e) interactive aids (M6)**.
+  9 role/measurement/catalog terms); ~~(e) no interactive aids on any term~~ **done** (M6 —
+  AI-visibility calculator + catalog-readiness scorecard via the shared enrichments framework, on
+  6 terms); ~~(f) the hub is flat~~ **done** (M5 — cluster intros + `/glossary/cluster/<slug>/`
+  pages). **All six known gaps now closed.**
 
 ## 4. Locked decisions (do not relitigate without the owner)
 
