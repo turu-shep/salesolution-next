@@ -12,7 +12,7 @@ const MEASURES = [
   'Signed BAAs on every tool that touches patient data — call tracking, SMS, and the CRM.',
   'Call-recording disclosures built into the greeting, per state two-party rules.',
   'Access controls and audit logs on the systems that hold patient information.',
-  'Patient data stays in your systems; we operate the engine on top, not a copy of your database.',
+  'Patient data stays in your systems; I operate the engine on top, not a copy of your database.',
 ]
 
 export function Compliance({ id }: { id?: string }) {
@@ -58,7 +58,7 @@ export function Compliance({ id }: { id?: string }) {
             ))}
           </ul>
           <p className="mt-4 text-sm text-ink-500">
-            This is how we operate, not legal advice — your compliance officer
+            This is how I operate, not legal advice — your compliance officer
             reviews and signs off on the stack during onboarding.
           </p>
         </div>

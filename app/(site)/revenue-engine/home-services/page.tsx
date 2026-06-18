@@ -5,17 +5,19 @@ import { AuditCTA } from '@/components/sections/revenue-engine/AuditCTA'
 import { EngineVsFuel } from '@/components/sections/revenue-engine/EngineVsFuel'
 import { FiveSteps, type FiveStep } from '@/components/sections/revenue-engine/FiveSteps'
 import { Guarantee } from '@/components/sections/revenue-engine/Guarantee'
-import { RevenueRateCard, type StateRate } from '@/components/sections/revenue-engine/RevenueRateCard'
+import { HowItWorks } from '@/components/sections/revenue-engine/HowItWorks'
+import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
+import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
 import { Seasonality } from '@/components/sections/revenue-engine/Seasonality'
 import { TheLeak, type Leak } from '@/components/sections/revenue-engine/TheLeak'
-import { ServicesHero } from '@/components/sections/services/ServicesHero'
+import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Revenue Engine for Home Services · Roofing, HVAC, plumbing, electrical',
   description:
-    'A done-for-you AI revenue system for home-services contractors. Answers every call 24/7, books estimates, chases cold quotes, and logs every storm-season lead — so the leads you pay for turn into booked jobs. Published Florida and California pricing.',
+    'A done-for-you system for home-services contractors. It answers every call 24/7, books estimates, chases the quotes that go cold, and logs every storm-season lead — so the leads you pay for turn into booked jobs. Book a free Revenue Leak Audit.',
   alternates: { canonical: 'https://salesolution.net/revenue-engine/home-services/' },
 }
 
@@ -47,38 +49,33 @@ const HS_STEPS: FiveStep[] = [
   {
     n: '01',
     key: 'CAPTURE',
-    what: 'An instant quote widget, storm and seasonal landing pages, and a Google Business Profile overhaul — conversion assets you own.',
-    metric: 'Conversion rate',
+    what: 'A simple way for homeowners to get a quote or book a visit, storm and seasonal landing pages, and a tidied-up Google listing — all yours, running alongside your site.',
+    metric: 'More visitors turn into calls and quote requests',
   },
   {
     n: '02',
     key: 'RESPOND',
-    what: 'An AI receptionist answers every call 24/7, texts back missed calls, and replies to every form fill in under 60 seconds — even mid-storm.',
-    metric: 'Answer rate · after-hours bookings',
+    what: 'Every call gets answered, 24/7 — even mid-storm when the crew is on a roof. Missed calls get an instant text back, every form gets a reply in under a minute, and a caller can always reach a human.',
+    metric: 'No lead lost to a missed call or slow reply',
   },
   {
     n: '03',
     key: 'BOOK',
-    what: 'AI qualification books estimates straight to the calendar with reminder sequences. Every call recorded, transcribed, and classified.',
-    metric: 'Lead-to-appointment rate · show rate',
+    what: 'Estimates get qualified and booked straight to your calendar, with reminders so they show. Every call is recorded and sorted, so nothing slips.',
+    metric: 'More leads become booked, kept jobs',
   },
   {
     n: '04',
     key: 'RECOVER',
-    what: 'Estimate-recovery sequences chase every quote that went cold, plus dormant-customer reactivation and a review engine that feeds the map pack.',
-    metric: 'Recovered revenue from cold estimates',
+    what: 'The quotes that went cold get chased automatically, past customers get a reason to call you back, and a steady stream of new reviews lifts you in local search.',
+    metric: 'Revenue won back from quotes already chased',
   },
   {
     n: '05',
     key: 'PROVE',
-    what: 'A dispute-proof lead log of every call, and an attribution dashboard that splits system-driven from media-driven revenue.',
-    metric: 'System-attributed revenue vs. fee',
+    what: 'A dispute-proof log of every call, and a monthly dashboard that shows what this system brought in, separately from your ads.',
+    metric: 'What the system earned, against the fee',
   },
-]
-
-const HS_RATES: StateRate[] = [
-  { name: 'Florida', systemMonthly: '$2,997', setup: '$2,500 setup', mediaMonthly: '+$997/mo' },
-  { name: 'California', systemMonthly: '$3,997', setup: '$3,000 setup', mediaMonthly: '+$1,497/mo' },
 ]
 
 const HS_FAQ: QA[] = [
@@ -86,9 +83,9 @@ const HS_FAQ: QA[] = [
     q: 'Do I need a new website?',
     a: (
       <p>
-        No. The conversion pages and quote widget run alongside your existing
-        site. We do not touch your domain or make you rebuild — the engine
-        bolts on to what you already have.
+        No. The quote form and landing pages run alongside your existing
+        site. I don&rsquo;t touch your domain or make you rebuild &mdash; the
+        engine bolts on to what you already have.
       </p>
     ),
   },
@@ -109,16 +106,6 @@ const HS_FAQ: QA[] = [
         Keep them if you want. I run the engine that converts the leads, not
         your ad buying. Your spend stays in your account, at cost, with zero
         markup &mdash; the system just makes that spend convert better.
-      </p>
-    ),
-  },
-  {
-    q: 'Will the AI sound robotic to my customers?',
-    a: (
-      <p>
-        A caller can always reach a human. The AI handles the calls you are
-        missing today &mdash; after hours, during the rush, mid-storm. We
-        tune the scripts against real call recordings every week.
       </p>
     ),
   },
@@ -149,29 +136,29 @@ export default function HomeServicesRevenueEnginePage() {
 
       <div className="h-1.5 w-full bg-brand-600" aria-hidden />
 
-      <ServicesHero
+      {/* 1 — HOOK */}
+      <RevenueHero
         eyebrow="Revenue Engine · Home services"
         title="Built for contractors who miss calls"
         titleAccent="because they're on a roof."
         lede={
           <>
-            A done-for-you AI revenue system for roofing, HVAC, plumbing, and
-            electrical. It answers every call 24/7, books estimates, chases
-            the quotes that went cold, and logs every storm-season lead
-            &mdash; so the leads you pay for turn into booked jobs.
+            You&rsquo;re on a roof when the phone rings &mdash; and the lead you
+            paid for dials the next contractor on the list. The estimate you
+            drove out for goes quiet. Each one is a booked job you never see.
           </>
         }
         primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}
-        secondaryCta={{ label: 'See pricing', href: '#pricing' }}
         anchors={[
           { label: 'The leak', href: '#leak' },
-          { label: 'The system', href: '#system' },
-          { label: 'Seasonality', href: '#seasonality' },
+          { label: 'How it works', href: '#how' },
+          { label: 'Storm season', href: '#seasonality' },
           { label: 'Pricing', href: '#pricing' },
           { label: 'FAQ', href: '#faq' },
         ]}
       />
 
+      {/* 2 — THE LEAK */}
       <TheLeak
         id="leak"
         eyebrow="The contractor's leak"
@@ -183,60 +170,60 @@ export default function HomeServicesRevenueEnginePage() {
         }
         intro={
           <>
-            Home-services leads are expensive and time-sensitive. The job
-            goes to whoever picks up first &mdash; and you are on a roof.
+            Home-services leads are expensive and time-sensitive. The job goes
+            to whoever picks up first, and most days that isn&rsquo;t you.
           </>
         }
         leaks={HS_LEAKS}
         closer={<>Every one of these is money you already spent to make the phone ring.</>}
       />
 
+      {/* 3 — THE MECHANISM */}
       <EngineVsFuel id="engine" />
 
+      {/* 4 — THE PLAN */}
+      <HowItWorks id="how" />
       <FiveSteps
         id="system"
         headline={
           <>
-            The 5-step engine,{' '}
+            The whole machine,{' '}
             <span className="text-ink-500">applied to your trade.</span>
           </>
         }
         intro={
           <>
-            Same engine as everywhere. Here is what each step looks like for a
-            contractor.
+            I install and run all of it &mdash; the 90-day setup is on me. Here
+            is what each piece looks like for a contractor.
           </>
         }
         steps={HS_STEPS}
       />
 
+      {/* 5 — PROOF */}
+      <TwoRevenueLines id="prove" />
+
+      {/* Vertical-specific reassurance (after proof, before price): storm surge */}
       <Seasonality id="seasonality" />
 
-      <RevenueRateCard
-        id="pricing"
-        states={HS_RATES}
-        intro={
-          <>
-            Published Florida and California rates for home services. No
-            discovery-call pricing games, no annual lock-in.
-          </>
-        }
-      />
-
+      {/* 6 — OFFER + GUARANTEE */}
+      <RevenuePricing id="pricing" />
       <Guarantee id="guarantee" />
 
+      {/* 7 — FAQ */}
       <FAQ
         id="faq"
-        eyebrow="Home services FAQ"
+        eyebrow="A few last questions"
         headline={
           <>
             Questions <span className="text-ink-500">before the audit.</span>
           </>
         }
-        kicker="New website, lead exclusivity, your Google rep, AI scripts, time to start. Straight answers."
+        kicker="New website, lead exclusivity, your Google rep, time to start. Straight answers."
         items={HS_FAQ}
       />
 
+      {/* 8 — FREE-AUDIT CLOSE */}
       <AuditCTA id="audit" />
     </>
   )

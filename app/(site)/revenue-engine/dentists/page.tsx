@@ -6,16 +6,18 @@ import { Compliance } from '@/components/sections/revenue-engine/Compliance'
 import { EngineVsFuel } from '@/components/sections/revenue-engine/EngineVsFuel'
 import { FiveSteps, type FiveStep } from '@/components/sections/revenue-engine/FiveSteps'
 import { Guarantee } from '@/components/sections/revenue-engine/Guarantee'
-import { RevenueRateCard, type StateRate } from '@/components/sections/revenue-engine/RevenueRateCard'
+import { HowItWorks } from '@/components/sections/revenue-engine/HowItWorks'
+import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
+import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
 import { TheLeak, type Leak } from '@/components/sections/revenue-engine/TheLeak'
-import { ServicesHero } from '@/components/sections/services/ServicesHero'
+import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Revenue Engine for Dental Practices · Answer, book, recover',
   description:
-    'A HIPAA-compliant AI revenue system for dental practices. Answers calls during chair time, books new patients, follows up on treatment plans and overdue recall, and scores your front desk — proven in a dashboard. Published Florida and California pricing.',
+    'A HIPAA-compliant system for dental practices. It answers calls during chair time, books new patients, follows up on treatment plans and overdue recall, and scores your front desk — then proves the revenue. Book a free Revenue Leak Audit.',
   alternates: { canonical: 'https://salesolution.net/revenue-engine/dentists/' },
 }
 
@@ -47,38 +49,33 @@ const DENTAL_STEPS: FiveStep[] = [
   {
     n: '01',
     key: 'CAPTURE',
-    what: 'Financing-framed service pages that present a monthly payment instead of a sticker price, online booking, and a Google Business Profile overhaul.',
-    metric: 'Conversion rate',
+    what: 'Service pages that show a monthly payment instead of a sticker price, online booking, and a tidied-up Google listing — all yours.',
+    metric: 'More visitors turn into booked new patients',
   },
   {
     n: '02',
     key: 'RESPOND',
-    what: 'An AI receptionist answers every call 24/7, texts back missed calls, and replies to new-patient inquiries in under 60 seconds.',
-    metric: 'Answer rate · after-hours bookings',
+    what: 'Every call gets answered, 24/7 — even when the front desk is with a patient. Missed calls get an instant text back, new-patient inquiries get a reply in under a minute, and a caller can always reach a human.',
+    metric: 'No new patient lost to a missed call',
   },
   {
     n: '03',
     key: 'BOOK',
-    what: 'AI qualification books appointments straight to the calendar with reminder sequences. Every call recorded, transcribed, and classified.',
-    metric: 'Lead-to-appointment rate · show rate',
+    what: 'New patients get qualified and booked straight to your calendar, with reminders so they show. Every call is recorded and sorted.',
+    metric: 'More inquiries become kept appointments',
   },
   {
     n: '04',
     key: 'RECOVER',
-    what: 'Treatment-plan and overdue-recall follow-up, dormant-patient reactivation, and a review engine that feeds the map pack.',
-    metric: 'Recovered revenue from unaccepted plans',
+    what: 'Unaccepted treatment plans and overdue recall get followed up automatically, past patients get a reason to come back, and new reviews lift you in local search.',
+    metric: 'Revenue won back from plans and recall',
   },
   {
     n: '05',
     key: 'PROVE',
-    what: 'Monthly front-desk conversion scoring and an attribution dashboard that splits system-driven from media-driven revenue.',
-    metric: 'System-attributed revenue vs. fee',
+    what: 'A monthly front-desk score, and a dashboard that shows what this system brought in, separately from your ads.',
+    metric: 'What the system earned, against the fee',
   },
-]
-
-const DENTAL_RATES: StateRate[] = [
-  { name: 'Florida', systemMonthly: '$3,997', setup: '$3,000 setup', mediaMonthly: '+$997/mo' },
-  { name: 'California', systemMonthly: '$4,997', setup: '$3,500 setup', mediaMonthly: '+$1,497/mo' },
 ]
 
 const DENTAL_FAQ: QA[] = [
@@ -124,15 +121,6 @@ const DENTAL_FAQ: QA[] = [
       </p>
     ),
   },
-  {
-    q: 'How fast can we start?',
-    a: (
-      <p>
-        The full system installs over 90 days, but call answering and
-        missed-call text-back are live within the first couple of weeks.
-      </p>
-    ),
-  },
 ]
 
 export default function DentistsRevenueEnginePage() {
@@ -150,29 +138,29 @@ export default function DentistsRevenueEnginePage() {
 
       <div className="h-1.5 w-full bg-brand-600" aria-hidden />
 
-      <ServicesHero
+      {/* 1 — HOOK */}
+      <RevenueHero
         eyebrow="Revenue Engine · Dental"
         title="Your front desk is the most"
         titleAccent="expensive channel you don't measure."
         lede={
           <>
-            A HIPAA-compliant AI revenue system for dental practices. It
-            answers calls during chair time, books new patients, follows up
-            on treatment plans and overdue recall, and scores your front desk
-            &mdash; then proves the revenue in a dashboard.
+            New patients call while your front desk is mid-appointment, and the
+            call goes to voicemail &mdash; and to another practice. Presented
+            treatment plans go quiet. The revenue leaks before anyone notices.
           </>
         }
         primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}
-        secondaryCta={{ label: 'See pricing', href: '#pricing' }}
         anchors={[
           { label: 'The leak', href: '#leak' },
-          { label: 'The system', href: '#system' },
+          { label: 'How it works', href: '#how' },
           { label: 'Compliance', href: '#compliance' },
           { label: 'Pricing', href: '#pricing' },
           { label: 'FAQ', href: '#faq' },
         ]}
       />
 
+      {/* 2 — THE LEAK */}
       <TheLeak
         id="leak"
         eyebrow="The practice's leak"
@@ -184,61 +172,61 @@ export default function DentistsRevenueEnginePage() {
         }
         intro={
           <>
-            New patients call while your front desk is with someone else, and
-            presented treatment plans go quiet. The revenue leaks before
-            anyone notices.
+            Most practice owners blame their marketing. It is almost never the
+            marketing &mdash; it is the calls during chair time nobody could
+            pick up, and the treatment plans nobody circled back on.
           </>
         }
         leaks={DENTAL_LEAKS}
         closer={<>Every one of these is revenue you already earned the right to.</>}
       />
 
+      {/* 3 — THE MECHANISM */}
       <EngineVsFuel id="engine" />
 
+      {/* 4 — THE PLAN */}
+      <HowItWorks id="how" />
       <FiveSteps
         id="system"
         headline={
           <>
-            The 5-step engine,{' '}
+            The whole machine,{' '}
             <span className="text-ink-500">applied to your practice.</span>
           </>
         }
         intro={
           <>
-            Same engine as everywhere. Here is what each step looks like
-            inside a dental practice.
+            I install and run all of it &mdash; the 90-day setup is on me. Here
+            is what each piece looks like inside a dental practice.
           </>
         }
         steps={DENTAL_STEPS}
       />
 
+      {/* 5 — PROOF */}
+      <TwoRevenueLines id="prove" />
+
+      {/* Vertical-specific reassurance (after proof, before price): HIPAA / patient data */}
       <Compliance id="compliance" />
 
-      <RevenueRateCard
-        id="pricing"
-        states={DENTAL_RATES}
-        intro={
-          <>
-            Published Florida and California rates for dental practices. No
-            discovery-call pricing games, no annual lock-in.
-          </>
-        }
-      />
-
+      {/* 6 — OFFER + GUARANTEE */}
+      <RevenuePricing id="pricing" />
       <Guarantee id="guarantee" />
 
+      {/* 7 — FAQ */}
       <FAQ
         id="faq"
-        eyebrow="Dental FAQ"
+        eyebrow="A few last questions"
         headline={
           <>
             Questions <span className="text-ink-500">before the audit.</span>
           </>
         }
-        kicker="Front desk, PMS integration, patient data, budget, time to start. Straight answers."
+        kicker="Front desk, PMS integration, patient data, budget. Straight answers."
         items={DENTAL_FAQ}
       />
 
+      {/* 8 — FREE-AUDIT CLOSE */}
       <AuditCTA id="audit" />
     </>
   )

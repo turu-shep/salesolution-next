@@ -19,7 +19,7 @@ const POINTS = [
   },
   {
     title: 'Log every storm lead',
-    body: 'Every call recorded, transcribed, and classified — a dispute-proof record of the season you can hold your ad spend accountable against.',
+    body: 'Every storm-season call recorded and sorted — a record you can use to see which jobs your ad money actually produced.',
   },
 ]
 
