@@ -14,20 +14,23 @@ import { InView } from './InView'
  * co-locating the two doors, so the funnels stay separate.
  *
  * Distinct from WhoWeServe on purpose: that's a 3-CARD vertical splitter ("who
- * are you"); this is a flat ROW list ("what do you want"). Different axis,
- * different format — the rows-vs-cards contrast is the anti-redundancy guard.
+ * are you"); this is a numbered ROW index ("what do you want"). Rows-vs-cards is
+ * the anti-redundancy guard.
  *
- * Static + server-rendered: every label and href is in the first response (no
- * JS gating), so crawlers and AI answers can read the goal → solution map.
- * Industrial links are brand-blue, Revenue Engine links accent-orange (the
- * funnel coloring reused from ProblemShift/WhoWeServe); the link's qualifier
- * text carries the funnel too, for colorblind users and crawlers.
+ * Each destination = a short colored funnel TAG (mono, carries the funnel for
+ * colorblind users + crawlers) + a sentence-case action. Industrial = brand-blue,
+ * Revenue Engine = accent-orange. Ordinals + row hover make it read as an index
+ * you pick from, not a static list.
+ *
+ * Static + server-rendered: every tag, label, and href is in the first response
+ * (no JS gating), so crawlers and AI answers can read the goal → solution map.
  */
 
 type Funnel = 'industrial' | 'revenue'
 
 type GoalLink = {
   href: string
+  tag: string
   text: string
   funnel: Funnel
   vertical?: 'homeservices' | 'dental'
@@ -41,16 +44,14 @@ type Goal = {
   links: GoalLink[]
 }
 
-const TONE: Record<Funnel, { text: string; decoration: string; dot: string }> = {
+const TONE: Record<Funnel, { tag: string; hover: string }> = {
   industrial: {
-    text: 'text-brand-700',
-    decoration: 'decoration-brand-500/40 group-hover:decoration-brand-600',
-    dot: 'bg-brand-500',
+    tag: 'text-brand-700',
+    hover: 'group-hover/dest:text-brand-700 group-hover/dest:decoration-brand-400',
   },
   revenue: {
-    text: 'text-accent-700',
-    decoration: 'decoration-accent-500/40 group-hover:decoration-accent-600',
-    dot: 'bg-accent-500',
+    tag: 'text-accent-700',
+    hover: 'group-hover/dest:text-accent-700 group-hover/dest:decoration-accent-400',
   },
 }
 
@@ -60,8 +61,8 @@ const GOALS: Goal[] = [
     label: 'I want to show up when people ask AI.',
     stake: 'A buyer asks ChatGPT or Google’s AI for what you sell, and your name never comes up.',
     links: [
-      { href: '/services/ai-seo/', text: 'See who AI names for your products', funnel: 'industrial' },
-      { href: '/revenue-engine/', text: 'Run a local shop? Get found in your area', funnel: 'revenue', secondary: true },
+      { href: '/services/ai-seo/', tag: 'Industrial', text: 'See who AI names for your products', funnel: 'industrial' },
+      { href: '/revenue-engine/', tag: 'Local shop', text: 'Get found in your area', funnel: 'revenue', secondary: true },
     ],
   },
   {
@@ -69,8 +70,8 @@ const GOALS: Goal[] = [
     label: 'I want more people to know my company.',
     stake: 'People who’d buy from you have never heard your name.',
     links: [
-      { href: '/services/editorial-authority/', text: 'Become the name buyers and AI keep citing', funnel: 'industrial' },
-      { href: '/revenue-engine/', text: 'Local business? Win the reviews that get you picked', funnel: 'revenue' },
+      { href: '/services/editorial-authority/', tag: 'Industrial', text: 'Become the name buyers and AI cite', funnel: 'industrial' },
+      { href: '/revenue-engine/', tag: 'Local', text: 'Win the reviews that get you picked', funnel: 'revenue' },
     ],
   },
   {
@@ -78,8 +79,8 @@ const GOALS: Goal[] = [
     label: 'I want more work coming in.',
     stake: 'Not enough quotes. Not enough booked jobs. The number you watch.',
     links: [
-      { href: '/industries/industrial-distribution/', text: 'Distributor or manufacturer? See the industrial playbook', funnel: 'industrial' },
-      { href: '/revenue-engine/', text: 'Roofer, HVAC, or dental? See the Revenue Engine', funnel: 'revenue' },
+      { href: '/industries/industrial-distribution/', tag: 'Industrial', text: 'See the industrial playbook', funnel: 'industrial' },
+      { href: '/revenue-engine/', tag: 'Revenue Engine', text: 'See the Revenue Engine', funnel: 'revenue' },
     ],
   },
   {
@@ -87,8 +88,8 @@ const GOALS: Goal[] = [
     label: 'I want to stop losing the quotes and calls I already pay for.',
     stake: 'The work arrives and slips away: buyers bounce off a slow site, calls get missed, estimates go cold.',
     links: [
-      { href: '/services/website-development-design-services/', text: 'Fix the site and quote form buyers bounce off', funnel: 'industrial' },
-      { href: '/revenue-engine/', text: 'Answer every call, reply in seconds, book the job', funnel: 'revenue' },
+      { href: '/services/website-development-design-services/', tag: 'Industrial', text: 'Fix the site buyers bounce off', funnel: 'industrial' },
+      { href: '/revenue-engine/', tag: 'Revenue Engine', text: 'Answer every call, book the job', funnel: 'revenue' },
     ],
   },
   {
@@ -96,8 +97,8 @@ const GOALS: Goal[] = [
     label: 'I want every call answered, even after hours.',
     stake: 'The phone rings while you’re on a roof or with a patient. The 9pm lead books with whoever picks up first.',
     links: [
-      { href: '/revenue-engine/home-services/', text: 'Roofer, HVAC, plumbing, electrical', funnel: 'revenue', vertical: 'homeservices' },
-      { href: '/revenue-engine/dentists/', text: 'Dental practice', funnel: 'revenue', vertical: 'dental' },
+      { href: '/revenue-engine/home-services/', tag: 'Home services', text: 'Roofing, HVAC, plumbing, electrical', funnel: 'revenue', vertical: 'homeservices' },
+      { href: '/revenue-engine/dentists/', tag: 'Dental', text: 'How it works for your practice', funnel: 'revenue', vertical: 'dental' },
     ],
   },
   {
@@ -105,8 +106,8 @@ const GOALS: Goal[] = [
     label: 'I want to keep my customers, and win back the ones who went quiet.',
     stake: 'Repeat buyers and revived accounts are the cheapest revenue you’ve got.',
     links: [
-      { href: '/services/outbound-email-marketing-services/', text: 'Win-back email to the list you already own', funnel: 'industrial' },
-      { href: '/revenue-engine/', text: 'Chase cold quotes and bring customers back', funnel: 'revenue' },
+      { href: '/services/outbound-email-marketing-services/', tag: 'Industrial', text: 'Win-back email to your own list', funnel: 'industrial' },
+      { href: '/revenue-engine/', tag: 'Revenue Engine', text: 'Chase cold quotes, bring buyers back', funnel: 'revenue' },
     ],
   },
 ]
@@ -119,16 +120,28 @@ function GoalDestination({ goalId, link }: { goalId: string; link: GoalLink }) {
       href={link.href}
       data-cta={cta}
       data-cta-location="home-intent-index"
-      className={cn(
-        'group inline-flex items-center gap-2 font-mono uppercase underline underline-offset-[6px] transition-colors',
-        link.secondary ? 'text-[11px] tracking-[0.12em] opacity-80' : 'text-[12px] tracking-[0.16em]',
-        t.text,
-        t.decoration,
-      )}
+      className="group/dest flex items-baseline gap-x-3 py-1"
     >
-      <span aria-hidden className={cn('h-1.5 w-1.5 shrink-0 rounded-full', t.dot, link.secondary && 'opacity-70')} />
-      {link.text}
-      <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
+      <span
+        className={cn(
+          'shrink-0 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.14em] md:w-32',
+          t.tag,
+        )}
+      >
+        {link.tag}
+      </span>
+      <span
+        className={cn(
+          'font-medium leading-snug underline decoration-transparent underline-offset-[3px] transition-colors',
+          link.secondary ? 'text-[13px] text-ink-500' : 'text-[15px] text-ink-800',
+          t.hover,
+        )}
+      >
+        {link.text}
+        <span aria-hidden className="ml-1 inline-block transition-transform group-hover/dest:translate-x-0.5">
+          →
+        </span>
+      </span>
     </Link>
   )
 }
@@ -150,20 +163,26 @@ export function GoalIndex({ id }: { id?: string }) {
       </div>
 
       <InView as="dl" className="mt-12">
-        {GOALS.map((goal) => (
+        {GOALS.map((goal, i) => (
           <div
             key={goal.id}
-            className="grid gap-4 border-t border-rule py-6 last:border-b md:grid-cols-12 md:gap-8"
+            className="group grid grid-cols-1 gap-x-6 gap-y-4 border-t border-rule py-6 transition-colors last:border-b hover:bg-ink-900/[0.02] md:grid-cols-12 md:gap-x-8"
           >
+            <span
+              aria-hidden
+              className="font-mono text-[13px] font-medium tabular-nums text-ink-400 transition-colors group-hover:text-ink-900 md:col-span-1"
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
             <dt className="md:col-span-6">
-              <p className="font-display text-xl font-semibold leading-snug text-ink-900 sm:text-2xl">
+              <p className="font-display text-xl font-semibold leading-snug text-ink-900">
                 {goal.label}
               </p>
-              <p className="mt-2 text-base leading-relaxed text-ink-600">{goal.stake}</p>
+              <p className="mt-2 text-base leading-relaxed text-ink-500">{goal.stake}</p>
             </dt>
-            <dd className="flex flex-col gap-2.5 md:col-span-6 md:items-start">
+            <dd className="flex flex-col gap-y-2.5 md:col-span-5">
               {goal.links.map((link) => (
-                <GoalDestination key={link.href + link.text} goalId={goal.id} link={link} />
+                <GoalDestination key={link.href + link.tag} goalId={goal.id} link={link} />
               ))}
             </dd>
           </div>
@@ -173,7 +192,7 @@ export function GoalIndex({ id }: { id?: string }) {
       <p className="mt-8 text-sm leading-relaxed text-ink-500">
         Not sure which?{' '}
         <Link
-          href="/services/"
+          href="/industries/industrial-distribution/"
           data-cta="goal-escape-industrial"
           data-cta-location="home-intent-index"
           className="font-medium text-ink-700 underline decoration-rule-strong underline-offset-4 transition-colors hover:text-ink-900"
