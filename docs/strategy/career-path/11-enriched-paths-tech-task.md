@@ -168,11 +168,16 @@ The mechanism that lets any path/module/term carry an *optional* enrichment.
 
 ### Phase 2 — First concrete enrichments (prove the mechanism)
 
-#### T7 — Dependency / role-map diagram (static)  ·  ✅ shipped (hub + path)  ·  effort: medium–high
-> Built as a pure layout (`lib/career-path-graph.ts`, longest-path layering on `leadsTo` + barycenter
-> ordering) → static SVG (`components/sections/career-paths/RoleMap.tsx`, no client JS, every node a
-> real link, kind encoded by solid/dashed border not colour). Rendered on the hub (`#map`, neutral)
-> and each path (`#map`, `highlightSlug` = you-are-here). The T5 download links sit under the hub map.
+#### T7 — Dependency / role-map diagram  ·  ✅ shipped (hub + path), rebuilt as contained canvas  ·  effort: medium–high
+> Pure layout (`lib/career-path-graph.ts`, longest-path layering on `leadsTo` + barycenter ordering) →
+> `RoleMap.tsx`. **v1 was a full-height static SVG — rejected by the owner (eats the page, ugly
+> diagonals, low utility).** v2 (2026-06-18) is a **contained, fixed-height, draggable client island**:
+> drag-to-pan, zoom +/fit/− buttons, fit-to-view on load, smooth curved (bezier) connectors, and
+> hover/focus a node to trace just its connections (the rest dims). Nodes are real links (a drag
+> doesn't navigate); kind = solid/dashed border (not colour); current path highlighted. Hub (`#map`,
+> neutral) + each path (`#map`, `highlightSlug`). T5 download links sit under the hub map. **Caveat:
+> for only 7 nodes the map's value is marginal — if it still doesn't earn its place, removing the
+> on-page block is two render calls; the relationships also live in the T2 text rails + the T5 artifact.**
 - **What:** the "graph done right." A build-time **static SVG** map of how the roles and
   specializations connect, generated from the T2 `prerequisites`/`leadsTo` edges — *not* a client
   editor, *not* hand-positioned per node, *not* login-gated. roadmap.sh's structure without its

@@ -20,13 +20,13 @@ export type GraphNode = {
   w: number
   h: number
 }
-export type GraphEdge = { x1: number; y1: number; x2: number; y2: number }
+export type GraphEdge = { from: string; to: string; x1: number; y1: number; x2: number; y2: number }
 export type RoleGraph = { width: number; height: number; nodes: GraphNode[]; edges: GraphEdge[] }
 
 const BOX_W = 168
-const BOX_H = 52
+const BOX_H = 50
 const GAP_X = 26
-const GAP_Y = 64
+const GAP_Y = 52
 const PAD = 12
 
 export function buildRoleGraph(entries: CareerPathMapEntry[]): RoleGraph {
@@ -103,7 +103,7 @@ export function buildRoleGraph(entries: CareerPathMapEntry[]): RoleGraph {
     for (const to of targets) {
       const b = pos.get(to)
       if (!b) continue
-      edges.push({ x1: a.x + a.w / 2, y1: a.y + a.h, x2: b.x + b.w / 2, y2: b.y })
+      edges.push({ from, to, x1: a.x + a.w / 2, y1: a.y + a.h, x2: b.x + b.w / 2, y2: b.y })
     }
   }
 
