@@ -178,7 +178,20 @@ relevant career paths and services; refs resolve; rail hidden when empty.
 
 ---
 
-## M5 — Cluster hubs
+## M5 — Cluster hubs  ✅ Shipped 2026-06-18
+
+**Status:** done. The hub already grouped by cluster; M5 added (a) humanized cluster intros + a
+"View cluster →" link per section ([GlossaryHub.tsx](../../../components/sections/glossary/GlossaryHub.tsx),
+intros in [glossary-config.ts](../../../lib/glossary-config.ts)), and (b) per-cluster landing
+pages [/glossary/cluster/[cluster]/](<../../../app/(site)/glossary/cluster/[cluster]/page.tsx>)
+emitting a scoped `clusterDefinedTermSetSchema` ([schema.ts](../../../lib/schema.ts)) with
+breadcrumbs. Shared term-card grid extracted to
+[GlossaryCardGrid.tsx](../../../components/sections/glossary/GlossaryCardGrid.tsx). Cluster
+value+label+intro+SEO is canonical in glossary-config.ts (re-exported from glossary.ts — no
+drift). Index gate: `CLUSTER_INDEX_THRESHOLD = 5` — ai-search-core/measurement/technical/
+industrial-ecommerce indexed + in [sitemap.ts](../../../app/sitemap.ts); roles (3 terms) noindex
+until it fills. Visual-loop validated (intro scale unified hub↔cluster, lede width capped,
+term-count micro-label, breadcrumb de-duped).
 
 **Goal:** the hub is organized by cluster, with crawlable cluster surfaces.
 

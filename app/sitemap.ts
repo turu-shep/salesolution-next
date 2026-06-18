@@ -1,7 +1,11 @@
 import type { MetadataRoute } from 'next'
 
 import { business } from '@/lib/business'
-import { GLOSSARY_INDEX_THRESHOLD } from '@/lib/glossary-config'
+import {
+  CLUSTER_INDEX_THRESHOLD,
+  GLOSSARY_CLUSTERS,
+  GLOSSARY_INDEX_THRESHOLD,
+} from '@/lib/glossary-config'
 
 /**
  * Generates /sitemap.xml. Replaces the Rank Math `sitemap_index.xml` from the
@@ -76,7 +80,10 @@ const STATIC_ROUTES: Entry[] = [
   { url: `${BASE}/opt-out-preferences/`,                  changeFrequency: 'yearly',  priority: 0.2 },
 ]
 
-async function fetchSanityRoutes(): Promise<Entry[]> {
+async function fetchSanityRoutes(): Promise<{
+  entries: Entry[]
+  clusterCounts: Record<string, number>
+}> {
   // Lazy import — fail soft if Sanity isn't configured (env missing in CI etc.)
   try {
     const { sanityClient } = await import('@/sanity/lib/client')
@@ -86,12 +93,22 @@ async function fetchSanityRoutes(): Promise<Entry[]> {
         slug: { current: string }
         updatedAt?: string
         publishedAt?: string
+        cluster?: string
       }[]
     >(
       `*[_type in ["post","guide","careerPath","caseStudy","glossaryTerm"] && defined(slug.current)]{
-         _type, slug, updatedAt, publishedAt
+         _type, slug, updatedAt, publishedAt, cluster
        }`,
     )
+
+    // Per-cluster published-term counts drive which /glossary/cluster/<slug>/
+    // pages are indexable + listed (the cluster route applies the same gate).
+    const clusterCounts: Record<string, number> = {}
+    for (const d of docs) {
+      if (d._type === 'glossaryTerm' && d.cluster) {
+        clusterCounts[d.cluster] = (clusterCounts[d.cluster] ?? 0) + 1
+      }
+    }
 
     // Glossary term pages are individually indexable as soon as they publish;
     // the /glossary/ hub itself is held out of the sitemap (and noindexed by
@@ -112,7 +129,7 @@ async function fetchSanityRoutes(): Promise<Entry[]> {
       glossaryTerm: 0.5,
     }
 
-    return docs.map((d) => {
+    const entries: Entry[] = docs.map((d) => {
       const lastMod = d.updatedAt ?? d.publishedAt
       return {
         url: `${BASE}${PATH_PREFIX[d._type] ?? ''}/${d.slug.current}/`,
@@ -121,14 +138,15 @@ async function fetchSanityRoutes(): Promise<Entry[]> {
         priority: PRIORITY[d._type] ?? 0.6,
       }
     })
+    return { entries, clusterCounts }
   } catch (err) {
     console.warn('[sitemap] Sanity fetch failed, returning static-only:', err)
-    return []
+    return { entries: [], clusterCounts: {} }
   }
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const dynamic = await fetchSanityRoutes()
+  const { entries: dynamic, clusterCounts } = await fetchSanityRoutes()
 
   // Add the /glossary/ hub only once it carries enough published terms — the
   // same gate the hub route applies via GLOSSARY_INDEX_THRESHOLD before it
@@ -138,13 +156,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const glossaryTermCount = dynamic.filter((e) =>
     e.url.startsWith(`${BASE}/glossary/`),
   ).length
-  const conditional: Entry[] =
-    glossaryTermCount >= GLOSSARY_INDEX_THRESHOLD
-      ? [{ url: `${BASE}/glossary/`, changeFrequency: 'weekly', priority: 0.6 }]
-      : []
+  const hubLive = glossaryTermCount >= GLOSSARY_INDEX_THRESHOLD
+  const conditional: Entry[] = hubLive
+    ? [{ url: `${BASE}/glossary/`, changeFrequency: 'weekly', priority: 0.6 }]
+    : []
+
+  // Cluster pages: listed only when the hub is live AND the cluster clears its
+  // own term threshold (matches each cluster route's noindex gate, so the
+  // sitemap never lists a noindexed cluster page).
+  const clusterEntries: Entry[] = hubLive
+    ? GLOSSARY_CLUSTERS.filter(
+        (c) => (clusterCounts[c.value] ?? 0) >= CLUSTER_INDEX_THRESHOLD,
+      ).map((c) => ({
+        url: `${BASE}/glossary/cluster/${c.value}/`,
+        changeFrequency: 'monthly' as const,
+        priority: 0.5,
+      }))
+    : []
 
   return [
-    ...[...STATIC_ROUTES, ...conditional].map((r) => ({
+    ...[...STATIC_ROUTES, ...conditional, ...clusterEntries].map((r) => ({
       ...r,
       lastModified: r.lastModified ?? new Date(),
     })),

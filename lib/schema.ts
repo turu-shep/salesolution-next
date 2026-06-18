@@ -243,6 +243,40 @@ export function definedTermSchema({
   }
 }
 
+/**
+ * DefinedTermSet scoped to one glossary cluster (the /glossary/cluster/<slug>/
+ * pages). Lists the cluster's terms via `hasDefinedTerm`, reusing each term's
+ * canonical `#term` @id so the cluster set reconciles with the per-term nodes
+ * instead of duplicating them — a citable, machine-readable map of the cluster.
+ */
+export function clusterDefinedTermSetSchema({
+  label,
+  cluster,
+  terms,
+}: {
+  label: string
+  cluster: string
+  terms: { term: string; slug: string; definition: string }[]
+}) {
+  const base = `${SITE}/glossary/cluster/${cluster}/`
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    '@id': `${base}#termset`,
+    name: `${label} — AI-search glossary`,
+    url: base,
+    publisher: { '@id': orgId },
+    inLanguage: 'en-US',
+    hasDefinedTerm: terms.map((t) => ({
+      '@type': 'DefinedTerm',
+      '@id': `${SITE}/glossary/${t.slug}/#term`,
+      name: t.term,
+      description: t.definition,
+      url: `${SITE}/glossary/${t.slug}/`,
+    })),
+  }
+}
+
 export function faqPageSchema(faq: { question: string; answer: string }[]) {
   return {
     '@context': 'https://schema.org',

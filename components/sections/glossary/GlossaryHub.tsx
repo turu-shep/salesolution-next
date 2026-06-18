@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { GlossaryCardGrid } from '@/components/sections/glossary/GlossaryCardGrid'
 import { SectionRail } from '@/components/layout/SectionRail'
 import {
   GLOSSARY_CLUSTERS,
@@ -81,26 +82,23 @@ export function GlossaryHub({
       <div className="mt-14 space-y-16">
         {groups.map((g) => (
           <section key={g.value} id={g.value} className="scroll-mt-24">
-            <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-              {g.label}
-            </h3>
-            <ul className="mt-6 grid gap-px overflow-hidden rounded-[4px] border border-rule bg-rule sm:grid-cols-2">
-              {g.terms.map((t) => (
-                <li key={t._id}>
-                  <Link
-                    href={`/glossary/${t.slug}/`}
-                    className="group flex h-full flex-col bg-surface p-6 transition-colors duration-200 hover:bg-paper"
-                  >
-                    <h4 className="font-display text-lg font-semibold tracking-[-0.01em] text-ink-900 transition-colors duration-200 group-hover:text-brand-600">
-                      {t.term}
-                    </h4>
-                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-700">
-                      {t.shortDefinition}
-                    </p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="flex items-baseline justify-between gap-4">
+              <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+                {g.label}
+              </h3>
+              <Link
+                href={`/glossary/cluster/${g.value}/`}
+                className="shrink-0 font-mono text-[11px] uppercase tracking-[0.18em] text-brand-600 underline decoration-transparent underline-offset-[5px] transition-colors duration-200 hover:decoration-brand-600"
+              >
+                View cluster &rarr;
+              </Link>
+            </div>
+            {g.intro && (
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-700">{g.intro}</p>
+            )}
+            <div className="mt-6">
+              <GlossaryCardGrid terms={g.terms} headingLevel="h4" />
+            </div>
           </section>
         ))}
       </div>

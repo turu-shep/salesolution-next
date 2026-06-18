@@ -1,5 +1,6 @@
 import 'server-only'
 
+import type { GlossaryCluster } from '@/lib/glossary-config'
 import {
   allGlossaryTermSlugsQuery,
   allGlossaryTermsQuery,
@@ -8,17 +9,12 @@ import {
 } from './queries'
 import { sanityFetch } from './fetch'
 
-// GLOSSARY_INDEX_THRESHOLD lives in lib/glossary-config.ts — a dependency-free
-// module so app/sitemap.ts can import the threshold without pulling the Sanity
-// client (and its env-or-throw module), which would break the sitemap's
-// fail-soft behaviour.
-
-export type GlossaryCluster =
-  | 'ai-search-core'
-  | 'measurement'
-  | 'technical'
-  | 'industrial-ecommerce'
-  | 'roles'
+// Cluster metadata + index thresholds live in lib/glossary-config.ts — a
+// dependency-free module so app/sitemap.ts and the cluster routes can import
+// them without pulling the Sanity client (its env-or-throw module would break
+// the sitemap's fail-soft behaviour). Re-exported here for component imports.
+export { GLOSSARY_CLUSTERS } from '@/lib/glossary-config'
+export type { GlossaryCluster } from '@/lib/glossary-config'
 
 export type GlossaryTermCard = {
   _id: string
@@ -50,15 +46,6 @@ export type GlossaryTerm = GlossaryTermCard & {
     canonicalUrl?: string
   }
 }
-
-/** Human labels + display order for the hub's cluster sections. */
-export const GLOSSARY_CLUSTERS: { value: GlossaryCluster; label: string }[] = [
-  { value: 'ai-search-core', label: 'AI search' },
-  { value: 'measurement', label: 'Measurement' },
-  { value: 'technical', label: 'Technical & structural' },
-  { value: 'industrial-ecommerce', label: 'Industrial e-commerce' },
-  { value: 'roles', label: 'Roles' },
-]
 
 export async function getAllGlossaryTerms(): Promise<GlossaryTermCard[]> {
   return sanityFetch<GlossaryTermCard[]>({
