@@ -6,6 +6,32 @@ This document is the single source of truth for what Sale Solution measures, how
 
 ---
 
+## Implementation status (code audit 2026-06-18)
+
+The instrumentation in this plan **shipped** — and was extended past this (industrial-only) spec for the multi-vertical pivot. Audited against the codebase. The account-side configuration can't be verified from the repo; it's listed below as "needs confirmation."
+
+**Live in code (verified):**
+- Consent Mode v2 default-deny layer: `components/integrations/Analytics.tsx` + `ConsentDefault`, `ConsentBanner.tsx`, `lib/consent.ts`, and the `/opt-out-preferences/` control surface.
+- The `track()` helper (`lib/analytics.ts`) and the viewport hook (`lib/use-track-on-view.ts`).
+- All trackers mounted in `app/layout.tsx`: `RouteChangeTracker` (App Router page_view), `OutboundLinkTracker`, `CTAClickTracker`, `MetaPixel`, `HubSpotTracking`.
+- Calendly `postMessage` bridge (`CalendlyEmbed.tsx`).
+- Every event in the §3 taxonomy has a real call-site: `form_view/start/step_complete/field_complete/submit/error`, `generate_lead`, `audit_request`, `book_growth_call`, `constraint_sprint_apply`, `calendly_*`, `service_view`, `pricing_tier_view`, `outbound_click`, `download`, `cta_click`, `page_view`.
+- Server-side Measurement Protocol failsafe (`lib/analytics-server.ts`) wired into **three** routes — `app/api/lead`, `app/api/full-growth-quote`, `app/api/revenue-leak-audit` (the spec only planned `/api/lead`).
+- Privacy policy discloses GA4 (`G-F0DJT7P1RQ`), Google Ads (`AW-17897120027`), Consent Mode v2, and the hashed `user_id`.
+- Client env set: `NEXT_PUBLIC_GA4_ID`, `NEXT_PUBLIC_GOOGLE_ADS_ID`, `NEXT_PUBLIC_META_PIXEL_ID`, `NEXT_PUBLIC_HUBSPOT_PORTAL_ID`.
+
+**Beyond this spec (multi-vertical additions):** new events `full_growth_quote_request` and `catalog_snapshot_request`; new forms `RevenueLeakAuditForm` + `FullGrowthQuoteForm`; new routes `/api/revenue-leak-audit` + `/api/full-growth-quote`. The Revenue Leak Audit fires `generate_lead` + `audit_request`. These aren't reflected in §2.8 (key events), §6 (cross-platform map), or the §4 funnels — those tables still describe the industrial-only set and should be updated to cover them.
+
+**Open gap — the server-side failsafe is inert.** `GA4_MEASUREMENT_ID` and `GA4_API_SECRET` are **absent** from `.env.local`. `sendServerEvent` early-returns when either is missing, so the ad-blocker failsafe (§5.8) silently no-ops in every environment until both are set — locally **and** in Vercel. This is the one code-adjacent fix still outstanding.
+
+**Needs confirmation (account-side, not in the repo):**
+- GA4 Admin: key events marked (§2.8), 14-month retention, referral exclusions (§2.4), internal-traffic filter (§2.5), Google Signals off (§2.6), User-ID on (§2.7), enhanced-measurement "Form interactions" OFF (§2.3).
+- Google Ads conversion actions + GA4 import (§6); Meta Events Manager validation; HubSpot custom events `pe244186307_*` (§6).
+- The §8 Explorations and §9 Looker Studio dashboard.
+- That events actually land in production DebugView.
+
+---
+
 ## 1. Goals & KPIs
 
 The business is a B2B consultancy selling SEO/GEO/content services to industrial e-commerce. Measurement priorities flow from that.
