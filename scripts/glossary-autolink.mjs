@@ -44,11 +44,13 @@ const TYPES = (typesArg ? typesArg.split('=')[1] : 'glossaryTerm,careerPath').sp
 const PER_DOC_CAP = 12
 const PER_BLOCK_CAP = 3
 const MIN_PHRASE_LEN = 4 // for normal phrases; acronyms handled separately
-// Phrases too generic to auto-link even though they're term/alias strings.
-const DENYLIST = new Set(['ai', 'seo', 'geo', 'data', 'content'])
+// Phrases too generic to auto-link even though they're term/alias strings —
+// they collide with unrelated meanings in general copy (e.g. "content
+// syndication" = article distribution, not industrial product-data syndication).
+const DENYLIST = new Set(['ai', 'seo', 'geo', 'data', 'content', 'content syndication'])
 
 const TYPE_QUERIES = {
-  glossaryTerm: `*[_type=="glossaryTerm" && defined(slug.current)]{_id,"slug":slug.current,"label":term, body}`,
+  glossaryTerm: `*[_type=="glossaryTerm" && defined(slug.current)]{_id,"slug":slug.current,"label":term, aliases, body}`,
   careerPath: `*[_type=="careerPath" && defined(slug.current)]{_id,"slug":slug.current,"label":title, body}`,
   guide: `*[_type=="guide" && defined(slug.current)]{_id,"slug":slug.current,"label":title, body}`,
   post: `*[_type=="post" && defined(slug.current)]{_id,"slug":slug.current,"label":title, body}`,
@@ -136,12 +138,21 @@ for (const type of TYPES) {
     const body = doc.body
     if (!Array.isArray(body) || !body.length) continue
     const ownSlug = type === 'glossaryTerm' ? doc.slug : null
+    // A term must not hand its OWN name/alias to a different term (shared aliases
+    // like "AI SEO specialist" otherwise link a page to a sibling, not itself).
+    const ownPhrases = new Set()
+    if (type === 'glossaryTerm') {
+      const core = (doc.label || '').replace(/\s*\([^)]*\)\s*$/, '').trim().toLowerCase()
+      if (core) ownPhrases.add(core)
+      for (const a of doc.aliases ?? []) ownPhrases.add((a || '').trim().toLowerCase())
+    }
     const linkedSlugs = new Set()
     const perBlock = new Map()
     const proposals = []
 
     for (const cand of candidates) {
       if (cand.slug === ownSlug) continue // no self-link
+      if (ownPhrases.has(cand.phrase.toLowerCase())) continue // don't link our own alias elsewhere
       if (linkedSlugs.has(cand.slug)) continue // one per target per doc
       if (linkedSlugs.size >= PER_DOC_CAP) break
       for (const block of body) {

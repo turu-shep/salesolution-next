@@ -27,7 +27,12 @@ M2 is a prerequisite for M1's payload but is tiny; do them together.
 
 ---
 
-## M0 — Publish the 30 + humanize the 20
+## M0 — Publish the 30 + humanize the 20  ✅ Publish-30 done 2026-06-18
+
+**Status:** the batch-2 30 are published (50 live terms) via
+[publish-glossary-batch2.mjs](../../../scripts/publish-glossary-batch2.mjs) (promotes drafts →
+published; idempotent). The auto-linker (M3) was re-run afterward to light up the new terms.
+Still pending: applying the original-20 humanizer drafts (separate workstream).
 
 **Goal:** the hub holds 50 live terms, all humanized.
 

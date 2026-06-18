@@ -49,10 +49,12 @@ in the service pages the glossary feeds.
 
 ## 3. Current state (2026-06-17)
 
-- **50 distinct terms:** 20 published + 30 in draft (`drafts.glossary-<slug>`), pending
-  operator review/publish. Seed scripts: [seed-glossary.mjs](../../../scripts/seed-glossary.mjs)
-  (batch 1) and [seed-glossary-batch2.mjs](../../../scripts/seed-glossary-batch2.mjs) (the 30,
-  with humanized prose in [_batch2-prose.json](../../../scripts/_batch2-prose.json)).
+- **50 published terms** (batch-2 30 published 2026-06-18 via
+  [publish-glossary-batch2.mjs](../../../scripts/publish-glossary-batch2.mjs)). Seed scripts:
+  [seed-glossary.mjs](../../../scripts/seed-glossary.mjs) (batch 1) and
+  [seed-glossary-batch2.mjs](../../../scripts/seed-glossary-batch2.mjs) (the 30, with humanized
+  prose in [_batch2-prose.json](../../../scripts/_batch2-prose.json)). (The original 20 also
+  have a pending humanizer-draft pass — a separate workstream.)
 - **Clusters:** `ai-search-core`, `measurement`, `technical`, `industrial-ecommerce`,
   `roles` (schema: [glossary-term.ts](../../../sanity/schemas/glossary-term.ts)).
 - **Voice:** operator register, **humanized** (the 30 were written with the humanizer
@@ -65,10 +67,10 @@ in the service pages the glossary feeds.
   `ai-share-of-voice` is the live example (inline links → `ai-visibility`, `llm-citation`).
   Bottom-rail cross-linking also exists (`PathTerms`,
   [GlossaryRelated.tsx](../../../components/sections/glossary/GlossaryRelated.tsx)).
-- **Known gaps:** (a) the 30 drafts aren't published; ~~(b) inline termLinks missing~~ **done**
-  (M3 auto-linker — 23 links live across the hub + a GEO post; re-run after the 30 publish);
-  ~~(c) no hovercard~~ **done**; (d) no funnels glossary → career paths/services; (e) no
-  interactive aids (calculators/converters/scorecards) on any term; (f) the hub is flat.
+- **Known gaps:** ~~(a) the 30 drafts aren't published~~ **done** (50 live);
+  ~~(b) inline termLinks missing~~ **done** (auto-linker re-run post-publish — ~67 links across
+  glossary terms + career paths + posts); ~~(c) no hovercard~~ **done**; (d) no funnels glossary
+  → career paths/services; (e) no interactive aids on any term; (f) the hub is flat.
 
 ## 4. Locked decisions (do not relitigate without the owner)
 
