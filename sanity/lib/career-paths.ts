@@ -4,6 +4,7 @@ import {
   allCareerPathSlugsQuery,
   allCareerPathsQuery,
   careerPathBySlugQuery,
+  careerPathsMapQuery,
 } from './queries'
 import { sanityFetch } from './fetch'
 
@@ -38,6 +39,7 @@ export type SkillModule = {
   scenario?: string
   edgeCases?: string[]
   proficientWhen?: string
+  relatedTerms?: { _id: string; term: string; slug: string }[]
 }
 
 export type BuyerSection = {
@@ -112,5 +114,24 @@ export async function getCareerPathBySlug(slug: string): Promise<CareerPath | nu
     query: careerPathBySlugQuery,
     params: { slug },
     tags: ['careerPath', `careerPath:${slug}`],
+  })
+}
+
+export type CareerPathMapEntry = {
+  slug: string
+  title: string
+  kind?: CareerPathKind
+  level?: string
+  duration?: string
+  modules?: Pick<SkillModule, 'level' | 'title' | 'skill' | 'weight'>[]
+  prerequisites?: string[]
+  leadsTo?: string[]
+}
+
+/** Flat data for the open downloadable role-map artifact. */
+export async function getCareerPathsForMap(): Promise<CareerPathMapEntry[]> {
+  return sanityFetch<CareerPathMapEntry[]>({
+    query: careerPathsMapQuery,
+    tags: ['careerPath'],
   })
 }

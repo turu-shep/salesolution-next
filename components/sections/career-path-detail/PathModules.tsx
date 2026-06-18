@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import type { SkillModule } from '@/sanity/lib/career-paths'
 import { slugifyHeading } from '@/lib/slug'
 
@@ -124,6 +126,25 @@ export function PathModules({
                         {m.proficientWhen}
                       </p>
                     </div>
+                  )}
+
+                  {m.relatedTerms && m.relatedTerms.length > 0 && (
+                    <p className="mt-4 text-sm text-ink-600">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
+                        See
+                      </span>{' '}
+                      {m.relatedTerms.map((t, i) => (
+                        <span key={t._id}>
+                          <Link
+                            href={`/glossary/${t.slug}/`}
+                            className="text-ink-800 underline decoration-rule-strong underline-offset-2 transition-colors duration-200 hover:text-brand-600 hover:decoration-brand-600"
+                          >
+                            {t.term}
+                          </Link>
+                          {i < m.relatedTerms!.length - 1 ? ', ' : ''}
+                        </span>
+                      ))}
+                    </p>
                   )}
                 </div>
               </div>

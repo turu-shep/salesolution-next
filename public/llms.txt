@@ -15,8 +15,10 @@ We publish primary research, frameworks, a glossary, and case studies on how to 
 
 ## Learning hub
 
-- [AI-search glossary](https://salesolution.net/glossary/): Plain-English definitions of AI-search, GEO, and answer-engine terms for industrial e-commerce. Browse the hub for every current definition.
-- [Career paths](https://salesolution.net/career-paths/): The roles of modern AI search, by seniority, for B2B technical e-commerce teams. Each path is linked from the hub.
+- [AI-search glossary](https://salesolution.net/glossary/): Plain-English definitions of AI-search, GEO, and answer-engine terms. Built for industrial e-commerce, home-services, and dental teams. Browse the hub for every current definition.
+- [Career paths](https://salesolution.net/career-paths/): The roles of modern AI search, taught as numbered skill modules by seniority (entry to senior), with examples across industrial e-commerce, home services, and dental.
+- [AI-search role map (JSON)](https://salesolution.net/career-paths/roles-map/): The career paths as machine-readable data — skill modules by seniority plus the prerequisite and next-step graph. CC BY 4.0; reuse with a link back.
+- [AI-search role map (Markdown)](https://salesolution.net/career-paths/roles-map/md/): The same role map in Markdown.
 
 ## Frameworks & guides
 

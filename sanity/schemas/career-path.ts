@@ -145,6 +145,14 @@ export const careerPath = defineType({
               title: 'Edge cases (the gotchas)',
             },
             { name: 'proficientWhen', type: 'text', rows: 2, title: 'Proficient when…' },
+            {
+              name: 'relatedTerms',
+              type: 'array',
+              title: 'Glossary terms this skill teaches',
+              description:
+                'The 1–3 glossary terms most central to this skill. Rendered as inline "See:" links under the module (the roadmap.sh node→concept behaviour).',
+              of: [{ type: 'reference', to: [{ type: 'glossaryTerm' }] }],
+            },
           ],
           preview: { select: { title: 'title', subtitle: 'level' } },
         },

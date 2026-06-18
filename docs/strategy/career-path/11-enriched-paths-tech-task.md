@@ -30,10 +30,17 @@ state**, multi-vertical, citation-not-leads.
 
 ### Phase 1 — Foundational (apply to every path; do as part of the cascade)
 
-> **Status (2026-06-17): T1, T2, T3 shipped.** Per-module `weight` tag, `prerequisites`/`leadsTo`
-> relations (DAG seeded across all 7 — SEO foundation → roles → specializations), and per-path
-> `ItemList`/`Occupation` JSON-LD are live and verified. T4 (inline module glossary links), T5 (open
-> data artifact), then Phase 2 (T6 mechanism, T7 role map, T8 salary dataset) remain.
+> **Status: Phase 1 (T1–T5) shipped (2026-06-17 / -18).** Per-module `weight` tag,
+> `prerequisites`/`leadsTo` relations (DAG seeded across all 7), per-path `ItemList`/`Occupation`
+> JSON-LD, inline per-module glossary links (auto-populated from terms each module uses), and the open
+> role-map artifact (JSON + Markdown, CC BY 4.0, in llms.txt) are all live and verified. Phase 2
+> remains: T6 enrichment mechanism, T7 role-map diagram, T8 salary dataset.
+>
+> **Gotcha (Turbopack):** a route-handler folder with a dot in its name (`map.json/`) placed next to
+> the `[slug]` dynamic route **corrupts the sibling route bundle** ("ReferenceError: require is not
+> defined", every `[slug]` page 500s; `tsc`/`next build` are clean — dev-only). Fix: dot-free segment
+> names. The artifact is served at `/career-paths/roles-map/` (JSON) + `/career-paths/roles-map/md/`
+> (Markdown), not `map.json`.
 
 #### T1 — Per-module weight tag  ·  ✅ shipped  ·  effort: low
 - **Schema** (`sanity/schemas/career-path.ts`, `skillModule` object): add
@@ -79,7 +86,7 @@ state**, multi-vertical, citation-not-leads.
 - **Acceptance:** valid against schema.org (spot-check in Rich Results Test); additive only, no UI
   change.
 
-#### T4 — Inline per-module glossary links  ·  effort: medium
+#### T4 — Inline per-module glossary links  ·  ✅ shipped  ·  effort: medium
 - **Decision:** do **not** convert module text fields to portable text yet (heavy, off the locked
   plain-text model). Instead add a per-module `relatedTerms: array of reference -> glossaryTerm`.
 - **Schema/type/query:** add to `skillModule`; dereference in the modules projection
@@ -90,7 +97,7 @@ state**, multi-vertical, citation-not-leads.
 - **Acceptance:** module-level term links render and resolve; path-level `relatedTerms` rail still
   works.
 
-#### T5 — Open downloadable data artifact  ·  effort: medium
+#### T5 — Open downloadable data artifact  ·  ✅ shipped  ·  effort: medium
 - **What:** one combined "AI-search role map" file built at build time from Sanity module data:
   `/career-paths/ai-search-roles.json` (machine) + a human-readable Markdown mirror. Include per
   path: `slug, title, kind, level, modules[{n, title, skill, weight}], prerequisites[], leadsTo[]`,

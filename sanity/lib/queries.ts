@@ -326,7 +326,10 @@ const CAREER_PATH_FIELDS = `
   aliases,
   status,
   seniorityMatrix,
-  modules,
+  modules[]{
+    ...,
+    "relatedTerms": relatedTerms[]->{ _id, term, "slug": slug.current }
+  },
   ${BODY_WITH_LINKS},
   buyerSection,
   lastReviewed,
@@ -363,6 +366,21 @@ export const careerPathBySlugQuery = `
   }
 `
 
+// Flat, machine-friendly projection for the open downloadable role-map artifact
+// (/career-paths/map.json + map.md). Modules + the dependency edges as slugs.
+export const careerPathsMapQuery = `
+  *[_type == "careerPath" && defined(slug.current)] | order(kind asc, title asc) {
+    "slug": slug.current,
+    title,
+    kind,
+    level,
+    duration,
+    modules[]{ level, title, skill, weight },
+    "prerequisites": prerequisites[]->slug.current,
+    "leadsTo": leadsTo[]->slug.current
+  }
+`
+
 // ── Glossary-term fields ──────────────────────────────────────────────────
 
 const GLOSSARY_TERM_CARD_FIELDS = `
@@ -391,7 +409,8 @@ const GLOSSARY_TERM_FIELDS = `
     "slug": slug.current,
     shortDefinition,
     cluster
-  }
+  },
+  relatedResources[]{ label, href, kind, blurb }
 `
 
 export const allGlossaryTermsQuery = `
