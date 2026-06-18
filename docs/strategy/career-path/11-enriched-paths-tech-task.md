@@ -34,10 +34,15 @@ state**, multi-vertical, citation-not-leads.
 > `prerequisites`/`leadsTo` relations (DAG seeded across all 7), per-path `ItemList`/`Occupation`
 > JSON-LD, inline per-module glossary links (auto-populated from terms each module uses), and the open
 > role-map artifact (JSON + Markdown, CC BY 4.0, in llms.txt) are all live and verified.
-> **T6 (enrichment mechanism) shipped** at careerPath level + the shared tool registry (first tool:
-> ai-visibility-calculator, live on the AI Visibility Analyst path). Remaining: T7 role-map diagram,
-> T8 salary dataset, plus T6 follow-ons (module-level enrichments, glossaryTerm reuse of the same
-> registry, optional standalone /tools/ pages + softwareToolSchema).
+> **T6 (enrichment mechanism) shipped** at careerPath level + the shared tool registry (tools:
+> ai-visibility-calculator, catalog-readiness-scorecard). **T7 (role-map diagram) shipped** — a static
+> SVG dependency graph on the hub ("How the paths connect") and on each path ("Where this sits", with
+> a you-are-here highlight); the T5 artifact download (JSON/Markdown) is now surfaced under the hub map.
+> **T8 (salary ladder) dropped** (2026-06-18, owner): a salary table is a job-seeker magnet that fights
+> the "we don't hire / measure on citations, not leads" stance, duplicates DR-80 salary sites, and is a
+> staleness liability; the buyer cost angle already lives in each path's "cost reality" prose.
+> Remaining: T6 follow-ons (module-level enrichments, glossaryTerm reuse of the same registry, optional
+> standalone /tools/ pages + softwareToolSchema).
 >
 > **Gotcha (Turbopack):** a route-handler folder with a dot in its name (`map.json/`) placed next to
 > the `[slug]` dynamic route **corrupts the sibling route bundle** ("ReferenceError: require is not
@@ -163,7 +168,11 @@ The mechanism that lets any path/module/term carry an *optional* enrichment.
 
 ### Phase 2 — First concrete enrichments (prove the mechanism)
 
-#### T7 — Dependency / role-map diagram (static)  ·  effort: medium–high
+#### T7 — Dependency / role-map diagram (static)  ·  ✅ shipped (hub + path)  ·  effort: medium–high
+> Built as a pure layout (`lib/career-path-graph.ts`, longest-path layering on `leadsTo` + barycenter
+> ordering) → static SVG (`components/sections/career-paths/RoleMap.tsx`, no client JS, every node a
+> real link, kind encoded by solid/dashed border not colour). Rendered on the hub (`#map`, neutral)
+> and each path (`#map`, `highlightSlug` = you-are-here). The T5 download links sit under the hub map.
 - **What:** the "graph done right." A build-time **static SVG** map of how the roles and
   specializations connect, generated from the T2 `prerequisites`/`leadsTo` edges — *not* a client
   editor, *not* hand-positioned per node, *not* login-gated. roadmap.sh's structure without its
@@ -175,7 +184,14 @@ The mechanism that lets any path/module/term carry an *optional* enrichment.
 - **Acceptance:** the map renders statically, reflects the real edges, links correctly, and is legible
   on mobile (or collapses to the text rails).
 
-#### T8 — Salary-ladder dataset (the exemplar dataset enrichment)  ·  effort: medium
+#### T8 — Salary-ladder dataset  ·  ✗ DROPPED (2026-06-18, owner)
+**Not building this.** A salary table is the strongest job-seeker magnet there is, which fights the
+locked "we don't hire / job-seeker traffic doesn't convert / measure on citations, not leads" stance;
+the citations it earns come from salary-aggregator content (off-ICP), it duplicates DR-80 sites
+(ZipRecruiter, Glassdoor, Levels) we can't out-rank, and stale numbers are a freshness liability. The
+buyer-side cost angle already lives in each path's `buyerSection.costReality`. If we want a data tool on
+these pages, it should be buyer-fit (e.g. the catalog-readiness scorecard), not a salary ladder.
+_Original plan kept below for reference._
 - **What:** a `dataTable` enrichment: GEO/AEO (and SEO/Technical-SEO) salary by role × seniority,
   from real sourced numbers ([03-roles.md §2/§4](03-roles.md)). The citable-dataset format the
   strategy wants.
@@ -230,7 +246,7 @@ foundations for free. T6+ is net-new and can run in parallel with the cascade.
   is eval'd. No new decision needed.
 - **O2 — Diagram authoring.** Recommend a **hybrid**: code-defined, data-driven components for
   repeatable diagram types; uploaded SVG (with alt) for one-offs. Confirm.
-- **O3 — Role-map placement.** Per-path rail, a hub landscape view on `/career-paths/`, or both?
+- **O3 — Role-map placement.** _Resolved: both._ Hub landscape (`#map`) + per-path you-are-here
+  (`#map`, highlighted). Shipped.
 - **O4 — Data-artifact license.** Recommend **CC BY 4.0** (attribution + link back). Confirm.
-- **O5 — Salary data sourcing.** Who owns keeping the salary ladder current on the 6-month cadence,
-  and which sources are canonical (ZipRecruiter etc. per [03-roles.md](03-roles.md))?
+- **O5 — Salary data sourcing.** _Moot — T8 dropped (see above)._

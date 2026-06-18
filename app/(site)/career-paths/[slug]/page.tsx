@@ -12,6 +12,8 @@ import { PathRelated } from '@/components/sections/career-path-detail/PathRelate
 import { PathSeniority } from '@/components/sections/career-path-detail/PathSeniority'
 import { PathTerms } from '@/components/sections/career-path-detail/PathTerms'
 import { PathTOC } from '@/components/sections/career-path-detail/PathTOC'
+import { RoleMap } from '@/components/sections/career-paths/RoleMap'
+import { SectionRail } from '@/components/layout/SectionRail'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { breadcrumbListSchema, careerPathSchema } from '@/lib/schema'
 import { business } from '@/lib/business'
@@ -19,6 +21,7 @@ import {
   getAllCareerPaths,
   getAllCareerPathSlugs,
   getCareerPathBySlug,
+  getCareerPathsForMap,
   orderModules,
 } from '@/sanity/lib/career-paths'
 import { slugifyHeading } from '@/lib/slug'
@@ -67,6 +70,8 @@ export default async function CareerPathPage({ params }: Props) {
   // the bottom of the page never blocks the article above it.
   let siblings = await getAllCareerPaths().catch(() => [])
   siblings = siblings.filter((p) => p.slug !== slug)
+
+  const mapEntries = await getCareerPathsForMap().catch(() => [])
 
   const MATRIX_ID = 'at-each-level'
   const BUYER_ID = 'hiring-this-role'
@@ -165,6 +170,24 @@ export default async function CareerPathPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {mapEntries.length > 1 && (
+        <SectionRail tone="paper" id="map">
+          <div className="max-w-2xl">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+              Where this sits
+            </p>
+            <h2 className="mt-3 font-display text-balance text-2xl font-semibold leading-[1.1] tracking-[-0.015em] text-ink-900 sm:text-3xl">
+              {path.title} in the map.
+            </h2>
+            <p className="mt-4 leading-relaxed text-ink-700">
+              How this path connects to the rest. Follow the arrows to what comes
+              before and after it.
+            </p>
+          </div>
+          <RoleMap entries={mapEntries} highlightSlug={slug} className="mt-8" />
+        </SectionRail>
+      )}
 
       <PathTerms terms={path.relatedTerms} />
 
