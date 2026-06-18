@@ -2,6 +2,7 @@ import { PortableText, type PortableTextComponents } from '@portabletext/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { GlossaryHovercard } from '@/components/portable-text/GlossaryHovercard'
 import { urlFor } from '@/sanity/lib/image'
 import { slugifyHeading } from '@/lib/slug'
 
@@ -54,13 +55,18 @@ const components: PortableTextComponents = {
     // Inline code is styled by `.article-body code` — this override only
     // exists so the renderer emits `<code>` without spurious wrapping spans.
     code: ({ children }) => <code>{children}</code>,
-    // Inline glossary link ("termLink"). The slug is resolved in GROQ
-    // (markDefs[]{..., _type=="glossaryRef" => {"slug": @->slug.current}}).
-    glossaryRef: ({ children, value }) => {
-      const slug = value?.slug
-      if (!slug) return <>{children}</>
-      return <Link href={`/glossary/${slug}/`}>{children}</Link>
-    },
+    // Inline glossary reference ("termLink"). slug + term + shortDefinition are
+    // resolved in GROQ (markDefs[]{..., _type=="glossaryRef" => {...}}). Renders
+    // a real crawlable link with an in-page hovercard preview (GlossaryHovercard).
+    glossaryRef: ({ children, value }) => (
+      <GlossaryHovercard
+        slug={value?.slug}
+        term={value?.term}
+        shortDefinition={value?.shortDefinition}
+      >
+        {children}
+      </GlossaryHovercard>
+    ),
   },
 
   types: {

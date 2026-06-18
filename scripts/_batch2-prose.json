@@ -1,0 +1,1203 @@
+[
+  {
+    "slug": "ai-citation-tracking",
+    "shortDefinition": "AI citation tracking is the practice of measuring when and where AI answer engines like ChatGPT, Perplexity, and Google AI Overviews cite your pages as a named source, run across a fixed set of buyer prompts and logged over time. It tracks attribution, not keyword rank.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "A hydraulics distributor runs a fixed prompt set every month and checks whether ChatGPT and Perplexity cite its Parker-to-Gates interchange chart when a buyer asks for the \"Gates equivalent of Parker 387 hose.\" If the chart gets cited, the distributor logs the engine and the date. Do that across 30 cross-reference prompts and you get a citation rate: the share of answers that quote you as the source. That number tells you something keyword rankings cannot. It shows whether the engines treat your catalog as the authority buyers act on, or send them to a competitor's interchange data instead."
+      },
+      {
+        "style": "h3",
+        "text": "Citation tracking vs share of voice"
+      },
+      {
+        "style": "normal",
+        "text": "Share of voice counts how often a brand is mentioned in AI answers across a prompt set. Citation tracking is narrower. It counts the subset where the engine names your domain as the cited source, with a link or attribution, not a passing mention. You can be mentioned without being cited. Tracking both tells you the gap between being known and being quoted."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Build a stable list of the prompts your buyers actually ask: spec lookups, cross-reference questions, \"best supplier for X.\" Run each prompt across the engines several times, since answers vary per run, and record which URLs get cited. An MRO supplier might find its PIM-fed product pages get cited for part-number queries but never for application questions, then route content work toward the gap. Several tools automate the sampling, but the method is vendor-neutral."
+      }
+    ],
+    "seo": {
+      "metaTitle": "AI Citation Tracking: Definition and Method",
+      "metaDescription": "AI citation tracking measures when AI engines like ChatGPT and Perplexity cite your pages as a named source across a fixed prompt set. Learn the method and how to log it."
+    }
+  },
+  {
+    "slug": "ai-visibility-tracking",
+    "shortDefinition": "AI visibility tracking is the practice of monitoring how often and how favorably a brand appears in AI answers across engines like ChatGPT, Perplexity, and Google's AI Overviews, sampled over time. It is a marketing-measurement term, distinct from the security sense of \"AI visibility,\" which means seeing what AI tools run inside an organization.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "A regional MRO house checks its share of AI answers for \"food-grade lubricant supplier\" style prompts month over month. It runs the prompts, records when its catalog gets named, and notes whether the mention is favorable or buried under a bigger distributor. Brand Radar is one instrument it uses for this, not the definition of the work. The point is the trend line: are we showing up more often this quarter than last, on the questions buyers actually type into an answer engine."
+      },
+      {
+        "style": "normal",
+        "text": "Keyword rank told you where you sat on a page of links. AI visibility tracking tells you whether the engine quotes you at all when a buyer asks for a NSF H1 grease cross-reference. That surface is where the click increasingly never happens, so not appearing there is invisible in your old analytics."
+      },
+      {
+        "style": "h3",
+        "text": "Tools vs the term"
+      },
+      {
+        "style": "normal",
+        "text": "Vendors own the product names. Nobody owns the generic practice. Ahrefs Brand Radar, Profound, and Peec are instruments that sample engines and report mention and citation counts. The term itself is just the discipline of measuring AI answer presence, the same way \"rank tracking\" outlived any single rank tracker."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A hydraulics distributor defines 40 buyer prompts, from \"replacement for Parker PV270 pump\" to \"best supplier for SAE J517 hose.\" It samples each across three engines weekly, because answers drift between runs. The dashboard shows mentions climbing on cross-reference prompts after a PIM cleanup, and flat on \"best supplier\" prompts where a national competitor still dominates. That gap becomes the next content target."
+      }
+    ],
+    "seo": {
+      "metaTitle": "AI Visibility Tracking: Definition + How to Measure",
+      "metaDescription": "AI visibility tracking monitors how often and how favorably a brand appears in AI answers over time. Learn how it works, the tools, and how it differs from rank tracking."
+    }
+  },
+  {
+    "slug": "spec-sheet-content",
+    "shortDefinition": "Spec-sheet content (datasheet SEO) is the practice of publishing product specifications as crawlable HTML tables on the product page instead of locking them inside downloadable PDFs. HTML-first specs are retrievable and citable by AI answer engines; specs trapped in PDFs largely are not.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "A pump distributor moves its Goulds 3196 performance curves and materials-of-construction tables out of a downloadable PDF and into HTML spec tables on the product page. Soon after, it starts getting cited for \"Goulds 3196 max temperature\" queries in AI answers. The data did not change. Its location did. A PDF is a closed file an engine has to open, parse, and trust; an HTML table is text the crawler reads as part of the page. Most datasheet value sits in the second column of a row, the bore size, the pressure rating, the seal material. Lock that in a PDF and the engine cannot lift the line that answers the buyer."
+      },
+      {
+        "style": "h3",
+        "text": "HTML tables vs PDF datasheets"
+      },
+      {
+        "style": "normal",
+        "text": "Both formats hold the same numbers. They are not equal to a retrieval engine."
+      },
+      {
+        "style": "normal",
+        "text": "HTML spec table: each spec is a labeled row, indexed with the page, easy to quote as a passage.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "PDF datasheet: a separate file, often image-scanned, frequently uncrawled, hard to attribute back to your URL.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Keep the PDF as a download for engineers. Mirror its contents as HTML so the spec is also a passage on the page.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Take a hydraulic cylinder SKU. Build one HTML table with attribute names in the left column and values in the right: bore, rod diameter, stroke, max pressure, mount style, port size. Use real labels, not vague headers. Now the line \"Max pressure: 3,000 psi\" reads as a clean attribute-value pair an engine can cite verbatim. Pull the same normalized attributes from your PIM so every product page across the catalog renders specs the same way."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Spec-Sheet Content (Datasheet SEO) Defined",
+      "metaDescription": "Spec-sheet content (datasheet SEO) means publishing product specs as crawlable HTML tables instead of PDFs, so AI engines can retrieve and cite the exact numbers."
+    }
+  },
+  {
+    "slug": "normalized-attributes",
+    "shortDefinition": "Normalized attributes are product attributes stored in one consistent, machine-readable form: a single unit, a single value format, and a controlled set of allowed values across every SKU. Attribute normalization is the data-quality prerequisite for an AI engine to answer catalog questions correctly.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "If one SKU lists \"1/2 in\", another \"0.5 inch\", and a third \"12.7mm\", an LLM cannot reliably answer \"half-inch JIC fittings in stock\". The three rows describe the same thread size, but the engine reads three different strings. Normalized attributes collapse that into one unit and one format, so the catalog becomes answerable. Without it, your filters miss stock, your AI answers hedge or skip the part, and a buyer assumes you do not carry it."
+      },
+      {
+        "style": "h3",
+        "text": "Normalized vs raw attributes"
+      },
+      {
+        "style": "normal",
+        "text": "Raw attributes are whatever each supplier feed, spec sheet, or hand-keyed row happened to contain. Normalized attributes apply rules on top of that source data:"
+      },
+      {
+        "style": "normal",
+        "text": "One unit per field. Pressure in PSI, not a mix of PSI and bar.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "One value format. \"0.5\" everywhere, not \"1/2\", \"0.5\", and \".50\".",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "A controlled allowed-values list per attribute. \"NBR\", not \"NBR\", \"Buna-N\", and \"nitrile\" for the same seal material.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A hydraulics distributor pulls fitting data from a dozen manufacturer feeds. Thread size arrives as inches, fractions, and millimeters; material arrives under three names. They map every variant to one canonical value in the PIM, then publish that to the storefront and the AI layer. Now \"half-inch JIC, stainless, in stock\" returns the right SKUs, and the answer engine can quote a clean spec instead of guessing across inconsistent strings."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Normalized Attributes in Industrial Catalogs",
+      "metaDescription": "Normalized attributes store product specs in one unit, one format, and controlled values per SKU, so AI engines answer catalog questions accurately. Here's how it works."
+    }
+  },
+  {
+    "slug": "distributor-content-parity",
+    "shortDefinition": "The distributor content parity problem is the situation where many distributors publish the same OEM-supplied product copy, so search and AI engines collapse the duplicates and cite a single source, usually the highest-authority domain rather than yours. It is distinct from \"content parity\" in martech, which means matching content across channels.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "Two hundred electrical distributors paste the same Square D breaker description straight from the manufacturer feed. Google and ChatGPT cite exactly one of them. A DR-15 regional house is never the one picked. The copy is identical, so the engine has no reason to prefer your page over a stronger domain selling the same part. You compete on authority you do not have. That changes only when you add original content the feed never carried: cross-reference tables, application notes, fitment data, real spec deltas between SKUs."
+      },
+      {
+        "style": "h3",
+        "text": "How to break parity"
+      },
+      {
+        "style": "normal",
+        "text": "Add page-level content no one else in the channel has. The usual moves:"
+      },
+      {
+        "style": "normal",
+        "text": "Cross-references that map your SKU to competing part numbers and superseded OEM codes.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Spec fields the OEM feed omits, like seal material, pressure rating, or thread standard.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Application and compatibility notes tied to the equipment your buyers actually run.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Inventory, lead-time, and pricing signals that are real and specific to you.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A hydraulics distributor stocks a Parker pressure filter and runs the manufacturer's stock description verbatim, the same paragraph on forty other sites. They rewrite the page around a cross-reference table mapping the Parker code to Donaldson and Hydac equivalents, add micron rating and bypass pressure, and note which combine and skid-steer models it fits. The page now answers a question the duplicate copy could not, which is what gives an AI engine a reason to cite it."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Distributor Content Parity Problem | Glossary",
+      "metaDescription": "Learn why distributors publishing identical OEM copy get collapsed to one cited source in search and AI answers, and how original page content breaks the tie."
+    }
+  },
+  {
+    "slug": "prompt-shaped-demand",
+    "shortDefinition": "Prompt-shaped demand is buyer demand that surfaces as natural-language prompts to AI assistants instead of keyword searches. Because keyword tools sample search boxes and not AI chats, this intent reads as near-zero volume even when real buyers are asking the question daily.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "Nobody types \"Char-Lynn 104 seal kit\" into Ahrefs enough to register volume. But plant techs ask ChatGPT \"what seal kit fits a Char-Lynn 104 motor\" daily. The demand is real. The keyword tool just cannot see it, because the question arrives as a sentence inside an AI assistant, not as a query in a search box. Read volume as zero and you conclude there is no market. The market is there. It moved into a channel your keyword report does not sample."
+      },
+      {
+        "style": "h3",
+        "text": "Prompt-shaped demand vs zero-volume keywords"
+      },
+      {
+        "style": "normal",
+        "text": "A zero-volume keyword is a search string that exists but ranks below a tool's reporting floor. Prompt-shaped demand is broader. The intent never takes keyword form at all. It surfaces as a full natural-language question, often with the part number, the symptom, and the application baked into one prompt. The fix for both is the same in spirit: stop trusting search volume as the only signal of intent."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A hydraulics distributor pulls the spec questions field techs actually ask, like cross-references, fitment, and seal-kit lookups, then publishes a structured answer page per part family that names the motor, the standard, and the compatible kit. Volume on those terms still reads near zero in keyword tools. The pages get cited in AI answers anyway, because they match the shape of the prompt. Treat this as an illustrative pattern, not a measured case."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Prompt-shaped demand | Sale Solution glossary",
+      "metaDescription": "Prompt-shaped demand is buyer intent that surfaces as natural-language prompts to AI assistants, so keyword tools read volume as zero while real demand exists."
+    }
+  },
+  {
+    "slug": "ai-ready-product-catalog",
+    "shortDefinition": "An AI-ready product catalog is a product catalog structured so AI answer engines can retrieve, read, and cite it: server-rendered HTML, normalized attributes, complete specs, and clean Product schema, instead of a catalog hidden behind a JavaScript app and on-site search.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "Two distributors carry the same valves. One serves a catalog as server-rendered HTML with normalized specs and Product schema, so Perplexity reads the page and cites it. The other ships a React single-page app where the product data loads after JavaScript runs, so a non-rendering crawler sees an empty shell and skips it. Same inventory. One catalog gets quoted in AI answers, the other is invisible."
+      },
+      {
+        "style": "normal",
+        "text": "For industrial catalogs this gap is wide. Distributor sites often hide thousands of SKUs behind faceted search and lazy-loaded grids, which means the exact spec a buyer asks an engine about never reaches the model."
+      },
+      {
+        "style": "h3",
+        "text": "What makes a catalog AI-ready"
+      },
+      {
+        "style": "normal",
+        "text": "The concrete requirements, not vague vendor labels:",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Server-rendered HTML for every product page, so the specs exist in the response before JavaScript runs.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Normalized attributes: one unit, one format, one field per spec across the catalog (port size, pressure rating, material).",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Complete specs and part numbers in the page text, not locked inside a PDF or an image.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Valid Product schema (schema.org) mapped from clean PIM data.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A hydraulics distributor with 40,000 SKUs renders each product page on the server and emits Product schema from its PIM. Ask an engine to cross-reference a discontinued Parker fitting and it can pull the replacement part number and pressure rating straight from the page, then cite the catalog as the source. The competitor's app-only catalog returns nothing a crawler can read, so it is never cited."
+      }
+    ],
+    "seo": {
+      "metaTitle": "AI-Ready Product Catalog: Definition & Requirements",
+      "metaDescription": "An AI-ready product catalog is structured so AI engines can read and cite it. Learn the concrete requirements: server-rendered HTML, normalized specs, Product schema."
+    }
+  },
+  {
+    "slug": "ai-search-specialist",
+    "shortDefinition": "An AI search specialist is the person responsible for getting a brand mentioned and cited in AI engine answers, working across content structure, entity data, and evidence. The role consolidates near-identical job titles such as GEO specialist, AEO specialist, and AI SEO specialist, which describe the same scope under different names.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "Industrials have begun posting GEO and AI-search job descriptions, and the title varies by company. The scope does not. Whatever it is called, the actual job is to make the SKU catalog retrievable and cited by AI engines when buyers ask for a cross-reference or a spec match. The same posting might read GEO specialist at one distributor, AEO specialist at the next, and AI SEO specialist at a third. They are hiring for one role with three labels."
+      },
+      {
+        "style": "h3",
+        "text": "AI search specialist vs SEO specialist"
+      },
+      {
+        "style": "normal",
+        "text": "A traditional SEO specialist optimizes for ranked blue links on a results page. An AI search specialist optimizes for being the source an answer engine quotes, which is a different output. The work shifts toward structured product data, entity definitions, and corroborating evidence the engine can lift. Ranking on page one and being cited in an answer are not the same target, and the second one is the role's job."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "An illustrative hydraulics distributor hires for AI search and gives the role one mandate: when a buyer asks an AI engine for a replacement seal kit by competitor part number, our catalog should be the cited answer. The specialist audits which prompts return competitors, fixes the PIM fields and cross-reference tables behind the SKUs, structures the part pages so engines can parse them, then tracks citation share over time. Title on the JD was AEO specialist. The work was catalog retrievability."
+      }
+    ],
+    "seo": {
+      "metaTitle": "AI Search Specialist: Definition & Scope",
+      "metaDescription": "An AI search specialist gets a brand cited in AI engine answers. Learn the role, how it differs from a traditional SEO, and what the job actually does."
+    }
+  },
+  {
+    "slug": "cited-domain-analysis",
+    "shortDefinition": "Cited-domain analysis is the practice of examining which websites an AI engine pulls from when it answers a category question, to identify the citation incumbents you must displace or get referenced by. It maps the current sources behind AI answers, not your own search rankings.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "Before building content, a bearings distributor analyzes who ChatGPT cites for \"SKF to NTN interchange.\" It finds two PDF spec mills and one forum thread doing the work. Those three domains are the incumbents. The distributor then ships a crawlable interchange table that fills the gaps the PDFs leave, and aims to either replace them or get cited alongside them."
+      },
+      {
+        "style": "normal",
+        "text": "Keyword rank tells you who Google lists. Cited-domain analysis tells you who the model actually quotes, which is the surface your buyer now reads. For an MRO catalog, that gap matters: a part-number answer rarely cites the manufacturer. It cites whoever structured the cross-reference cleanly."
+      },
+      {
+        "style": "h3",
+        "text": "How to do it"
+      },
+      {
+        "style": "normal",
+        "text": "Run a stable set of buyer prompts across each engine, log the domains cited in every answer, and tally them. Sample repeatedly, since answers vary per run. Sort by frequency to see the incumbents. Then read the cited pages to find what makes them citable and where they are thin."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A hydraulics distributor pulls the cited domains for 25 cross-reference prompts like \"Parker to Eaton fitting equivalent.\" One aggregator and a single OEM PDF show up in most answers. That tells the team to publish a structured equivalence table aimed at the prompts those two sources answer poorly, instead of guessing at topics."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Cited-domain analysis: find AI's source incumbents",
+      "metaDescription": "Cited-domain analysis examines which websites an AI engine pulls from when answering a category question, so you can spot the sources to displace or join."
+    }
+  },
+  {
+    "slug": "ai-impression-share",
+    "shortDefinition": "AI impression share is the percentage of AI answers in a defined category where your brand appears at all, mentioned or cited, across a fixed set of buyer prompts. It is the AI-answer analogue of paid impression share in Google Ads, applied to generative search results rather than ad auctions.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "Across a 50-prompt set on industrial lubricants, a distributor appears in 6 answers. That is a 12% AI impression share. Now the distributor has a baseline. Publish a hydraulic-fluid cross-reference table, re-run the same 50 prompts, and watch whether that number moves. Impression share answers a blunt question. In how many of the answers your buyers see do you show up at all? Rankings cannot tell you that, because the AI answer is a single synthesized passage, not a list of ten blue links."
+      },
+      {
+        "style": "h3",
+        "text": "AI impression share vs AI share of voice"
+      },
+      {
+        "style": "normal",
+        "text": "They count different things. Impression share is presence: the fraction of answers where you appear, full stop. Share of voice weighs that against competitors, so it is your slice of all brand mentions in the same answer set. You can hold a high impression share and a low share of voice when a rival is named in every answer you appear in."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "An MRO distributor fixes a stable prompt set, say 50 questions covering NLGI grease grades, seal cross-references, and 'best supplier for X' lookups. They run it monthly across ChatGPT, Perplexity, and Google AI answers, then log the share each month. When a new PIM-fed spec page pushes impression share from 12% to 19% on the lubricant prompts, that is the signal the content reached the engines. Treat any single run as illustrative, since answers vary per sample."
+      }
+    ],
+    "seo": {
+      "metaTitle": "AI Impression Share: Definition and How to Measure",
+      "metaDescription": "AI impression share is the percentage of AI answers in a category where your brand appears. Learn how it differs from share of voice and how to track it."
+    }
+  },
+  {
+    "slug": "benchmark-prompts",
+    "shortDefinition": "Benchmark prompts are a fixed, representative set of buyer questions run repeatedly against AI search engines to measure whether and how often they cite your brand over time. The prompt set is the instrument behind every AI-share-of-voice number. It is unrelated to LLM-evaluation benchmarks that score model accuracy.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "For a hydraulics catalog, a 40-prompt set might span interchange (\"Gates equivalent of Parker 387\"), sizing (\"NPT vs JIC vs ORFS\"), and selection (\"best hose for 5,000 PSI bent-tube routing\"). Re-run that same set monthly and you can watch your citation rate move. Without a fixed set, every measurement uses different questions, so the number drifts for reasons that have nothing to do with your visibility. The prompt set is what makes the score comparable from one month to the next."
+      },
+      {
+        "style": "h3",
+        "text": "How to build one"
+      },
+      {
+        "style": "normal",
+        "text": "Sample the questions your buyers actually ask, then lock the wording so runs stay comparable. A workable set covers three job types:"
+      },
+      {
+        "style": "normal",
+        "text": "Interchange and cross-reference lookups, where a buyer has one part number and wants the equivalent.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Spec and sizing questions, like thread standards, pressure ratings, or material compatibility.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Selection and \"best supplier for X\" prompts, where the engine recommends a product or a source.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A distributor freezes a 40-prompt set in a spreadsheet and runs it across ChatGPT, Perplexity, and Google AI answers on the first of each month. Answers vary per run, so each prompt fires several times and the results are averaged. The team tracks two counts: how often the brand is mentioned, and how often its domain is cited as a source. Six months in, the trend line, not any single answer, tells them whether the catalog is gaining ground. Treat this as an illustrative setup, not a published case."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Benchmark Prompts (Prompt Set): Definition",
+      "metaDescription": "Benchmark prompts are a fixed set of buyer questions run repeatedly against AI engines to measure citation rate over time. Learn how to build one for industrial."
+    }
+  },
+  {
+    "slug": "mention-rate-vs-citation-rate",
+    "shortDefinition": "Mention rate is how often an AI answer names your brand across a set of prompts. Citation rate is how often that answer links or attributes a source to your domain. Mention rate measures awareness; citation rate measures source authority, and the two often diverge.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "ChatGPT names a hydraulics distributor in roughly 20% of category answers, but links its page in only about 4% of them. The first number is mention rate. The second is citation rate. The gap shows a brand the model recognizes by name yet does not trust enough to attribute as a source. Tracking only mentions hides that gap, and you end up reporting awareness you cannot convert into clicks or verifiable authority."
+      },
+      {
+        "style": "h3",
+        "text": "Mention rate vs citation rate"
+      },
+      {
+        "style": "normal",
+        "text": "Both count appearances across the same prompt set, but they count different things."
+      },
+      {
+        "style": "normal",
+        "listItem": "bullet",
+        "text": "Mention rate: the share of answers that name your brand, with or without a link. Measures recognition."
+      },
+      {
+        "style": "normal",
+        "listItem": "bullet",
+        "text": "Citation rate: the share of answers that link or attribute a source to your domain. Measures source authority."
+      },
+      {
+        "style": "normal",
+        "text": "A high mention rate with a low citation rate is the common pattern. The model knows you exist but pulls its facts from a third-party catalog or a competitor's spec page."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Run your 30 buyer prompts, things like \"cross-reference for a Parker PV016 pump\" or \"best supplier for SAE J517 hose,\" then log two columns per brand: was it named, and was it cited. If your mention rate climbs while citation rate stays flat, the fix is source-side. Publish the cross-reference table and spec data on your own pages so the engine has a source to attribute the answer to, not a name to recall."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Mention Rate vs Citation Rate: AI Search Metrics",
+      "metaDescription": "Mention rate is how often an AI answer names your brand; citation rate is how often it links you as a source. Learn the difference and how to measure each."
+    }
+  },
+  {
+    "slug": "hallucinated-attribution",
+    "shortDefinition": "Hallucinated attribution is when an AI answer credits a claim, spec, or quote to a brand or source that never published it. The information is fabricated or misassigned, and the named source carries the blame in the buyer's eyes even though it said nothing.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "An LLM tells a buyer \"per Acme Hydraulics, the max working pressure for this hose is 5,000 psi.\" Acme never published that figure. If the real rating is 3,000 psi and a maintenance tech acts on the answer, a line fails and Acme's name is on the spec that caused it. That is not a ranking problem. It is a safety and liability problem wearing your brand."
+      },
+      {
+        "style": "normal",
+        "text": "Industrial buyers treat a cited source as the authority. When an engine misattributes a number to your catalog, the buyer trusts it because your name is attached. You did not write it, you cannot see it, and you may never learn it happened until a customer quotes it back to you."
+      },
+      {
+        "style": "h3",
+        "text": "Hallucinated attribution vs brand hallucination"
+      },
+      {
+        "style": "normal",
+        "text": "Brand hallucination is the engine inventing a fact about you, like a product line you do not sell. Hallucinated attribution is narrower. The claim may even be true in general, but the engine pins it to a specific source that never said it. The damage is the false sourcing, not the false fact."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Run your own part numbers and spec questions through the major engines on a schedule. Watch for answers that quote a torque value, pressure rating, or cross-reference \"according to\" your brand. When you find one, the fix is to publish the real spec in clean, machine-readable form so the engine has a correct figure to ground on, then re-test until the attributed number matches your PIM data."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Hallucinated Attribution: AI Misattributes a Spec",
+      "metaDescription": "Hallucinated attribution is when an AI answer credits a spec, quote, or claim to a brand that never published it. Why it is a liability risk for industrial sellers."
+    }
+  },
+  {
+    "slug": "brand-hallucination",
+    "shortDefinition": "Brand hallucination is when an AI model states false facts about a brand: products it does not sell, specs it never published, or policies that do not exist. It describes what an engine got wrong about you, separate from hallucinated attribution, which is wrongly crediting who said something.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "ChatGPT tells a buyer that your distribution covers a discontinued Allen-Bradley PowerFlex drive you never carried. The buyer calls to order it. Your counter staff spend the morning explaining that the part does not exist in your catalog, the phantom inventory was invented by a model, and you cannot ship it. That is a brand hallucination, and it carries real support cost. The model did not misquote a source. It fabricated a fact about you."
+      },
+      {
+        "style": "normal",
+        "text": "For industrial sellers the damage is concrete. False stock claims trigger wasted sales calls. Invented specs put a wrong cross-reference in front of an engineer. A made-up return policy sets an expectation you never agreed to. Each one erodes trust in the answer layer your buyers now start from."
+      },
+      {
+        "style": "h3",
+        "text": "Brand hallucination vs hallucinated attribution"
+      },
+      {
+        "style": "normal",
+        "text": "Both are model errors, but they break different things. Brand hallucination is about what was said: a false claim regarding your products, pricing, or terms. Hallucinated attribution is about who said it: the model credits a quote or fact to the wrong source. One corrupts the content. The other corrupts the citation."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Run your own brand and top SKUs through the major engines on a fixed schedule. Ask the prompts a buyer would: does this distributor stock part X, what is the pressure rating, what is the lead time. Log every fabricated spec, phantom stock claim, or invented policy. The fix is supply-side. Publish clean, structured PIM data and machine-readable catalog facts so the engine has a correct source to ground on instead of guessing."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Brand Hallucination in AI Search | Sale Solution",
+      "metaDescription": "Brand hallucination is when an AI model states false facts about your brand: products you don't sell or specs you never published. Learn how to detect and reduce it."
+    }
+  },
+  {
+    "slug": "crawlability-for-ai-bots",
+    "shortDefinition": "Crawlability for AI bots is whether AI crawlers can actually fetch and parse a page's content. It is the AI-bot cut of generic crawlability: JavaScript-rendered catalogs often return an empty shell to non-rendering crawlers, leaving the page's data invisible until server-side rendering exposes the HTML.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "A distributor builds its parts catalog as a React app. When a non-rendering AI crawler requests a page, the server returns an empty HTML shell and a bundle of JavaScript the bot never runs. All 50,000 SKUs sit behind that shell, so they are uncrawlable. The catalog looks complete in a browser and invisible to the engine. Server-side rendering changes this. The HTML arrives already populated with part numbers, specs, and cross-references, and those SKUs become retrievable. Crawlability for AI bots is the gate before anything else. An engine cannot chunk, embed, or cite a page it could not fetch and parse."
+      },
+      {
+        "style": "h3",
+        "text": "How to check it"
+      },
+      {
+        "style": "normal",
+        "text": "Request your page the way a non-rendering bot does and read what comes back, not what the browser paints. A few concrete checks:"
+      },
+      {
+        "style": "normal",
+        "text": "Fetch the raw HTML with curl and confirm the SKU data, specs, and body copy are present in the source, not injected later by JavaScript.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Confirm robots.txt and meta tags do not block the named AI user-agents (GPTBot, ClaudeBot, PerplexityBot, Google-Extended).",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Check that part-number and category URLs return 200, not soft-404 shells or redirect chains.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A hydraulics distributor finds its cylinder pages absent from AI answers. A curl request returns a near-empty shell, so the bot sees no bore, stroke, or pressure ratings. The team moves the catalog to server-side rendering, leaves client-side hydration for interactivity, and the next crawl ingests full spec tables. Reading lists, not courses. Render the page server-side, then worry about chunking and citations."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Crawlability for AI Bots: Definition",
+      "metaDescription": "Crawlability for AI bots is whether AI crawlers can fetch and parse your pages. Learn why JS-rendered catalogs go invisible and how server-side rendering fixes it."
+    }
+  },
+  {
+    "slug": "content-chunking-for-retrieval",
+    "shortDefinition": "Content chunking for retrieval is the practice of splitting a page into self-contained passages so a retrieval system can pull one accurate, complete unit into an AI answer. Each chunk should hold a whole fact, such as a full spec row, rather than a sentence cut off mid-value.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "Take a spec page where each fitting's dimensions sit in a labeled table. Thread size, body length, working pressure, and material each retrieve as one clean chunk, with the part number attached. Bury the same data in a prose paragraph and a retriever splits it mid-fact. The engine returns \"3/8 inch\" without the part it belongs to, or a pressure rating detached from its fitting. Wall-of-text pages chunk badly. Tables and short labeled blocks chunk well, because the split lands on a boundary that keeps the fact whole."
+      },
+      {
+        "style": "h3",
+        "text": "What chunks well vs badly"
+      },
+      {
+        "style": "normal",
+        "text": "Chunks well: spec tables with one attribute per row, a Q&A block that answers one question completely, a cross-reference list pairing an OEM number with your SKU. Chunks badly: a long compatibility paragraph where the qualifying condition sits three sentences from the part it limits, or a feature wall that names a value in one place and its unit in another. The test is simple. Can a single passage stand alone and still be true?"
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A distributor with 40,000 hydraulic fittings moves the load rating, seal material, and temperature range out of the marketing paragraph and into a labeled table, one fact per row, part number repeated in the heading. Now each retrieved chunk carries enough context to be cited correctly. The buyer prompt \"what is the max pressure on part 6801-6-6\" returns the right row instead of a number sheared away from the part it describes."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Content Chunking for Retrieval | Sale Solution",
+      "metaDescription": "Content chunking for retrieval splits pages into self-contained passages so AI engines pull whole facts. Learn what chunks well, what breaks, and how to fix it."
+    }
+  },
+  {
+    "slug": "entity-seo",
+    "shortDefinition": "Entity SEO is the practice of optimizing for entities, the things an engine knows, and their relationships in a knowledge graph rather than for keyword strings, so engines understand your brand and products as defined entities they can store, disambiguate, and cite.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "A distributor that establishes itself as a distinct entity, with consistent NAP, sameAs links, and Organization schema, makes \"authorized Char-Lynn distributor\" resolve to it rather than a confused brand string. Engines stop guessing which company you are. Entity SEO targets that disambiguation. You define the thing, its products, and the relationships between them so a knowledge graph can store you as a known node, not a loose phrase it has to re-derive on every query."
+      },
+      {
+        "style": "h3",
+        "text": "Entity SEO vs keyword SEO"
+      },
+      {
+        "style": "normal",
+        "text": "Keyword SEO matches the strings a page contains against the strings a query contains. Entity SEO maps the things a page is about to entries in a knowledge graph, then strengthens the edges between them. A part page optimized for entities states that SKU 104-1028-006 is a Char-Lynn 2000 series motor, that Char-Lynn is an Eaton brand, and that you stock it. Engines lift that as fact, not as a ranked keyword guess."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Take an MRO distributor catalog. You give each brand and product line a stable URL, mark it up with Product and Brand schema, add sameAs pointers to the manufacturer's canonical page, and cross-reference part numbers in structured fields rather than free text. Over time the engine learns your domain is the entity behind those parts, so it cites you when a buyer asks for a cross-reference or an authorized source."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Entity SEO: Define Your Brand as a Known Entity",
+      "metaDescription": "Entity SEO optimizes for things and their knowledge-graph relationships, not keyword strings, so engines treat your brand and parts as defined entities they can cite."
+    }
+  },
+  {
+    "slug": "product-schema-for-industrial-skus",
+    "shortDefinition": "Product schema for industrial SKUs is the application of schema.org/Product markup to technical parts, using mpn, gtin, and additionalProperty fields to encode part numbers, specifications, and compatibility so AI engines can read and answer questions about a SKU. It is the industrial-catalog use of generic Product structured data.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "Mark up a hydraulic fitting with mpn, gtin, and additionalProperty for thread type and pressure rating, and an engine can answer \"what is the MPN for a half-inch JIC swivel rated 5,000 psi.\" That is the difference between a part page an engine can parse and one it skips. Generic Product schema is documented everywhere. The industrial part is where catalogs go wrong: the spec data sits in a PDF or a description blob, not in machine-readable fields. Without mpn and additionalProperty, the engine sees a price and a title and nothing it can match against a buyer's spec query."
+      },
+      {
+        "style": "h3",
+        "text": "How to apply it to a SKU"
+      },
+      {
+        "style": "normal",
+        "text": "Map the fields your buyers search on into named schema properties:"
+      },
+      {
+        "style": "normal",
+        "text": "mpn for the manufacturer part number, the string buyers paste in.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "gtin (or gtin13/gtin14) for the barcode, when you have one.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "additionalProperty entries (PropertyValue) for each spec: thread type, pressure rating, bore size, material.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "brand for the manufacturer, kept distinct from your distributor name.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A distributor selling a 1/2\" JIC 37-degree swivel rated to 5,000 psi pulls those values straight from PIM rather than burying them in prose. The page emits Product with mpn set to the catalog number, plus additionalProperty for thread (JIC 37), pressure (5,000 psi), and size (1/2\"), each as a PropertyValue with name and value. Run it through a structured-data test, confirm the fields parse, then check that the spec values match the PIM record exactly. Mismatched markup is worse than none."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Product Schema for Industrial SKUs",
+      "metaDescription": "How to apply schema.org/Product markup to technical parts using mpn, gtin, and additionalProperty so AI engines can read part numbers, specs, and compatibility."
+    }
+  },
+  {
+    "slug": "punchout-catalog",
+    "shortDefinition": "A punchout catalog is a B2B product catalog a buyer reaches from inside their own procurement system, where the buyer's e-procurement tool connects to the supplier's site over cXML or OCI, the buyer shops there, and the cart returns as a requisition. The catalog content lives behind that handshake, not on a public page.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "Picture a distributor whose full catalog exists only inside SAP Ariba punchout sessions. ChatGPT cannot see a single SKU. A buyer researching a hydraulic fitting or an MRO part on ChatGPT never finds that distributor, because the part numbers live behind a procurement login. The punchout is great for the buyers already provisioned in Ariba or Coupa. It does nothing for everyone discovering suppliers through an AI engine first."
+      },
+      {
+        "style": "normal",
+        "text": "We call this a dark catalog. The data is rich and well-structured, and it is invisible to search and AI because it only renders after a cXML handshake. A crawler hits a punchout setup URL and gets a session redirect, not products. So the catalog never enters the index that AI engines retrieve from."
+      },
+      {
+        "style": "h3",
+        "text": "Punchout vs public catalog"
+      },
+      {
+        "style": "normal",
+        "text": "A punchout catalog serves provisioned buyers inside their procurement system. A public, crawlable catalog serves discovery. You need both. The punchout closes the order for an existing account, and a crawlable catalog feeds the same part data, descriptions, and specs to an indexable page an AI engine can cite when a new buyer asks."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A hydraulics distributor running a cXML punchout into Coupa exports the same PIM records to public product pages, one URL per SKU with the part number, spec table, and cross-references in the markup. The punchout keeps serving its provisioned accounts. The public catalog gives ChatGPT and Perplexity something to retrieve, so a buyer who starts at an AI engine can reach the same parts."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Punchout catalog: the dark catalog problem",
+      "metaDescription": "A punchout catalog is a B2B catalog reached inside a procurement system via cXML or OCI. Learn why it stays invisible to AI search and how to fix it."
+    }
+  },
+  {
+    "slug": "product-data-syndication",
+    "shortDefinition": "Product data syndication is the practice of distributing product content (specs, descriptions, attributes, images) from a source catalog to marketplaces, aggregators, and channel partners so each destination shows consistent data. Which copy an AI engine cites is decided here, and it is often the marketplace copy, not yours.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "A distributor syndicates the same hydraulic-fitting specs to Amazon Business and to its own site. The Amazon copy outranks the distributor's page and gets cited in AI answers. The distributor did the work of normalizing the attributes and writing the description. The marketplace earned the citation. Syndication decides which copy of your data engines treat as canonical, and the destination with more authority usually wins."
+      },
+      {
+        "style": "h3",
+        "text": "How to control which copy wins"
+      },
+      {
+        "style": "normal",
+        "text": "You cannot stop a marketplace from outranking you, but you can make your own page the better-structured source. Mark up your products with structured data, keep part numbers and attributes identical to the syndicated feed, and publish the cross-reference and fitment detail that the marketplace listing strips out. The goal is parity on the data and an edge on depth."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Say you feed 40,000 SKUs of pneumatic components to a syndication platform that pushes to four marketplaces. Audit a sample of those SKUs in an AI engine. If the cited source is consistently the marketplace, your own product pages are losing the attribution even though they hold the original PIM data. Fix the parity gap on your site before chasing more channels."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Product Data Syndication: What It Is",
+      "metaDescription": "Product data syndication distributes specs and attributes to marketplaces and partners. Learn why the syndicated copy, not yours, often gets cited by AI engines."
+    }
+  },
+  {
+    "slug": "long-tail-sku-demand",
+    "shortDefinition": "Long-tail SKU demand is buyer demand for specific part numbers and specs that is real but too sparse for keyword tools to register, where each query reads as zero volume while the aggregate of thousands of these zero-volume part-number questions makes up most of a distributor catalog's actual search intent.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "No single \"1756-L61 replacement\" query has measurable search volume. Across 80,000 SKUs, though, the long tail of part-number questions is where distributors actually win AI citations. Keyword tools round each of those queries to zero, so the demand looks like it does not exist. It does. A buyer types the exact catalog number, a torque spec, or a cross-reference into an AI engine and expects one correct answer. Add up thousands of these near-silent queries and you get most of the real intent in an industrial catalog."
+      },
+      {
+        "style": "h3",
+        "text": "Long-tail SKU demand vs head-term demand"
+      },
+      {
+        "style": "normal",
+        "text": "Head terms are the few high-volume phrases keyword tools can see, like \"hydraulic pump\" or \"PLC controller.\" Long-tail SKU demand is the opposite shape: each query is a specific part number or spec, individually too sparse to register, collectively the bulk of catalog intent. Head terms get the marketing attention. The long tail is where the order actually gets placed, because that is where the buyer already knows the exact part."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A distributor carrying 80,000 SKUs cannot write a page targeting each part number by hand, and a keyword tool will never justify it on volume. The fix is structured PIM data and clean cross-reference pages per SKU, so an AI engine can resolve \"what replaces a discontinued 1756-L61\" from your catalog rather than a competitor's. You are not chasing one keyword. You are making sure thousands of zero-volume questions each have a correct, citable answer."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Long-tail SKU demand | Industrial AI Search Glossary",
+      "metaDescription": "Long-tail SKU demand is the sum of part-number and spec queries too sparse for keyword tools to see, yet the bulk of a distributor catalog's real intent."
+    }
+  },
+  {
+    "slug": "category-page-architecture",
+    "shortDefinition": "Category page architecture is how a catalog's category and taxonomy pages are structured for buyers and retrieval engines: faceted navigation, internal links to subcategories, and on-page content like selection guides. Content-bearing category pages are retrievable and citable; thin filter-only pages are not.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "A distributor's \"hydraulic hose fittings\" category page with a real selection guide and links to subcategories gets cited. The bare faceted-filter version, just a grid of SKUs and checkboxes, does not. An AI engine retrieves passages. A category page that is only a filter UI has no passage to lift, so it stays invisible in answers even when the catalog underneath is complete."
+      },
+      {
+        "style": "normal",
+        "text": "This is the e-commerce SEO topic of taxonomy structure, with the AI-retrieval cut added. The question shifts from \"does this page rank\" to \"does this page contain a quotable, self-contained chunk an engine can attribute to your domain.\""
+      },
+      {
+        "style": "h3",
+        "text": "Content-bearing vs filter-only category pages"
+      },
+      {
+        "style": "normal",
+        "text": "Filter-only: a results grid, facets for thread type and pressure rating, no prose. Nothing to retrieve."
+      },
+      {
+        "style": "normal",
+        "text": "Content-bearing: the same facets, plus a short selection guide (JIC vs ORFS, working-pressure ranges, how to read a dash size), named subcategory links, and a few canonical part numbers. The page now holds chunks worth citing."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Take a category like \"NPT hydraulic adapters.\" Add a 120-word guide that defines the standard, states the size convention, and links to the SAE and BSPP sibling categories by name. Keep the facets. You have not removed the buyer-facing filter. You have given the engine a passage to quote and a reason to name your domain as the source."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Category Page Architecture for AI Search",
+      "metaDescription": "How category page architecture structures taxonomy pages for buyers and AI retrieval. Learn why content-bearing category pages get cited and filter-only ones don't."
+    }
+  },
+  {
+    "slug": "etim-classification",
+    "shortDefinition": "ETIM classification is an open international standard that organizes technical products into classes, each with a defined set of machine-readable features (such as voltage, number of poles, and rating), giving products consistent, comparable attributes across catalogs and systems.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "Map your electrical SKUs to ETIM classes and every product gets the same machine-readable features: voltage, poles, rating. That is the normalized-attribute backbone an LLM needs to compare products. Without it, a circuit breaker reads as free-text marketing copy. With it, the breaker carries a defined feature set an engine can parse, filter, and quote. ETIM is free and published, so the cost is mapping work, not licensing."
+      },
+      {
+        "style": "h3",
+        "text": "ETIM vs a custom attribute schema"
+      },
+      {
+        "style": "normal",
+        "text": "A homegrown schema fits your catalog and nobody else's. ETIM is shared across manufacturers and distributors, so a supplier's ETIM-tagged data drops into your PIM without re-mapping every feature. The trade-off: ETIM classes are broad and standardized, so they may not cover a niche attribute your buyers ask about. Many distributors run ETIM as the base layer and extend it for the gaps."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A distributor receives a manufacturer feed tagged to ETIM class EC000123 (a molded-case circuit breaker). The feed already carries rated current, breaking capacity, and pole count as discrete features. The distributor loads it straight into their PIM, and product pages expose those features as structured data. When a buyer asks an AI engine for a 250A three-pole breaker, the engine has clean attributes to match against instead of guessing from prose."
+      }
+    ],
+    "seo": {
+      "metaTitle": "ETIM Classification: Standard for Industrial Products",
+      "metaDescription": "ETIM classification is an open standard that sorts technical products into classes with machine-readable features. Learn how it feeds normalized attributes for AI search."
+    }
+  },
+  {
+    "slug": "generative-engine",
+    "shortDefinition": "A generative engine is an AI system that composes a synthesized answer from multiple sources instead of returning a list of links. ChatGPT, Perplexity, and Google AI Overviews are examples. It is the engine that generative engine optimization targets.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "A buyer asks a generative engine for the best food-grade chain lubricant for a bottling line. The engine does not hand back ten blue links. It reads several supplier pages, pulls the relevant specs, and writes one answer that names a few products and the distributors behind them. If your catalog page is one of the cited sources, you are in the answer the buyer acts on. If it is not, you are invisible, even when your part is the right one. That is the shift from ranking to being quoted."
+      },
+      {
+        "style": "h3",
+        "text": "Generative engine vs traditional search engine"
+      },
+      {
+        "style": "normal",
+        "text": "A traditional search engine returns a ranked list and the buyer clicks through. A generative engine returns a written answer and cites a handful of sources inside it. The unit of competition moves from position on a results page to inclusion in the composed response. Same query, different surface, different thing to win."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Take a real cross-reference query like \"replacement for Parker hydraulic filter element 924865.\" A distributor that publishes clean part data, the OEM equivalent, and the spec table on a crawlable page gives the engine something concrete to lift and attribute. A PDF datasheet or a price-gated SKU gives it nothing. The pages that get cited are the ones a generative engine can read and quote without guessing."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Generative engine: definition for AI search",
+      "metaDescription": "A generative engine composes a synthesized answer from multiple sources instead of listing links. Learn what it is, how it differs from search, and why citation matters."
+    }
+  },
+  {
+    "slug": "ai-mode",
+    "shortDefinition": "AI Mode is Google's conversational, generative search experience, where a single question triggers a query fan-out (many related sub-queries run at once) and the results are synthesized into one written answer with links to cited sources, rather than a list of ten blue links.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "In AI Mode, a question like \"compare R-410A and R-454B retrofit requirements\" fans out into many sub-queries and comes back as one synthesized answer. An HVAC/R distributor with crawlable retrofit guides can surface inside that answer. The query is broad and comparative, the kind that used to mean a buyer reads five tabs. Now Google reads them and writes the summary. If your spec pages, MSDS notes, and cross-reference tables are indexable and structured, you can be one of the sources it pulls from. If they sit behind a JavaScript catalog that crawlers can't read, you are invisible at the exact moment the comparison is being made."
+      },
+      {
+        "style": "h3",
+        "text": "AI Mode vs AI Overviews"
+      },
+      {
+        "style": "normal",
+        "text": "AI Overviews is the generated summary box that appears above normal Google results for some queries. AI Mode is a separate, dedicated experience you enter on purpose, built for longer back-and-forth questions and deeper fan-out. Both run on the same query fan-out machinery. AI Overviews is a feature inside the results page; AI Mode is the whole page."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "A maintenance buyer opens AI Mode and asks for a hydraulic pump that cross-references to a discontinued OEM part, then follows up with flow-rate and port-size constraints. Google fans the thread out across catalogs and spec sheets and names a few suppliers in the answer. To be one of them, publish the cross-reference and the spec table as readable HTML on a crawlable URL, not locked inside a PDF or a search-only widget."
+      }
+    ],
+    "seo": {
+      "metaTitle": "AI Mode: Google's Generative Search Experience",
+      "metaDescription": "AI Mode is Google's conversational search that fans one question into many sub-queries and writes one cited answer. How industrial sellers surface in it."
+    }
+  },
+  {
+    "slug": "zero-click-search",
+    "shortDefinition": "Zero-click search is a search that ends without the user clicking through to any website, because the answer appears directly on the results page through featured snippets or AI Overviews. The term comes from SparkToro's Rand Fishkin, whose research tracked the share of searches that resolve without a click.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "A buyer types \"what does E7018 mean\" and reads the AI Overview without clicking anything. Your welding distributor page may have supplied the spec that informed that answer, but you got no visit. That is a zero-click search. The reader has their answer, the sale conversation may still come, and your traffic logs show nothing. For industrial catalogs full of cross-reference lookups and spec questions, this is now the default path. The goal shifts. You want the citation, not the click, because being named as the source is what carries forward when the buyer is ready to act."
+      },
+      {
+        "style": "h3",
+        "text": "How to measure it"
+      },
+      {
+        "style": "normal",
+        "text": "You cannot see a zero-click search in your own analytics, since no visit happens. Track it indirectly. Run your buyer prompts (cross-references, part-number lookups, \"what is E7018\") across engines and record whether your domain is cited in the answer, even when no click follows. Pair that with Google Search Console impressions on the same queries to estimate the gap between appearances and clicks."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Say a hydraulics distributor ranks a page explaining the difference between SAE and metric port threads. Pre-AI, that page earned a few hundred organic visits a month from buyers searching the comparison. Now an AI Overview answers the same question inline and clicks drop, but the overview cites the distributor's page as a source. The page stopped earning visits and started earning attribution. Treat that citation as the win and structure the page to keep earning it."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Zero-click search: what it means for AI answers",
+      "metaDescription": "Zero-click search is a search that ends without a click because the answer shows on the results page. Learn why it makes citation, not clicks, the goal."
+    }
+  },
+  {
+    "slug": "knowledge-graph",
+    "shortDefinition": "A knowledge graph is a structured network of entities (people, products, brands, standards) and the labeled relationships between them, which search and AI engines use to connect facts and answer questions. It stores knowledge as nodes and edges rather than as loose documents.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "If \"Char-Lynn\" is a recognized entity linked to \"Eaton\" and \"hydraulic motors\" in the knowledge graph, an engine can confidently route a \"Char-Lynn distributor\" query to the right brand. If those links are missing, it guesses. For an industrial distributor, that is the difference between getting named in the answer and getting skipped. The graph is the backbone behind entity SEO and grounding: it gives the model a fact-checked structure to anchor against instead of pattern-matching on raw text."
+      },
+      {
+        "style": "h3",
+        "text": "Knowledge graph vs knowledge base"
+      },
+      {
+        "style": "normal",
+        "text": "A knowledge base is a store of documents or articles you read. A knowledge graph stores facts as entities and relationships a machine can traverse. Google's Knowledge Graph and Wikidata are the well-known public examples. Your own product data can act as a private one when a PIM links part numbers to brands, specs, and cross-references."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Suppose your catalog lists SKU 104-1028-006 as a Char-Lynn 2000 Series motor, with displacement, shaft type, and an OEM cross-reference to a competing part. Expose those relationships as structured data and consistent entity references, and an engine can place your SKU in the same graph neighborhood as the brand and the standard it meets. That is what makes you the cited source for a spec or cross-reference lookup instead of a page the engine never connects."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Knowledge Graph: Definition for AI Search",
+      "metaDescription": "A knowledge graph stores entities and their relationships so search and AI engines can connect facts. Learn how it underpins entity SEO and grounding."
+    }
+  },
+  {
+    "slug": "structured-data-for-ai",
+    "shortDefinition": "Structured data for AI is schema.org markup (usually JSON-LD) that labels page facts like price, MPN, and availability so machines can read them. Its proven value is Product rich results and clean entity disambiguation; whether AI answer engines ingest the JSON-LD directly is unproven, so it should not be overclaimed.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "Put Product schema on a hydraulic-pump spec page and the price, availability, MPN, and ratings still reliably earn rich results. That markup also hands an AI engine a clean entity to disambiguate, so it ties the part number to the right pump instead of guessing. FAQ schema is a different story. Google retired FAQ rich results on 7 May 2026, so it no longer earns a SERP chip, though the marked-up facts are still there for any machine that parses them."
+      },
+      {
+        "style": "normal",
+        "text": "Here is the honest part. Most AI answer engines, including ChatGPT and Perplexity, tend to read your JSON-LD as page text rather than as a validated graph. So the durable wins are the rich result and the entity clarity. Direct LLM ingestion of the schema is partly speculative, and we do not claim it as a guaranteed channel."
+      },
+      {
+        "style": "h3",
+        "text": "Proven value vs speculative value"
+      },
+      {
+        "style": "normal",
+        "text": "Two buckets, kept separate so you spend effort where it pays off:"
+      },
+      {
+        "style": "normal",
+        "text": "Proven: Product rich results (price, availability, MPN) and entity disambiguation that any crawler can use.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "normal",
+        "text": "Speculative: an AI engine reading your JSON-LD as a structured fact source rather than as plain text on the page.",
+        "listItem": "bullet"
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "On a distributor SKU page for a Parker-style gear pump, mark up Product with mpn, gtin, offers, and aggregateRating, then validate it in Google's Rich Results Test. Keep the same facts visible in the page body and in a clean attribute table, because that text is what an AI engine most reliably extracts. Treat the schema as insurance for rich results and entity matching, not as a private API into the model."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Structured Data for AI: What It Does (and Doesn't)",
+      "metaDescription": "Structured data for AI is schema.org markup that labels page facts. Learn its proven value (rich results, entity disambiguation) and what stays unproven."
+    }
+  },
+  {
+    "slug": "llm-seeding",
+    "shortDefinition": "LLM seeding is the practice of deliberately placing brand and product information on sources large language models tend to ingest or cite, such as Wikipedia, Wikidata, Reddit, and trade directories, so the brand is already present when an engine assembles an answer. The term was popularized by Locomotive Agency.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "A hydraulics distributor seeds its entity on Wikidata, the subreddits where its buyers ask cross-reference questions, and the trade directories its competitors already sit in. Then, when an LLM assembles an answer about that niche, the brand is already in the sources it pulls from. This is upstream work. You are not editing your own site to rank. You are placing facts on the third-party pages a model reads before it answers, so your name shows up in the response whether or not the buyer ever visits your domain."
+      },
+      {
+        "style": "h3",
+        "text": "LLM seeding vs citation engineering"
+      },
+      {
+        "style": "normal",
+        "text": "The two overlap and are easy to confuse. LLM seeding is about presence on external sources a model ingests. Citation engineering is about being named as a source inside the generated answer. Seeding gets your facts into the training and retrieval pool. Citation work earns the attribution link. You usually do both, and seeding tends to come first."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Pick the sources that actually feed answers in your category. For an MRO parts supplier that often means a clean Wikidata entry tied to your brand, accurate listings in the distributor directories engines scrape, and honest answers in the supply-chain and maintenance subreddits where buyers post part-number questions. Keep the data consistent with your PIM so the seeded facts and your catalog agree. The aim is simple. When an engine reaches for context on your niche, it finds you already there."
+      }
+    ],
+    "seo": {
+      "metaTitle": "LLM Seeding: Definition for Industrial Search",
+      "metaDescription": "LLM seeding means placing your brand on the sources AI engines ingest, like Wikidata, Reddit, and trade directories. Learn how distributors do it and where it fits."
+    }
+  },
+  {
+    "slug": "searchandising",
+    "shortDefinition": "Searchandising is the practice of tuning on-site search results to surface the right products, using synonym mappings, boosting rules, and pinning so a buyer's query lands on the intended catalog set. It applies to a store's internal search, not to web SEO or AI answer engines.",
+    "body": [
+      {
+        "style": "h2",
+        "text": "Why it matters"
+      },
+      {
+        "style": "normal",
+        "text": "A distributor maps \"jic\" to \"an fitting\" to \"37 degree flare\" as search synonyms, so a buyer typing any of the three lands on one canonical product set. That same synonym graph does double duty. It decides which content is structured around a shared vocabulary and stays findable, which is why we treat searchandising as upstream of catalog and content work, even though it lives in the on-site search layer."
+      },
+      {
+        "style": "h3",
+        "text": "Searchandising vs SEO"
+      },
+      {
+        "style": "normal",
+        "text": "Searchandising tunes results inside your own search box: synonyms, boost or bury rules, redirects, and pinned products. SEO and AI search tune how you appear in external engines. The overlap is the vocabulary. A clean synonym set (JIC equals AN equals 37 degree flare) helps both, because it forces one canonical name per part instead of three competing ones scattered across PIM fields and category pages."
+      },
+      {
+        "style": "h3",
+        "text": "In practice"
+      },
+      {
+        "style": "normal",
+        "text": "Take a hydraulics distributor whose buyers search \"3/4 npt to jic\" but whose catalog stores the fitting as \"adapter, male pipe to 37 deg.\" Without a synonym rule the search returns nothing and the buyer leaves. Add the mapping, pin the two best-selling sizes, and bury discontinued SKUs. The search now resolves to a stocked product, and the canonical name you chose for the rule is the one to carry into category pages and structured data."
+      }
+    ],
+    "seo": {
+      "metaTitle": "Searchandising: On-Site Search Tuning Explained",
+      "metaDescription": "Searchandising tunes on-site search results with synonyms, boosting, and pinning so buyer queries land on the right products. How it works and how it differs from SEO."
+    }
+  }
+]
