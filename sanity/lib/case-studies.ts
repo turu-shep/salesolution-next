@@ -3,7 +3,10 @@ import 'server-only'
 import {
   allCaseStudiesQuery,
   allCaseStudySlugsQuery,
+  allIndustriesQuery,
+  caseStudiesByIndustryQuery,
   caseStudyBySlugQuery,
+  industryBySlugQuery,
 } from './queries'
 import { sanityFetch } from './fetch'
 
@@ -17,13 +20,40 @@ export type CaseStudyServiceKey =
 
 export type CaseStudyDisclosure = 'named' | 'anonymized' | 'composite'
 
+/** A vertical (or sub-niche) as resolved from a caseStudyClient reference. */
+export type CaseStudyIndustryRef = {
+  _id: string
+  title: string
+  shortLabel?: string
+  slug: string
+  /** Slug of the top-level vertical when this is a sub-niche. */
+  parentSlug?: string
+}
+
 export type CaseStudyClient = {
   _id: string
   publicName?: string
   descriptor: string
+  /** Deprecated freeform label; prefer industryRef. */
   industry?: string
+  industryRef?: CaseStudyIndustryRef
   scale?: string
   region?: string
+}
+
+/** Top-level vertical, with a live count of case studies tagged to it. */
+export type Industry = {
+  _id: string
+  title: string
+  shortLabel?: string
+  slug: string
+  description?: string
+  hubHref?: string
+  accentColor?: string
+  order?: number
+  parentSlug?: string
+  caseStudyCount: number
+  subNiches?: { _id: string; title: string; shortLabel?: string; slug: string }[]
 }
 
 export type CaseStudyKeyMetric = {
@@ -125,5 +155,30 @@ export async function getCaseStudyBySlug(slug: string): Promise<CaseStudy | null
     query: caseStudyBySlugQuery,
     params: { slug },
     tags: ['caseStudy', `caseStudy:${slug}`],
+  })
+}
+
+/** Top-level verticals (no sub-niches), each with its live case-study count. */
+export async function getAllIndustries(): Promise<Industry[]> {
+  return sanityFetch<Industry[]>({
+    query: allIndustriesQuery,
+    tags: ['industry', 'caseStudy'],
+  })
+}
+
+export async function getIndustryBySlug(slug: string): Promise<Industry | null> {
+  return sanityFetch<Industry | null>({
+    query: industryBySlugQuery,
+    params: { slug },
+    tags: ['industry', `industry:${slug}`],
+  })
+}
+
+/** Case studies for a top-level vertical, including all its sub-niches. */
+export async function getCaseStudiesByIndustry(slug: string): Promise<CaseStudyCard[]> {
+  return sanityFetch<CaseStudyCard[]>({
+    query: caseStudiesByIndustryQuery,
+    params: { slug },
+    tags: ['caseStudy', `industry:${slug}`],
   })
 }

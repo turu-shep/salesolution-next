@@ -68,20 +68,23 @@ export const HOMEPAGE_FAQ_ITEMS: QA[] = [
     ),
   },
   {
-    q: 'What if we’re not in hydraulics or MRO?',
+    q: 'Does this work for my business?',
     a: (
       <>
         <p>
-          The playbook works for any technical-distribution or
-          specification-heavy e-commerce: electronics, contract
-          manufacturing, lab supply, industrial automation, fluid power,
-          fasteners, abrasives. If buyers read a spec sheet before they
-          purchase, the same mechanics apply.
+          Two engines, one operator. If buyers research before they buy
+          &mdash; distributors, manufacturers, anything spec-heavy &mdash; we
+          make you the company AI names, and stop the quotes you already get
+          from leaking.
         </p>
         <p className="mt-3">
-          If you sell something that doesn&rsquo;t require specification
-          comparison (commodity SKUs, generic consumer), we&rsquo;ll tell
-          you on the first call. Not every vertical needs us.
+          If you run on calls and bookings &mdash; roofing, HVAC, plumbing,
+          electrical, dental &mdash; the Revenue Engine answers every call,
+          replies in seconds, books the job, and chases the quotes that stall.
+        </p>
+        <p className="mt-3">
+          Sell a pure commodity with no research and no phone? We&rsquo;ll tell
+          you on the first call. Not every business needs us.
         </p>
       </>
     ),

@@ -76,6 +76,11 @@ export function PathModules({
                   {String(m.n).padStart(2, '0')}
                 </span>
                 <div className="min-w-0 max-w-prose">
+                  {weightLabel(m.weight) && (
+                    <span className="mb-2 inline-block rounded-[3px] border border-rule px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500">
+                      {weightLabel(m.weight)}
+                    </span>
+                  )}
                   <h3 className="font-display text-xl font-semibold tracking-[-0.01em] text-ink-900 sm:text-2xl">
                     {m.title}
                   </h3>
@@ -128,6 +133,14 @@ export function PathModules({
       })}
     </div>
   )
+}
+
+// Editorial weight tag (roadmap.sh's recommended/alternative/optional idea, as
+// text not color). `core` is the default and shows no badge.
+function weightLabel(weight?: string): string | null {
+  if (weight === 'alternative') return 'Alternative · pick this or a core skill'
+  if (weight === 'flexible') return 'Learn anytime'
+  return null
 }
 
 function Part({ label, children }: { label: string; children: React.ReactNode }) {

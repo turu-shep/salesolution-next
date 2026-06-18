@@ -125,15 +125,15 @@ const studies = [
     primaryService: 'catalog',
     supportingServices: ['search'],
     summary:
-      'An ~8,500-SKU industrial hydraulics distributor came in with qualified inbounds flat at 1,840 a month and AI Overviews citing its manufacturers instead of its own category pages. Six months of catalog and AI-search engineering later, January closed at 2,640 — +43.5% on the August baseline, with paid budget held flat.',
+      'An ~8,500-SKU hydraulics distributor was stuck at 1,840 qualified inbounds a month. AI Overviews were citing its manufacturers, not its own category pages. Six months of catalog and AI-search work later, January closed at 2,640. That’s +43.5% over the August baseline, and we didn’t add a dollar of ad spend.',
     engagementWindow: 'Aug 2024 – Jan 2025',
     durationLabel: '6 months',
     situation: pt(
-      'The client sells hydraulic fittings, adapters, and assemblies — roughly 8,500 SKUs across 150-plus categories. Through mid-2024, qualified inbounds had flattened at about **1,840 a month**, and the cost of buying growth back through paid search kept climbing.',
-      'The trigger was visible in the results pages: AI Overviews had started answering the engineering queries that used to land on the client’s category pages — and the citations went to the **manufacturers**, whose spec sheets were the cleanest structured source available. A distributor lives downstream of its own suppliers in AI answers unless its catalog gives the engines something better to cite.',
+      'The client sells hydraulic fittings, adapters, and assemblies. Roughly 8,500 SKUs across 150-plus categories. By mid-2024, qualified inbounds had flattened at about **1,840 a month**, and the cost of buying growth back through paid search kept climbing.',
+      'You could see why on the results page. AI Overviews had started answering the engineering queries that used to land on the client’s category pages, and they cited the **manufacturers** — whose spec sheets were the cleanest structured source around. In AI answers, a distributor sits downstream of its own suppliers until its catalog gives the engines something better to cite.',
     ),
     constraint: pt(
-      'Catalog copy was largely manufacturer-supplied — the same descriptions ran on competitor sites — and the product schema had gaps wide enough that engines had no reason to prefer the client’s pages over the manufacturer’s. And the brief came with a hard line: **grow qualified inbounds without adding ad budget**. Whatever moved had to come from the catalog itself.',
+      'Most of the catalog copy was manufacturer-supplied. The same descriptions ran on every competitor’s site, and the product schema had gaps wide enough that engines had no reason to pick the client’s pages over the manufacturer’s. The brief had one hard line: **grow qualified inbounds without adding ad budget**. Whatever moved had to come from the catalog itself.',
     ),
     approach: [
       phase(
@@ -158,12 +158,12 @@ const studies = [
       ),
     ],
     mechanism: pt(
-      'AI engines cite whichever page makes the answer easiest to assemble. The manufacturers were winning by default because their spec data was structured; the schema rewrite moved that advantage to the distributor — the same specs, plus stock, pricing, cross-compatibility, and application context a manufacturer page can’t offer.',
-      'Once the category pages and answer hubs gave the engines a better source, citations followed — and the traffic those answers route arrives **pre-qualified**. An engineer who lands from a thread-sizing answer already knows what they need; that is why the lead count moved faster than raw sessions did.',
+      'AI engines cite whichever page makes the answer easiest to assemble. The manufacturers won by default because their spec data was structured. The schema rewrite handed that advantage to the distributor, which had the same specs plus stock, pricing, cross-compatibility, and the application context a manufacturer page never carries.',
+      'Once the category pages and answer hubs gave the engines a better source, the citations followed. And the traffic those answers send arrives **pre-qualified**. An engineer who clicks through from a thread-sizing answer already knows what they need. That’s why the lead count climbed faster than raw sessions did.',
     ),
     resultsNarrative: pt(
-      'The path was not a hockey stick. Month one moved the baseline by about 150 leads while the schema work shipped; the slope steepened from October as the restructured category pages took. **January closed at 2,640 qualified inbounds — +43.5% on the August baseline**, roughly 800 additional qualified leads a month, with paid budget flat the entire window.',
-      'The chart shows the monthly counts as recorded in the client’s CRM — qualified inbounds, not impressions, not raw sessions.',
+      'It wasn’t a hockey stick. Month one added about 150 leads while the schema work shipped. The slope steepened in October as the restructured category pages took hold. **January closed at 2,640 qualified inbounds, +43.5% over the August baseline** — roughly 800 more a month, with paid budget flat the whole time.',
+      'The chart shows the monthly counts straight from the client’s CRM. Qualified inbounds. Not impressions, not raw sessions.',
     ),
     keyMetric: {
       prefix: '+',
@@ -236,14 +236,14 @@ const studies = [
     client: ref('caseStudyClient-automation'),
     primaryService: 'editorial',
     summary:
-      'A mid-market industrial automation distributor — ~12K SKUs — was ranking well and still losing organic share as AI Overviews ate informational-query click-through. Six months on the Standard editorial retainer took its AI Overview citation count on its top 50 commercial queries from 4 to 34. Organic leads from informational pages doubled.',
+      'A mid-market automation distributor with ~12K SKUs was ranking well and still bleeding organic share, because AI Overviews were eating the click-through on informational queries. Six months on the Standard editorial retainer took its AI Overview citations on the top 50 commercial queries from 4 to 34. Organic leads from informational pages doubled.',
     engagementWindow: '2025',
     durationLabel: '6 months',
     situation: pt(
-      'The client ranked where it needed to — and watched click-through decay anyway, as AI Overviews started answering the informational queries upstream of its commercial pages. On its **top 50 commercial queries**, the client’s pages were cited in AI Overview responses exactly **four times**. The query spaces its category position should have owned were being explained to its buyers by manufacturers.',
+      'The client ranked where it needed to and watched click-through decay anyway. AI Overviews had started answering the informational queries that feed its commercial pages. Across its **top 50 commercial queries**, the client’s pages showed up in AI Overview responses exactly **four times**. The query spaces its category position should have owned were getting explained to its buyers by manufacturers instead.',
     ),
     constraint: pt(
-      'The catalog was already in order; the gap was authority content, and the budget was approved for one retainer tier — not a content-team buildout. The constraint shaped the plan: **8 pieces and 1 pillar a month, concentrated on three product categories**, written by senior subject-matter writers. Spread across the whole catalog it would have moved nothing.',
+      'The catalog was already in order. The gap was authority content, and the budget covered one retainer tier, not a content-team buildout. So the plan had to be narrow: **8 pieces and 1 pillar a month, on three product categories**, written by senior subject-matter writers. Spread thin across the whole catalog, it would have moved nothing.',
     ),
     approach: [
       phase(
@@ -263,11 +263,11 @@ const studies = [
       ),
     ],
     mechanism: pt(
-      'AI Overviews assemble answers from sources that look like the category authority: depth, internal coherence, and machine-parseable structure. Concentrating six months of senior writing on **three categories** made the client the densest source available for those query spaces.',
-      'Citations compound. Once the pillars started being cited, the cluster pieces around them followed — the engine had already decided the domain was the authority for that territory.',
+      'AI Overviews build answers from whatever looks like the category authority — depth, internal coherence, structure a machine can parse. Six months of senior writing aimed at **three categories** made the client the densest source available in those query spaces.',
+      'Citations compound. Once the pillars started getting cited, the cluster pieces around them came along. The engine had already decided the domain was the authority for that territory.',
     ),
     resultsNarrative: pt(
-      'Citation count on the tracked query set went from **4 to 34** over the six months — a ×8.5 lift. Organic leads from informational pages **doubled** over the same window.',
+      'Citations on the tracked query set went from **4 to 34** over six months, a ×8.5 lift. Organic leads from informational pages **doubled** in the same window.',
       'The pillar pages now sit at the top of AI Overview responses for terms the manufacturers used to own.',
     ),
     keyMetric: {
@@ -319,15 +319,15 @@ const studies = [
     primaryService: 'dev',
     supportingServices: ['search'],
     summary:
-      'The same hydraulics distributor’s commerce stack was end-of-life: Magento 1, legacy schema invisible to AI Overviews, and 600ms-plus INP killing add-to-cart on mobile category browsing. A six-month full replatform moved all 8,500 SKUs onto a headless Next.js + Shopify Hydrogen storefront with a complete schema graph live from the first deploy.',
+      'The same hydraulics distributor’s commerce stack was at end-of-life. Magento 1, schema AI Overviews couldn’t read, and 600ms-plus INP that was killing add-to-cart on mobile category browsing. A six-month replatform moved all 8,500 SKUs onto a headless Next.js + Shopify Hydrogen storefront, with a complete schema graph live on the first deploy.',
     engagementWindow: '2024',
     durationLabel: '6 months',
     situation: pt(
-      'Magento 1 was past end-of-life — no patches, an aging integration surface, and a storefront whose structured data predated everything AI engines now read. On mobile, category browsing ran at **600ms-plus INP**, and add-to-cart behaved the way add-to-cart behaves at 600ms: customers left.',
-      'The decision wasn’t whether to replatform — the platform had made that decision itself. It was whether the new stack would just be newer, or would become the foundation the catalog and AI-search work could actually compound on.',
+      'Magento 1 was past end-of-life: no patches, an aging integration surface, and a storefront whose structured data predated everything AI engines now read. On mobile, category browsing ran at **600ms-plus INP**. Add-to-cart behaves the way you’d expect at 600ms. Customers left.',
+      'Whether to replatform wasn’t really the question — the platform had answered it. The question was whether the new stack would just be newer, or become a foundation the catalog and AI-search work could actually compound on.',
     ),
     constraint: pt(
-      'Hydraulic fittings are spec-driven buying: thread form, size, pressure rating. The old quote flow encoded years of that domain logic, and an off-the-shelf theme would have flattened it. The replatform had to carry **8,500 SKUs and the spec-selection workflow** across without simplifying either.',
+      'Buying hydraulic fittings is spec-driven: thread form, size, pressure rating. The old quote flow had years of that domain logic baked in, and an off-the-shelf theme would have flattened it. The replatform had to carry **8,500 SKUs and the spec-selection workflow** across without simplifying either one.',
     ),
     approach: [
       phase(
@@ -344,11 +344,11 @@ const studies = [
       ),
     ],
     mechanism: pt(
-      'Platform work doesn’t generate demand — it removes the ceiling on everything that does. The rebuild took the friction out of the two places a distributor wins or loses: the mobile category browse where 600ms of input delay was costing carts, and the machine-readability layer where AI engines decide whom to cite.',
+      'Platform work doesn’t generate demand. It lifts the ceiling on everything that does. The rebuild took the friction out of the two places a distributor wins or loses business: the mobile category browse, where 600ms of input delay was costing carts, and the machine-readability layer, where AI engines decide whom to cite.',
     ),
     resultsNarrative: pt(
-      'The full catalog was live in **six months**, schema graph in place from launch, quote flow and configurators carried over intact.',
-      'The growth chapter came next: the six months after launch are the **catalog + AI-search engagement documented in its own case study** — qualified inbounds up 43% on the post-launch baseline. The replatform is what made that slope possible; the two are reported separately so neither claims the other’s work.',
+      'The full catalog was live in **six months**. Schema graph in place from launch, quote flow and configurators carried over intact.',
+      'The growth came next. The six months after launch are the **catalog + AI-search engagement written up in its own case study**, where qualified inbounds rose 43% off the post-launch baseline. The replatform is what made that slope possible. We report the two separately so neither one claims the other’s work.',
     ),
     keyMetric: {
       value: '8,500',
@@ -398,14 +398,14 @@ const studies = [
     primaryService: 'dev',
     supportingServices: ['search'],
     summary:
-      'A fluid power manufacturer opening a direct commerce channel had no storefront, no organic history, and one hard requirement: the Acumatica PIM stays the source of truth. Five months later a 22k-SKU Next.js + Saleor build was live — AIO-ready from the first deploy, and earning its first AI Overview citations within 12 weeks of launch.',
+      'A fluid power manufacturer opening a direct commerce channel had no storefront, no organic history, and one hard rule: the Acumatica PIM stays the source of truth. Five months later a 22k-SKU Next.js + Saleor build was live. It shipped AIO-ready, and earned its first AI Overview citations within 12 weeks of launch.',
     engagementWindow: '2025',
     durationLabel: '5 months',
     situation: pt(
-      'A manufacturer selling through an OEM channel decided to open a direct commerce channel — net-new, with **no existing storefront and no organic history** to inherit. The catalog was 22k SKUs, the pricing was multi-currency across multiple tax regions, and the product data lived where it belonged: in the **Acumatica PIM**, which was not going to be replaced.',
+      'A manufacturer selling through an OEM channel decided to open a direct channel from scratch, with **no storefront and no organic history** to inherit. The catalog ran to 22k SKUs. Pricing was multi-currency across several tax regions. And the product data lived where it belonged, in the **Acumatica PIM**, which wasn’t going anywhere.',
     ),
     constraint: pt(
-      'Greenfield domains start with nothing engines trust. Every citation heuristic that favors incumbents — history, links, behavioral signals — worked against this launch. And the PIM-as-source-of-truth requirement meant no copy-paste catalog: if product data forked from Acumatica, the project failed on its own terms regardless of traffic.',
+      'A greenfield domain starts with nothing engines trust. Every citation heuristic that rewards incumbents — history, links, behavioral signals — worked against this launch. The PIM-as-source-of-truth rule ruled out a copy-paste catalog, too: if the product data ever forked from Acumatica, the project failed on its own terms no matter what traffic did.',
     ),
     approach: [
       phase(
@@ -422,11 +422,11 @@ const studies = [
       ),
     ],
     mechanism: pt(
-      'A greenfield domain can’t win citations on authority, so it has to win on **legibility**. The engines’ first crawl saw the catalog exactly the way they want it: structured specs, answer-shaped category pages, a complete schema graph. That is why the first citations arrived in weeks, not quarters — there was no remediation phase, because nothing shipped broken.',
+      'A greenfield domain can’t win citations on authority, so it has to win on **legibility**. The engines’ first crawl saw the catalog exactly the way they like it: structured specs, answer-shaped category pages, a complete schema graph. That’s why the first citations came in weeks instead of quarters. There was no remediation phase, because nothing shipped broken.',
     ),
     resultsNarrative: pt(
-      'The build went live at month five, 22k SKUs, PIM wired straight through.',
-      'The first **AI Overview citations on tracked category queries arrived inside 12 weeks of launch** — on a domain that had existed for less than half a year and had no link history to lean on.',
+      'The build went live at month five. 22k SKUs, PIM wired straight through.',
+      'The first **AI Overview citations on tracked category queries landed inside 12 weeks of launch**, on a domain less than half a year old with no link history to lean on.',
     ),
     keyMetric: {
       value: '12',
@@ -472,14 +472,14 @@ const studies = [
     client: ref('caseStudyClient-fasteners'),
     primaryService: 'dev',
     summary:
-      'A specialty fasteners distributor — 12k SKUs across 17 brands — ran B2B commerce on WooCommerce with 61 plugins, three of which handled net terms and tiered pricing and broke on every update. A ten-week migration to Shopify Plus B2B replaced the plugin stack with native primitives and took product-page CLS from 0.31 to 0.02.',
+      'A specialty fasteners distributor with 12k SKUs across 17 brands ran B2B commerce on WooCommerce and 61 plugins. Three of them handled net terms and tiered pricing, and broke on every update. A ten-week migration to Shopify Plus B2B swapped the plugin stack for native primitives and took product-page CLS from 0.31 to 0.02.',
     engagementWindow: '2024',
     durationLabel: '10 weeks',
     situation: pt(
-      'The store had grown the way WooCommerce stores grow: a plugin for every problem, **61 of them** by the time we audited it. The three that mattered most — net terms and tiered B2B pricing — were also the three that broke on every update cycle. Product pages carried a **CLS of 0.31**, well outside Core Web Vitals thresholds, because every plugin brought its own late-loading scripts.',
+      'The store had grown the way WooCommerce stores grow: a plugin for every problem, **61 of them** by the time we audited it. The three that mattered most ran net terms and tiered B2B pricing, and those were the three that broke on every update. Product pages carried a **CLS of 0.31**, well outside Core Web Vitals, because every plugin loaded its own late scripts.',
     ),
     constraint: pt(
-      'B2B requirements — company accounts, net terms, per-customer price lists — are exactly what generic commerce themes don’t handle, which is how the plugin sprawl happened in the first place. The migration had to land those workflows on **native platform primitives**, carry 17 brands’ spec tables across, and do it without pausing a working store.',
+      'B2B requirements like company accounts, net terms, and per-customer price lists are exactly what generic commerce themes don’t handle. That’s how the plugin sprawl started. The migration had to land those workflows on **native platform primitives**, carry 17 brands’ spec tables across, and do it without pausing a working store.',
     ),
     approach: [
       phase(
@@ -499,11 +499,11 @@ const studies = [
       ),
     ],
     mechanism: pt(
-      'Most replatform wins are **subtraction**. Each of the 61 plugins was a late-loading script shifting layout and an update-day liability; moving the B2B stack onto native primitives removed the breakage class entirely, and CLS followed the script weight out the door. Nothing was "optimized" — the cause was removed.',
+      'Most replatform wins come from **subtraction**. Each of the 61 plugins was a late-loading script that shifted layout and a liability on update day. Moving the B2B stack onto native primitives removed the whole class of breakage, and CLS followed the script weight out the door. We didn’t optimize anything. We removed the cause.',
     ),
     resultsNarrative: pt(
-      'Launch shipped in week ten with product-page **CLS at 0.02, down from 0.31** — from failing Core Web Vitals to comfortably inside the "good" threshold — on a stack of **4 plugins where 61 had been**.',
-      'Net terms and tiered pricing now run native, which means the failure mode they used to bring — breaking on every plugin update — no longer exists to monitor.',
+      'Launch shipped in week ten with product-page **CLS at 0.02, down from 0.31**. That’s the jump from failing Core Web Vitals to comfortably inside the “good” range, on a stack of **4 plugins where 61 had been**.',
+      'Net terms and tiered pricing now run native. The failure they used to cause, breaking on every plugin update, simply isn’t there to monitor anymore.',
     ),
     keyMetric: {
       value: '0.31 → 0.02',
@@ -539,25 +539,33 @@ const studies = [
   },
 ]
 
-// ── Mutate ──────────────────────────────────────────────────────────────
-const mutations = [...clients, ...studies].map((doc) => ({ createOrReplace: doc }))
+// Exported so the prose-humanizer patch can read the canonical content from
+// one place instead of duplicating it.
+export { clients, studies }
 
-const res = await fetch(
-  `https://${projectId}.api.sanity.io/v${apiVersion}/data/mutate/${dataset}?returnIds=true`,
-  {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+// ── Mutate — only when run directly (`node scripts/seed-case-studies.mjs`),
+//    never when imported, so importing this file has no side effects. ────────
+const isMain = process.argv[1]?.endsWith('seed-case-studies.mjs')
+if (isMain) {
+  const mutations = [...clients, ...studies].map((doc) => ({ createOrReplace: doc }))
+
+  const res = await fetch(
+    `https://${projectId}.api.sanity.io/v${apiVersion}/data/mutate/${dataset}?returnIds=true`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ mutations }),
     },
-    body: JSON.stringify({ mutations }),
-  },
-)
+  )
 
-const json = await res.json()
-if (!res.ok) {
-  console.error('Mutation failed:', JSON.stringify(json, null, 2))
-  process.exit(1)
+  const json = await res.json()
+  if (!res.ok) {
+    console.error('Mutation failed:', JSON.stringify(json, null, 2))
+    process.exit(1)
+  }
+  console.log(`Seeded ${clients.length} clients + ${studies.length} case studies:`)
+  for (const r of json.results ?? []) console.log(`  ${r.operation ?? 'upsert'} ${r.id}`)
 }
-console.log(`Seeded ${clients.length} clients + ${studies.length} case studies:`)
-for (const r of json.results ?? []) console.log(`  ${r.operation ?? 'upsert'} ${r.id}`)

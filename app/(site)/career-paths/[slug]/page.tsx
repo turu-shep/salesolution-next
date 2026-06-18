@@ -6,12 +6,13 @@ import { PathBody } from '@/components/sections/career-path-detail/PathBody'
 import { PathBuyer } from '@/components/sections/career-path-detail/PathBuyer'
 import { PathHero } from '@/components/sections/career-path-detail/PathHero'
 import { PathModules } from '@/components/sections/career-path-detail/PathModules'
+import { PathPrereqs } from '@/components/sections/career-path-detail/PathPrereqs'
 import { PathRelated } from '@/components/sections/career-path-detail/PathRelated'
 import { PathSeniority } from '@/components/sections/career-path-detail/PathSeniority'
 import { PathTerms } from '@/components/sections/career-path-detail/PathTerms'
 import { PathTOC } from '@/components/sections/career-path-detail/PathTOC'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { breadcrumbListSchema } from '@/lib/schema'
+import { breadcrumbListSchema, careerPathSchema } from '@/lib/schema'
 import { business } from '@/lib/business'
 import {
   getAllCareerPaths,
@@ -98,6 +99,17 @@ export default async function CareerPathPage({ params }: Props) {
           { name: path.title, url: `${business.url}/career-paths/${slug}/` },
         ])}
       />
+      {hasModules && (
+        <JsonLd
+          data={careerPathSchema({
+            title: path.title,
+            slug,
+            description: path.description,
+            kind,
+            modules: ordered.map((m) => ({ n: m.n, title: m.title, skill: m.skill })),
+          })}
+        />
+      )}
 
       <PathHero path={path} />
 
@@ -130,6 +142,7 @@ export default async function CareerPathPage({ params }: Props) {
                   Reviewed {formatReviewed(path.lastReviewed)}
                 </p>
               )}
+              <PathPrereqs paths={path.prerequisites} />
               {hasModules ? (
                 <>
                   {bodyHasContent && <PathBody body={path.body} />}
@@ -151,7 +164,16 @@ export default async function CareerPathPage({ params }: Props) {
 
       <PathTerms terms={path.relatedTerms} />
 
-      <PathRelated paths={siblings} />
+      {path.leadsTo && path.leadsTo.length > 0 ? (
+        <PathRelated
+          paths={path.leadsTo}
+          eyebrow="What's next"
+          heading="Where this leads"
+          headingMuted="next."
+        />
+      ) : (
+        <PathRelated paths={siblings} />
+      )}
 
       <FinalCTARail />
     </>

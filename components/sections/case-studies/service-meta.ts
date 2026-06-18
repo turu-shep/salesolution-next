@@ -116,6 +116,6 @@ export function disclosureCopy(
       return `Composite case study: figures are aggregated from multiple ${descriptor.toLowerCase()} engagements and do not describe a single client. Per-engagement references are available on request under NDA.`
     case 'anonymized':
     default:
-      return `Client name withheld under NDA — most industrial distributors prefer the case study without the logo. The vertical, scale, timeline, and every number are as measured; only identifying details are removed. Reference calls available on request.`
+      return `Client name withheld under NDA. Most industrial distributors prefer the case study without the logo. The vertical, scale, timeline, and every number are exactly as measured. Only the identifying details are removed. Reference calls available on request.`
   }
 }

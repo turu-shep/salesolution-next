@@ -6,6 +6,7 @@ import { caseStudy } from './case-study'
 import { caseStudyClient } from './case-study-client'
 import { glossaryTerm } from './glossary-term'
 import { guide } from './guide'
+import { industry } from './industry'
 import { faqItem } from './objects/faq-item'
 import { portableText } from './objects/portable-text'
 import { seo } from './objects/seo'
@@ -23,6 +24,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   glossaryTerm,
   caseStudy,
   caseStudyClient,
+  industry,
   service,
   testimonial,
   author,

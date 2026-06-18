@@ -42,10 +42,19 @@ export const caseStudyClient = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'industry',
+      name: 'industryRef',
       title: 'Industry',
+      type: 'reference',
+      to: [{ type: 'industry' }],
+      description:
+        'The vertical (or sub-niche) this client belongs to. Drives industry faceting on the case-studies hub and future /industries/* pages.',
+    }),
+    defineField({
+      name: 'industry',
+      title: 'Industry (legacy text)',
       type: 'string',
-      description: 'E.g. "Industrial distribution · fluid power".',
+      description:
+        'Deprecated freeform label, e.g. "Industrial distribution · fluid power". Kept temporarily as the source for sub-niche backfill; prefer the Industry reference above.',
     }),
     defineField({
       name: 'scale',

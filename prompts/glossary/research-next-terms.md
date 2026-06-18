@@ -16,8 +16,10 @@ authoring prompt for each chosen term** by filling the template at
    Use a Node script with `next-sanity` `createClient` (`perspective:'raw'` to also see drafts),
    query `*[_type=="glossaryTerm"]{term, "slug": slug.current, cluster, opportunity}`. Do not
    re-add anything that already exists.
-2. **Pull the candidate pool** from `05-glossary.md` (terms not yet built). It tags each term with
-   a cluster and an opportunity (`own` / `contest` / `reference-only`).
+2. **Pull the candidate pool** from two places: `05-glossary.md` (the 65-term plan) AND the live
+   **capture queue** — run `node scripts/glossary-queue.mjs list` (or read
+   `docs/strategy/glossary-queue.json`). The queue holds terms that real published content already
+   uses and needs defined, so prioritize those: defining them lets us cross-link existing pages.
 3. **Re-check demand + difficulty** for the top candidates with Ahrefs MCP if available
    (`keywords-explorer-overview`, country `us`, select `keyword,volume,difficulty,global_volume`).
    Be sparing with Ahrefs units (a batched call of ~20 keywords is fine). If Ahrefs is

@@ -11,14 +11,30 @@ export type NavItem = { label: string; href: string; children?: NavChild[] }
 
 export const primaryNav: NavItem[] = [
   { label: 'Services', href: '/services/' },
+  {
+    // Audience-led entry, sitting beside the capability-led "Services" so a
+    // visitor can self-identify by industry in one click. Industrial routes to
+    // its own proof-led hub; the two Revenue Engine verticals route to their
+    // tailored offer pages. (Parent points at the proof spine until a cross-
+    // vertical /industries/ index exists.)
+    label: 'Who We Serve',
+    href: '/case-studies/',
+    children: [
+      { label: 'Industrial & Technical B2B', href: '/industries/industrial-distribution/' },
+      { label: 'Home Services (Roofing, HVAC)', href: '/revenue-engine/home-services/' },
+      { label: 'Dental Practices', href: '/revenue-engine/dentists/' },
+    ],
+  },
   { label: 'Case Studies', href: '/case-studies/' },
   { label: 'Framework', href: '/future-proof-your-seo/' },
-  { label: 'Insights', href: '/category/blog/' },
   {
-    label: 'Resources',
-    href: '/guides/',
+    // "Resources" folded in here to keep the top-level bar at six items once
+    // "Who We Serve" was added (the AI Search Readiness Checklist lived at
+    // /future-proof-your-seo/, already top-levelled as "Framework").
+    label: 'Insights',
+    href: '/category/blog/',
     children: [
-      { label: 'AI Search Readiness Checklist', href: '/future-proof-your-seo/' },
+      { label: 'Articles', href: '/category/blog/' },
       { label: 'Guides', href: '/guides/' },
       { label: 'Learning Hub', href: '/career-paths/' },
       { label: 'Glossary', href: '/glossary/' },

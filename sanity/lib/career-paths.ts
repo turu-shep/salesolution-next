@@ -31,6 +31,7 @@ export type SeniorityRow = {
 export type SkillModule = {
   _key?: string
   level?: 'Entry' | 'Mid' | 'Senior'
+  weight?: 'core' | 'alternative' | 'flexible'
   title?: string
   skill?: string
   why?: string
@@ -61,6 +62,8 @@ export type CareerPath = CareerPathCard & {
   modules?: SkillModule[]
   body?: unknown[]
   buyerSection?: BuyerSection
+  prerequisites?: CareerPathCard[]
+  leadsTo?: CareerPathCard[]
   relatedTerms?: RelatedTermCard[]
   lastReviewed?: string
   seo?: {

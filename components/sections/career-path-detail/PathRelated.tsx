@@ -23,9 +23,17 @@ import type { CareerPathCard } from '@/sanity/lib/career-paths'
 export function PathRelated({
   paths,
   id,
+  eyebrow = 'Keep reading',
+  heading = 'Other paths',
+  headingMuted = 'in the library.',
 }: {
   paths: CareerPathCard[]
   id?: string
+  /** Override the rail framing — used for a curated "Where this leads" rail
+   *  (driven by `leadsTo`) vs the default newest-first sibling rail. */
+  eyebrow?: string
+  heading?: string
+  headingMuted?: string
 }) {
   if (paths.length === 0) return null
 
@@ -36,11 +44,11 @@ export function PathRelated({
       <div className="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between">
         <div className="max-w-2xl">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-            Keep reading
+            {eyebrow}
           </p>
           <h2 className="mt-3 font-display text-balance text-3xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-4xl">
-            Other paths{' '}
-            <span className="text-ink-500">in the library.</span>
+            {heading}{' '}
+            <span className="text-ink-500">{headingMuted}</span>
           </h2>
         </div>
         <Link

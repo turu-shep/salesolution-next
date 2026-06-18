@@ -119,6 +119,21 @@ export const careerPath = defineType({
               options: { list: ['Entry', 'Mid', 'Senior'] },
               validation: (rule) => rule.required(),
             },
+            {
+              name: 'weight',
+              type: 'string',
+              title: 'Weight',
+              description:
+                'core = required for the role; alternative = a swap-in for a core skill (pick this or that); flexible = useful but order/inclusion is loose. "core" shows no badge.',
+              options: {
+                list: [
+                  { title: 'Core (required)', value: 'core' },
+                  { title: 'Alternative (swap-in)', value: 'alternative' },
+                  { title: 'Flexible (learn anytime)', value: 'flexible' },
+                ],
+              },
+              initialValue: 'core',
+            },
             { name: 'title', type: 'string', title: 'Skill title', validation: (rule) => rule.required() },
             { name: 'skill', type: 'text', rows: 2, title: 'The skill (what you must be able to do)' },
             { name: 'why', type: 'text', rows: 3, title: 'Why it matters' },
@@ -158,6 +173,22 @@ export const careerPath = defineType({
         { name: 'inHouseVsAgency', type: 'portableText', title: 'In-house vs agency vs fractional' },
         { name: 'costReality', type: 'text', rows: 2, title: 'Cost reality' },
       ],
+    }),
+    defineField({
+      name: 'prerequisites',
+      title: 'Prerequisites (paths to learn first)',
+      type: 'array',
+      description:
+        'The paths a reader should know before this one — e.g. SEO Specialist before GEO Specialist. Renders as a "Before this path" line and feeds the dependency map.',
+      of: [{ type: 'reference', to: [{ type: 'careerPath' }] }],
+    }),
+    defineField({
+      name: 'leadsTo',
+      title: 'Leads to (where this path goes next)',
+      type: 'array',
+      description:
+        'The natural next paths after this one. Renders as the "Where this leads" rail (replaces the default newest-first siblings when set).',
+      of: [{ type: 'reference', to: [{ type: 'careerPath' }] }],
     }),
     defineField({
       name: 'relatedTerms',

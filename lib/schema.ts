@@ -149,6 +149,57 @@ export function itemListSchema({
   }
 }
 
+/**
+ * JSON-LD for a /career-paths/[slug]/ page. Emits an ItemList of the ordered
+ * skill modules (so an AI engine sees the progression as a structured, pre-
+ * chunked list, name + the one-line skill per step), plus an Occupation node
+ * for role-kind paths (a hireable profession) so the page reads as the canonical
+ * entity for that role. Pass the already-ordered modules from the page.
+ */
+export function careerPathSchema({
+  title,
+  slug,
+  description,
+  kind = 'role',
+  modules,
+}: {
+  title: string
+  slug: string
+  description?: string
+  kind?: 'role' | 'specialization'
+  modules: { n: number; title?: string; skill?: string }[]
+}) {
+  const pageUrl = `${SITE}/career-paths/${slug}/`
+  const graph: Record<string, unknown>[] = [
+    {
+      '@type': 'ItemList',
+      '@id': `${pageUrl}#modules`,
+      name: `${title} — skills, entry to senior`,
+      ...(description ? { description } : {}),
+      url: pageUrl,
+      numberOfItems: modules.length,
+      itemListElement: modules.map((m) => ({
+        '@type': 'ListItem',
+        position: m.n,
+        name: m.title,
+        ...(m.skill ? { description: m.skill } : {}),
+      })),
+    },
+  ]
+  if (kind === 'role') {
+    graph.push({
+      '@type': 'Occupation',
+      '@id': `${pageUrl}#occupation`,
+      name: title,
+      ...(description ? { description } : {}),
+      occupationalCategory: 'Search marketing / SEO',
+      url: pageUrl,
+      skills: modules.map((m) => m.title).filter(Boolean),
+    })
+  }
+  return { '@context': 'https://schema.org', '@graph': graph }
+}
+
 const glossaryTermSetId = `${SITE}/glossary/#termset`
 
 /**

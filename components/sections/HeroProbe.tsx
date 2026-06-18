@@ -9,15 +9,16 @@ import { AIOverviewMockup } from './AIOverviewMockup'
 import { LogoMarquee } from './LogoMarquee'
 
 /**
- * Home hero — v3.
+ * Home hero — v4 (cross-vertical front door).
  *
  * - No §0X rail. The section announces itself with the H1.
- * - Industrial-first headline; hydraulics + MRO + technical distribution as
- *   the specifier line.
- * - Probe panel gets more visual weight: bigger header band, full-width on
- *   the right column, hover affordances on the action row.
- *
- * Real probe is wired to /api/probe/ — see app/api/probe/route.ts.
+ * - Universal promise headline ("win the customers you already pay for"); the
+ *   subhead names both leaks (discovery + response) and the CTAs fork into the
+ *   two funnels: industrial → /industries/industrial-distribution/, local-service
+ *   → /revenue-engine/. Do not merge the funnels.
+ * - The AI-answer mockup + probe are the discovery-side proof (any site can be
+ *   scored, but the framing leans GEO). Probe is wired to /api/probe/ — see
+ *   app/api/probe/route.ts.
  */
 
 type ProbeState =
@@ -72,120 +73,137 @@ export function HeroProbe() {
 
   return (
     <>
+      {/* Hero — split: the message in a column it fills (a short headline
+          stranded in a full-width band reads as small), the AI answer (our
+          proof) beside it and on the first screen. */}
       <section data-section-tone="light" className="relative bg-paper">
-        <div className="mx-auto max-w-6xl px-4 pb-16 pt-16 sm:px-6 md:pb-24 md:pt-24 lg:px-8">
-          {/* Big-statement headline — dominant moment of the page */}
-          <div className="max-w-5xl">
-            <h1 className="font-display text-6xl font-semibold leading-[0.95] tracking-[-0.035em] text-ink-900 sm:text-7xl md:text-[6.5rem]">
-              <span className="block">AI search,</span>
-              <span className="block text-ink-500">engineered.</span>
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 pb-16 pt-14 sm:px-6 md:pt-20 lg:grid-cols-12 lg:items-center lg:gap-12 lg:px-8 lg:pb-20">
+          <div className="lg:col-span-7">
+            <h1 className="font-display text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.03em] text-ink-900 sm:text-5xl lg:text-[4.25rem]">
+              <span className="block">Win the customers</span>
+              <span className="block">you already pay for.</span>
             </h1>
 
-            <p className="mt-10 max-w-2xl text-lg leading-relaxed text-ink-700 md:text-xl">
-              Built for industrial e&#8209;commerce. Hydraulics, MRO, and
-              technical distribution &mdash; we engineer how AI Overviews
-              and generative engines cite your category.
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-700">
+              You pay to get found and to make the phone ring. Then you lose them
+              in the gap &mdash; buyers get their answer from AI before they reach
+              you, and the ones who do reach you wait too long for a reply. We
+              close both, without more ad spend.
             </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Link
-                href="/unlock-growth-audit/"
-                data-cta="audit__hero_cta"
-                data-cta-location="hero"
-                className="inline-flex items-center justify-center rounded-[4px] bg-brand-600 px-6 py-3.5 text-base font-semibold text-white shadow-cta transition-colors duration-200 hover:bg-brand-700"
-              >
-                Get the full audit
-              </Link>
-              <Link
-                href="/future-proof-your-seo/"
-                data-cta="checklist__hero_cta"
-                data-cta-location="hero"
-                className="inline-flex items-center gap-1.5 py-3 text-base font-semibold text-ink-800 underline decoration-rule-strong underline-offset-[6px] transition-colors duration-200 hover:text-brand-600 hover:decoration-brand-600"
-              >
-                See the framework
-                <span aria-hidden>→</span>
-              </Link>
+            <div className="mt-8">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+                Which are you?
+              </p>
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-3">
+                <Link
+                  href="/industries/industrial-distribution/"
+                  data-cta="lane-industrial__hero"
+                  data-cta-location="hero"
+                  className="inline-flex items-center gap-1.5 rounded-[4px] bg-brand-600 px-6 py-3.5 text-base font-semibold text-white shadow-cta transition-colors duration-200 hover:bg-brand-700"
+                >
+                  Industrial &amp; technical B2B
+                  <span aria-hidden>→</span>
+                </Link>
+                <Link
+                  href="/revenue-engine/"
+                  data-cta="lane-local-service__hero"
+                  data-cta-location="hero"
+                  className="inline-flex items-center gap-1.5 rounded-[4px] border border-rule-strong bg-surface px-6 py-3.5 text-base font-semibold text-ink-900 transition-colors duration-200 hover:border-ink-900"
+                >
+                  Home services &amp; dental
+                  <span aria-hidden>→</span>
+                </Link>
+              </div>
             </div>
           </div>
 
-          {/* Two visual proofs side by side: what we DO (mockup) and how
-              you can TRY it (probe). */}
-          <div className="mt-16 grid gap-8 lg:grid-cols-12 md:mt-24">
-            {/* AI Overview mockup — wider, the visual centerpiece.
-                `min-w-0` keeps the column from sizing to its long-URL content
-                inside the truncated browser chrome on mobile (default grid
-                tracks size to content). */}
-            <div className="min-w-0 lg:col-span-7">
-              <div className="mb-4 flex items-center justify-between">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-                  What it looks like when we&rsquo;ve done the work
-                </p>
-                <p className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400 sm:block">
-                  Real query · Real citation · Real client
-                </p>
-              </div>
-              <AIOverviewMockup />
+          {/* The proof, beside the message — min-w-0 stops the long-URL chrome
+              from blowing out the grid track on mobile. */}
+          <div className="min-w-0 lg:col-span-5">
+            <div className="mb-4 flex items-center justify-between">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+                What it looks like when we&rsquo;ve done the work
+              </p>
+              <p className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400 sm:block">
+                Real query · Real citation · Real client
+              </p>
             </div>
+            <AIOverviewMockup />
+          </div>
+        </div>
+      </section>
 
-            {/* Probe — keep on the right, slightly narrower */}
-            <div className="min-w-0 lg:col-span-5">
-              <div className="mb-4">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-                  Try it on your own page
-                </p>
+      {/* Try it on your own page — the interactive probe earns its own moment
+          instead of being squeezed beside the mockup. */}
+      <section data-section-tone="light" className="relative border-t border-rule bg-paper">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-16 sm:px-6 lg:grid-cols-12 lg:items-center lg:gap-12 lg:px-8 lg:py-20">
+          <div className="lg:col-span-5">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+              Try it on your own page
+            </p>
+            <h2 className="mt-3 font-display text-3xl font-semibold leading-[1.1] tracking-[-0.015em] text-ink-900 sm:text-4xl">
+              Score a page the way AI reads it.
+            </h2>
+            <p className="mt-4 max-w-md text-lg leading-relaxed text-ink-700">
+              Paste a product or category URL. In about two seconds you&rsquo;ll
+              see how ready it is to be cited &mdash; schema, AI-readability, and
+              authority &mdash; with no email required.
+            </p>
+          </div>
+
+          <div className="min-w-0 lg:col-span-7">
+            <div className="relative border border-ink-300/30 bg-surface shadow-[0_30px_80px_-30px_rgba(15,20,30,0.20)]">
+              <div className="flex items-center justify-between border-b border-rule px-5 py-4">
+                <span className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.16em] text-ink-700">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-500 opacity-50" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-500" />
+                  </span>
+                  AI-Readiness Probe
+                </span>
+                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-400">
+                  live
+                </span>
               </div>
-              <div className="relative border border-ink-300/30 bg-surface shadow-[0_30px_80px_-30px_rgba(15,20,30,0.20)]">
-                <div className="flex items-center justify-between border-b border-rule px-5 py-4">
-                  <span className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.16em] text-ink-700">
-                    <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-500 opacity-50" />
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-500" />
-                    </span>
-                    AI-Readiness Probe
+
+              <form onSubmit={onSubmit} className="p-5">
+                <label
+                  htmlFor="probe-url"
+                  className="block font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500"
+                >
+                  Your product or category URL
+                </label>
+                <div className="mt-2 flex items-stretch border border-rule-strong focus-within:border-brand-600 focus-within:ring-2 focus-within:ring-brand-600/15">
+                  <span className="flex items-center border-r border-rule px-3 font-mono text-xs text-ink-400">
+                    https://
                   </span>
-                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-400">
-                    live
-                  </span>
+                  <input
+                    id="probe-url"
+                    type="text"
+                    inputMode="url"
+                    autoComplete="off"
+                    placeholder="yourdomain.com/category"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    disabled={state.kind === 'loading'}
+                    className="min-w-0 flex-1 bg-transparent px-3 py-3 font-mono text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none disabled:opacity-50"
+                  />
                 </div>
 
-                <form onSubmit={onSubmit} className="p-5">
-                  <label
-                    htmlFor="probe-url"
-                    className="block font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500"
-                  >
-                    Your product or category URL
-                  </label>
-                  <div className="mt-2 flex items-stretch border border-rule-strong focus-within:border-brand-600 focus-within:ring-2 focus-within:ring-brand-600/15">
-                    <span className="flex items-center border-r border-rule px-3 font-mono text-xs text-ink-400">
-                      https://
-                    </span>
-                    <input
-                      id="probe-url"
-                      type="text"
-                      inputMode="url"
-                      autoComplete="off"
-                      placeholder="yourdomain.com/category"
-                      value={url}
-                      onChange={(e) => setUrl(e.target.value)}
-                      disabled={state.kind === 'loading'}
-                      className="min-w-0 flex-1 bg-transparent px-3 py-3 font-mono text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none disabled:opacity-50"
-                    />
-                  </div>
+                <button
+                  type="submit"
+                  disabled={state.kind === 'loading' || !url.trim()}
+                  className="mt-3 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-[4px] bg-ink-900 px-5 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-ink-800 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {state.kind === 'loading' ? 'Scoring…' : 'Score this page →'}
+                </button>
+              </form>
 
-                  <button
-                    type="submit"
-                    disabled={state.kind === 'loading' || !url.trim()}
-                    className="mt-3 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-[4px] bg-ink-900 px-5 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-ink-800 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    {state.kind === 'loading' ? 'Scoring…' : 'Score this page →'}
-                  </button>
-                </form>
+              <ProbeResultPanel state={state} />
 
-                <ProbeResultPanel state={state} />
-
-                <div className="border-t border-rule px-5 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">
-                  Deterministic · No data stored
-                </div>
+              <div className="border-t border-rule px-5 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">
+                Deterministic · No data stored
               </div>
             </div>
           </div>

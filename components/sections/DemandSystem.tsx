@@ -49,9 +49,9 @@ function fanPaths(n: number, w: number, h: number): string[] {
 
 // Funnel vessel silhouette, drawn in a stretchy 0–100 space behind the bands.
 // Gentle taper up top (room for the wide source rows) pinching to the neck.
-const FUNNEL_LEFT = 'M4 0C6 30 16 60 30 100'
-const FUNNEL_RIGHT = 'M96 0C94 30 84 60 70 100'
-const FUNNEL_FILL = 'M4 0L96 0C94 30 84 60 70 100L30 100C16 60 6 30 4 0Z'
+const FUNNEL_LEFT = 'M4 0C6 30 16 62 28 100'
+const FUNNEL_RIGHT = 'M96 0C94 30 84 62 72 100'
+const FUNNEL_FILL = 'M4 0L96 0C94 30 84 62 72 100L28 100C16 62 6 30 4 0Z'
 
 // Descending blue-intensity ramp: neutral stranger → brand-tinted, ready-to-buy.
 const STAGE_TONE: Record<FunnelStageId, string> = {
@@ -224,14 +224,54 @@ export function DemandSystem({ id }: { id?: string }) {
                 )
               })}
 
-              {/* neck → decision */}
+            </div>
+          </div>
+
+          {/* ── Conversion + retention loop ─────────────────────────────────
+              Decision and retention share one relative container so the loop
+              can actually connect them: a drawn return path exits the retention
+              node, rises through the right gutter, and lands an arrowhead back
+              on the decision. Desktop draws the path; mobile gets the note. */}
+          <div className="relative mx-auto mt-1 max-w-3xl">
+            <svg
+              className="absolute inset-0 hidden h-full w-full md:block"
+              style={{ zIndex: 0 }}
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              aria-hidden
+            >
+              <path
+                d="M82 76H91C95 76 95 27 91 27H72"
+                fill="none"
+                stroke="var(--color-accent-500)"
+                strokeOpacity="0.85"
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+                className="demand-flow"
+              />
+              <path
+                d="M75.5 23.5L71.5 27L75.5 30.5"
+                fill="none"
+                stroke="var(--color-accent-500)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
+              />
+            </svg>
+            <span aria-hidden className="absolute right-0 top-1/2 hidden -translate-y-1/2 rotate-90 font-mono text-[10px] uppercase tracking-[0.2em] text-accent-500 md:block">
+              repeat loop
+            </span>
+
+            <div className="relative" style={{ zIndex: 1 }}>
+              {/* funnel neck → decision */}
               <div aria-hidden className="flex justify-center py-2.5 text-brand-300/80">
                 <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
                   <path d="M1 1l7 7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
 
-              {/* Decision — the climax, at the neck */}
+              {/* Decision — the funnel's output */}
               <div
                 className="demand-rise relative mx-auto w-full overflow-hidden rounded-[4px] border border-brand-300/70 bg-brand-600 px-6 py-5 text-center shadow-[0_0_60px_-12px_rgba(38,82,239,0.85)]"
                 style={{ ['--w' as string]: '40%' }}
@@ -250,51 +290,37 @@ export function DemandSystem({ id }: { id?: string }) {
                   {DEMAND_DECISION.note}
                 </p>
               </div>
-            </div>
-          </div>
 
-          {/* ── Retention loop: won customers cycle back, below the decision ── */}
-          <div className="relative mx-auto mt-0 max-w-3xl">
-            <div aria-hidden className="flex justify-center py-2.5 text-accent-500/80">
-              <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
-                <path d="M1 1l7 7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
+              {/* won customer drops into retention */}
+              <div aria-hidden className="flex justify-center py-2.5 text-accent-500/80">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                  <path d="M1 1l7 7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
 
-            <div
-              className="demand-rise relative mx-auto w-full rounded-[4px] border border-accent-500/40 bg-accent-500/[0.05] px-5 py-4 text-center sm:px-6"
-              style={{ ['--w' as string]: '64%' }}
-              data-funnel-band
-            >
-              <span className="flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-accent-500">
-                <span className="text-accent-500/60">05</span>
-                <span className="text-accent-500/40">/</span>
-                {RETENTION.loopLabel}
-              </span>
-              <p className="mt-1.5 font-display text-lg font-semibold text-white">
-                {RETENTION.label}
-              </p>
-              <p className="mx-auto mt-1.5 max-w-md text-[15px] leading-relaxed text-ink-200">
-                {RETENTION.note}
-              </p>
-            </div>
-
-            {/* Loop-back trace: retention re-enters near the buy decision.
-                Sharp corners (not a rounded pill) to read as an engineered
-                return path rather than generic flowchart chrome. */}
-            <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 hidden w-14 md:-right-6 md:block">
-              <span className="absolute right-4 top-12 bottom-14 rounded-r-[3px] border-y-2 border-r-2 border-dashed border-accent-500/70" />
-              <svg className="absolute right-[9px] top-[34px] text-accent-500" width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M7.5 1L1 6.5l6.5 5.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span className="absolute right-7 top-1/2 origin-center -translate-y-1/2 rotate-90 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.18em] text-accent-500">
-                loops back
-              </span>
+              {/* Retention — cycles back to the decision via the return path */}
+              <div
+                className="demand-rise relative mx-auto w-full rounded-[4px] border border-accent-500/40 bg-accent-500/[0.05] px-5 py-4 text-center sm:px-6"
+                style={{ ['--w' as string]: '64%' }}
+                data-funnel-band
+              >
+                <span className="flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-accent-500">
+                  <span className="text-accent-500/60">05</span>
+                  <span className="text-accent-500/40">/</span>
+                  {RETENTION.loopLabel}
+                </span>
+                <p className="mt-1.5 font-display text-lg font-semibold text-white">
+                  {RETENTION.label}
+                </p>
+                <p className="mx-auto mt-1.5 max-w-md text-[15px] leading-relaxed text-ink-200">
+                  {RETENTION.note}
+                </p>
+              </div>
             </div>
           </div>
 
           <p className="mx-auto mt-3 max-w-sm text-center font-mono text-[10px] uppercase tracking-[0.16em] text-accent-500 md:hidden">
-            &uarr; existing customers loop back to the next decision
+            &#8634; existing customers loop back to the next decision
           </p>
 
           {/* figure caption — house signature */}

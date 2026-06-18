@@ -1,0 +1,10 @@
+import { chromium } from 'playwright'
+const browser = await chromium.launch()
+const page = await browser.newPage({ viewport: { width: 1280, height: 1100 }, deviceScaleFactor: 1.25 })
+await page.goto('http://localhost:3000/', { waitUntil: 'networkidle' })
+await page.waitForTimeout(1000)
+const h = page.locator('h2', { hasText: 'Tell us the outcome' })
+await h.scrollIntoViewIfNeeded(); await page.waitForTimeout(500)
+await h.locator('xpath=ancestor::section[1]').screenshot({ path: '/tmp/goalindex.png' })
+console.log('ok')
+await browser.close()

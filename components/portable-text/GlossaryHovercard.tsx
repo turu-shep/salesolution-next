@@ -176,10 +176,12 @@ export function GlossaryHovercard({ slug, term, shortDefinition, children }: Pro
                 </button>
               </div>
               <p className="mt-2 text-sm leading-relaxed text-ink-700">{shortDefinition}</p>
+              {/* Left-aligned (not full-width) so it clears any bottom-right
+                  floating widget — e.g. the site chat FAB. */}
               <Link
                 ref={sheetActionRef}
                 href={href}
-                className="mt-5 flex min-h-11 items-center justify-center rounded-md bg-brand-600 px-4 text-sm font-semibold text-white hover:bg-brand-700"
+                className="mt-5 inline-flex min-h-11 items-center rounded-md bg-brand-600 px-5 text-sm font-semibold text-white hover:bg-brand-700"
               >
                 Open term page →
               </Link>

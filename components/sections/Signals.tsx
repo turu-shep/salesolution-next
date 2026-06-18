@@ -16,11 +16,12 @@ import { cn } from '@/lib/cn'
  */
 
 const CONCERNS: string[] = [
-  'Organic traffic is plateauing or declining despite consistent content output.',
-  'Your team can’t articulate what changed when AI Overviews launched.',
-  'Page-experience scores look fine but conversions don’t move.',
-  'Spec-heavy product pages don’t surface for the queries that matter.',
-  'Your competitors are appearing in AI summaries — and you’re not.',
+  'Leads from Google have quietly dried up — and nothing on your end changed.',
+  'Ask ChatGPT about your category and it names a competitor, not you.',
+  'You’re paying for more clicks, but no more people actually call or buy.',
+  'The phone rings while you’re busy, and nobody calls back in time.',
+  'You send the quote or estimate and never hear back.',
+  'You can’t tell which marketing actually brought in business.',
 ]
 
 export function Signals() {
@@ -53,9 +54,8 @@ export function Signals() {
           Recognize any of these?
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          Tap the ones that match your store. Two or more usually means
-          it&rsquo;s structural &mdash; not something you can write your
-          way out of.
+          Tap the ones that sound familiar. Two or more usually means you have a
+          structural leak &mdash; not something more ads or content will fix.
         </p>
       </div>
 
@@ -124,20 +124,36 @@ export function Signals() {
           </span>
         </div>
 
-        <Link
-          href="/unlock-growth-audit/"
-          data-cta="audit__signals"
-          data-cta-location="mid_body"
-          className={cn(
-            'inline-flex items-center justify-center gap-1.5 rounded-[4px] px-5 py-3 text-sm font-semibold transition-colors duration-200',
-            count >= 2
-              ? 'bg-ink-900 text-white hover:bg-brand-600'
-              : 'border border-rule-strong bg-surface text-ink-900 hover:border-ink-900',
-          )}
-        >
-          Take the readiness audit
-          <span aria-hidden>→</span>
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/unlock-growth-audit/"
+            data-cta="audit__signals"
+            data-cta-location="mid_body"
+            className={cn(
+              'inline-flex items-center justify-center gap-1.5 rounded-[4px] px-5 py-3 text-sm font-semibold transition-colors duration-200',
+              count >= 2
+                ? 'bg-ink-900 text-white hover:bg-brand-600'
+                : 'border border-rule-strong bg-surface text-ink-900 hover:border-ink-900',
+            )}
+          >
+            Industrial readiness audit
+            <span aria-hidden>→</span>
+          </Link>
+          <Link
+            href="/revenue-engine/"
+            data-cta="revenue-leak-audit__signals"
+            data-cta-location="mid_body"
+            className={cn(
+              'inline-flex items-center justify-center gap-1.5 rounded-[4px] px-5 py-3 text-sm font-semibold transition-colors duration-200',
+              count >= 2
+                ? 'bg-ink-900 text-white hover:bg-accent-600'
+                : 'border border-rule-strong bg-surface text-ink-900 hover:border-ink-900',
+            )}
+          >
+            Revenue Leak Audit
+            <span aria-hidden>→</span>
+          </Link>
+        </div>
       </div>
     </SectionRail>
   )

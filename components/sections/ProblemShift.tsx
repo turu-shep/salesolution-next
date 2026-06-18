@@ -1,109 +1,119 @@
+import Link from 'next/link'
+
 import { SectionRail } from '@/components/layout/SectionRail'
 
 import { InView } from './InView'
 
 /**
- * Home § 02 — replaces the 3-up ProblemCards.
+ * Home § 02 — "One leak, two faces."
  *
- * One paragraph framing the shift, one inline SVG chart showing the AIO
- * coverage curve against organic CTR on AIO-triggered queries, and three
- * numbered findings underneath. No card chrome.
+ * The cross-vertical problem beat. One universal villain (you're losing
+ * customers you already earned), shown two ways, each routing to its own funnel:
  *
- * Chart data is *illustrative of the published industry pattern* — exact
- * monthly values are placeholders until we plug in a live source. The shape
- * (slow uptick → mid-2025 inflection → high coverage by mid-2026) matches
- * BrightEdge / Ahrefs / Pew tracking reports.
+ *  - Face A — the discovery leak (industrial): AI answers the buyer before they
+ *    reach the site. Anchored by the AIO-up / clicks-down chart. Door → the
+ *    industrial hub.
+ *  - Face B — the response leak (local-service): the call/quote arrives and gets
+ *    missed. Anchored by the missed-call / slow-reply stats. Door → the Revenue
+ *    Engine.
+ *
+ * Industrial nouns (parts/products/catalog) live ONLY inside Face A. Face B uses
+ * the local-service owner's words (roof, patient, the phone). Both data figures
+ * are illustrative of the published pattern — the shape is the point, not the
+ * exact monthly value.
  */
 
-// 24 monthly samples, Aug 2024 → Jul 2026.
+// ── Face A evidence: 24 monthly samples, Aug 2024 → Jul 2026. ──
 const MONTHS = [
   'A24', 'S', 'O', 'N', 'D',
   'J25', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D',
   'J26', 'F', 'M', 'A', 'M', 'J', 'J',
 ]
-// % of US searches showing an AI Overview.
+// % of US searches showing an AI answer.
 const AIO_COVERAGE = [
   14, 16, 19, 22, 25,
   28, 31, 33, 36, 38, 40, 42, 43, 44, 45, 46, 47,
   48, 49, 50, 50, 51, 51, 52,
 ]
-// Organic CTR index on AIO-triggered queries (Aug 2024 = 100).
+// Index of clicks reaching the site on AI-answered queries (Aug 2024 = 100).
 const CTR_INDEX = [
   100, 98, 95, 91, 87,
   83, 79, 76, 73, 71, 69, 67, 66, 65, 64, 63, 62,
   61, 60, 60, 59, 59, 58, 58,
 ]
 
-const FINDINGS = [
-  {
-    label: 'The vanishing click',
-    body: 'AI Overviews answer more queries inside the SERP. Informational pages that used to drive traffic now drive impressions without clicks.',
-  },
-  {
-    label: 'The outmoded toolkit',
-    body: 'Keyword-rank tracking and link counts no longer predict revenue. The signals that move AI surfaces are different from the ones legacy tools measure.',
-  },
-  {
-    label: 'The new guide',
-    body: 'AI surfaces favor structured, citation-worthy content with deep topical authority. The product detail page is now an answer source, not a landing spot.',
-  },
-]
-
 export function ProblemShift() {
   return (
     <SectionRail tone="dark">
-      <div className="grid gap-12 md:grid-cols-12 md:gap-10">
-        <div className="md:col-span-7">
-          <h2 className="font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-            The click is moving inline.
-          </h2>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-300">
-            AI Overviews intercept a growing share of searches before the
-            click ever reaches your store. For engineers spec&rsquo;ing JIC
-            fittings and threaded couplings, that&rsquo;s a structural shift
-            in discovery &mdash; not a content problem you can write your
-            way out of.
-          </p>
-        </div>
-
-        <ShiftChart className="md:col-span-5" />
+      <div className="max-w-2xl">
+        <h2 className="font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
+          You already earned these customers. You&rsquo;re losing them anyway.
+        </h2>
+        <p className="mt-6 text-lg leading-relaxed text-ink-300">
+          You already paid to earn this demand. It leaks in two places &mdash; the
+          buyers who never reach you, and the ones who reach you and slip away.
+        </p>
       </div>
 
-      {/* P&L translation — converts the technical shift into dollars
-          a founder can act on. The "$1.8M / $14M" framing is illustrative
-          but grounded in real client engagements. */}
-      <aside className="mt-14 border border-accent-500/30 bg-accent-500/[0.04] p-6 md:p-8">
-        <div className="flex flex-col gap-6 md:flex-row md:items-start md:gap-10">
-          <div className="md:w-2/5">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent-500">
-              Translation for the P&amp;L
-            </p>
-            <p className="mt-3 font-display text-3xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-4xl">
-              ~<span className="tabular-nums text-accent-500">$1.8M</span> displaced<br />
-              per <span className="tabular-nums">$14M</span> ARR.
-            </p>
-          </div>
-          <p className="text-base leading-relaxed text-ink-200 md:flex-1 md:pt-2">
-            A 42-point CTR drop on a hydraulics distributor&rsquo;s top 200
-            category pages, at typical industrial AOV, displaces roughly
-            $1.8M of pipeline per year per $14M of ARR. We&rsquo;ve watched
-            this play out at four client engagements over the last 14 months.
-            Replacing the same volume with paid acquisition runs $300k+ in
-            ad spend.
+      <div className="mt-14 grid gap-x-12 gap-y-14 md:grid-cols-2">
+        {/* ── Face A — the discovery leak (industrial) ── */}
+        <div className="flex flex-col border-t-2 border-brand-500/70 pt-6">
+          <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-brand-300">
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-brand-500" />
+            They never reach you
           </p>
-        </div>
-      </aside>
+          <h3 className="mt-3 font-display text-2xl font-semibold leading-tight text-white sm:text-3xl">
+            The AI answers first.
+          </h3>
+          <p className="mt-4 text-ink-300">
+            Someone needs what you sell. They ask Google or ChatGPT, and the
+            answer &mdash; a spec, a substitute, sometimes a competitor &mdash;
+            shows up before they ever click. Your page still ranks. The visit
+            just stops, and the quote that came with it.
+          </p>
 
-      <ul className="mt-14 grid gap-x-12 gap-y-10 border-t border-white/10 pt-10 md:grid-cols-3">
-        {FINDINGS.map((f) => (
-          <li key={f.label}>
-            <h3 className="font-display text-lg font-semibold text-white">
-              {f.label}
-            </h3>
-            <p className="mt-3 text-ink-300">{f.body}</p>
-          </li>
-        ))}
-      </ul>
+          <ShiftChart className="mt-6" />
+
+          <Link
+            href="/industries/industrial-distribution/"
+            data-cta="problem-discovery-industrial"
+            data-cta-location="home-problem-faceA"
+            className="group mt-6 inline-flex items-center gap-1.5 self-start font-mono text-[12px] uppercase tracking-[0.16em] text-white underline decoration-brand-500/50 underline-offset-[6px] transition-colors hover:decoration-brand-400"
+          >
+            See who AI names for your products
+            <span aria-hidden className="transition-transform group-hover:translate-x-0.5">&rarr;</span>
+          </Link>
+        </div>
+
+        {/* ── Face B — the response leak (local-service) ── */}
+        <div className="flex flex-col border-t-2 border-accent-500/70 pt-6">
+          <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-accent-500">
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent-500" />
+            You miss them when they do
+          </p>
+          <h3 className="mt-3 font-display text-2xl font-semibold leading-tight text-white sm:text-3xl">
+            The fastest reply wins the job.
+          </h3>
+          <p className="mt-4 text-ink-300">
+            The call comes while you&rsquo;re on a roof or with a patient. The web
+            lead lands at 9pm. By the time someone follows up, they&rsquo;ve
+            booked with whoever picked up first. You paid to make that phone ring.
+            The job booked somewhere else.
+          </p>
+
+          <LeakStats className="mt-6" />
+
+          <Link
+            href="/revenue-engine/"
+            data-cta="problem-response-revenue-engine"
+            data-cta-location="home-problem-faceB"
+            className="group mt-6 inline-flex items-center gap-1.5 self-start font-mono text-[12px] uppercase tracking-[0.16em] text-white underline decoration-accent-500/50 underline-offset-[6px] transition-colors hover:decoration-accent-400"
+          >
+            See how the Revenue Engine fixes it
+            <span aria-hidden className="transition-transform group-hover:translate-x-0.5">&rarr;</span>
+          </Link>
+        </div>
+      </div>
     </SectionRail>
   )
 }
@@ -130,14 +140,14 @@ function ShiftChart({ className = '' }: { className?: string }) {
   return (
     <InView as="figure" className={`border border-rule bg-paper p-5 ${className}`}>
       <figcaption className="mb-4 font-mono text-[11px] text-ink-500">
-        <span className="uppercase tracking-[0.18em]">Coverage vs. CTR · Aug 2024 – Jul 2026</span>
+        <span className="uppercase tracking-[0.18em]">AI answers up. Clicks down. · Aug 2024 – Jul 2026</span>
         <span className="mt-1.5 block normal-case tracking-normal text-ink-400">
-          Smoothed pattern from BrightEdge / Pew tracking. Exact monthly
-          values illustrative; the shape is the point.
+          Industry pattern from BrightEdge and Pew. Exact monthly values are
+          illustrative; the shape is the point.
         </span>
       </figcaption>
 
-      <svg viewBox={`0 0 ${W} ${H}`} className="block w-full" role="img" aria-label="AI Overview coverage rising while organic CTR on affected queries declines over 24 months.">
+      <svg viewBox={`0 0 ${W} ${H}`} className="block w-full" role="img" aria-label="The share of searches Google answers itself rises while clicks reaching the site fall, over 24 months.">
         {/* Grid */}
         {[0, 25, 50, 75, 100].map((v) => (
           <g key={v}>
@@ -148,7 +158,7 @@ function ShiftChart({ className = '' }: { className?: string }) {
           </g>
         ))}
 
-        {/* CTR (down) — drawn behind. Draws in on view via stroke-dasharray. */}
+        {/* Clicks (down) — drawn behind. Draws in on view via stroke-dasharray. */}
         <path
           d={ctrPath}
           stroke="var(--color-data-down)"
@@ -159,7 +169,7 @@ function ShiftChart({ className = '' }: { className?: string }) {
         />
         <circle cx={xAt(lastIdx)} cy={yAt(CTR_INDEX[lastIdx])} r="3" fill="var(--color-data-down)" />
 
-        {/* AIO (up) */}
+        {/* AI answers (up) */}
         <path
           d={aioPath}
           stroke="var(--color-brand-600)"
@@ -201,7 +211,7 @@ function ShiftChart({ className = '' }: { className?: string }) {
                 fill="transparent"
                 className="cursor-help [&:hover+circle]:opacity-100"
               >
-                <title>{`${monthLabel} · AIO coverage ${AIO_COVERAGE[i]}%`}</title>
+                <title>{`${monthLabel} · AI answers ${AIO_COVERAGE[i]}%`}</title>
               </circle>
               <circle
                 cx={xAt(i)}
@@ -217,7 +227,7 @@ function ShiftChart({ className = '' }: { className?: string }) {
                 fill="transparent"
                 className="cursor-help [&:hover+circle]:opacity-100"
               >
-                <title>{`${monthLabel} · CTR index ${CTR_INDEX[i]}`}</title>
+                <title>{`${monthLabel} · clicks index ${CTR_INDEX[i]}`}</title>
               </circle>
               <circle
                 cx={xAt(i)}
@@ -235,16 +245,62 @@ function ShiftChart({ className = '' }: { className?: string }) {
         <div className="flex items-center justify-between">
           <span className="flex items-center gap-2">
             <span aria-hidden className="h-0.5 w-4 bg-brand-600" />
-            <span className="uppercase tracking-[0.14em]">AIO coverage</span>
+            <span className="uppercase tracking-[0.14em]">Searches the AI answers</span>
           </span>
           <span className="tabular-nums text-ink-900">52% <span className="text-data-up">↑</span></span>
         </div>
         <div className="flex items-center justify-between">
           <span className="flex items-center gap-2">
             <span aria-hidden className="h-0.5 w-4 border-t border-dashed border-data-down" />
-            <span className="uppercase tracking-[0.14em]">CTR · affected queries</span>
+            <span className="uppercase tracking-[0.14em]">Clicks that reach the site</span>
           </span>
           <span className="tabular-nums text-ink-900">58 <span className="text-data-down">↓</span></span>
+        </div>
+      </div>
+    </InView>
+  )
+}
+
+/**
+ * Face B evidence — the response-leak counterpart to the chart. Two big stats in
+ * the same bordered-figure house style. Illustrative of the local-service
+ * inbound pattern (1-in-3 calls missed; slow web-lead reply), not a client
+ * number — captioned honestly, the way the chart is.
+ */
+function LeakStats({ className = '' }: { className?: string }) {
+  return (
+    <InView as="figure" className={`border border-rule bg-paper p-5 ${className}`}>
+      <figcaption className="mb-4 font-mono text-[11px] text-ink-500">
+        <span className="uppercase tracking-[0.18em]">The leak after the lead · local-service inbound</span>
+        <span className="mt-1.5 block normal-case tracking-normal text-ink-400">
+          Industry pattern for calls and web leads. The shape is the point, not
+          the exact figure.
+        </span>
+      </figcaption>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="border-l-2 border-accent-500 pl-4">
+          <p className="font-display text-4xl font-semibold leading-none tracking-[-0.02em] text-ink-900 sm:text-5xl">
+            1 in 3
+          </p>
+          <p className="mt-2 text-sm leading-snug text-ink-700">
+            calls to local businesses go unanswered
+          </p>
+        </div>
+        <div className="border-l-2 border-accent-500 pl-4">
+          <p className="font-display text-4xl font-semibold leading-none tracking-[-0.02em] text-ink-900 sm:text-5xl">
+            47<span className="ml-0.5 text-2xl">hrs</span>
+          </p>
+          <p className="mt-2 text-sm leading-snug text-ink-700">
+            typical reply to a web lead &mdash; long after they booked elsewhere
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-5 border-t border-rule pt-3 font-mono text-[11px] text-ink-700">
+        <div className="flex items-center justify-between">
+          <span className="uppercase tracking-[0.14em]">Jobs you paid to win</span>
+          <span className="tabular-nums text-ink-900">leaking <span className="text-data-down">↓</span></span>
         </div>
       </div>
     </InView>

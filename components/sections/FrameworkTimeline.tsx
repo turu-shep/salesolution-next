@@ -33,15 +33,15 @@ const PHASES: Phase[] = [
     number: '01',
     name: 'Foundation',
     window: 'Months 1–3',
-    outcome: { value: 12, prefix: '+', unit: '%', label: 'AIO citations' },
-    title: 'AI-Ready Foundation',
+    outcome: { value: 12, prefix: '+', unit: '%', label: 'more AI answers cite you' },
+    title: 'Get AI-ready',
     description:
-      'Technical, structural, and content fundamentals that make your store legible to AI parsers and ranking models.',
+      'The groundwork that lets AI and search engines actually read your site and understand what you sell.',
     items: [
-      { title: 'Technical excellence', body: "Schema, product feeds, site speed, mobile-first — the AI parser's preconditions." },
-      { title: 'Platform diversification', body: 'YouTube and LinkedIn presence calibrated to a technical buyer audience.' },
-      { title: 'Content clarity', body: 'Product pages and guides structured for AI parsing and H-E-E-A-T alignment.' },
-      { title: 'Frictionless checkout', body: 'Modern payment paths and quote flows that match technical-buyer expectations.' },
+      { title: 'The plumbing', body: 'Fast pages, clean product info, and a site AI can actually read. The boring stuff everything else needs.' },
+      { title: 'Show up where buyers look', body: 'A presence on YouTube and LinkedIn, aimed at the people who actually buy from you.' },
+      { title: 'Pages that answer real questions', body: 'Product pages and guides written so a buyer — and an AI — gets a straight answer fast.' },
+      { title: 'Make it easy to buy', body: "Checkout and quote requests that don't make a ready buyer jump through hoops." },
     ],
   },
   {
@@ -49,29 +49,29 @@ const PHASES: Phase[] = [
     name: 'Amplify',
     window: 'Months 4–9',
     outcome: { value: 43, prefix: '+', unit: '%', label: 'qualified leads' },
-    title: 'Authority & Engagement',
+    title: 'Become the name they trust',
     description:
-      'Topical depth, citation engineering, and engagement systems that compound your visibility quarter over quarter.',
+      'Go deep enough on your subject that AI keeps quoting you and buyers keep choosing you — and it builds quarter after quarter.',
     items: [
-      { title: 'Hyper-personalization', body: 'Customer data drives tailored experiences that lift CLV.' },
-      { title: 'Intelligent PPC', body: 'Paid search adapted for AI ad surfaces and conversational queries.' },
-      { title: 'Omnichannel SEO', body: 'Unified messaging across every surface AI engines crawl.' },
-      { title: 'AI-driven insights', body: 'New visibility KPIs that keep the strategy honest quarter over quarter.' },
+      { title: 'Treat repeat buyers like regulars', body: 'Use what you know about customers to bring them back and grow what each one is worth.' },
+      { title: 'Ads that keep up with AI', body: 'Paid search tuned for how people actually ask questions now, including inside AI tools.' },
+      { title: 'One clear story everywhere', body: 'The same straight message wherever a buyer — or an AI — runs into you.' },
+      { title: 'Numbers that tell the truth', body: "Plain measures of whether you're getting found and chosen, reviewed every quarter." },
     ],
   },
   {
     number: '03',
     name: 'Lead',
     window: 'Months 10+',
-    outcome: { value: 2.5, decimals: 1, unit: '×', label: 'ARR multiple' },
-    title: 'Sustainable Growth',
+    outcome: { value: 2.5, decimals: 1, unit: '×', label: 'return on spend' },
+    title: 'Stay out front',
     description:
-      'Ongoing optimization cycles that ride algorithm changes instead of reacting to them.',
+      'Steady improvements that keep you ahead when Google and AI change the rules, instead of scrambling every time they do.',
     items: [
-      { title: 'Cited authority strategy', body: 'Pillar pages, topic clusters, and structured data tuned for generative engines.' },
-      { title: 'Digital PR & citation engineering', body: 'Trade press, podcasts, webinars — sources AI engines preferentially reference.' },
-      { title: 'AI trust monitoring', body: 'Brand sentiment, citation tracking, and competitive positioning inside AI surfaces.' },
-      { title: 'Compounding revenue cycles', body: 'A/B testing, lifecycle systems, and revenue-per-visitor optimization.' },
+      { title: 'Own your subject', body: 'Deep, well-organized content that makes you the source AI reaches for first.' },
+      { title: 'Get mentioned where it counts', body: 'Trade press, podcasts, and webinars — the places AI trusts and quotes.' },
+      { title: 'Watch what AI says about you', body: 'Track how often AI names you, how it describes you, and where you stand against competitors.' },
+      { title: 'More from every visit', body: 'Test, follow up, and improve so each visitor is worth more over time.' },
     ],
   },
 ]
@@ -81,12 +81,12 @@ export function FrameworkTimeline({ id }: { id?: string }) {
     <SectionRail tone="paper" id={id}>
       <div className="max-w-3xl">
         <h2 className="font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          A 3-phase adaptation framework.
+          Three phases. Each one earns the next.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          One operator, three sequential phases. Each phase has an exit
-          criterion that clears before we move &mdash; so gains compound
-          instead of stacking on an unbuilt foundation.
+          One operator runs all three. We don&rsquo;t move to the next phase
+          until the last one has done its job &mdash; so each win sits on solid
+          ground, not a shaky foundation.
         </p>
       </div>
 

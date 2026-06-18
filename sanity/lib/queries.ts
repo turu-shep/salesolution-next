@@ -332,6 +332,12 @@ const CAREER_PATH_FIELDS = `
   lastReviewed,
   publishedAt,
   ${SEO_FIELDS},
+  "prerequisites": prerequisites[]->{
+    _id, title, "slug": slug.current, kind, level, duration, description
+  },
+  "leadsTo": leadsTo[]->{
+    _id, title, "slug": slug.current, kind, level, duration, description
+  },
   "relatedTerms": relatedTerms[]->{
     _id,
     term,

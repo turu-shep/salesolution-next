@@ -29,9 +29,15 @@ fits them. Case studies become a first-class, Sanity-driven proof spine across b
 └── /catalog-snapshot/         ← already exists = Catalog AI's conversion funnel
 ```
 
-**No `/industries/*` namespace.** Homepage industry tiles route directly:
-Industrial Distribution → `/services/`, Home Services → `/revenue-engine/home-services/`,
-Dental → `/revenue-engine/dentists/`. Avoids three near-empty industry hubs at launch.
+**`/industries/*` namespace — proof-gated (amended 2026-06-16).** Originally "no
+namespace, route tiles directly." Amended: the ban was only ever about avoiding
+*near-empty* hubs. So — a nav **menu** (ships now) and a hub **anchored by real
+proof** are both allowed; a thin/empty hub is not. An industry earns its own
+`/industries/<slug>/` page only when it has case studies OR real search demand
+behind it. Until then it routes to the page that already exists: Industrial →
+`/services/`, Home Services → `/revenue-engine/home-services/`, Dental →
+`/revenue-engine/dentists/`. URL namespace = `/industries/*`; visible nav label =
+"Who We Serve" (the two need not match).
 
 ## Two-funnel model (CTA strategy)
 
@@ -92,7 +98,15 @@ Two ICPs, two doors — do not merge:
 ## Open decisions (needed by phase)
 - **Phase 2:** GHL audit embed ID; FL/CA pricing display (both rate cards vs default FL).
 - **Phase 3:** v2-1 destination (replace `/catalog-snapshot/` vs new route).
-- **Phase 4:** Industries dropdown in nav, or direct tile routing only.
+- **Phase 4:** ~~Industries dropdown in nav, or direct tile routing only.~~ RESOLVED
+  2026-06-16 — BOTH. Shipped a "Who We Serve" nav dropdown routing to existing
+  pages (`lib/navigation.ts`), added the Revenue Engine routes to `app/sitemap.ts`
+  (ends orphan stage), and laid the Sanity `industry` taxonomy foundation (new
+  `industry` doc type, `industryRef` on `caseStudyClient`, `allIndustries` +
+  `caseStudiesByIndustry` queries, `scripts/seed-industries.mjs` backfill).
+  Still open: real `/industries/*` landing pages (dental first by demand, then
+  roofing/home-services), industrial hub + case-study faceting UI, and the
+  GHL audit-embed funnel fix that gates the Revenue Engine items being promoted.
 
 ## WordPress spec → Next.js mapping
 The Revenue Engine spec targets WordPress; we're Next.js + Sanity. Architecture, copy standards,

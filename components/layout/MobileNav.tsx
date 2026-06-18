@@ -14,7 +14,7 @@ import { primaryCta, primaryNav } from '@/lib/navigation'
  *  - body-scroll lock
  *  - accessible labels via DialogTitle
  *
- * Renders nothing on desktop (the parent positions it `md:hidden`).
+ * Renders nothing on desktop (the parent positions it `lg:hidden`).
  */
 export function MobileNav() {
   const [open, setOpen] = useState(false)
@@ -25,7 +25,7 @@ export function MobileNav() {
         <button
           type="button"
           aria-label="Open menu"
-          className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-ink-800 transition hover:bg-surface-alt md:hidden"
+          className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-ink-800 transition hover:bg-surface-alt lg:hidden"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
