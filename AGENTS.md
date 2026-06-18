@@ -40,11 +40,18 @@ A versioned, brand-agnostic content pipeline (`research → draft → humanize �
 | `.agents/product-marketing-context.md` | Brand voice / positioning / ICP / kill-list — the SSOT for copy. |
 | `brand/` | Engine inputs (VALUES): `competitor-policy.yaml` (banned names), `trusted-sources.md` (citation allowlist), `tools.yaml` (calculators/finders registry), `cms.yaml` (publish details), `design/palette.yaml`. |
 | `prompts/` | Operator playbooks. Start at `prompts/_CONTEXT.md`. Subdirs: `career-paths/`, `glossary/`, `revenue-seo/`, `interlinking/`, `foundations/`. |
-| `docs/strategy/` | The business logic: `multi-vertical-pivot/`, `icp/`, `roofing/` (the Revenue Engine spec), `career-path/` (learning-hub strategy + GSC baseline), `case-studies/`, `ga4.md`. |
+| `docs/strategy/` | The business logic: `multi-vertical-pivot/`, `icp/`, `roofing/` (Revenue Engine spec), `career-path/` (learning-hub strategy + build standard + GSC baseline), `case-studies/`, `full-growth-ownership/`, `content-architecture-geo.md`, `ga4.md`. Infra / how-to: `sanity-setup.md`, `sanity-webhook-setup.md`, `vercel-deploy.md`, `design-tokens.md`. |
 | `analysis/` | Engine data dir: `gsc/` + `ga/` exports, `inventory.md` (dedup list). |
 | `seo-project/` | **LEGACY** pre-engine SEO template (Liori-era "Cowork" playbook) — superseded by `.engine` for the pipeline. But `seo-project/data/` is still the live GSC baseline-comparison CSV location (see below). |
 | `sanity/` | Schemas, GROQ queries, fetchers. New doc types must be registered in `sanity/schemas/index.ts` AND `sanity/structure.ts` or they're invisible in Studio. |
 | `app/`, `components/`, `lib/` | The Next.js site. `lib/business.ts` = NAP/identity SSOT; `lib/navigation.ts` = nav; `lib/schema.ts` = JSON-LD. |
+
+## Commands
+
+- `pnpm dev` (dev server, pinned to `--webpack` — see Landmines) · `pnpm build` · `pnpm start` · `pnpm lint` · `pnpm test` (`node --test lib/`).
+- `node scripts/<name>.mjs` runs the content/Sanity scripts; env auto-loads from `.env.local` (copy `.env.local.example`; it documents `SANITY_API_WRITE_TOKEN`, `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, and the rest).
+- Sanity Studio is at `/studio` — review drafts and publish there (publishing is manual).
+- Definition of done for a content change: `npx tsc --noEmit` clean (ignore pre-existing `lib/lead-form/*` Zod errors), lint clean on changed files, `pnpm build` compiles, content seeded as **drafts** unless told to publish. Full checklist in `prompts/_CONTEXT.md`.
 
 ## Data & measurement
 
@@ -55,7 +62,7 @@ A versioned, brand-agnostic content pipeline (`research → draft → humanize �
 
 ## The learning hub (glossary + career paths)
 
-`/glossary/` and `/career-paths/` are a wiki-like authority asset. Strategy: `docs/strategy/career-path/` (read `00-overview.md` first). Live as of 2026-06-14: 20 glossary terms, 2 career paths (GEO Specialist, Citation Engineer).
+`/glossary/` and `/career-paths/` are a wiki-like authority asset. Strategy: `docs/strategy/career-path/` (read `00-overview.md` first). Live as of 2026-06-14: 20 glossary terms, 2 career paths (GEO Specialist, Citation Engineer). Career paths are built as **skill modules** (scenario / edge-cases / proficient-when), grouped by seniority — not essays. Follow `docs/strategy/career-path/09-career-path-build-standard.md`.
 
 - **It is measured on referring domains + AI citations, NOT leads.** That traffic doesn't convert, and that's expected — don't optimize it for conversion.
 - **Term capture is REQUIRED on every content task:** after writing any prose, run `node scripts/glossary-queue.mjs add "term" … --source <type>:<slug>` to queue new domain terms for the glossary (see `prompts/_CONTEXT.md` for the full rule).
@@ -67,7 +74,7 @@ A versioned, brand-agnostic content pipeline (`research → draft → humanize �
 - **Publishing into Sanity is manual** — there's no HTML → Portable Text converter yet.
 - **Career paths are an authority play, not recruiting.** "We don't hire from these paths" — no recruiting framing, no rates page (`prompts/_CONTEXT.md`).
 - **Sanity gotchas** (full list in `prompts/_CONTEXT.md`): default query perspective hides drafts (`perspective: 'raw'` to see them); interlinked drafts need weak refs; new doc types must be added to `sanity/structure.ts`; import `createClient` from `next-sanity`, not `@sanity/client`.
-- **Next 16 / Turbopack dev is flaky under load** (`jsx-runtime "module factory"` errors, missing `routes-manifest.json`). Recover with `pkill -f "next dev"; rm -rf .next; npm run dev`, then poll for stable 200s before screenshotting. Use one dev server + one browser for visual work.
+- **Next 16 dev is flaky under load.** `dev` is pinned to `--webpack` (not Turbopack) for this reason; you can still hit `jsx-runtime "module factory"` errors or a missing `routes-manifest.json`. Recover with `pkill -f "next dev"; rm -rf .next; pnpm dev`, then poll for stable 200s before screenshotting. Use one dev server + one browser for visual work.
 
 ## Voice
 
