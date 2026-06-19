@@ -70,7 +70,6 @@ A versioned, brand-agnostic content pipeline (`research → draft → humanize �
 ## Landmines — check before you ship
 
 - **Hydraulics case studies:** the "Northern Hydraulics" name collision blocks publishing one. Read `docs/strategy/case-studies/fact-ledger.md` first (resolution decided: rename the noindex v2-1 composite).
-- **The tagline is stale.** `lib/business.ts` still says "AI-Driven SEO for Technical B2B & Industrial E-commerce" — industrial-only, an open TODO pending the pivot. Don't ship it as the current positioning.
 - **Publishing into Sanity is manual** — there's no HTML → Portable Text converter yet.
 - **Career paths are an authority play, not recruiting.** "We don't hire from these paths" — no recruiting framing, no rates page (`prompts/_CONTEXT.md`).
 - **Sanity gotchas** (full list in `prompts/_CONTEXT.md`): default query perspective hides drafts (`perspective: 'raw'` to see them); interlinked drafts need weak refs; new doc types must be added to `sanity/structure.ts`; import `createClient` from `next-sanity`, not `@sanity/client`.

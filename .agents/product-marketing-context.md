@@ -31,7 +31,7 @@
 
 **Founder:** Artur Shepel, Founder & AI-Growth Strategist. On the Revenue Engine the brand voice is first-person "I" — the operator speaks directly. (`lib/business.ts`, `docs/strategy/multi-vertical-pivot/01-pillar-storyboard.md`)
 
-**Canonical identity (do not drift):** Name **Sale Solution**, legal name Sale Solution, site `https://salesolution.net`. Tagline on file: "AI-Driven SEO for Technical B2B & Industrial E-commerce." Note the tagline still reads industrial-only; the business has since pivoted to multi-vertical, so don't treat it as the whole story. (`lib/business.ts`, `prompts/_CONTEXT.md`)
+**Canonical identity (do not drift):** Name **Sale Solution**, legal name Sale Solution, site `https://salesolution.net`. Tagline (updated 2026-06-18 to multi-vertical, revenue-first): "Revenue systems for businesses that sell parts, book jobs, and fill chairs." (`lib/business.ts`, `prompts/_CONTEXT.md`)
 
 ---
 
@@ -307,7 +307,7 @@ Locked rules for this arm:
 ## TODOs (flag, don't invent)
 
 - **Canonical address is contested.** Three addresses appear on the live site. The locked one is 17071 W Dixie Hwy, North Miami Beach, FL 33160; the other two need sweeping at cutover. Phone 561-531-4339; emails leads@ / connect@salesolution.net. (`lib/business.ts`) — **TODO:** confirm the sweep is done before quoting NAP anywhere.
-- **Tagline lags the pivot.** `business.tagline` still reads "AI-Driven SEO for Technical B2B & Industrial E-commerce" while the business is now multi-vertical. **TODO:** decide whether to update the canonical tagline. (`lib/business.ts`, `prompts/_CONTEXT.md`)
+- **Tagline updated to multi-vertical (2026-06-18):** `business.tagline` now reads "Revenue systems for businesses that sell parts, book jobs, and fill chairs." Canonical value only — not yet rendered in site metadata/JSON-LD; wire into `lib/schema.ts` (`slogan`) to surface it. (`lib/business.ts`, `prompts/_CONTEXT.md`)
 - **Case-study disclosure decisions are open.** All five studies are seeded `anonymized` as a safe default, not a verified decision. Engagement windows for four studies are placeholder years. **TODO (owner-only):** set disclosure per study and supply real windows + source artifacts before treating any number as locked. (`docs/strategy/case-studies/fact-ledger.md`)
 - **GHL Revenue Leak Audit embed** is pending an embed ID from Artur; the audit funnel isn't fully wired. **TODO.** (`docs/strategy/multi-vertical-pivot/00-phase-plan.md`)
 - **Revenue Engine dollar price** is deliberately not published cold and depends on trade/location/scope; it's delivered in the audit. No fixed monthly figure was found in the repo. **TODO:** if a content piece needs a price band, get it from Artur. (`components/sections/revenue-engine/RevenuePricing.tsx`)

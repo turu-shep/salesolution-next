@@ -17,9 +17,9 @@
 export const business = {
   name: 'Sale Solution',
   legalName: 'Sale Solution',
-  // ⚠ STALE: industrial-only, predates the multi-vertical pivot (open TODO — owner
-  //   decision). See AGENTS.md → Landmines and docs/strategy/multi-vertical-pivot/.
-  tagline: 'AI-Driven SEO for Technical B2B & Industrial E-commerce',
+  // Multi-vertical positioning (set 2026-06-18). Canonical value only — not yet
+  //   rendered: wire into Organization JSON-LD (lib/schema.ts `slogan`) / metadata to surface it.
+  tagline: 'Revenue systems for businesses that sell parts, book jobs, and fill chairs.',
   url: 'https://salesolution.net',
 
   // D5 locked 2026-05-19. The other two addresses on the live site
