@@ -78,3 +78,6 @@ backup/
 analysis/gsc/*.csv
 analysis/ga/*.csv
 analysis/products.json
+
+# generated image raws (regenerable; treated webp in public/ is committed)
+.cache/
