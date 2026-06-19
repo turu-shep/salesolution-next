@@ -13,16 +13,17 @@ export const primaryNav: NavItem[] = [
   { label: 'Services', href: '/services/' },
   {
     // Audience-led entry, sitting beside the capability-led "Services" so a
-    // visitor can self-identify by industry in one click. Industrial routes to
-    // its own proof-led hub; the two Revenue Engine verticals route to their
-    // tailored offer pages. (Parent points at the proof spine until a cross-
-    // vertical /industries/ index exists.)
+    // visitor can self-identify by industry in one click. Parent is the
+    // cross-vertical /industries/ index; each child routes to its own hub
+    // (industrial proof-led page; the Revenue Engine verticals to their
+    // tailored offer pages), keeping the two funnels separate.
     label: 'Who We Serve',
-    href: '/case-studies/',
+    href: '/industries/',
     children: [
       { label: 'Industrial & Technical B2B', href: '/industries/industrial-distribution/' },
-      { label: 'Home Services (Roofing, HVAC)', href: '/revenue-engine/home-services/' },
-      { label: 'Dental Practices', href: '/revenue-engine/dentists/' },
+      { label: 'Medical & Aesthetics', href: '/revenue-engine/medical/' },
+      { label: 'Home & Local Services', href: '/revenue-engine/home-services/' },
+      { label: 'Retail & Consumer Brands', href: '/revenue-engine/local-retail/' },
     ],
   },
   { label: 'Case Studies', href: '/case-studies/' },
