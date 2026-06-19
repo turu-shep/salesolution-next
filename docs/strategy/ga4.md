@@ -22,7 +22,7 @@ The instrumentation in this plan **shipped** — and was extended past this (ind
 
 **Beyond this spec (multi-vertical additions):** new events `full_growth_quote_request` and `catalog_snapshot_request`; new forms `RevenueLeakAuditForm` + `FullGrowthQuoteForm`; new routes `/api/revenue-leak-audit` + `/api/full-growth-quote`. The Revenue Leak Audit fires `generate_lead` + `audit_request`. These aren't reflected in §2.8 (key events), §6 (cross-platform map), or the §4 funnels — those tables still describe the industrial-only set and should be updated to cover them.
 
-**Open gap — the server-side failsafe is inert.** `GA4_MEASUREMENT_ID` and `GA4_API_SECRET` are **absent** from `.env.local`. `sendServerEvent` early-returns when either is missing, so the ad-blocker failsafe (§5.8) silently no-ops in every environment until both are set — locally **and** in Vercel. This is the one code-adjacent fix still outstanding.
+**Server-side failsafe — env set locally (2026-06-18).** `GA4_MEASUREMENT_ID` and `GA4_API_SECRET` are now present and non-empty in `.env.local`, and match the names `sendServerEvent` reads (`lib/analytics-server.ts`), so the §5.8 failsafe is live in local/dev. ⚠ `.env.local` is gitignored and does **not** deploy — add the same two vars to **Vercel → Project → Environment Variables (Production)** or the server-side hit stays a no-op in prod.
 
 **Needs confirmation (account-side, not in the repo):**
 - GA4 Admin: key events marked (§2.8), 14-month retention, referral exclusions (§2.4), internal-traffic filter (§2.5), Google Signals off (§2.6), User-ID on (§2.7), enhanced-measurement "Form interactions" OFF (§2.3).
