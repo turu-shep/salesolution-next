@@ -1,9 +1,9 @@
-import imageUrlBuilder from '@sanity/image-url'
+import { createImageUrlBuilder } from '@sanity/image-url'
 import type { SanityImageSource } from '@sanity/image-url'
 
 import { dataset, projectId } from '../env'
 
-const builder = imageUrlBuilder({ projectId, dataset })
+const builder = createImageUrlBuilder({ projectId, dataset })
 
 /**
  * `urlFor(image).width(800).height(600).fit('crop').url()`
