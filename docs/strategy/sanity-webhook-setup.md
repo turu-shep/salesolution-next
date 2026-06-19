@@ -51,7 +51,7 @@ Next request to /<slug>/ fetches fresh data
    | URL | `https://salesolution.net/api/revalidate/` (use the production URL, trailing slash) |
    | Dataset | `production` |
    | Trigger on | ✓ Create  ✓ Update  ✓ Delete |
-   | Filter (GROQ) | `_type in ["post","guide","careerPath","siteSettings","service","testimonial","author"]` |
+   | Filter (GROQ) | `_type in ["post","guide","careerPath","caseStudy","glossaryTerm","siteSettings","service","testimonial","author"]` |
    | Projection (GROQ) | `{ _type, "slug": slug.current }` |
    | Secret | The hex string from step 1 |
    | API version | `2026-05-19` (same as `NEXT_PUBLIC_SANITY_API_VERSION`) |

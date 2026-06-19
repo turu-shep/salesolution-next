@@ -8,8 +8,13 @@
  *
  * Webhook config in Sanity → Manage → API → Webhooks:
  *   - Trigger on:  Create, Update, Delete
- *   - Filter (GROQ): _type in ["post","guide","careerPath","siteSettings","service","testimonial","author"]
+ *   - Filter (GROQ): _type in ["post","guide","careerPath","caseStudy","glossaryTerm","siteSettings","service","testimonial","author"]
  *   - Projection:  { _type, "slug": slug.current }
+ *
+ * caseStudy + glossaryTerm are in the filter so publishing them busts both
+ * their detail pages and the sitemap (its fetch is tagged by these _types —
+ * see lib/sitemap/data.ts). Omitting them leaves the sitemap stale until the
+ * next deploy or the daily cron.
  *   - Secret:      same string as SANITY_WEBHOOK_SECRET in .env.local
  *   - URL:         https://salesolution.net/api/revalidate
  *
