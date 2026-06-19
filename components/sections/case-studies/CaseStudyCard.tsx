@@ -23,6 +23,11 @@ export function CaseStudyCard({ study }: { study: CaseStudyCardData }) {
     >
       <div aria-hidden className={`h-1.5 w-full ${primary.dot}`} />
       <div className="flex flex-1 flex-col p-7 md:p-8">
+        {study.engagementRole === 'anchor' && (
+          <p className="mb-3 inline-flex w-fit items-center rounded-[3px] bg-ink-900 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-white">
+            Full engagement
+          </p>
+        )}
         {/* Descriptor + disclosure badge — the "is this me / can I trust it" row */}
         <div className="flex items-start justify-between gap-3">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">

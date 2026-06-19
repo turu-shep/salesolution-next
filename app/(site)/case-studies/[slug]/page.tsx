@@ -166,7 +166,16 @@ export default async function CaseStudyPage({ params }: Props) {
 
       <CaseStudyMethodology study={study} id="measurement" />
 
-      <CaseStudyRelated sameClient={sameClient} others={others} />
+      <CaseStudyRelated
+        sameClient={sameClient}
+        others={others}
+        currentRole={study.engagementRole}
+        clientLabel={
+          study.disclosure === 'named' && study.client?.publicName
+            ? study.client.publicName
+            : study.client?.descriptor
+        }
+      />
 
       <CaseStudyCTA />
 

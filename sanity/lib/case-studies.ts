@@ -20,6 +20,8 @@ export type CaseStudyServiceKey =
 
 export type CaseStudyDisclosure = 'named' | 'anonymized' | 'composite'
 
+export type CaseStudyEngagementRole = 'standalone' | 'anchor' | 'cut'
+
 /** A vertical (or sub-niche) as resolved from a caseStudyClient reference. */
 export type CaseStudyIndustryRef = {
   _id: string
@@ -106,6 +108,7 @@ export type CaseStudyCard = {
   summary: string
   primaryService: CaseStudyServiceKey
   supportingServices?: CaseStudyServiceKey[]
+  engagementRole?: CaseStudyEngagementRole
   engagementWindow: string
   durationLabel: string
   disclosure: CaseStudyDisclosure

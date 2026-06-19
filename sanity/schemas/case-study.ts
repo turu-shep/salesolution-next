@@ -91,6 +91,23 @@ export const caseStudy = defineType({
       description: 'Other services that ran in the same engagement.',
     }),
     defineField({
+      name: 'engagementRole',
+      title: 'Engagement role',
+      type: 'string',
+      group: 'content',
+      options: {
+        list: [
+          { title: 'Standalone — a one-off project', value: 'standalone' },
+          { title: 'Anchor — the full-engagement overview', value: 'anchor' },
+          { title: 'Cut — one discipline of a larger engagement', value: 'cut' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'standalone',
+      description:
+        'How this study sits within a multi-service engagement for one client. “Anchor” is the full-stack overview (usually Full Growth Ownership); each “Cut” is one discipline of it. The anchor and its cuts share a client and cross-link as one engagement, with each owning a different headline number so credit isn’t double-counted. Default “Standalone” for one-off projects.',
+    }),
+    defineField({
       name: 'summary',
       title: 'Summary (lede)',
       type: 'text',
