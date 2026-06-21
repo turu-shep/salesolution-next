@@ -16,7 +16,7 @@ import { business } from '@/lib/business'
  */
 export default function robots(): MetadataRoute.Robots {
   // Block lists that apply to every named bot below. Define once, share.
-  const standardDisallow = ['/api/', '/studio/', '/dev/']
+  const standardDisallow = ['/api/', '/studio/', '/dev/', '/sales/']
 
   return {
     rules: [

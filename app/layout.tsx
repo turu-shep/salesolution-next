@@ -9,6 +9,7 @@ import { CTAClickTracker } from '@/components/integrations/CTAClickTracker'
 import { HubSpotTracking } from '@/components/integrations/HubSpotTracking'
 import { MetaPixel } from '@/components/integrations/MetaPixel'
 import { OutboundLinkTracker } from '@/components/integrations/OutboundLinkTracker'
+import { PublicOnly } from '@/components/integrations/PublicOnly'
 import { RouteChangeTracker } from '@/components/integrations/RouteChangeTracker'
 import './globals.css'
 
@@ -73,26 +74,50 @@ export default function RootLayout({
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-surface text-ink-700 font-sans"
       >
+        {/* Dev-only service-worker eviction. A previous PWA app on localhost:3000
+            can leave a service worker registered against this origin; it then
+            serves that dead app's cached `/_next/static/chunks/*.js` (dev chunk
+            names are stable, not hashed) over this site, producing cryptic
+            `ReactCurrentDispatcher` / `createContext is not a function` errors
+            for files that don't exist here. This inline script runs from the
+            freshly-served HTML — before the foreign chunk — so it executes even
+            when that chunk is broken. It unregisters any SW + clears caches, then
+            reloads once (sessionStorage guard avoids a reload loop). Not emitted
+            in production, and localhost-gated, so it never touches a real PWA. */}
+        {process.env.NODE_ENV === 'development' && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){var h=location.hostname;if(h!=="localhost"&&h!=="127.0.0.1"&&h!=="[::1]")return;if(!("serviceWorker"in navigator))return;navigator.serviceWorker.getRegistrations().then(function(rs){if(!rs.length)return;Promise.all(rs.map(function(r){return r.unregister()})).then(function(){var c=("caches"in self)?caches.keys().then(function(k){return Promise.all(k.map(function(n){return caches.delete(n)}))}):Promise.resolve();c.then(function(){if(!sessionStorage.getItem("__sw_evicted")){sessionStorage.setItem("__sw_evicted","1");location.reload()}})})})})();`,
+            }}
+          />
+        )}
         {/* Consent Mode v2 default-deny — must execute BEFORE any tracking tag.
             next/script `beforeInteractive` is always injected into <head> by
             Next regardless of where it's placed, so it lives in <body> here. */}
         <ConsentDefault />
-        {/* Tracking — each component self-gates on its env var. */}
-        <Analytics />
-        <MetaPixel />
-        <HubSpotTracking />
+        {/* Tracking + chat — customer-facing only. Route-gated out of the internal
+            /sales workspace (see docs/strategy/sales/07-compliance.md). Each also
+            self-gates on its env var. */}
+        <PublicOnly>
+          <Analytics />
+          <MetaPixel />
+          <HubSpotTracking />
 
-        {/* GA4 event dispatchers — fire client-side navigation page_view,
-            outbound-link clicks, and primary-CTA clicks (anything carrying
-            a `data-cta` attribute). All three consent-gate inside track(). */}
-        <RouteChangeTracker />
-        <OutboundLinkTracker />
-        <CTAClickTracker />
+          {/* GA4 event dispatchers — fire client-side navigation page_view,
+              outbound-link clicks, and primary-CTA clicks (anything carrying
+              a `data-cta` attribute). All three consent-gate inside track(). */}
+          <RouteChangeTracker />
+          <OutboundLinkTracker />
+          <CTAClickTracker />
+        </PublicOnly>
 
         {children}
 
-        {/* Consent banner — default-deny stays in force until visitor decides. */}
-        <ConsentBanner />
+        {/* Consent banner — default-deny stays in force until visitor decides.
+            Not shown in the internal /sales workspace. */}
+        <PublicOnly>
+          <ConsentBanner />
+        </PublicOnly>
 
         {/* Vercel-first-party telemetry. Cookie-free; safe under default-deny.
             Enable / disable per-project in Vercel → Project → Analytics. */}
