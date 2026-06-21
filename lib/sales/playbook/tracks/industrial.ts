@@ -396,7 +396,7 @@ export const industrialTrack: Track = {
             { say: `Here's the whole thing in three lines.` },
             { say: `One. I make you the company the AI names when buyers ask for your parts, so you get found before they find a competitor or Amazon.` },
             { say: `Two. I fix your site so it actually answers them. Searchable by part number and spec, real product pages the AI can read. You stop losing quotes you already earned.` },
-            { say: `Three. One team builds it and runs it. Not ten vendors you have to herd. One operator, one system.` },
+            { say: `Three. One team builds it and runs it. Not ten vendors you have to herd, each selling you one piece. One operator, one system.` },
           ],
         },
         {

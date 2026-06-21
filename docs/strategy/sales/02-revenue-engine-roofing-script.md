@@ -126,7 +126,7 @@ Pick the variant that matches what you found. Same move every time: name the lea
 
 ## Stage 2 — HOOK (the money frame, his words — then stop)
 
-Once he's given me the ten seconds. Two beats and a question. Don't monologue. The fuel/engine metaphor is mechanism — it lives in the pitch, not here.
+Once he's given me the ten seconds. Two beats and a question. Don't monologue. The mechanism — the five things that catch the leak, and the "keep your ads guy, at cost" line — lives in the pitch, not here.
 
 > "Here's the thing most roofers don't see. You're not short on leads. You're losing the ones you've already got.
 >
@@ -207,7 +207,7 @@ He's admitted a leak. Now the mechanism, in plain stakes. Keep it tight. The aud
 >
 > Five — you see all of it. A dashboard with the calls we caught, the jobs we booked, the revenue we pulled back. Your numbers, not my say-so."
 
-> *[VERIFY before saying the reply-time stat aloud: the "47 hours is the average reply" figure lives in `docs/strategy/multi-vertical-pivot/01-pillar-storyboard.md` (tagged "LeadSync 2026"), but that doc flags it as Artur's framing, not an audited external study. Do NOT cite it as a study on a call until it's sourced. Until then, use the plain version already written into step two: "whoever replies first usually books the job."]*
+> *Reply-time stat: "the industry average is 47 hours" is sourced (LeadSync, 2026) — cite it as an industry average, never as this prospect's own number. On the cold open the plain version still opens stronger: "whoever replies first usually books the job." Source of record: `docs/strategy/sales/_claims-library.md` C-01.*
 
 **Then — what I don't do. Say this slowly. It's the trust.**
 

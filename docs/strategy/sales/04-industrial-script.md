@@ -237,7 +237,7 @@ Only pitch after he's confirmed at least one real pain and said yes to the bridg
 >
 > Two. I fix your site so it actually answers them. Searchable by part number and spec, real product pages the AI can read. You stop losing quotes you already earned.
 >
-> Three. One team builds it and runs it. Not ten vendors you have to herd. One operator, one system."
+> Three. One team builds it and runs it. Not ten vendors you have to herd, each selling you one piece. One operator, one system."
 
 **Then name what you don't do.** Fastest trust signal for this buyer.
 

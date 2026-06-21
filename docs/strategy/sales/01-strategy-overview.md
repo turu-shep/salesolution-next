@@ -34,7 +34,7 @@ You're running two businesses through one phone. Different buyer, different prob
 | **Who** | Local-service owner: roofer, HVAC, plumber, electrician, dental-practice owner | Owner / president of a $5M–$75M distributor or manufacturer |
 | **What they feel** | "Phone rings while I'm on a roof or with a patient. I pay for leads nobody calls back. I quote a job and never hear a word." | "Phone's quieter, fewer quotes coming in. We slipped on Google. Amazon and the manufacturers are going direct." |
 | **Their words** | jobs, calls, estimates, booked, the front desk | quotes, RFQs, counter sales, line card, our reps, our parts |
-| **What I sell** | A system that answers every call, texts back in seconds, books the job, chases cold quotes, proves the revenue | Get found when buyers ask AI; stop leaking the quotes they already get |
+| **What I sell** | A system that answers every call, texts back in seconds, books the job, chases cold quotes, and proves the revenue | Get found when buyers ask AI; stop leaking the quotes they already get |
 | **The CTA** | **Revenue Leak Audit** — free, ~20 min, they keep the numbers | **Growth Call** (the written diagnostic at /unlock-growth-audit/ is the backup door) |
 | **Voice** | First-person "I." Owner to owner. No hype, they can smell it. | First-person "I" / "we." Owner to owner. Revenue, not metrics. |
 | **The unlock** | I tested their phone and Google profile before dialing. The opener names the real leak I found. | I checked whether ChatGPT and Google's AI name them or a competitor. |

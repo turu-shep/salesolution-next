@@ -355,7 +355,7 @@ export const revenueEngineRoofingTrack: Track = {
             { say: 'Three — it books the estimate onto your calendar. No phone tag.' },
             { say: 'Four — the quotes that go cold get chased for you, automatically. A dead estimate gets one more real shot at booking.' },
             { say: 'Five — you see all of it. A dashboard with the calls we caught, the jobs we booked, the revenue we pulled back. Your numbers, not my say-so.' },
-            { note: '[VERIFY] before saying the reply-time stat aloud: the "47 hours" figure is Artur’s framing, not an audited study. Until sourced, use the plain version: "whoever replies first usually books the job."' },
+            { note: 'Reply-time stat: cite as "the industry average is 47 hours (LeadSync, 2026)" — never as their own number. On the cold open the plain version still wins: "whoever replies first usually books the job." Source of record: docs/strategy/sales/_claims-library.md C-01.' },
           ],
         },
         {

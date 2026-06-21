@@ -49,7 +49,7 @@ Canonical sources to read first (don't duplicate them here): the operating conce
 | **Meta Lead event** | ❌ `track()` is gtag-only; pixel fires PageView only | Fire `fbq('track','Lead')` on submit + server CAPI, dedup on `submissionId` (RE-501). |
 | **Google Ads conversion** | ❌ (per channel-funnel-playbook) | Import GA4 `generate_lead` as an Ads conversion, or fire `gtag('event','conversion')` on `/audit-booked/`. |
 | **A/B test** | ❌ | First test: pillar hero leak-framing vs engine-framing (RE-503), `GATE:HUMAN`. |
-| **Approved Claims Library** | ⚠️ Claims live inline in page data with sources (e.g. "47 hours" → "LeadSync, 2026") | Formalize as one doc; reconcile C-01 status with the cockpit (see Open items). |
+| **Approved Claims Library** | ✅ Formalized — `docs/strategy/sales/_claims-library.md`; C-01 reconciled (VERIFIED) | — |
 | **Manifests / process** | ❌ No `.agents/manifests/` | Use PRs as the manifest (+ optional JSON note). |
 | **Canonical product spec** | ⚠️ `.agents/product-marketing-context.md` + `01-pillar-storyboard.md` still carry the old frame | Update both to Bring→Convert→Retain; make the spec §1 the one SSOT the **site + the `/sales` cockpit** both read. |
 
@@ -103,5 +103,5 @@ Rollback at any stage = revert the PR; cluster pages stay live.
 
 ## Open items needing a human call
 - **DP-3 (nav):** keep "Who We Serve" submenu as the entry, or add a top-level "Revenue Engine"?
-- **C-01 reconciliation:** is "LeadSync, 2026" a source we stand behind for the "47 hours" stat (then un-gate it in the cockpit too), or do we gate it everywhere and soften the page copy?
+- ~~**C-01 reconciliation**~~ **— RESOLVED 2026-06-21:** stand behind "47 hours" as VERIFIED, cite "LeadSync, 2026," never as the prospect's own number. Source of record `docs/strategy/sales/_claims-library.md` C-01; the cockpit's `[VERIFY]` gate is removed (scripts repointed to the claims library).
 - **Out of scope here** (separate workstreams): Catalog AI / v2-1 rehoming (pivot Phase 3); the live call-tracking-number pool (service delivery).

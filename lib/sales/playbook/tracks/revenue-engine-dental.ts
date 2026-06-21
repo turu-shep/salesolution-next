@@ -264,7 +264,7 @@ export const revenueEngineDentalTrack: Track = {
             { say: "Two. A missed call gets a text back in seconds, so you don't lose the caller while they wait." },
             { say: "Three. A new-patient inquiry gets a reply in under a minute, gets booked straight onto your calendar, and gets reminders so they actually show." },
             { say: "Four. It works the money already in your charts. The treatment plans that stalled, the patients overdue for recall — followed up automatically." },
-            { say: "Five. Every month it shows you, in plain numbers, what it brought in. Kept separate from your ads." },
+            { say: "Five. Every month it shows you, in plain numbers, what it brought in — on its own line, separate from what your ads did." },
           ],
         },
         {

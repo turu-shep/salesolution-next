@@ -15,11 +15,11 @@
 
 **One-liner:** Sale Solution makes industrial and local-service businesses the company AI search points to, so buyers find them before they find a competitor — without spending more on ads. (`components/sections/HeroProbe.tsx`)
 
-**What it does:** Sale Solution is a small, operator-led firm doing SEO, GEO (generative engine optimization), and AI-search readiness for two kinds of business. (`prompts/_CONTEXT.md`) It runs as one team that builds and operates earned, paid, and owned channels together, instead of leaving a client to coordinate ten vendors. (`components/sections/DemandSystem.tsx`)
+**What it does:** Sale Solution is a small, operator-led firm doing SEO, GEO (generative engine optimization), and AI-search readiness for two kinds of business. (`prompts/_CONTEXT.md`) One operator runs the whole flow — **Bring → Convert → Retain (+ Prove)**: bring the right buyers in, convert the demand you already have, keep and re-sell the customers you already won, and prove it in the client's own numbers. The leak isn't in any one slice; it's in the seams between vendors — the lead the ads guy bought that nobody called back, on a page the SEO guy never built to convert. So the unit of work is the flow, not the tactic. (`docs/strategy/operating-concept-bring-convert-retain.md`, `components/sections/revenue-engine/flow-concepts/FlowBlock.tsx`)
 
 **Two product lines:**
 - **The services book** — six services for industrial and technical-distribution e-commerce, sold off `/services/*`: AI Search & GEO, Catalog AI, Editorial Authority, Website Development, Outbound Email, and Full Growth Ownership (the premium tier). (`components/services/service-colors.ts`, `components/sections/case-studies/service-meta.ts`)
-- **The Revenue Engine** — a done-for-you, productized offer for local service businesses (roofers and dental practices). It answers every call, replies in seconds, books the job, and chases quotes that go cold, then shows the owner which revenue it drove. (`app/(site)/revenue-engine/page.tsx`)
+- **The Revenue Engine** — a done-for-you, productized offer for local service businesses (roofers and dental practices). Five steps — **CAPTURE → RESPOND → BOOK → RECOVER → PROVE** — that map under the pillars: Bring = CAPTURE, Convert = RESPOND + BOOK, Retain = RECOVER, Prove = PROVE. It answers every call, replies in seconds, books the job, and chases quotes that go cold, then shows the owner which revenue it drove. (`app/(site)/revenue-engine/page.tsx`, `docs/strategy/operating-concept-bring-convert-retain.md`)
 
 **Product category:** SEO / GEO / AI-search-readiness services (multi-vertical). The work is citation, authority, and AI-answer plays, not volume SEO — the site itself is low-authority (DR ~10), so that's the deliberate strategy. (`prompts/_CONTEXT.md`)
 
@@ -59,7 +59,7 @@ Roofing, HVAC, plumbing, electrical. The hero speaks to "contractors who miss ca
 
 The pitch: "Your front desk is the most expensive channel you don't measure." Calls missed during chair time, treatment plans and recall that never get followed up. The dental setup is HIPAA-compliant — BAAs on every tool that touches patient data. (`app/(site)/revenue-engine/dentists/page.tsx`)
 
-**The Revenue Engine buyer (both verticals):** a **problem-aware, not solution-aware** local-service owner. They feel the pain (missed calls, leads that ghost, "spent on marketing, can't tell what worked") but have no name for the fix and have never heard "engine vs fuel." They are time-poor, agency-burned, hype-allergic, price-sensitive, afraid of lock-in, and **not marketers**. Any unexplained acronym (GEO, map pack, schema, PMS, BAA) is friction. They're high market-sophistication — they've stopped believing louder promises — so the page turns on a credible mechanism, not a bigger claim. (`docs/strategy/multi-vertical-pivot/01-pillar-storyboard.md`)
+**The Revenue Engine buyer (both verticals):** a **problem-aware, not solution-aware** local-service owner. They feel the pain (missed calls, leads that ghost, "spent on marketing, can't tell what worked") but have no name for the fix — they've been sold pieces (a website, an ad, a CRM) and never heard the whole flow named. They are time-poor, agency-burned, hype-allergic, price-sensitive, afraid of lock-in, and **not marketers**. Any unexplained acronym (GEO, map pack, schema, PMS, BAA) is friction. They're high market-sophistication — they've stopped believing louder promises — so the page turns on a credible mechanism, not a bigger claim. (`docs/strategy/multi-vertical-pivot/01-pillar-storyboard.md`)
 
 **Jobs to be done (across verticals):**
 - "Get found when buyers ask AI, so they pick me before a competitor." (`components/sections/HeroProbe.tsx`)
@@ -109,7 +109,7 @@ Two or more usually means the problem is structural — not something more conte
 
 **Lead vendors (Revenue Engine side)** — sell shared, unworked contacts and promise lead volume. Sale Solution's counter: no shared pool, no reselling your leads; it works the demand and contacts you already have, and guarantees revenue it can prove, not lead counts. (`app/(site)/revenue-engine/page.tsx`)
 
-**Ad agencies that "burned you" (Revenue Engine side)** — sold more fuel (ads, leads). Sale Solution's counter: ads are fuel you should own at cost; the engine is the system that converts demand you already have. Keep your ads guy — the engine just makes his leads convert. (`components/sections/revenue-engine/EngineVsFuel.tsx`)
+**Vendors who sell one slice (Revenue Engine side)** — the ads guy who optimizes clicks, the SEO guy who sends a rankings report, a chatbot, a reviews tool. Each proves *their slice fired*; none owns whether you made money. Sale Solution's counter: you've been sold pieces; I run the whole flow — Bring → Convert → Retain, proven. The leak lives in the seams between vendors, not the ad budget. Ads are one input into Bring, run on the client's own account at cost, zero markup; keep your ads guy, the system just makes his leads convert. ("Ads are fuel; the engine is everything that turns demand into booked, paid, repeat revenue" survives as a Convert sub-message, nested under Bring/Convert — no longer the top-level frame. Canon: `docs/strategy/operating-concept-bring-convert-retain.md`; `components/sections/revenue-engine/flow-concepts/FlowBlock.tsx`, `EngineVsFuel.tsx`)
 
 **On the industrial side, name modern competitors only per the competitor policy** (`brand/competitor-policy.yaml`). Amazon and "the manufacturers going direct" are the owner's named villains and are fair to reference, because that's how the ICP describes the threat. (`docs/strategy/icp/industrial-distribution.md`)
 
@@ -117,9 +117,11 @@ Two or more usually means the problem is structural — not something more conte
 
 ## Differentiation
 
-**Be the answer, not the ranking.** The work is getting cited inside AI answers (GEO/AEO), not chasing positions on a results page. (`components/sections/HeroProbe.tsx`)
+**One operator runs the whole flow.** Bring → Convert → Retain, proven — not ten vendors each selling one slice and proving only that their slice fired. The money is in closing the seams between them. (`components/sections/revenue-engine/flow-concepts/FlowBlock.tsx`, `docs/strategy/operating-concept-bring-convert-retain.md`)
 
-**One operator, one system.** Earned, paid, and owned channels built and run by one team, each entering the funnel where the buyer actually is — not everything dumped into the top. (`components/sections/DemandSystem.tsx`)
+**Be the answer, not the ranking.** The Bring play on a DR-10 site is citation and authority — getting cited inside AI answers (GEO/AEO), not chasing positions on a results page or buying volume SEO. (`components/sections/HeroProbe.tsx`)
+
+**Earned, paid, and owned, run as one.** Every channel built and run by one team, each entering the funnel where the buyer actually is — not everything dumped into the top. (`components/sections/DemandSystem.tsx`)
 
 **Each phase earns the next.** The framework runs Foundation (get AI-ready) → Amplify (become the name they trust) → Lead (stay out front). The work doesn't move to the next phase until the last one has done its job. (`components/sections/FrameworkTimeline.tsx`)
 
@@ -127,7 +129,7 @@ Two or more usually means the problem is structural — not something more conte
 
 **Revenue Engine differentiators (local-service):**
 - A published pricing model and terms, in full, so there are no games on a call. The number comes in the audit, in writing, the same day. (`components/sections/revenue-engine/RevenuePricing.tsx`)
-- No markup on the client's ads; no reselling their leads; keep their ads guy. (`components/sections/revenue-engine/EngineVsFuel.tsx`)
+- No markup on the client's ads; no reselling their leads; keep their ads guy. Ads are fuel into Bring; the engine (Convert: RESPOND + BOOK) is what makes those leads book. (`components/sections/revenue-engine/EngineVsFuel.tsx`, `flow-concepts/FlowBlock.tsx`)
 - A falsifiable guarantee: "If system-attributed revenue doesn't exceed my fee by day 90, I work free until it does." System-attributed revenue is shown as plain math in the client's own dashboard. (`components/sections/revenue-engine/Guarantee.tsx`)
 - The Revenue Leak Audit is a diagnosis, not a sales call — the owner keeps the numbers whether or not they hire. (`docs/strategy/multi-vertical-pivot/01-pillar-storyboard.md`)
 
@@ -137,7 +139,7 @@ Two or more usually means the problem is structural — not something more conte
 
 | Objection | Response | Source |
 |-----------|----------|--------|
-| "Will this work for me?" / "I've been burned." | Name what we *don't* do, early and specifically: no markup on your ads, no reselling your leads, no annual lock-in. | `docs/strategy/multi-vertical-pivot/01-pillar-storyboard.md` |
+| "Will this work for me?" / "I've been burned." | You've been sold pieces by vendors who each proved their slice fired. I run the whole flow and own whether it pays. Then name what we *don't* do, early and specifically: no markup on your ads, no reselling your leads, no annual lock-in. | `docs/strategy/multi-vertical-pivot/01-pillar-storyboard.md` |
 | "Do you guarantee a number of leads?" | No. The guarantee is revenue the system can prove against the fee, not lead counts. Volume promises are how lead vendors sell shared, unworked contacts. | `app/(site)/revenue-engine/page.tsx` |
 | "Are you reselling me the same leads three other contractors got?" | No shared pool. The engine works the demand and contacts you already have. Every call is recorded and logged to you. | `app/(site)/revenue-engine/page.tsx` |
 | "Is this HIPAA-compliant for a dental practice?" | Yes. BAAs on every tool that touches patient data — call tracking, SMS, CRM. | `app/(site)/revenue-engine/page.tsx` |
@@ -165,10 +167,11 @@ Two or more usually means the problem is structural — not something more conte
 
 **How a buyer describes the brand's promise:**
 - "Buyers ask AI. Be the answer." (`components/sections/HeroProbe.tsx`)
-- "Get found. Get booked. Get paid." (`app/(site)/revenue-engine/page.tsx`)
-- "One team builds and runs every box. Not ten vendors. One system." (`components/sections/DemandSystem.tsx`)
+- "Get found. Win the sale. Keep them coming back." (Bring → Convert → Retain, in the owner's words. `components/sections/HeroProbe.tsx`)
+- "You've been sold pieces. I run the whole flow." (`components/sections/revenue-engine/flow-concepts/FlowBlock.tsx`)
+- "Everyone sells you one piece. I run the whole flow." (`Concept2OnePiece.tsx`)
 
-**Words to use:** quotes, RFQs, counter sales, line card, revenue, booked jobs, get found, be the answer, the AI answer, ChatGPT, Google AI Overviews, get cited, one system, one operator, Revenue Leak Audit, system-attributed revenue, no markup, no lock-in, your own dashboard, GEO (second clause only)
+**Words to use:** quotes, RFQs, counter sales, line card, revenue, booked jobs, get found, win the sale, keep them coming back, bring, convert, retain, be the answer, the AI answer, ChatGPT, Google AI Overviews, get cited, one system, one operator, the whole flow, Revenue Leak Audit, system-attributed revenue, no markup, no lock-in, your own dashboard, GEO (second clause only)
 
 **Words to avoid:** leverage, utilize, seamless, robust, scalable, holistic, cutting-edge, world-class, unlock, supercharge, elevate, empower, game-changer, guaranteed rankings, full-service agency, digital marketing agency, ARR (industrial copy), pipeline, CTR, impressions, coverage, schema (cold), ERP, PIM (cold), faceted navigation (cold)
 
@@ -184,7 +187,8 @@ Two or more usually means the problem is structural — not something more conte
 | GEO (generative engine optimization) | Getting your pages cited inside AI-generated answers (ChatGPT, Google AI Overviews), not just ranked on a results page (`prompts/_CONTEXT.md`, `components/sections/HeroProbe.tsx`) |
 | AEO (answer engine optimization) | The answer-engine slice of the same work; optimizing to be the source an AI answer names (`docs/strategy/career-path/02-scope-and-positioning.md`) |
 | The Revenue Engine | The productized done-for-you system for local-service businesses: capture, respond, book, recover, prove (`app/(site)/revenue-engine/page.tsx`) |
-| Engine vs. fuel | Ads are fuel the client owns at cost; the engine is the system that converts demand they already have, and keeps producing with the ads off (`components/sections/revenue-engine/EngineVsFuel.tsx`) |
+| Bring → Convert → Retain (+ Prove) | The canonical operating frame for what Sale Solution covers: bring the right buyers in, convert the demand you already have, keep and re-sell who you won, and prove it. The Revenue Engine's five steps map under it — Bring = CAPTURE, Convert = RESPOND + BOOK, Retain = RECOVER, Prove = PROVE. Supersedes the old "engine vs fuel / what happens after the call" frame, which only described Convert. (`docs/strategy/operating-concept-bring-convert-retain.md`) |
+| Engine vs. fuel | A sub-message *inside* Bring/Convert, not the top-level frame: ads are one input the client owns at cost; the engine — convert + retain — turns that demand into booked, paid, repeat revenue and keeps producing with the ads off. Keep your ads guy. (`components/sections/revenue-engine/EngineVsFuel.tsx`) |
 | System-attributed revenue | The second line on the monthly report — recovered calls, follow-up, reactivation, review-driven organic — measured in the client's own dashboard, not estimated (`components/sections/revenue-engine/Guarantee.tsx`) |
 | Revenue Leak Audit | The free ~20-minute diagnosis that shows an owner their own numbers: missed calls, response time, Google profile, the follow-up gap. Theirs to keep (`docs/strategy/multi-vertical-pivot/01-pillar-storyboard.md`) |
 | The demand system | Earned, paid, and owned channels that each enter the funnel where the buyer actually is, run as one system (`components/sections/DemandSystem.tsx`) |

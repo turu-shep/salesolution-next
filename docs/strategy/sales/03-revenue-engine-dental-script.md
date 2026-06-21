@@ -170,7 +170,7 @@ Only after they've named at least one leak themselves. Plain stakes. First perso
 >
 > Four. It works the money already in your charts. The treatment plans that stalled, the patients overdue for recall — followed up automatically.
 >
-> Five. Every month it shows you, in plain numbers, what it brought in. Kept separate from your ads."
+> Five. Every month it shows you, in plain numbers, what it brought in — on its own line, separate from what your ads did."
 
 > "What it doesn't do matters more, so let me say it first. It doesn't replace your front desk. It catches the calls they physically can't, while they take care of the patient in the chair. I don't lock you into a year. I don't make you rip out your software. We book at the calendar level first, so you're live fast, then we scope deeper into Dentrix or Open Dental or whatever you run during setup. The 90-day install is on me."
 
@@ -233,7 +233,7 @@ Lock a real time. Confirm the invite goes to a real email. Confirm who'll be on 
 ---
 
 *[VERIFY — every number that leaves my mouth, before I dial]*
-- *"47 hours" (average time to first reply on a new-patient inquiry): sourced to LeadSync, 2026, per `app/(site)/revenue-engine/dentists/page.tsx`. Don't state it as this practice's number unless I measured it.*
+- *"47 hours" (average time to first reply on a new-patient inquiry): sourced to LeadSync, 2026 — source of record `docs/strategy/sales/_claims-library.md` C-01. Don't state it as this practice's number unless I measured it.*
 - *"As many as 1 in 3 calls missed" and "treatment plans go unfollowed": keep these as ranges, never as a hard per-practice figure. Same source, same file.*
 - *Google rating / last-review month (section 1B): fill in the real values I actually saw. Never read a placeholder or a stale month out loud.*
 - *Website form silence (section 1C): only say it if I really submitted a request and really got no reply. No invented timestamps — say "earlier today," not "a few hours ago," unless it's literally true.*
