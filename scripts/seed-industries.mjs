@@ -54,6 +54,17 @@ const industries = [
     order: 10,
   },
   {
+    _id: 'industry-medical',
+    _type: 'industry',
+    title: 'Medical & Aesthetics',
+    shortLabel: 'Medical',
+    slug: slug('medical'),
+    hubHref: '/revenue-engine/medical/',
+    description:
+      'Elective and aesthetic practices — dental, med spa, plastic surgery, derm — that lose high-value patients to missed calls and treatment plans nobody follows up.',
+    order: 20,
+  },
+  {
     _id: 'industry-home-services',
     _type: 'industry',
     title: 'Home Services',
@@ -62,7 +73,7 @@ const industries = [
     hubHref: '/revenue-engine/home-services/',
     description:
       'Local home-services contractors — roofing-forward, plus HVAC, plumbing and the trades — that lose revenue to missed calls and slow follow-up.',
-    order: 20,
+    order: 30,
   },
   {
     _id: 'industry-dental',
@@ -70,10 +81,22 @@ const industries = [
     title: 'Dental Practices',
     shortLabel: 'Dental',
     slug: slug('dental'),
+    parent: ref('industry-medical'),
     hubHref: '/revenue-engine/dentists/',
     description:
-      'Single-location and multi-location dental practices that want every call answered, booked, and followed up — with HIPAA handled.',
-    order: 30,
+      'Single-location and multi-location dental practices that want every call answered, booked, and followed up — with HIPAA handled. A sub-niche of Medical & Aesthetics.',
+    order: 25,
+  },
+  {
+    _id: 'industry-local-retail',
+    _type: 'industry',
+    title: 'Local Retail & Brands',
+    shortLabel: 'Local Retail',
+    slug: slug('local-retail'),
+    hubHref: '/revenue-engine/local-retail/',
+    description:
+      'Showrooms, specialty retailers, and local brands (jewelry, flooring, and similar) that lose nearby buyers to local and AI search, and never sell again to the customers they already won.',
+    order: 40,
   },
 ]
 

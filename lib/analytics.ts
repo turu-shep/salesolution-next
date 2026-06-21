@@ -37,6 +37,7 @@ type FormId =
   | 'strategy_call_form'
   | 'catalog_snapshot_form'
   | 'full_growth_quote_form'
+  | 'revenue_leak_audit_form'
 type ErrorType = 'validation' | 'rate_limit' | 'server' | 'network' | 'turnstile'
 type ServiceCategory = 'seo' | 'content' | 'web' | 'email' | 'catalog'
 

@@ -83,6 +83,11 @@ loss-aversion pages are proven.
 
 ## Notes that change the plan
 
+- **Meta destination depends on temperature, not just vertical.** Cold Meta/IG goes
+  to a native **Instant Form** (Higher-intent type), *not* this LP; the LP is for
+  **warm/retargeting** traffic and Google Search. So the home-services cells above
+  mean "instant-form (cold) + LP (warm)," not a flat "LP." Full reasoning in
+  [channel-funnel-playbook.md](./channel-funnel-playbook.md).
 - **Pair G5 + G4 on one page, don't split them.** Both are the capture/response leak;
   one "stop the leak" narrative per local vertical is stronger and fewer pages to build.
 - **Loss aversion > volume promises.** "Stop losing what you pay for" (G4/G5) outpulls

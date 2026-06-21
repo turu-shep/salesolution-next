@@ -99,8 +99,9 @@ export default function RevenueEnginePage() {
         }
         primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}
         selfQualifiers={[
+          { label: 'I run a clinic or practice', href: '/revenue-engine/medical/' },
           { label: "I'm a contractor", href: '/revenue-engine/home-services/' },
-          { label: 'I run a dental practice', href: '/revenue-engine/dentists/' },
+          { label: 'I run a shop or brand', href: '/revenue-engine/local-retail/' },
         ]}
         anchors={[
           { label: 'The leak', href: '#leak' },

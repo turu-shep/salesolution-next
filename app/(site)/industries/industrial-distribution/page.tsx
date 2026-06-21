@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-import { AIOverviewMockup } from '@/components/sections/AIOverviewMockup'
+import { AIOverviewMockup, INDUSTRIAL_SLIDES } from '@/components/sections/AIOverviewMockup'
 import { CaseStudyCard } from '@/components/sections/case-studies/CaseStudyCard'
 import { CaseStudyProofBand } from '@/components/sections/case-studies/CaseStudyProofBand'
 import { FAQ } from '@/components/sections/FAQ'
@@ -230,7 +230,7 @@ export default async function IndustrialDistributionPage() {
           {/* The exact thing the page argues, shown — this is the proof, and
               the larger visual anchor (7 of 12 cols) so it isn't secondary. */}
           <div className="min-w-0 lg:col-span-6">
-            <AIOverviewMockup />
+            <AIOverviewMockup slides={INDUSTRIAL_SLIDES} />
             <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">
               What we build: your products named in the AI answer, ahead of the brands you carry.
             </p>

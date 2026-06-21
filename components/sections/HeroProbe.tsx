@@ -1,25 +1,69 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { cn } from '@/lib/cn'
 
-import { AIOverviewMockup } from './AIOverviewMockup'
+import { AIOverviewMockup, ALL_SLIDES, type LaneKey } from './AIOverviewMockup'
 import { LogoMarquee } from './LogoMarquee'
 
 /**
- * Home hero — v4 (cross-vertical front door).
+ * Home hero — v5 (cross-vertical front door).
  *
  * - No §0X rail. The section announces itself with the H1.
- * - Universal promise headline ("win the customers you already pay for"); the
- *   subhead names both leaks (discovery + response) and the CTAs fork into the
- *   two funnels: industrial → /industries/industrial-distribution/, local-service
- *   → /revenue-engine/. Do not merge the funnels.
- * - The AI-answer mockup + probe are the discovery-side proof (any site can be
- *   scored, but the framing leans GEO). Probe is wired to /api/probe/ — see
- *   app/api/probe/route.ts.
+ * - Promise headline names the full arc (get found → win the sale → keep them);
+ *   the subhead names the three leaks (discovery, conversion, retention).
+ * - "Which are you?" is a compact 4-chip selector (industrial / medical /
+ *   home-services / retail). Picking a chip filters the AI-answer mockup to that
+ *   lane and reveals a contextual CTA into the right funnel: industrial → the
+ *   services book; the other three → the Revenue Engine. Do not merge the funnels.
+ * - The AI-answer mockup + probe are the discovery-side proof. Probe is wired to
+ *   /api/probe/ — see app/api/probe/route.ts.
  */
+
+type Lane = {
+  key: LaneKey
+  /** Short chip label. */
+  chip: string
+  /** Where the contextual CTA points once this lane is picked. */
+  href: string
+  /** The contextual CTA label shown once the lane is picked. */
+  cta: string
+  /** Industrial is the discovery face (brand-blue); the rest the response face (accent). */
+  tone: 'brand' | 'accent'
+}
+
+const LANES: Lane[] = [
+  {
+    key: 'industrial',
+    chip: 'Industrial',
+    href: '/industries/industrial-distribution/',
+    cta: 'See the industrial playbook',
+    tone: 'brand',
+  },
+  {
+    key: 'medical',
+    chip: 'Medical',
+    href: '/revenue-engine/medical/',
+    cta: 'See it for medical & aesthetics',
+    tone: 'accent',
+  },
+  {
+    key: 'home-services',
+    chip: 'Home & local',
+    href: '/revenue-engine/home-services/',
+    cta: 'See it for home services',
+    tone: 'accent',
+  },
+  {
+    key: 'retail',
+    chip: 'Retail',
+    href: '/revenue-engine/local-retail/',
+    cta: 'See it for retail & consumer brands',
+    tone: 'accent',
+  },
+]
 
 type ProbeState =
   | { kind: 'idle' }
@@ -37,6 +81,12 @@ type ProbeResult = {
 export function HeroProbe() {
   const [url, setUrl] = useState('')
   const [state, setState] = useState<ProbeState>({ kind: 'idle' })
+  const [lane, setLane] = useState<LaneKey | null>(null)
+  const slides = useMemo(
+    () => (lane ? ALL_SLIDES.filter((s) => s.lane === lane) : ALL_SLIDES),
+    [lane],
+  )
+  const selected = LANES.find((l) => l.key === lane) ?? null
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -80,40 +130,67 @@ export function HeroProbe() {
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 pb-16 pt-14 sm:px-6 md:pt-20 lg:grid-cols-12 lg:items-center lg:gap-12 lg:px-8 lg:pb-20">
           <div className="lg:col-span-7">
             <h1 className="font-display text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.03em] text-ink-900 sm:text-5xl lg:text-[4.25rem]">
-              <span className="block">Win the customers</span>
-              <span className="block">you already pay for.</span>
+              <span className="block">Get found.</span>
+              <span className="block">Win the sale.</span>
+              <span className="block">Keep them coming back.</span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-700">
-              You pay to get found and to make the phone ring. Then you lose them
-              in the gap &mdash; buyers get their answer from AI before they reach
-              you, and the ones who do reach you wait too long for a reply. We
-              close both, without more ad spend.
+              Buyers look you up and an algorithm sends them elsewhere. The ones
+              who reach you slip through. The ones who buy never hear from you
+              again. We close all three.
             </p>
 
             <div className="mt-8">
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
                 Which are you?
               </p>
-              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-3">
-                <Link
-                  href="/industries/industrial-distribution/"
-                  data-cta="lane-industrial__hero"
-                  data-cta-location="hero"
-                  className="inline-flex items-center gap-1.5 rounded-[4px] bg-brand-600 px-6 py-3.5 text-base font-semibold text-white shadow-cta transition-colors duration-200 hover:bg-brand-700"
-                >
-                  Industrial &amp; technical B2B
-                  <span aria-hidden>→</span>
-                </Link>
-                <Link
-                  href="/revenue-engine/"
-                  data-cta="lane-local-service__hero"
-                  data-cta-location="hero"
-                  className="inline-flex items-center gap-1.5 rounded-[4px] border border-rule-strong bg-surface px-6 py-3.5 text-base font-semibold text-ink-900 transition-colors duration-200 hover:border-ink-900"
-                >
-                  Home services &amp; dental
-                  <span aria-hidden>→</span>
-                </Link>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {LANES.map((l) => {
+                  const isActive = l.key === lane
+                  return (
+                    <button
+                      key={l.key}
+                      type="button"
+                      onClick={() => setLane(isActive ? null : l.key)}
+                      aria-pressed={isActive}
+                      data-cta={`lane-${l.key}__hero`}
+                      data-cta-location="hero"
+                      className={cn(
+                        'inline-flex cursor-pointer items-center rounded-full border px-4 py-2 text-sm font-semibold transition-colors duration-200',
+                        isActive && l.tone === 'brand' && 'border-brand-600 bg-brand-600 text-white',
+                        isActive && l.tone === 'accent' && 'border-accent-500 bg-accent-500 text-white',
+                        !isActive && 'border-rule-strong bg-surface text-ink-700 hover:border-ink-900 hover:text-ink-900',
+                      )}
+                    >
+                      {l.chip}
+                    </button>
+                  )
+                })}
+              </div>
+
+              <div className="mt-5 min-h-[3.25rem]">
+                {selected ? (
+                  <Link
+                    href={selected.href}
+                    data-cta={`lane-${selected.key}-cta__hero`}
+                    data-cta-location="hero"
+                    className={cn(
+                      'inline-flex items-center gap-1.5 rounded-[4px] px-6 py-3.5 text-base font-semibold text-white shadow-cta transition-colors duration-200',
+                      selected.tone === 'brand'
+                        ? 'bg-brand-600 hover:bg-brand-700'
+                        : 'bg-accent-500 hover:bg-accent-600',
+                    )}
+                  >
+                    {selected.cta}
+                    <span aria-hidden>→</span>
+                  </Link>
+                ) : (
+                  <p className="max-w-md text-sm leading-relaxed text-ink-500">
+                    Pick the one that&rsquo;s you &mdash; the live example updates
+                    to match.
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -129,7 +206,7 @@ export function HeroProbe() {
                 Real query · Real citation · Real client
               </p>
             </div>
-            <AIOverviewMockup />
+            <AIOverviewMockup slides={slides} />
           </div>
         </div>
       </section>

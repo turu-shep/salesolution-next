@@ -7,10 +7,10 @@ import { InView } from './InView'
 /**
  * Home § 02.5 — the audience splitter.
  *
- * The homepage is the cross-vertical front door; this is where it forks. Three
+ * The homepage is the cross-vertical front door; this is where it forks. Four
  * audience cards, each in the owner's own words, routing to its own hub —
  * keeping the two funnels separate (do not merge). Industrial is brand-blue (the
- * discovery face); the two Revenue Engine verticals are accent-orange (the
+ * discovery face); the three Revenue Engine verticals are accent-orange (the
  * response face), matching the two-face coloring in ProblemShift.
  *
  * Card hrefs mirror lib/navigation.ts "Who We Serve" children.
@@ -39,8 +39,18 @@ const AUDIENCES: Audience[] = [
     tone: 'brand',
   },
   {
+    key: 'medical',
+    eyebrow: 'Medical & aesthetics',
+    sub: 'Dental · Med spa · Plastic surgery',
+    pain: 'Your front desk is with a patient when the phone rings, and the new consult books with whoever picked up. High-value treatment plans get presented once and never followed up.',
+    fix: 'A HIPAA-compliant system that answers during treatment, books new patients, and chases the plans and recalls worth the most — then proves the revenue.',
+    href: '/revenue-engine/medical/',
+    cta: 'See it for medical & aesthetics',
+    tone: 'accent',
+  },
+  {
     key: 'home-services',
-    eyebrow: 'Home services',
+    eyebrow: 'Home & local services',
     sub: 'Roofing · HVAC · Plumbing · Electrical',
     pain: 'The phone rings while you’re on a roof. You pay for leads nobody calls back, and estimates go cold.',
     fix: 'A system that answers every call, replies in seconds, books the job, and chases the quotes that stall.',
@@ -49,13 +59,13 @@ const AUDIENCES: Audience[] = [
     tone: 'accent',
   },
   {
-    key: 'dental',
-    eyebrow: 'Dental practices',
-    sub: 'Single & multi-location',
-    pain: 'Your busiest hours are your leakiest. Calls get missed during chair time; recall and treatment plans never get followed up.',
-    fix: 'A HIPAA-compliant system that books during chair time and proves the revenue it drives.',
-    href: '/revenue-engine/dentists/',
-    cta: 'See it for dental',
+    key: 'local-retail',
+    eyebrow: 'Retail & consumer brands',
+    sub: 'Jewelry · Flooring · Specialty goods',
+    pain: 'Shoppers near you search and find a competitor. The ones who do buy rarely come back, and the customer list you already paid to build never gets sold to again.',
+    fix: 'Show up first in Maps and AI for your area, bring back the shoppers who looked and left, and sell again to the customers you already won.',
+    href: '/revenue-engine/local-retail/',
+    cta: 'See it for retail',
     tone: 'accent',
   },
 ]
@@ -83,7 +93,7 @@ export function WhoWeServe() {
           Who we serve
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Three businesses we know cold.
+          Four businesses we know cold.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           The leak looks different in each one, and so does the fix. Find the
@@ -91,7 +101,7 @@ export function WhoWeServe() {
         </p>
       </div>
 
-      <InView className="mt-12 grid gap-6 md:grid-cols-3">
+      <InView className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {AUDIENCES.map((a) => {
           const t = TONE[a.tone]
           return (

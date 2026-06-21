@@ -83,10 +83,15 @@ verticals**, and **Google Search ads for industrial**.
   real conversion asset on local LPs — **never invent a guarantee for industrial**;
   that side is no-guarantee by policy).
 - Fast (Core Web Vitals) — paid traffic bounces on slow loads and platforms reward speed.
-- Per-angle UTMs + the existing `data-cta` convention; Meta Pixel + Conversions API.
-  **Dental exception:** no client-side Pixel on any LP that captures patient data —
-  use server-side, PHI-stripped conversions through BAA-covered tooling only. A
-  standard pixel on a dental booking page is a HIPAA/CIPA exposure.
+- Per-angle UTMs + the existing `data-cta` convention. **Tracking gaps to close
+  before spend (launch blockers):** the Meta Pixel is wired site-wide but fires
+  **PageView only** — no `Lead` event and no server CAPI yet; and **no Google Ads
+  conversion fires anywhere** (the audit-booked page fires none, despite its
+  comment). Fix both before spending — see
+  [channel-funnel-playbook.md](./channel-funnel-playbook.md) → "Conversion tracking."
+  **Dental exception:** the Pixel mounts via the shared root layout, so a dental LP
+  must be **route-gated out of the pixel** (not just snippet-omitted); server-side,
+  PHI-stripped, BAA-covered conversions only.
 
 ## 5. Sequence — validate cheap, then build
 
@@ -113,12 +118,19 @@ prove ROAS, then scale the matrix.
   still an interim redirect to `/book-growth-call/` (`components/sections/revenue-engine/AuditCTA.tsx`,
   pending the GHL embed). Do **not** spend on home-services/dental paid until the real
   audit form + calendar is live — you'd be paying for clicks into a half-wired funnel.
+- **TCPA / A2P 10DLC (home-services SMS):** the GHL auto-text-back texts a number
+  you captured — needs express-consent language on every capture surface (LP +
+  Meta instant form) and a registered 10DLC campaign. Near-term legal blocker,
+  independent of HIPAA.
 - **Dental:** BAAs/HIPAA on any tooling that touches patient data, **and no
-  client-side Meta Pixel/CAPI on PHI-capturing LPs** (server-side, PHI-stripped only).
-  A standard pixel on a dental booking LP is a compliance landmine.
+  client-side Meta Pixel/CAPI on PHI-capturing LPs.** The Pixel mounts via the
+  shared root layout, so a dental LP must be **route-gated out of the pixel**, not
+  just snippet-omitted. Server-side, PHI-stripped only.
 - **LP space:** decide the route convention (e.g. `/lp/`) and `noindex` it before launch.
 
 ---
 
 See [ad-angle-matrix.md](./ad-angle-matrix.md) for the per-cell creative angles,
-destinations, and build order.
+destinations, and build order — and [channel-funnel-playbook.md](./channel-funnel-playbook.md)
+for the traffic-source → funnel-structure matrix (Google Search / Meta instant
+forms vs LP / cold email / retargeting) and the conversion-tracking blockers.
