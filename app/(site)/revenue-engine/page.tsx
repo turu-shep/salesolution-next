@@ -3,14 +3,13 @@ import Link from 'next/link'
 
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { AuditCTA } from '@/components/sections/revenue-engine/AuditCTA'
-import { EngineVsFuel } from '@/components/sections/revenue-engine/EngineVsFuel'
-import { FiveSteps } from '@/components/sections/revenue-engine/FiveSteps'
 import { Guarantee } from '@/components/sections/revenue-engine/Guarantee'
-import { HowItWorks } from '@/components/sections/revenue-engine/HowItWorks'
+import { PlanByPillar } from '@/components/sections/revenue-engine/PlanByPillar'
 import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
 import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
 import { TheLeak } from '@/components/sections/revenue-engine/TheLeak'
 import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
+import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -68,6 +67,55 @@ const REVENUE_ENGINE_FAQ: QA[] = [
   },
 ]
 
+// Generic, vertical-agnostic plan content for the pillar (PlanByPillar defaults to
+// roofing). The 5 steps grouped under Bring / Convert / Retain.
+const PILLAR_GROUPS = [
+  {
+    pillar: 'Bring',
+    outcome: 'Get found when they’re looking',
+    steps: [
+      {
+        key: 'Capture',
+        what: 'A cleaned-up Google and Maps presence, pages built to show up when people search for what you do — and in AI answers — plus an easy way to reach you. New demand, brought to your door.',
+        metric: 'More searchers turn into calls and quote requests',
+      },
+    ],
+  },
+  {
+    pillar: 'Convert',
+    outcome: 'Win the ones who reach you',
+    steps: [
+      {
+        key: 'Respond',
+        what: 'Every call answered, 24/7 — even when you’re with a customer. Missed calls get an instant text back, every form a reply in under a minute, and a caller can always reach a human.',
+        metric: 'No lead lost to a missed call or slow reply',
+      },
+      {
+        key: 'Book',
+        what: 'Jobs and appointments qualified and booked straight to your calendar, with reminders so they show. Every call recorded and sorted, so nothing slips.',
+        metric: 'More leads become booked, kept revenue',
+      },
+    ],
+  },
+  {
+    pillar: 'Retain',
+    outcome: 'Bring them back',
+    steps: [
+      {
+        key: 'Recover',
+        what: 'The quotes and plans that went cold get chased automatically, past customers get a reason to come back, and a steady stream of reviews lifts you in local search.',
+        metric: 'Revenue won back from work you already earned',
+      },
+    ],
+  },
+]
+
+const PILLAR_PROVE = {
+  key: 'Prove',
+  what: 'A dispute-proof log of every call, and a monthly dashboard showing what the system brought in — on its own line, separate from your ads.',
+  metric: 'What the system earned, against the fee',
+}
+
 export default function RevenueEnginePage() {
   return (
     <>
@@ -87,8 +135,7 @@ export default function RevenueEnginePage() {
 
       {/* 1 — HOOK + self-qualifier (reserved VSL slot until video is recorded) */}
       <RevenueHero
-        title="Get found. Get booked. Get paid."
-        titleAccent="The whole growth engine for local service businesses."
+        title="Get found. Win the sale. Keep them coming back."
         lede={
           <>
             The phone rings while you&rsquo;re on a roof or with a patient. You
@@ -105,7 +152,7 @@ export default function RevenueEnginePage() {
         ]}
         anchors={[
           { label: 'The leak', href: '#leak' },
-          { label: 'How it works', href: '#how' },
+          { label: 'The plan', href: '#how' },
           { label: 'Proof', href: '#prove' },
           { label: 'Pricing', href: '#pricing' },
           { label: 'FAQ', href: '#faq' },
@@ -115,12 +162,13 @@ export default function RevenueEnginePage() {
       {/* 2 — THE LEAK (the villain; make them feel the bleed first) */}
       <TheLeak id="leak" />
 
-      {/* 3 — ENGINE VS FUEL (the guide + the mechanism that shifts belief) */}
-      <EngineVsFuel id="engine" />
+      {/* 3 — THE FIX: "you've been sold pieces / I run the whole flow" (the mechanism) */}
+      <div id="flow">
+        <FlowBlock />
+      </div>
 
-      {/* 4 — THE PLAN (simple 3-phase, then the machine in plain terms) */}
-      <HowItWorks id="how" />
-      <FiveSteps id="system" />
+      {/* 4 — THE PLAN: the five steps grouped under Bring / Convert / Retain */}
+      <PlanByPillar id="how" groups={PILLAR_GROUPS} prove={PILLAR_PROVE} />
 
       {/* 5 — PROOF BY LOGIC (your own numbers, not a stock chart) */}
       <TwoRevenueLines id="prove" />

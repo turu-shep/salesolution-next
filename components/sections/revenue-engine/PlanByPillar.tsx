@@ -3,9 +3,9 @@ import { SectionRail } from '@/components/layout/SectionRail'
 /**
  * The Plan — the 5-step machine, grouped under the 3-pillar spine.
  *
- * The 3 pillars (Bring / Sell / Retain) are the narrative; the 5 steps
+ * The 3 pillars (Bring / Convert / Retain) are the narrative; the 5 steps
  * (Capture / Respond / Book / Recover / Prove) are the operational detail nested
- * under them — the wider process. Bring=Capture, Sell=Respond+Book,
+ * under them — the wider process. Bring=Capture, Convert=Respond+Book,
  * Retain=Recover, and Prove caps the plan and hands into the Proof section.
  *
  * Default content is home-services; pass `groups`/`prove` to retune per vertical.
@@ -26,7 +26,7 @@ const HS_GROUPS: PillarGroup[] = [
     ],
   },
   {
-    pillar: 'Sell',
+    pillar: 'Convert',
     outcome: 'Win the ones who reach you',
     steps: [
       {

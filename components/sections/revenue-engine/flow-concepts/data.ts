@@ -1,5 +1,5 @@
 /**
- * Shared content for the four "Bring -> Sell -> Retain" intro-block concepts,
+ * Shared content for the four "Bring -> Convert -> Retain" intro-block concepts,
  * shown side by side on /revenue-engine/flow-concepts/ for a pick-the-winner
  * review. This block is the reframed engine-vs-fuel beat: it widens the old
  * "ads are fuel, I convert them" frame to the whole flow we optimize. Ads are
@@ -28,8 +28,8 @@ export const PILLARS: Pillar[] = [
   },
   {
     n: '02',
-    verb: 'Sell',
-    outcome: 'Close the ones who reach you',
+    verb: 'Convert',
+    outcome: 'Win the ones who reach you',
     body: 'Answer every call and message in seconds, book the job, and chase the quotes that stall. The demand you already have, turned into revenue.',
     leak: 'They reach you and slip through.',
     fix: 'Answer in seconds, book the job, chase the stalls.',

@@ -26,7 +26,7 @@ export function RevenueHero({
 }: {
   eyebrow?: string
   title: React.ReactNode
-  titleAccent: React.ReactNode
+  titleAccent?: React.ReactNode
   lede: React.ReactNode
   primaryCta: CTA
   selfQualifiers?: SelfQualifier[]
@@ -40,9 +40,9 @@ export function RevenueHero({
           {eyebrow}
         </p>
 
-        <h1 className="mt-4 font-display text-balance text-5xl font-semibold leading-[1] tracking-[-0.03em] text-ink-900 sm:text-6xl md:text-[6rem]">
+        <h1 className="mt-4 font-display text-balance text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.03em] text-ink-900 sm:text-5xl md:text-[3.5rem]">
           <span className="block">{title}</span>
-          <span className="block text-ink-500">{titleAccent}</span>
+          {titleAccent && <span className="block text-ink-500">{titleAccent}</span>}
         </h1>
 
         <p className="mt-10 max-w-2xl text-lg leading-relaxed text-ink-700 md:text-xl">
