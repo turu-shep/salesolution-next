@@ -300,7 +300,7 @@ The ask is the audit, not the contract. The audit is a diagnosis he keeps either
 
 **Operator notes:**
 - The [VERIFY] reply-time stat in Stage 4 stays out of your mouth until it's sourced in the repo. The strongest proof on this call isn't a stat — it's the leak you found on his own phone before you dialed.
-- Guarantee, terms, and the audit scope are quoted to match what we put in writing: 90-day install, three-month minimum, then month to month; provable system-attributed revenue beats the fee by day 90 or I work free. Don't loosen that language on the call.
+- Guarantee, terms, and the audit scope are quoted to match what we put in writing: 90-day install, three-month minimum, then month to month; the revenue the system brings back beats the fee by day 90 or I work free. Don't loosen that language on the call.
 - Never quote a price cold. It goes in writing, the same day as the audit.
 - Never name a client or read an unapproved case-study number aloud.
 - "I'm slammed / no time" is the single most common honest objection from this buyer. Don't bulldoze it — offer the dead hour, or set a callback. A pushed owner no-shows; a respected one books.

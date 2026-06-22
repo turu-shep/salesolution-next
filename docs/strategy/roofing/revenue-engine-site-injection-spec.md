@@ -47,7 +47,7 @@ A done-for-you, AI-powered revenue system for local service businesses (home ser
 Terms: 90-day system install, 3-month minimum, month-to-month after. Media (if added): client-funded ad accounts, zero markup.
 
 ### 1.6 Guarantee (exact language, verbatim on pages)
-> "If system-attributed revenue doesn't exceed my fee by day 90, I work free until it does."
+> "If the revenue the system brings back doesn't beat my fee by day 90, I work free until it does." (Live wording, de-jargoned from the original "system-attributed revenue.")
 
 ### 1.7 Primary conversion action
 Book a **"Revenue Leak Audit"** (free; we analyze missed calls, response time, GBP performance, and the estimate/treatment follow-up gap). One audit name across both verticals. Form/calendar embed provided via GHL (asset IDs supplied at Phase 2 — placeholder token `{{GHL_AUDIT_EMBED}}`).
@@ -203,8 +203,8 @@ Primary keyword: from RE-004. Sections, in order:
 5. **Two revenue lines.** Explain the PROVE report split; describe the dashboard in words (no fake screenshot; `[PROOF-SLOT]` for a real one later).
 6. **Vertical fork.** Two cards → contractors / dentists pages. One sentence each naming the skin features (§1.4).
 7. **Pricing.** Per DP-2 (default: "Starting at $2,997/mo + setup. 90-day install, month-to-month after." + link to vertical pages for the full card).
-8. **Guarantee.** §1.6 verbatim, with one plain sentence on how "system-attributed" is measured.
-9. **FAQ** (FAQPage schema): "I already have an ads agency" / "Will the AI sound robotic?" (answer: caller can always reach a human; we A/B the scripts) / "What happens if I cancel?" (honest: the system is licensed during the engagement) / "Is this HIPAA-compliant?" (dental: yes — BAAs on every tool, details on the dental page) / "Do you guarantee lead volume?" (no — we guarantee system-attributed revenue; volume promises are how lead vendors lie).
+8. **Guarantee.** §1.6, de-jargoned ("the revenue the system brings back ... beats my fee by day 90"), with one plain sentence on how that line is counted.
+9. **FAQ** (FAQPage schema): "I already have an ads agency" / "Will the AI sound robotic?" (answer: caller can always reach a human; we A/B the scripts) / "What happens if I cancel?" (honest: the system is licensed during the engagement) / "Is this HIPAA-compliant?" (dental: yes — BAAs on every tool, details on the dental page) / "Do you guarantee lead volume?" (no — we guarantee the revenue the system can prove against the fee; volume promises are how lead vendors lie).
 10. **Final CTA.** Audit embed (RE-203).
 
 ### 6.2 Contractors — `/revenue-engine/contractors/`
