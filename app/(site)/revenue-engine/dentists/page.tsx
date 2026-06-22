@@ -3,14 +3,13 @@ import type { Metadata } from 'next'
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { AuditCTA } from '@/components/sections/revenue-engine/AuditCTA'
 import { Compliance } from '@/components/sections/revenue-engine/Compliance'
-import { EngineVsFuel } from '@/components/sections/revenue-engine/EngineVsFuel'
-import { FiveSteps, type FiveStep } from '@/components/sections/revenue-engine/FiveSteps'
 import { Guarantee } from '@/components/sections/revenue-engine/Guarantee'
-import { HowItWorks } from '@/components/sections/revenue-engine/HowItWorks'
+import { PlanByPillar } from '@/components/sections/revenue-engine/PlanByPillar'
 import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
 import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
 import { TheLeak, type Leak } from '@/components/sections/revenue-engine/TheLeak'
 import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
+import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -45,38 +44,52 @@ const DENTAL_LEAKS: Leak[] = [
   },
 ]
 
-const DENTAL_STEPS: FiveStep[] = [
+const DENTAL_GROUPS = [
   {
-    n: '01',
-    key: 'CAPTURE',
-    what: 'Service pages that show a monthly payment instead of a sticker price, online booking, and a tidied-up Google listing — all yours.',
-    metric: 'More visitors turn into booked new patients',
+    pillar: 'Bring',
+    outcome: 'Get found when patients are looking',
+    steps: [
+      {
+        key: 'Capture',
+        what: 'Service pages that show a monthly payment instead of a sticker price, online booking, and a tidied-up Google listing — all yours.',
+        metric: 'More visitors turn into booked new patients',
+      },
+    ],
   },
   {
-    n: '02',
-    key: 'RESPOND',
-    what: 'Every call gets answered, 24/7 — even when the front desk is with a patient. Missed calls get an instant text back, new-patient inquiries get a reply in under a minute, and a caller can always reach a human.',
-    metric: 'No new patient lost to a missed call',
+    pillar: 'Convert',
+    outcome: 'Win the ones who reach you',
+    steps: [
+      {
+        key: 'Respond',
+        what: 'Every call answered, 24/7 — even when the front desk is with a patient. Missed calls get an instant text back, new-patient inquiries get a reply in under a minute, and a caller can always reach a human.',
+        metric: 'No new patient lost to a missed call',
+      },
+      {
+        key: 'Book',
+        what: 'New patients qualified and booked straight to your calendar, with reminders so they show. Every call recorded and sorted.',
+        metric: 'More inquiries become kept appointments',
+      },
+    ],
   },
   {
-    n: '03',
-    key: 'BOOK',
-    what: 'New patients get qualified and booked straight to your calendar, with reminders so they show. Every call is recorded and sorted.',
-    metric: 'More inquiries become kept appointments',
-  },
-  {
-    n: '04',
-    key: 'RECOVER',
-    what: 'Unaccepted treatment plans and overdue recall get followed up automatically, past patients get a reason to come back, and new reviews lift you in local search.',
-    metric: 'Revenue won back from plans and recall',
-  },
-  {
-    n: '05',
-    key: 'PROVE',
-    what: 'A monthly front-desk score, and a dashboard that shows what this system brought in, separately from your ads.',
-    metric: 'What the system earned, against the fee',
+    pillar: 'Retain',
+    outcome: 'Bring them back',
+    steps: [
+      {
+        key: 'Recover',
+        what: 'Unaccepted treatment plans and overdue recall get followed up automatically, past patients get a reason to come back, and new reviews lift you in local search.',
+        metric: 'Revenue won back from plans and recall',
+      },
+    ],
   },
 ]
+
+const DENTAL_PROVE = {
+  key: 'Prove',
+  what: 'A monthly front-desk score, and a dashboard that shows what this system brought in — on its own line, separate from your ads.',
+  metric: 'What the system earned, against the fee',
+}
 
 const DENTAL_FAQ: QA[] = [
   {
@@ -140,7 +153,7 @@ export default function DentistsRevenueEnginePage() {
 
       {/* 1 — HOOK */}
       <RevenueHero
-        eyebrow="Revenue Engine · Dental"
+        eyebrow={'For dentists & dental practices'}
         title="Your front desk is the most"
         titleAccent="expensive channel you don't measure."
         lede={
@@ -151,9 +164,19 @@ export default function DentistsRevenueEnginePage() {
           </>
         }
         primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}
+        founder={{
+          name: 'Artur Shepel',
+          src: '/artur-shepel.jpg',
+          caption: 'I run every account myself.',
+          specs: [
+            { label: 'Setup', value: '90 days, on me' },
+            { label: 'Minimum', value: '3 months' },
+            { label: 'Lock-in', value: 'none' },
+          ],
+        }}
         anchors={[
           { label: 'The leak', href: '#leak' },
-          { label: 'How it works', href: '#how' },
+          { label: 'The plan', href: '#how' },
           { label: 'Compliance', href: '#compliance' },
           { label: 'Pricing', href: '#pricing' },
           { label: 'FAQ', href: '#faq' },
@@ -181,37 +204,25 @@ export default function DentistsRevenueEnginePage() {
         closer={<>Every one of these is revenue you already earned the right to.</>}
       />
 
-      {/* 3 — THE MECHANISM */}
-      <EngineVsFuel id="engine" />
+      {/* 3 — THE FIX: "you've been sold pieces / I run the whole flow" */}
+      <div id="flow">
+        <FlowBlock />
+      </div>
 
-      {/* 4 — THE PLAN */}
-      <HowItWorks id="how" />
-      <FiveSteps
-        id="system"
-        headline={
-          <>
-            The whole machine,{' '}
-            <span className="text-ink-500">applied to your practice.</span>
-          </>
-        }
-        intro={
-          <>
-            I install and run all of it &mdash; the 90-day setup is on me. Here
-            is what each piece looks like inside a dental practice.
-          </>
-        }
-        steps={DENTAL_STEPS}
-      />
+      {/* 4 — THE PLAN: the five steps grouped under Bring / Convert / Retain */}
+      <PlanByPillar id="how" groups={DENTAL_GROUPS} prove={DENTAL_PROVE} />
 
-      {/* 5 — PROOF */}
-      <TwoRevenueLines id="prove" />
-
-      {/* Vertical-specific reassurance (after proof, before price): HIPAA / patient data */}
+      {/* 5 — COMPLIANCE (vertical reassurance, plan-adjacent) */}
       <Compliance id="compliance" />
 
-      {/* 6 — OFFER + GUARANTEE */}
+      {/* 6 — HOW I REPORT IT (dark) — closer hands into the guarantee */}
+      <TwoRevenueLines id="prove" />
+
+      {/* 7 — GUARANTEE (dark, abutted to the report as one conviction field) */}
+      <Guarantee id="guarantee" abut />
+
+      {/* 8 — OFFER (the price, now that the risk is reversed) */}
       <RevenuePricing id="pricing" />
-      <Guarantee id="guarantee" />
 
       {/* 7 — FAQ */}
       <FAQ

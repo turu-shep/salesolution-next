@@ -17,7 +17,9 @@ const MEASURES = [
 
 export function Compliance({ id }: { id?: string }) {
   return (
-    <SectionRail tone="surface" id={id}>
+    // `paper` (vs the plan's `surface` above it) gives a subtle tonal break so the
+    // two adjacent light sections don't read flat.
+    <SectionRail tone="paper" id={id}>
       <div className="grid gap-12 md:grid-cols-12 md:gap-16">
         <div className="md:col-span-5">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
