@@ -23,7 +23,7 @@ const HS_GROUPS: PillarGroup[] = [
     steps: [
       {
         key: 'Capture',
-        what: 'A tidied-up Google and Maps listing, pages built to show up for “roofer near me” and in AI answers, and a simple way to get a quote — all yours, running alongside your site.',
+        what: 'A tidied-up Google and Maps listing, pages built to show up for “roofer near me,” and a simple way to get a quote — all yours, running alongside your site.',
         metric: 'More searchers turn into quote requests',
       },
     ],

@@ -2,15 +2,14 @@ import type { Metadata } from 'next'
 
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { AuditCTA } from '@/components/sections/revenue-engine/AuditCTA'
-import { EngineVsFuel } from '@/components/sections/revenue-engine/EngineVsFuel'
-import { FiveSteps, type FiveStep } from '@/components/sections/revenue-engine/FiveSteps'
 import { Guarantee } from '@/components/sections/revenue-engine/Guarantee'
-import { HowItWorks } from '@/components/sections/revenue-engine/HowItWorks'
+import { PlanByPillar } from '@/components/sections/revenue-engine/PlanByPillar'
 import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
 import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
 import { Seasonality } from '@/components/sections/revenue-engine/Seasonality'
 import { TheLeak, type Leak } from '@/components/sections/revenue-engine/TheLeak'
 import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
+import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -42,39 +41,6 @@ const HS_LEAKS: Leak[] = [
     label: 'estimates that never get a second call',
     body: 'The quote goes out after the site visit and then goes quiet. The job was won and lost in the same week, sitting in your own CRM.',
     source: null,
-  },
-]
-
-const HS_STEPS: FiveStep[] = [
-  {
-    n: '01',
-    key: 'CAPTURE',
-    what: 'A simple way for homeowners to get a quote or book a visit, storm and seasonal landing pages, and a tidied-up Google listing — all yours, running alongside your site.',
-    metric: 'More visitors turn into calls and quote requests',
-  },
-  {
-    n: '02',
-    key: 'RESPOND',
-    what: 'Every call gets answered, 24/7 — even mid-storm when the crew is on a roof. Missed calls get an instant text back, every form gets a reply in under a minute, and a caller can always reach a human.',
-    metric: 'No lead lost to a missed call or slow reply',
-  },
-  {
-    n: '03',
-    key: 'BOOK',
-    what: 'Estimates get qualified and booked straight to your calendar, with reminders so they show. Every call is recorded and sorted, so nothing slips.',
-    metric: 'More leads become booked, kept jobs',
-  },
-  {
-    n: '04',
-    key: 'RECOVER',
-    what: 'The quotes that went cold get chased automatically, past customers get a reason to call you back, and a steady stream of new reviews lifts you in local search.',
-    metric: 'Revenue won back from quotes already chased',
-  },
-  {
-    n: '05',
-    key: 'PROVE',
-    what: 'A dispute-proof log of every call, and a monthly dashboard that shows what this system brought in, separately from your ads.',
-    metric: 'What the system earned, against the fee',
   },
 ]
 
@@ -138,7 +104,7 @@ export default function HomeServicesRevenueEnginePage() {
 
       {/* 1 — HOOK */}
       <RevenueHero
-        eyebrow="Revenue Engine · Home services"
+        eyebrow={'For roofing, HVAC, plumbing & electrical'}
         title="Built for contractors who miss calls"
         titleAccent="because they're on a roof."
         lede={
@@ -149,9 +115,19 @@ export default function HomeServicesRevenueEnginePage() {
           </>
         }
         primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}
+        founder={{
+          name: 'Artur Shepel',
+          src: '/artur-shepel.jpg',
+          caption: 'I run every account myself.',
+          specs: [
+            { label: 'Setup', value: '90 days, on me' },
+            { label: 'Minimum', value: '3 months' },
+            { label: 'Lock-in', value: 'none' },
+          ],
+        }}
         anchors={[
           { label: 'The leak', href: '#leak' },
-          { label: 'How it works', href: '#how' },
+          { label: 'The plan', href: '#how' },
           { label: 'Storm season', href: '#seasonality' },
           { label: 'Pricing', href: '#pricing' },
           { label: 'FAQ', href: '#faq' },
@@ -178,37 +154,25 @@ export default function HomeServicesRevenueEnginePage() {
         closer={<>Every one of these is money you already spent to make the phone ring.</>}
       />
 
-      {/* 3 — THE MECHANISM */}
-      <EngineVsFuel id="engine" />
+      {/* 3 — THE FIX: "you've been sold pieces / I run the whole flow" */}
+      <div id="flow">
+        <FlowBlock />
+      </div>
 
-      {/* 4 — THE PLAN */}
-      <HowItWorks id="how" />
-      <FiveSteps
-        id="system"
-        headline={
-          <>
-            The whole machine,{' '}
-            <span className="text-ink-500">applied to your trade.</span>
-          </>
-        }
-        intro={
-          <>
-            I install and run all of it &mdash; the 90-day setup is on me. Here
-            is what each piece looks like for a contractor.
-          </>
-        }
-        steps={HS_STEPS}
-      />
+      {/* 4 — THE PLAN: the five steps grouped under Bring / Convert / Retain */}
+      <PlanByPillar id="how" />
 
-      {/* 5 — PROOF */}
-      <TwoRevenueLines id="prove" />
-
-      {/* Vertical-specific reassurance (after proof, before price): storm surge */}
+      {/* 5 — STORM SURGE (vertical reassurance, plan-adjacent) */}
       <Seasonality id="seasonality" />
 
-      {/* 6 — OFFER + GUARANTEE */}
+      {/* 6 — HOW I REPORT IT (dark) — closer hands into the guarantee */}
+      <TwoRevenueLines id="prove" />
+
+      {/* 7 — GUARANTEE (dark, abutted to the report as one conviction field) */}
+      <Guarantee id="guarantee" abut />
+
+      {/* 8 — OFFER (the price, now that the risk is reversed) */}
       <RevenuePricing id="pricing" />
-      <Guarantee id="guarantee" />
 
       {/* 7 — FAQ */}
       <FAQ

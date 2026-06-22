@@ -184,8 +184,8 @@ export default function RevenueEnginePage() {
       {/* 5 — HOW I REPORT IT (the method, dark) — closer hands into the guarantee */}
       <TwoRevenueLines id="prove" />
 
-      {/* 6 — GUARANTEE (dark, no glow — reads as one conviction field with the report) */}
-      <Guarantee id="guarantee" />
+      {/* 6 — GUARANTEE (dark, abutted — reads as one conviction field with the report) */}
+      <Guarantee id="guarantee" abut />
 
       {/* 7 — OFFER (the price, now that the risk is reversed) */}
       <RevenuePricing id="pricing" />

@@ -25,7 +25,9 @@ const POINTS = [
 
 export function Seasonality({ id }: { id?: string }) {
   return (
-    <SectionRail tone="surface" id={id}>
+    // `paper` (vs the plan's `surface` above it) gives a subtle tonal break so the
+    // two adjacent light sections don't read flat.
+    <SectionRail tone="paper" id={id}>
       <div className="max-w-3xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
           Seasonality

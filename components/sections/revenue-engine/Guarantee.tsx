@@ -9,9 +9,18 @@ import { SectionRail } from '@/components/layout/SectionRail'
  * directly above this one.
  */
 
-export function Guarantee({ id }: { id?: string }) {
+export function Guarantee({ id, abut = false }: { id?: string; abut?: boolean }) {
+  // `abut`: this guarantee directly follows the dark report band, so drop the
+  // glow and pull it up to read as one conviction field. Off by default — pages
+  // where the guarantee follows a light section must NOT pull up over it.
   return (
-    <SectionRail tone="dark" id={id} glow="none" size="sm" className="-mt-12 md:-mt-16">
+    <SectionRail
+      tone="dark"
+      id={id}
+      glow={abut ? 'none' : 'quiet'}
+      size="sm"
+      className={abut ? '-mt-12 md:-mt-16' : undefined}
+    >
       <div className="mx-auto max-w-3xl text-center">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
           The guarantee
