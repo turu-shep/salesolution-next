@@ -7,7 +7,9 @@
  */
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Footer } from '@/components/layout/Footer'
+import { FooterSwitch } from '@/components/layout/FooterSwitch'
 import { Header } from '@/components/layout/Header'
+import { RevenueFooter } from '@/components/layout/RevenueFooter'
 import { globalGraph } from '@/lib/schema'
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -29,7 +31,9 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <main id="main-content" className="flex flex-1 flex-col">
         {children}
       </main>
-      <Footer />
+      {/* Slim local-service footer on /revenue-engine/*; the industrial mega-footer
+          everywhere else. Both render server-side; the switch is a thin client island. */}
+      <FooterSwitch full={<Footer />} slim={<RevenueFooter />} />
     </>
   )
 }

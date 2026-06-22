@@ -16,16 +16,16 @@ export function TwoRevenueLines({ id }: { id?: string }) {
       <div className="grid items-center gap-12 md:grid-cols-12 md:gap-16">
         <div className="md:col-span-5">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
-            Proof, not promises
+            How I report it
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-            Two revenue lines,{' '}
-            <span className="text-ink-400">on every report.</span>
+            Two lines on every report.{' '}
+            <span className="text-ink-400">The second has to clear my fee.</span>
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-ink-200">
-            Every month I split what your ads produced from what the system
-            recovered. The honest test: the second line alone should cover
-            what you pay me.
+            Each month I split what your ads produced from what the system
+            brought back. The honest test: the recovered line alone should
+            cover what you pay me.
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export function TwoRevenueLines({ id }: { id?: string }) {
                   </span>
                 </div>
                 <p className="mt-1.5 text-sm leading-relaxed text-ink-300">
-                  Recovered calls, follow-up, reactivation, reviews.
+                  Calls won back, quotes chased, past customers returning, new reviews.
                 </p>
               </li>
             </ul>
@@ -77,9 +77,10 @@ export function TwoRevenueLines({ id }: { id?: string }) {
             </div>
 
             <p className="mt-6 text-sm leading-relaxed text-ink-300">
-              The honest test: the system-driven line alone should clear the fee. Your real
-              figures come from the live dashboard &mdash; and if that line doesn&rsquo;t
-              clear it, the guarantee does.
+              The system line is calls won back, quotes chased, past customers brought back,
+              and people who found you from new reviews &mdash; counted in your own dashboard,
+              not estimated on my spreadsheet. If it doesn&rsquo;t clear the fee, the next
+              section is for you.
             </p>
           </div>
           {/* PROOF-SLOT: real attribution-dashboard image once first-cohort data exists (spec §2.4 / DP-5). */}

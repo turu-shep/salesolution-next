@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 /**
@@ -13,6 +14,12 @@ import Link from 'next/link'
 type CTA = { label: string; href: string }
 type SelfQualifier = { label: string; href: string }
 type Anchor = { label: string; href: string }
+type Founder = {
+  name: string
+  src: string
+  caption: string
+  specs: { label: string; value: string }[]
+}
 
 export function RevenueHero({
   eyebrow = 'Revenue Engine',
@@ -20,6 +27,7 @@ export function RevenueHero({
   titleAccent,
   lede,
   primaryCta,
+  founder,
   selfQualifiers,
   videoUrl,
   anchors,
@@ -29,6 +37,7 @@ export function RevenueHero({
   titleAccent?: React.ReactNode
   lede: React.ReactNode
   primaryCta: CTA
+  founder?: Founder
   selfQualifiers?: SelfQualifier[]
   videoUrl?: string
   anchors?: Anchor[]
@@ -75,6 +84,40 @@ export function RevenueHero({
             </Link>
           )}
         </div>
+
+        {/* Founder spec-card — a named face + named terms is the calm-operator
+            trust signal, shown not asserted. Wired off an optional prop so the
+            vertical heroes stay text-only unless they opt in. */}
+        {founder && (
+          <figure className="mt-10 max-w-md overflow-hidden rounded-[4px] border border-rule-strong bg-surface shadow-[0_22px_48px_-26px_rgba(15,23,42,0.4)]">
+            <div className="h-1.5 w-full bg-brand-600" aria-hidden />
+            <div className="flex items-stretch gap-4 p-4 sm:gap-5 sm:p-5">
+              <div className="relative h-[100px] w-[78px] shrink-0 overflow-hidden rounded-[3px] ring-1 ring-rule sm:h-[116px] sm:w-[90px]">
+                <Image
+                  src={founder.src}
+                  alt={founder.name}
+                  fill
+                  sizes="90px"
+                  className="object-cover object-top"
+                />
+              </div>
+              <figcaption className="flex min-w-0 flex-col justify-center">
+                <p className="font-display text-lg font-semibold tracking-[-0.01em] text-ink-900">
+                  {founder.name}
+                </p>
+                <p className="mt-1 text-sm leading-snug text-ink-700">{founder.caption}</p>
+                <dl className="mt-3.5 space-y-1.5 border-t border-rule pt-3 font-mono text-[10px] uppercase tracking-[0.12em]">
+                  {founder.specs.map((s) => (
+                    <div key={s.label} className="flex items-baseline gap-3">
+                      <dt className="w-[4.5rem] shrink-0 text-ink-400">{s.label}</dt>
+                      <dd className="font-semibold text-ink-800">{s.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </figcaption>
+            </div>
+          </figure>
+        )}
 
         {selfQualifiers && selfQualifiers.length > 0 && (
           <p className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm text-ink-500">

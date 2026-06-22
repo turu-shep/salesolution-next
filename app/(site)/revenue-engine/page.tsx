@@ -47,13 +47,13 @@ const REVENUE_ENGINE_FAQ: QA[] = [
     ),
   },
   {
-    q: 'Is this HIPAA-compliant for a dental practice?',
+    q: 'Is my patient data safe to run through this?',
     a: (
       <>
         <p>
-          Yes. The dental setup runs BAAs on every tool that touches patient
-          data &mdash; call tracking, SMS, and CRM. The full compliance detail
-          is on the{' '}
+          Yes. Every tool that touches patient records runs under a signed
+          compliance agreement &mdash; call tracking, texts, and CRM. The full
+          detail is on the{' '}
           <Link
             href="/revenue-engine/dentists/"
             className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600"
@@ -76,8 +76,8 @@ const PILLAR_GROUPS = [
     steps: [
       {
         key: 'Capture',
-        what: 'A cleaned-up Google and Maps presence, pages built to show up when people search for what you do — and in AI answers — plus an easy way to reach you. New demand, brought to your door.',
-        metric: 'More searchers turn into calls and quote requests',
+        what: 'Show up on Google, Maps, and your own pages when someone nearby searches your trade — with an easy way to reach you. New demand, brought to your door.',
+        metric: 'More of the right searches turn into calls',
       },
     ],
   },
@@ -88,12 +88,12 @@ const PILLAR_GROUPS = [
       {
         key: 'Respond',
         what: 'Every call answered, 24/7 — even when you’re with a customer. Missed calls get an instant text back, every form a reply in under a minute, and a caller can always reach a human.',
-        metric: 'No lead lost to a missed call or slow reply',
+        metric: 'No job lost to a missed call or a slow reply',
       },
       {
         key: 'Book',
         what: 'Jobs and appointments qualified and booked straight to your calendar, with reminders so they show. Every call recorded and sorted, so nothing slips.',
-        metric: 'More leads become booked, kept revenue',
+        metric: 'More of the leads you have turn into booked work',
       },
     ],
   },
@@ -135,16 +135,27 @@ export default function RevenueEnginePage() {
 
       {/* 1 — HOOK + self-qualifier (reserved VSL slot until video is recorded) */}
       <RevenueHero
+        eyebrow={'For roofers, dentists & local shops'}
         title="Get found. Win the sale. Keep them coming back."
         lede={
           <>
-            The phone rings while you&rsquo;re on a roof or with a patient. You
-            pay for leads nobody calls back. You send the quote and never hear
-            back &mdash; and you can&rsquo;t tell what your marketing actually
-            did.
+            The phone rings while you&rsquo;re on a roof or with a patient, and
+            it goes to voicemail. You pay for leads nobody calls back. You send
+            the quote and never hear back. At month&rsquo;s end you can&rsquo;t
+            say what your marketing actually did.
           </>
         }
         primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}
+        founder={{
+          name: 'Artur Shepel',
+          src: '/artur-shepel.jpg',
+          caption: 'I run every account myself.',
+          specs: [
+            { label: 'Setup', value: '90 days, on me' },
+            { label: 'Minimum', value: '3 months' },
+            { label: 'Lock-in', value: 'none' },
+          ],
+        }}
         selfQualifiers={[
           { label: 'I run a clinic or practice', href: '/revenue-engine/medical/' },
           { label: "I'm a contractor", href: '/revenue-engine/home-services/' },
@@ -187,7 +198,7 @@ export default function RevenueEnginePage() {
             <span className="text-ink-500">I answered in the story above.</span>
           </>
         }
-        kicker="Lead-volume promises, shared leads, HIPAA. Straight answers."
+        kicker="Lead-volume promises, shared leads, patient privacy. Straight answers."
         items={REVENUE_ENGINE_FAQ}
       />
 

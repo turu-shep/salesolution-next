@@ -44,8 +44,7 @@ export function RevenuePricing({ id }: { id?: string }) {
           <p className="mt-6 text-lg leading-relaxed text-ink-700">
             You see exactly how this is priced before we ever talk. The number
             depends on your trade, location, and scope &mdash; you get it in the
-            audit, in writing, the same day. Usually it is less than the leak
-            is already costing you each month.
+            audit, in writing, the same day.
           </p>
         </div>
 

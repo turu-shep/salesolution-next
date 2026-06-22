@@ -77,17 +77,17 @@ export function TheLeak({
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           {headline ?? (
             <>
-              The leak isn&rsquo;t your ad budget.{' '}
-              <span className="text-ink-500">It&rsquo;s everything after the click.</span>
+              It isn&rsquo;t your ad budget.{' '}
+              <span className="text-ink-500">It&rsquo;s everything after the phone rings.</span>
             </>
           )}
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           {intro ?? (
             <>
-              Most owners I talk to think the problem is ad spend. It almost
-              never is. Count the calls nobody answered and the quotes nobody
-              chased, and the leak is bigger than the budget.
+              Most owners I talk to think they need more leads. They almost
+              never do. The calls that ring out and the quotes nobody chased
+              are usually a bigger hole than the ad budget.
             </>
           )}
         </p>
