@@ -1,12 +1,15 @@
 import { SectionRail } from '@/components/layout/SectionRail'
 
+import { PillarIcon } from './pillar-icons'
+
 /**
  * The Plan — the 5-step machine, grouped under the 3-pillar spine.
  *
- * The 3 pillars (Bring / Convert / Retain) are the narrative; the 5 steps
- * (Capture / Respond / Book / Recover / Prove) are the operational detail nested
- * under them — the wider process. Bring=Capture, Convert=Respond+Book,
- * Retain=Recover, and Prove caps the plan and hands into the Proof section.
+ * The 3 pillars (Bring / Convert / Retain) are the narrative, each headed by its
+ * icon; the 5 steps (Capture / Respond / Book / Recover / Prove) are numbered
+ * 1–5 in a flat counter across the groups, so "three jobs, five moving parts" is
+ * drawn, not just stated. Bring=Capture, Convert=Respond+Book, Retain=Recover,
+ * and Prove (5) caps the plan and hands into the report section.
  *
  * Default content is home-services; pass `groups`/`prove` to retune per vertical.
  */
@@ -60,10 +63,15 @@ const HS_PROVE: Step = {
   metric: 'What the system earned, against the fee',
 }
 
-function StepCard({ step }: { step: Step }) {
+function StepCard({ step, n }: { step: Step; n: number }) {
   return (
     <div className="rounded-[4px] border border-rule bg-paper p-6">
-      <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">{step.key}</p>
+      <div className="flex items-center gap-2.5">
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-accent-500 font-mono text-[11px] font-bold tabular-nums text-accent-600">
+          {n}
+        </span>
+        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">{step.key}</p>
+      </div>
       <p className="mt-3 leading-relaxed text-ink-800">{step.what}</p>
       <p className="mt-4 flex items-baseline gap-2 border-t border-rule pt-3 text-sm text-ink-600">
         <span aria-hidden className="text-accent-500">→</span>
@@ -82,6 +90,13 @@ export function PlanByPillar({
   groups?: PillarGroup[]
   prove?: Step
 }) {
+  // Flat 1–5 numbering across the groups, so "five moving parts" is drawn.
+  // Each group's first step number is the count of all steps in prior groups.
+  const starts = groups.map((_, i) =>
+    groups.slice(0, i).reduce((sum, g) => sum + g.steps.length, 0),
+  )
+  const proveNo = groups.reduce((sum, g) => sum + g.steps.length, 0) + 1
+
   return (
     <SectionRail tone="surface" id={id}>
       <div className="max-w-3xl">
@@ -101,33 +116,36 @@ export function PlanByPillar({
           <div key={g.pillar} className="grid gap-6 md:grid-cols-[14rem_1fr] md:gap-10">
             <div className="md:pt-1">
               <div className="flex items-center gap-3">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent-500 font-mono text-xs font-bold tabular-nums text-white">
-                  {gi + 1}
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-500 text-white">
+                  <PillarIcon pillar={g.pillar} className="h-[18px] w-[18px]" />
                 </span>
                 <h3 className="font-display text-2xl font-semibold tracking-[-0.015em] text-ink-900">
                   {g.pillar}
                 </h3>
               </div>
-              <p className="mt-2 text-base text-ink-600 md:ml-10">{g.outcome}.</p>
+              <p className="mt-2 text-base text-ink-600 md:ml-12">{g.outcome}.</p>
             </div>
             <div className={g.steps.length > 1 ? 'grid gap-4 sm:grid-cols-2' : 'grid gap-4'}>
-              {g.steps.map((s) => (
-                <StepCard key={s.key} step={s} />
+              {g.steps.map((step, sj) => (
+                <StepCard key={step.key} step={step} n={starts[gi] + sj + 1} />
               ))}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Prove — the capstone that hands into the Proof section */}
+      {/* Prove — step 5, the capstone that hands into the report section */}
       <div className="mt-12 flex flex-col gap-4 rounded-[4px] border-l-2 border-ink-900 bg-surface px-6 py-6 sm:flex-row sm:items-center sm:gap-8">
         <div className="sm:w-56 sm:shrink-0">
-          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">
-            And then · {prove.key}
-          </p>
-          <p className="mt-1 font-display text-xl font-semibold text-ink-900">
-            I prove it paid.
-          </p>
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-ink-900 font-mono text-[11px] font-bold tabular-nums text-ink-900">
+              {proveNo}
+            </span>
+            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">
+              And then · {prove.key}
+            </p>
+          </div>
+          <p className="mt-1.5 font-display text-xl font-semibold text-ink-900">I prove it paid.</p>
         </div>
         <p className="leading-relaxed text-ink-700">
           {prove.what} <span className="text-ink-500">↓</span>

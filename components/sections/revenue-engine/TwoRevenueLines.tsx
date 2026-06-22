@@ -12,7 +12,7 @@ import { SectionRail } from '@/components/layout/SectionRail'
 
 export function TwoRevenueLines({ id }: { id?: string }) {
   return (
-    <SectionRail tone="dark" id={id} glow="quiet">
+    <SectionRail tone="dark" id={id} glow="strong">
       <div className="grid items-center gap-12 md:grid-cols-12 md:gap-16">
         <div className="md:col-span-5">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
@@ -79,8 +79,10 @@ export function TwoRevenueLines({ id }: { id?: string }) {
             <p className="mt-6 text-sm leading-relaxed text-ink-300">
               The system line is calls won back, quotes chased, past customers brought back,
               and people who found you from new reviews &mdash; counted in your own dashboard,
-              not estimated on my spreadsheet. If it doesn&rsquo;t clear the fee, the next
-              section is for you.
+              not estimated on my spreadsheet.{' '}
+              <span className="font-medium text-white">
+                If it doesn&rsquo;t clear the fee, the next section is for you.
+              </span>
             </p>
           </div>
           {/* PROOF-SLOT: real attribution-dashboard image once first-cohort data exists (spec §2.4 / DP-5). */}

@@ -181,12 +181,14 @@ export default function RevenueEnginePage() {
       {/* 4 — THE PLAN: the five steps grouped under Bring / Convert / Retain */}
       <PlanByPillar id="how" groups={PILLAR_GROUPS} prove={PILLAR_PROVE} />
 
-      {/* 5 — PROOF BY LOGIC (your own numbers, not a stock chart) */}
+      {/* 5 — HOW I REPORT IT (the method, dark) — closer hands into the guarantee */}
       <TwoRevenueLines id="prove" />
 
-      {/* 6 — OFFER + RISK REVERSAL (model+terms, then the guarantee adjacent) */}
-      <RevenuePricing id="pricing" />
+      {/* 6 — GUARANTEE (dark, no glow — reads as one conviction field with the report) */}
       <Guarantee id="guarantee" />
+
+      {/* 7 — OFFER (the price, now that the risk is reversed) */}
+      <RevenuePricing id="pricing" />
 
       {/* 7 — SLIM FAQ (the heavy objections already died in-story) */}
       <FAQ

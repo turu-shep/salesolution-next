@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 
 import { SectionRail } from '@/components/layout/SectionRail'
 
+import { PillarIcon } from '../pillar-icons'
 import { PILLARS } from './data'
 
 /**
@@ -38,8 +39,8 @@ export function FlowBlock() {
           {PILLARS.map((p, i) => (
             <Fragment key={p.n}>
               <div className="text-center sm:w-40 sm:shrink-0">
-                <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-accent-500 font-mono text-sm font-bold tabular-nums text-white">
-                  {p.n}
+                <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-accent-500 text-white">
+                  <PillarIcon pillar={p.verb} className="h-[22px] w-[22px]" />
                 </span>
                 <h3 className="mt-5 font-display text-[2rem] font-semibold leading-none tracking-[-0.02em] text-white sm:text-4xl">
                   {p.verb}
@@ -61,9 +62,37 @@ export function FlowBlock() {
         </div>
       </div>
 
-      {/* 3 — the compounding loop, promoted with a left accent rule */}
-      <div className="mt-5 flex items-start gap-3 rounded-[4px] border-l-2 border-accent-500 bg-accent-500/[0.06] px-5 py-4">
-        <span aria-hidden className="mt-0.5 font-mono text-lg text-accent-500">↺</span>
+      {/* 3a — desktop return-arc: Retain (right) loops back to Bring (left) */}
+      <div className="relative mt-3 hidden h-9 sm:block" aria-hidden>
+        <svg
+          viewBox="0 0 1000 40"
+          preserveAspectRatio="none"
+          className="h-full w-full overflow-visible text-accent-500/40"
+        >
+          <path
+            d="M820 2 C 820 40, 180 40, 180 7"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.25"
+            strokeDasharray="5 6"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+        <span className="absolute left-[18%] top-[-3px] -translate-x-1/2 text-accent-500/70">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 5 6 1l4 4" />
+          </svg>
+        </span>
+      </div>
+
+      {/* 3b — the compounding loop, promoted with a left accent rule */}
+      <div className="mt-3 flex items-start gap-3 rounded-[4px] border-l-2 border-accent-500 bg-accent-500/[0.06] px-5 py-4">
+        <span aria-hidden className="mt-0.5 shrink-0 text-accent-500">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.5 2.5L3 8" />
+            <path d="M3 3v5h5" />
+          </svg>
+        </span>
         <p className="text-base leading-relaxed text-ink-100">
           <span className="font-semibold text-white">Retain feeds Bring.</span> A repeat
           customer or a referral costs almost nothing to win. A one-off campaign can’t do

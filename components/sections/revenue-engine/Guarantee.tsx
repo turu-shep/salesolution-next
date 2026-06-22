@@ -11,7 +11,7 @@ import { SectionRail } from '@/components/layout/SectionRail'
 
 export function Guarantee({ id }: { id?: string }) {
   return (
-    <SectionRail tone="dark" id={id} glow="quiet" size="sm">
+    <SectionRail tone="dark" id={id} glow="none" size="sm" className="-mt-12 md:-mt-16">
       <div className="mx-auto max-w-3xl text-center">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
           The guarantee
