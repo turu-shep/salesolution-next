@@ -2,14 +2,13 @@ import type { Metadata } from 'next'
 
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { AuditCTA } from '@/components/sections/revenue-engine/AuditCTA'
-import { EngineVsFuel } from '@/components/sections/revenue-engine/EngineVsFuel'
-import { FiveSteps, type FiveStep } from '@/components/sections/revenue-engine/FiveSteps'
 import { Guarantee } from '@/components/sections/revenue-engine/Guarantee'
-import { HowItWorks } from '@/components/sections/revenue-engine/HowItWorks'
+import { PlanByPillar } from '@/components/sections/revenue-engine/PlanByPillar'
 import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
 import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
 import { TheLeak, type Leak } from '@/components/sections/revenue-engine/TheLeak'
 import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
+import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -44,38 +43,52 @@ const RETAIL_LEAKS: Leak[] = [
   },
 ]
 
-const RETAIL_STEPS: FiveStep[] = [
+const RETAIL_GROUPS = [
   {
-    n: '01',
-    key: 'CAPTURE',
-    what: 'A tidied-up Google and Maps listing, location and product pages built to show up for "near me" and in AI answers, and a simple way to ask or book — all yours, running alongside your site.',
-    metric: 'More local searchers find you first',
+    pillar: 'Bring',
+    outcome: 'Get found when they’re searching nearby',
+    steps: [
+      {
+        key: 'Capture',
+        what: 'A tidied-up Google and Maps listing, location and product pages built to show up for “near me” searches, and a simple way to ask or book — all yours, running alongside your site.',
+        metric: 'More local searchers find you first',
+      },
+    ],
   },
   {
-    n: '02',
-    key: 'RESPOND',
-    what: 'Every call, text, DM, and form gets answered fast, even after close. A missed call gets an instant text back, so the shopper does not move on to the next shop.',
-    metric: 'No interested buyer left waiting',
+    pillar: 'Convert',
+    outcome: 'Win the ones who reach you',
+    steps: [
+      {
+        key: 'Respond',
+        what: 'Every call, text, DM, and form answered fast, even after close. A missed call gets an instant text back, so the shopper doesn’t move on to the next shop.',
+        metric: 'No interested buyer left waiting',
+      },
+      {
+        key: 'Book',
+        what: 'Visits, consults, and appointments booked straight to your calendar with reminders so they show, and walk-ins logged so you know who came in.',
+        metric: 'More interest turns into a sale',
+      },
+    ],
   },
   {
-    n: '03',
-    key: 'BOOK',
-    what: 'Visits, consults, and appointments booked straight to your calendar with reminders so they show, and walk-ins logged so you know who came in.',
-    metric: 'More interest turns into a sale',
-  },
-  {
-    n: '04',
-    key: 'RECOVER',
-    what: 'The shoppers who looked and left get retargeted, and the customers you already have get sold to again — win-back offers, new-arrival emails, referral asks, and a steady stream of reviews that lifts you in local search.',
-    metric: 'Repeat revenue from customers you already won',
-  },
-  {
-    n: '05',
-    key: 'PROVE',
-    what: 'A record of every lead and sale the system touched, and a monthly dashboard that shows what it brought in, separately from your ads.',
-    metric: 'What the system earned, against the fee',
+    pillar: 'Retain',
+    outcome: 'Bring them back',
+    steps: [
+      {
+        key: 'Recover',
+        what: 'The shoppers who looked and left get brought back, and the customers you already have get sold to again — win-back offers, new-arrival emails, referral asks, and a steady stream of reviews that lifts you in local search.',
+        metric: 'Repeat revenue from customers you already won',
+      },
+    ],
   },
 ]
+
+const RETAIL_PROVE = {
+  key: 'Prove',
+  what: 'A record of every lead and sale the system touched, and a monthly dashboard that shows what it brought in — on its own line, separate from your ads.',
+  metric: 'What the system earned, against the fee',
+}
 
 const RETAIL_FAQ: QA[] = [
   {
@@ -137,7 +150,7 @@ export default function LocalRetailRevenueEnginePage() {
 
       {/* 1 — HOOK */}
       <RevenueHero
-        eyebrow="Revenue Engine · Local retail"
+        eyebrow={'For showrooms, brands & specialty shops'}
         title="Built for the local shop"
         titleAccent="nobody nearby can find online."
         lede={
@@ -149,9 +162,19 @@ export default function LocalRetailRevenueEnginePage() {
           </>
         }
         primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}
+        founder={{
+          name: 'Artur Shepel',
+          src: '/artur-shepel.jpg',
+          caption: 'I run every account myself.',
+          specs: [
+            { label: 'Setup', value: '90 days, on me' },
+            { label: 'Minimum', value: '3 months' },
+            { label: 'Lock-in', value: 'none' },
+          ],
+        }}
         anchors={[
           { label: 'The leak', href: '#leak' },
-          { label: 'How it works', href: '#how' },
+          { label: 'The plan', href: '#how' },
           { label: 'Pricing', href: '#pricing' },
           { label: 'FAQ', href: '#faq' },
         ]}
@@ -177,34 +200,22 @@ export default function LocalRetailRevenueEnginePage() {
         closer={<>Every one of these is a customer you already earned, handed to someone else.</>}
       />
 
-      {/* 3 — THE MECHANISM */}
-      <EngineVsFuel id="engine" />
+      {/* 3 — THE FIX: "you've been sold pieces / I run the whole flow" */}
+      <div id="flow">
+        <FlowBlock />
+      </div>
 
-      {/* 4 — THE PLAN */}
-      <HowItWorks id="how" />
-      <FiveSteps
-        id="system"
-        headline={
-          <>
-            The whole machine,{' '}
-            <span className="text-ink-500">applied to your shop.</span>
-          </>
-        }
-        intro={
-          <>
-            I install and run all of it &mdash; the 90-day setup is on me. Here
-            is what each piece looks like for a local shop or brand.
-          </>
-        }
-        steps={RETAIL_STEPS}
-      />
+      {/* 4 — THE PLAN: the five steps grouped under Bring / Convert / Retain */}
+      <PlanByPillar id="how" groups={RETAIL_GROUPS} prove={RETAIL_PROVE} />
 
-      {/* 5 — PROOF */}
+      {/* 5 — HOW I REPORT IT (dark) — closer hands into the guarantee */}
       <TwoRevenueLines id="prove" />
 
-      {/* 6 — OFFER + GUARANTEE */}
+      {/* 6 — GUARANTEE (dark, abutted to the report as one conviction field) */}
+      <Guarantee id="guarantee" abut />
+
+      {/* 7 — OFFER (the price, now that the risk is reversed) */}
       <RevenuePricing id="pricing" />
-      <Guarantee id="guarantee" />
 
       {/* 7 — FAQ */}
       <FAQ
