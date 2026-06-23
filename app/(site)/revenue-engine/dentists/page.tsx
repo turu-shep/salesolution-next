@@ -7,9 +7,12 @@ import { Guarantee } from '@/components/sections/revenue-engine/Guarantee'
 import { PlanByPillar } from '@/components/sections/revenue-engine/PlanByPillar'
 import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
 import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
-import { TheLeak, type Leak } from '@/components/sections/revenue-engine/TheLeak'
 import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
 import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
+import { Concept2Evidence } from '@/components/sections/revenue-engine/leak-concepts/Concept2Evidence'
+import { Concept3Calculator } from '@/components/sections/revenue-engine/leak-concepts/Concept3Calculator'
+import { Concept4BeforeAfter } from '@/components/sections/revenue-engine/leak-concepts/Concept4BeforeAfter'
+import { LEAK_DATA } from '@/components/sections/revenue-engine/leak-concepts/data'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -20,29 +23,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://salesolution.net/revenue-engine/dentists/' },
 }
 
-const DENTAL_LEAKS: Leak[] = [
-  {
-    n: '01',
-    stat: 'As many as 1 in 3',
-    label: 'calls go unanswered during chair time',
-    body: 'The front desk is with a patient and the phone keeps ringing. A new-patient call that hits voicemail usually books somewhere else.',
-    source: null,
-  },
-  {
-    n: '02',
-    stat: '47 hours',
-    label: 'industry-average lead response time',
-    body: 'A new-patient inquiry that waits two days has already chosen another practice. Speed to the first reply is most of the decision.',
-    source: 'LeadSync, 2026',
-  },
-  {
-    n: '03',
-    stat: 'A large share',
-    label: 'of treatment plans go unaccepted and unfollowed',
-    body: 'The plan is presented once, the patient says they will think about it, and no one circles back. Overdue recall slips the same way.',
-    source: null,
-  },
-]
+const leak = LEAK_DATA['medical']
 
 const DENTAL_GROUPS = [
   {
@@ -183,25 +164,31 @@ export default function DentistsRevenueEnginePage() {
         ]}
       />
 
-      {/* 2 — THE LEAK */}
-      <TheLeak
-        id="leak"
-        eyebrow="The practice's leak"
-        headline={
-          <>
-            Your busiest hours{' '}
-            <span className="text-ink-500">are your leakiest.</span>
-          </>
-        }
-        intro={
-          <>
-            Most practice owners blame their marketing. It is almost never the
-            marketing &mdash; it is the calls during chair time nobody could
-            pick up, and the treatment plans nobody circled back on.
-          </>
-        }
-        leaks={DENTAL_LEAKS}
-        closer={<>Every one of these is revenue you already earned the right to.</>}
+      {/* 2 — THE LEAK: three places you lose the patient */}
+      <div id="leak">
+        <Concept2Evidence
+          data={leak}
+          header={{
+            eyebrow: "The practice's leak",
+            headlineA: 'Three places you lose the patient.',
+            headlineB: 'Most practices only fix one.',
+            intro:
+              'Before they find you, when they call during chair time, and after the plan is presented. The leak is bigger than the missed call.',
+            closer: 'Every one of these is revenue you already earned the right to.',
+          }}
+        />
+      </div>
+
+      {/* 3 — QUANTIFY YOUR LEAK */}
+      <Concept3Calculator
+        data={leak}
+        header={{
+          eyebrow: 'Your leak, in dollars',
+          headlineA: 'Put a number on it.',
+          headlineB: 'Your number, not mine.',
+          intro: 'Three figures from your own week. The math is in the open — change them.',
+          closer: '',
+        }}
       />
 
       {/* 3 — THE FIX: "you've been sold pieces / I run the whole flow" */}
@@ -211,6 +198,18 @@ export default function DentistsRevenueEnginePage() {
 
       {/* 4 — THE PLAN: the five steps grouped under Bring / Convert / Retain */}
       <PlanByPillar id="how" groups={DENTAL_GROUPS} prove={DENTAL_PROVE} />
+
+      {/* 4.5 — THE DIFFERENCE: same patient, two endings */}
+      <Concept4BeforeAfter
+        data={leak}
+        header={{
+          eyebrow: 'The difference',
+          headlineA: 'Same patient.',
+          headlineB: 'Two endings.',
+          intro: 'One new-patient call. The only thing that changes is whether it gets answered.',
+          closer: '',
+        }}
+      />
 
       {/* 5 — COMPLIANCE (vertical reassurance, plan-adjacent) */}
       <Compliance id="compliance" />

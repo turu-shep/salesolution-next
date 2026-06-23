@@ -6,9 +6,12 @@ import { Guarantee } from '@/components/sections/revenue-engine/Guarantee'
 import { PlanByPillar } from '@/components/sections/revenue-engine/PlanByPillar'
 import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
 import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
-import { TheLeak, type Leak } from '@/components/sections/revenue-engine/TheLeak'
 import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
 import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
+import { Concept2Evidence } from '@/components/sections/revenue-engine/leak-concepts/Concept2Evidence'
+import { Concept3Calculator } from '@/components/sections/revenue-engine/leak-concepts/Concept3Calculator'
+import { Concept4BeforeAfter } from '@/components/sections/revenue-engine/leak-concepts/Concept4BeforeAfter'
+import { LEAK_DATA } from '@/components/sections/revenue-engine/leak-concepts/data'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -19,29 +22,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://salesolution.net/revenue-engine/local-retail/' },
 }
 
-const RETAIL_LEAKS: Leak[] = [
-  {
-    n: '01',
-    stat: 'The top 3',
-    label: 'results take most of the local clicks',
-    body: 'When someone nearby searches, or asks AI who sells this near me, a few names get the visits and the calls. If you are not one of them, you never knew the customer was looking.',
-    source: null,
-  },
-  {
-    n: '02',
-    stat: 'Most',
-    label: 'first-time visitors leave without buying',
-    body: 'They found you, looked, and left to compare. With no way to follow them, that interest is gone, and you paid to earn it once already.',
-    source: null,
-  },
-  {
-    n: '03',
-    stat: 'Your cheapest sale',
-    label: 'is to a customer you already have',
-    body: 'The people who already bought are the likeliest to buy again and the cheapest to reach. Most shops never ask: no second offer, no win-back, no reason to return. The list just sits there.',
-    source: null,
-  },
-]
+const leak = LEAK_DATA['retail']
 
 const RETAIL_GROUPS = [
   {
@@ -180,24 +161,31 @@ export default function LocalRetailRevenueEnginePage() {
         ]}
       />
 
-      {/* 2 — THE LEAK */}
-      <TheLeak
-        id="leak"
-        eyebrow="The local shop's leak"
-        headline={
-          <>
-            They&rsquo;re searching for you.{' '}
-            <span className="text-ink-500">They&rsquo;re finding someone else.</span>
-          </>
-        }
-        intro={
-          <>
-            Most of what a local shop could earn never shows up as a sale. It
-            leaks in three places, and almost nobody plugs them.
-          </>
-        }
-        leaks={RETAIL_LEAKS}
-        closer={<>Every one of these is a customer you already earned, handed to someone else.</>}
+      {/* 2 — THE LEAK: three places you lose the customer */}
+      <div id="leak">
+        <Concept2Evidence
+          data={leak}
+          header={{
+            eyebrow: "The local shop's leak",
+            headlineA: 'Three places you lose the customer.',
+            headlineB: 'Most shops only fix one.',
+            intro:
+              'Before they find you, when they look and leave, and after they buy once. The leak is bigger than the storefront.',
+            closer: 'Every one of these is a customer you already earned, handed to someone else.',
+          }}
+        />
+      </div>
+
+      {/* 3 — QUANTIFY YOUR LEAK */}
+      <Concept3Calculator
+        data={leak}
+        header={{
+          eyebrow: 'Your leak, in dollars',
+          headlineA: 'Put a number on it.',
+          headlineB: 'Your number, not mine.',
+          intro: 'Three figures from your own numbers. The math is in the open — change them.',
+          closer: '',
+        }}
       />
 
       {/* 3 — THE FIX: "you've been sold pieces / I run the whole flow" */}
@@ -207,6 +195,18 @@ export default function LocalRetailRevenueEnginePage() {
 
       {/* 4 — THE PLAN: the five steps grouped under Bring / Convert / Retain */}
       <PlanByPillar id="how" groups={RETAIL_GROUPS} prove={RETAIL_PROVE} />
+
+      {/* 4.5 — THE DIFFERENCE: same shopper, two endings */}
+      <Concept4BeforeAfter
+        data={leak}
+        header={{
+          eyebrow: 'The difference',
+          headlineA: 'Same shopper.',
+          headlineB: 'Two endings.',
+          intro: 'One shopper, one search. The only thing that changes is whether you show up and follow up.',
+          closer: '',
+        }}
+      />
 
       {/* 5 — HOW I REPORT IT (dark) — closer hands into the guarantee */}
       <TwoRevenueLines id="prove" />

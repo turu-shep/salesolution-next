@@ -7,9 +7,12 @@ import { PlanByPillar } from '@/components/sections/revenue-engine/PlanByPillar'
 import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
 import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
 import { Seasonality } from '@/components/sections/revenue-engine/Seasonality'
-import { TheLeak, type Leak } from '@/components/sections/revenue-engine/TheLeak'
 import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
 import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
+import { Concept2Evidence } from '@/components/sections/revenue-engine/leak-concepts/Concept2Evidence'
+import { Concept3Calculator } from '@/components/sections/revenue-engine/leak-concepts/Concept3Calculator'
+import { Concept4BeforeAfter } from '@/components/sections/revenue-engine/leak-concepts/Concept4BeforeAfter'
+import { LEAK_DATA } from '@/components/sections/revenue-engine/leak-concepts/data'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -20,29 +23,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://salesolution.net/revenue-engine/home-services/' },
 }
 
-const HS_LEAKS: Leak[] = [
-  {
-    n: '01',
-    stat: 'As many as 1 in 3',
-    label: 'calls go unanswered during the workday',
-    body: 'The crew is on a roof and the office is one person. The caller dials the next contractor on the list, and the lead you paid for is gone.',
-    source: null,
-  },
-  {
-    n: '02',
-    stat: '$80–$220',
-    label: 'to buy a single qualified roofing lead',
-    body: 'Competitive metros push past $300. Every call you miss is that much spent to make a phone ring that nobody picked up.',
-    source: 'Getbiddable, 2026',
-  },
-  {
-    n: '03',
-    stat: 'Won, then lost',
-    label: 'estimates that never get a second call',
-    body: 'The quote goes out after the site visit and then goes quiet. The job was won and lost in the same week, sitting in your own CRM.',
-    source: null,
-  },
-]
+const leak = LEAK_DATA['home-services']
 
 const HS_FAQ: QA[] = [
   {
@@ -134,24 +115,31 @@ export default function HomeServicesRevenueEnginePage() {
         ]}
       />
 
-      {/* 2 — THE LEAK */}
-      <TheLeak
-        id="leak"
-        eyebrow="The contractor's leak"
-        headline={
-          <>
-            You paid for the lead.{' '}
-            <span className="text-ink-500">Then nobody answered.</span>
-          </>
-        }
-        intro={
-          <>
-            Home-services leads are expensive and time-sensitive. The job goes
-            to whoever picks up first, and most days that isn&rsquo;t you.
-          </>
-        }
-        leaks={HS_LEAKS}
-        closer={<>Every one of these is money you already spent to make the phone ring.</>}
+      {/* 2 — THE LEAK: three places you lose the job */}
+      <div id="leak">
+        <Concept2Evidence
+          data={leak}
+          header={{
+            eyebrow: "The contractor's leak",
+            headlineA: 'Three places you lose the job.',
+            headlineB: 'Most contractors only fix one.',
+            intro:
+              'Before they call, when they call, and after the visit. The leak is bigger than the missed phone.',
+            closer: 'Every one of these is a job you already had the right to win.',
+          }}
+        />
+      </div>
+
+      {/* 3 — QUANTIFY YOUR LEAK */}
+      <Concept3Calculator
+        data={leak}
+        header={{
+          eyebrow: 'Your leak, in dollars',
+          headlineA: 'Put a number on it.',
+          headlineB: 'Your number, not mine.',
+          intro: 'Three figures from your own week. The math is in the open — change them.',
+          closer: '',
+        }}
       />
 
       {/* 3 — THE FIX: "you've been sold pieces / I run the whole flow" */}
@@ -161,6 +149,19 @@ export default function HomeServicesRevenueEnginePage() {
 
       {/* 4 — THE PLAN: the five steps grouped under Bring / Convert / Retain */}
       <PlanByPillar id="how" />
+
+      {/* 4.5 — THE DIFFERENCE: same lead, two endings */}
+      <Concept4BeforeAfter
+        data={leak}
+        header={{
+          eyebrow: 'The difference',
+          headlineA: 'Same lead.',
+          headlineB: 'Two endings.',
+          intro:
+            'One contractor, one inbound lead. The only thing that changes is whether it gets answered.',
+          closer: '',
+        }}
+      />
 
       {/* 5 — STORM SURGE (vertical reassurance, plan-adjacent) */}
       <Seasonality id="seasonality" />
