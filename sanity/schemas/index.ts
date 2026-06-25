@@ -13,6 +13,7 @@ import { portableText } from './objects/portable-text'
 import { seo } from './objects/seo'
 import { series } from './objects/series'
 import { post } from './post'
+import { precallLead } from './precall-lead'
 import { service } from './service'
 import { siteSettings } from './site-settings'
 import { testimonial } from './testimonial'
@@ -30,6 +31,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   testimonial,
   author,
   siteSettings,
+  precallLead,
   // Reusable objects
   portableText,
   seo,

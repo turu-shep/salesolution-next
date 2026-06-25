@@ -1,0 +1,20 @@
+[
+  {
+    "vertical": "dental",
+    "categories": ["dentist", "dental clinic", "cosmetic dentist"],
+    "filters": [["rating.votes_count", "<", 130]],
+    "order_by": ["rating.value,asc"],
+    "limit": 30,
+    "cities": [
+      { "name": "Miami", "coordinate": "25.7743,-80.1937,16" },
+      { "name": "Hialeah", "coordinate": "25.8576,-80.2781,10" },
+      { "name": "Coral Gables", "coordinate": "25.7215,-80.2684,8" }
+    ]
+  },
+  {
+    "vertical": "home-services",
+    "categories": ["roofing contractor", "roofer"],
+    "limit": 30,
+    "cities": [{ "name": "Tampa", "coordinate": "27.9506,-82.4572,22" }]
+  }
+]
