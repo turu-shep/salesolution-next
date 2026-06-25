@@ -27,6 +27,11 @@ const groups: { title: string; tools: Tool[] }[] = [
     title: 'Work the calls',
     tools: [
       {
+        href: '/sales/precall',
+        name: 'Pre-call scanner',
+        desc: 'Finds the leak on each prospect before you dial — no website, slow site, not in the map pack, skipped by AI — and writes a ready opener. Seeds 100/day into Sanity. Setup + how it runs.',
+      },
+      {
         href: '/sales/playbook',
         name: 'Cold-Call Cockpit',
         desc: 'Branching call scripts, objection battle-cards, and the per-call logger. Both motions — Revenue Engine and Industrial.',
