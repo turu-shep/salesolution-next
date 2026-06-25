@@ -6,6 +6,8 @@
 
 *You are not closing a sale. You are the one calm expert who hands a busy owner something true about his own business, then points at the next step.*
 
+*Be clear what you're handing him a piece of. You don't sell missed-call recovery. You run the whole flow: get him **found** when buyers search — Google, the map, the AI answer — **win** the calls and quotes he's already paying for, and **keep** the ones he already sold coming back. He's been sold pieces — a website, an ad, a CRM nobody runs — and the money leaks in the seams between them. The fact you open with is the sharpest visible seam on this prospect, not the product: a voicemail, an AI answer that skipped him, a quote nobody chased, reviews that stopped, a map he isn't on. Lead with the one seam; never let it shrink the offer — in your head or his.*
+
 ### Why it works
 
 A cold call is two states meeting. His guard is half-up before you speak, because the last six callers wanted something and dressed it up. Yours sets the temperature for both of you. People read state off each other fast — he'll feel yours before you finish your first sentence. If you're tense, needy, rushing to the pitch, the shutters come down and nothing you say afterward gets in. If you're calm and clearly not desperate for this one booking, his guard drops a notch on its own. He starts to wonder if you might actually know something.
@@ -44,7 +46,7 @@ Your competence *is* the fact you found. Lead with it. Not who you are, not what
 
 **Build the open on whatever you actually checked — same shape, three verticals.** The fact changes by buyer; the move doesn't. Open with the real thing, fold in the out, then offer a *when*.
 
-> **Roofer / HVAC / plumber (Revenue Leak Audit):** *"Before I called I tried your main line and got voicemail — figured you might be on a job. That's why I'm calling. Most roofers lose more work to missed calls than to anything else and never see it. I put together a quick rundown of what's slipping — calls, text-back time, your Google profile. Fifteen minutes, free, the numbers are yours whether you ever hire me or not. Thursday morning or Friday afternoon?"*
+> **Roofer / HVAC / plumber (Revenue Leak Audit):** *"Before I called I tried your main line and got voicemail — figured you might be on a job. That's why I'm calling. Most roofers lose more work to missed calls than to anything else and never see it. I put together a quick rundown of what's slipping — missed calls, text-back time, your Google profile, the quotes that went cold. Fifteen minutes, free, the numbers are yours whether you ever hire me or not. Thursday morning or Friday afternoon?"*
 
 > **Dentist (Revenue Leak Audit):** *"I called your office around 8:40 to see how long it'd take to book a cleaning, and I got the after-hours machine — figured the front desk was mid-check-in. That's actually why I'm calling. Practices your size lose more new patients to calls that hit during chair time than to anything in their marketing, and it never shows up anywhere. I'll show you your own missed-call and recall numbers, free, about fifteen minutes, yours to keep. Easier Thursday morning or Friday after lunch?"*
 
@@ -72,7 +74,7 @@ He picks up, clipped: *"Yeah, who's this?"* Guard all the way up. You don't spee
 
 Then stop. Two seconds of silence. Count them — *one, two* — and let him fill it. The silence isn't a squeeze; it's room to react to something true. He half-laughs: *"Yeah, that happens, we stay busy."* Guard down a notch — because you noticed, you didn't pitch.
 
-Now you've earned the lead. *"Most roofers lose more work to missed calls than to anything else, and they never see it. I put together a quick rundown of what's slipping at your place — calls, text-back time, your Google profile. About fifteen minutes, free, and the numbers are yours whether you ever hire me or not. Thursday morning or Friday afternoon?"*
+Now you've earned the lead. *"Most roofers lose more work to missed calls than to anything else, and they never see it. I put together a quick rundown of what's slipping at your place — missed calls, text-back time, your Google profile, the quotes that went cold. About fifteen minutes, free, and the numbers are yours whether you ever hire me or not. Thursday morning or Friday afternoon?"*
 
 Guard lowered (the voicemail, not a pitch). Status raised (you saw the real thing). Then you led (a *when*). Forty seconds, in order.
 
@@ -589,7 +591,7 @@ Her: "Yeah, voicemail mostly. He's on roofs all day, I catch what I can."
 
 You just got the spouse — the real influencer — to say the leak out loud. Don't talk past her now.
 
-You: "That's the exact thing I'd want to show you both. Most of those voicemails, the customer's already calling the next roofer before anyone hears it. I put together a quick rundown on your own numbers — how many calls slipped last month, your text-back time, your Google profile. About fifteen minutes, free, and the findings are yours to keep whether or not you ever work with me. Is he around mornings or afternoons, so I can get the two of you on it together?"
+You: "That's the exact thing I'd want to show you both. Most of those voicemails, the customer's already calling the next roofer before anyone hears it. I put together a quick rundown on your own numbers — how many calls slipped last month, your text-back time, your Google profile, and the quotes that went quiet. About fifteen minutes, free, and the findings are yours to keep whether or not you ever work with me. Is he around mornings or afternoons, so I can get the two of you on it together?"
 
 Her: "Mornings, before he heads out. Probably."
 
@@ -858,7 +860,7 @@ That pause is the whole move. If you're calm, he fills it — *"yeah, I was up o
 
 If you said "real quick," keep it real quick — and when you say you'll let him go, mean it. That phrase buys you three seconds of patience; spend ninety on a pitch and you've taught him the same lesson every other caller did. The tone earned the trust; the follow-through keeps it.
 
-**You** *(still slow, still down at the ends)*: *"That's actually why I'm calling. Most roofers I talk to lose more work to missed calls than to anything else, and they never see it."* *(beat)* *"I put together a quick rundown of what's slipping at your place — calls, text-back time, your Google profile. Takes about fifteen minutes, it's free, and the numbers are yours to keep whether you ever hire me or not."* *(now the one warm rise, the real invitation:)* *"I've got Thursday morning or Friday afternoon — which is easier for you?"*
+**You** *(still slow, still down at the ends)*: *"That's actually why I'm calling. Most roofers I talk to lose more work to missed calls than to anything else, and they never see it."* *(beat)* *"I put together a quick rundown of what's slipping at your place — missed calls, text-back time, your Google profile, the quotes that went cold. Takes about fifteen minutes, it's free, and the numbers are yours to keep whether you ever hire me or not."* *(now the one warm rise, the real invitation:)* *"I've got Thursday morning or Friday afternoon — which is easier for you?"*
 
 Everything load-bearing fell at the end, certain. Only the question lifted. He never heard a man who needed the call. He heard a guy who found something and is calm about it.
 
