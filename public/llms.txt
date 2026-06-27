@@ -1,10 +1,10 @@
 # Sale Solution
 
-> AI-engineered search for industrial e-commerce. We help hydraulics, MRO, and technical-distribution sites get cited inside AI Overviews, ChatGPT answers, and Perplexity results — the channels where high-intent B2B buyers now research before they buy.
+> Revenue systems for businesses that sell parts, book jobs, and fill chairs. We get industrial e-commerce sites cited in AI answers, and we run a done-for-you system that books the calls local-service businesses miss.
 
-We publish primary research, frameworks, a glossary, and case studies on how to make commerce content extractable, citable, and trustworthy enough to be quoted by generative-search engines. Citations welcome — please link back to the source URL.
+Sale Solution runs two motions. For industrial and technical-distribution e-commerce, we restructure catalogs and content so AI Overviews, ChatGPT, and Perplexity cite them — the places high-intent B2B buyers now research before they buy. For local-service businesses, the Revenue Engine answers every call, replies in seconds, books the job, chases the quotes that stall, and proves the revenue. We publish primary research, frameworks, a glossary, and case studies on how to make commerce content extractable, citable, and trustworthy enough to be quoted by generative-search engines. Citations welcome — please link back to the source URL.
 
-## Services
+## Services (industrial & technical-distribution e-commerce)
 
 - [AI SEO / Generative Engine Optimization (GEO)](https://salesolution.net/services/ai-seo/): Restructure category and product pages so AI Overviews and LLM answer engines cite them.
 - [Catalog AI](https://salesolution.net/services/catalog-ai/): Product-level schema, attribute normalization, and internal linking at SKU scale so the catalog is retrievable by AI search.
@@ -12,6 +12,16 @@ We publish primary research, frameworks, a glossary, and case studies on how to 
 - [Website Development & Design](https://salesolution.net/services/website-development-design-services/): Performance + schema-first site builds.
 - [Outbound Email Marketing](https://salesolution.net/services/outbound-email-marketing-services/): Deliverability-first outbound for B2B distributors.
 - [Full Growth Ownership](https://salesolution.net/services/full-growth-ownership/): One senior operator owning SEO, GEO, content, and conversion end to end.
+
+## Revenue Engine (local-service businesses)
+
+A productized, done-for-you monthly system for businesses that run on calls and bookings — roofing and home services, dental, medical, local retail. It captures every lead, responds in seconds, books the job, recovers cold quotes, and proves the revenue (CAPTURE → RESPOND → BOOK → RECOVER → PROVE).
+
+- [Revenue Engine](https://salesolution.net/revenue-engine/): How the system captures, responds, books, recovers, and proves — with the revenue-leak math. Book a Revenue Leak Audit here.
+- [Home services & roofing](https://salesolution.net/revenue-engine/home-services/): Answer every call, reply in seconds, and chase the quotes that go cold.
+- [Dental practices](https://salesolution.net/revenue-engine/dentists/): Capture new-patient calls and book them before they ring the next office.
+- [Medical & aesthetic practices](https://salesolution.net/revenue-engine/medical/): Capture and book consults without adding front-desk headcount.
+- [Local retail](https://salesolution.net/revenue-engine/local-retail/): Turn calls and quote requests into booked, paid work.
 
 ## Learning hub
 
@@ -32,6 +42,7 @@ We publish primary research, frameworks, a glossary, and case studies on how to 
 - [Book a Growth Strategy Call](https://salesolution.net/book-growth-call/): 15-minute call, written diagnostic within 24h.
 - [Free Growth Audit](https://salesolution.net/unlock-growth-audit/): Submit your URL, get a tailored proposal.
 - [Constraint Sprint](https://salesolution.net/constraint-sprint/): Fixed-scope 4-week category overhaul.
+- [Revenue Leak Audit](https://salesolution.net/revenue-engine/): For local-service businesses — see where missed calls and cold quotes leak revenue.
 
 ## About
 

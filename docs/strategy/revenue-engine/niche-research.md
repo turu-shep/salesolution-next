@@ -1,0 +1,100 @@
+# Revenue Engine — niche research & calculator presets (cited)
+
+**Status:** SOURCE-CITED (2026-06-26). 15 niches + 14 discovery candidates, web-researched per niche (named sources where possible; vendor/agency numbers flagged). Run: `wf_f49ecc1f-abd`. Synthesis below is hand-authored from the cited agent outputs (the auto-synthesis stalled on input size).
+**Filter:** high-ticket + high-margin, and/or recurring revenue after the first transaction.
+**Use:** seed the whole-flow leak calculator (`WholeFlowLeak.tsx`) per trade, and decide which verticals to build next.
+
+---
+
+## The recommendation (which to add, ranked)
+
+The ideal Revenue Engine niche stacks three things: **(a) high ticket or high margin, (b) recurring/repeat revenue, (c) phone-/speed-driven urgency** (so the Convert leak — missed/slow calls — is acute). Ranked by that stack:
+
+**Tier 1 — build these next (high fit + recurring + acute leak):**
+1. **Pest control** — fit 5. **74% of revenue is recurring** (NPMA/PCO 2025 cost study), 58% gross margin. The cleanest recurring/Retain story in the book; phone-driven sign-ups.
+2. **Med spa (injectables/laser)** — fit 5. 50–70% injectable margin, recurring *by biology* (Botox wears off in 3–4 mo) + memberships. High demand, consult speed-to-lead.
+3. **Pool — service-led** — fit 5. Recurring $80–150/mo, ~$7,500 LTV at 80–85% retention, 40–60% service margin; build is a $66k one-time upsell.
+4. **Cosmetic & implant dentistry** — fit 5. High-ticket cases ($3–6k implants), ~$5.5k+ patient LTV, recurring recall + the treatment-plan-follow-up Retain lever.
+5. **Plastic surgery** — fit 5. $6–15k cash-pay cases, 55–65% cosmetic margin; 30–42% missed-call leak on $9k+ cases makes speed-to-lead high-leverage.
+
+**Tier 2 — strong, with a caveat:**
+6. **Restoration (water/fire/mold)** — fit 4. **70–80% gross margin** on water mitigation, 24/7 emergency where the first responder wins → the *best* Convert/speed fit. Caveat: one-time, referral/insurance-driven (weak Retain).
+7. **Lawn care & landscaping** — fit 4. Recurring seasonal contracts, 50–65% maintenance margin.
+8. **Water treatment** — fit 4. Recurring consumables/filters, 35–50%+ margin.
+9. **HVAC + Plumbing** (already core, fit 5) — lean harder into the *recurring memberships* ($150–400/yr HVAC, $99–199/yr plumbing) — currently underplayed in the copy.
+
+**Tier 3 — high ticket but weaker Engine fit (long cycle, fewer leads → the leak is Bring + nurture, not missed-call speed):**
+10. Kitchen & bath remodel (~28% margin), windows & doors (20–35%), **solar (fit 3 — brutal CAC, ~40% CAC spike forecast, no recurring).**
+
+**Top discovery adds (from the new-niche pass):**
+- **Hormone / medical weight-loss (GLP-1, HRT, IV)** — monthly memberships, exploding demand (135k/mo IV, 50k/mo weight-loss). Recurring + high-margin + booming. The strongest *new* idea.
+- **Garage doors** — 165k/mo "repair near me," urgent same-day + high-ticket install. Textbook Convert fit.
+- **Septic pumping & service** — 110k/mo, urgent overflow calls + a 3–5yr recurring cadence.
+- **Audiology / hearing aids** — $3–6k devices + recurring cleanings/refits/batteries; older, phone-first buyer.
+- **In-home senior care** — recurring monthly care, anxious family books a same-week assessment.
+
+---
+
+## Per-niche economics (cited)
+
+| Niche | Fit | Avg ticket | Gross margin | Recurring | The leak / fit |
+|---|---|---|---|---|---|
+| **Roofing** | 5 | ~$8.5k blended ($7–15k replace) | 30–40% (net ~2.8%, NRCA) | No (referral/storm) | 27% calls unanswered; 78% hire first responder. Missed 5-figure call = the leak. |
+| **HVAC** | 5 | $150–450 call → $5–12k install | 50–60% service / 35–45% install | **Yes** (memberships $150–400/yr) | 60–70% emergency, phone-first; CPL ~$100–153. Acute Convert + strong Retain. |
+| **Plumbing** | 5 | ~$340–475 blended ($150–1,500+) | 50–60%+ (drain 75%+) | **Yes** (memberships $99–199/yr) | 27% calls missed, after-hours emergencies; booking ~50%. Acute Convert. |
+| **Electrical** | 4 | ~$300–600 ($120 call → $5–15k generator) | 35–50% | Yes (light) | "Electrician near me" 368k/mo; EV/generator upsell. Local-search led. |
+| **Residential solar** | 3 | $25–35k/system | 25–40% gross | No | Brutal CAC (forecast +40% in 2026), long cycle. Leak is nurture, not speed. |
+| **Restoration** | 4 | ~$3.8k water (fire $27k) | **70–80% water mitigation** | No (referral/insurance) | 24/7 emergency, first responder wins. Best speed-to-lead fit; weak Retain. |
+| **Kitchen & bath remodel** | 4 | ~$15–25k blended ($27k–80k full) | ~28% (NAHB) | No | High ticket, long consideration, fewer leads. Leak = slow follow-up. |
+| **Windows & doors** | 4 | ~$8–20k project (~$750/window) | 20–35% | No | In-home sales, seasonal, expensive leads. Longer cycle. |
+| **Pest control** | 5 | $150–300 initial + $40–75/mo | **58%** (74% recurring revenue) | **Yes (core)** | Subscription model; "pest control near me" 201k/mo. Cleanest Retain. |
+| **Lawn & landscaping** | 4 | ~$55–75/visit ($100–410/mo) | 50–65% maintenance | **Yes (seasonal)** | Weekly/bi-weekly, annual re-sign. Retain-led. |
+| **Pool (build + service)** | 5 | $66k build / $80–150/mo service | build 22–35% / service 40–60% | **Yes (service)** | "pool service near me" 40k/mo; ~$7,500 service LTV. Build is the upsell. |
+| **Water treatment** | 4 | ~$2.3k installed | 35–50%+ (consumables higher) | **Yes** (salt/filters/service) | Local-search led; recurring consumables. |
+| **Med spa** | 5 | ~$500/visit (AmSpa $504) | injectables 50–70%, net 20–25% | **Yes (biology + memberships)** | "near me" + map pack + social; recurring by rebooking cadence. |
+| **Cosmetic & implant dentistry** | 5 | $3–6k implant ($4–4.3k); $5.5k+ LTV | ~38% (after 62% overhead) | **Yes (recall)** | 71–76% start online, 3-pack ~70% clicks; treatment-plan follow-up = the lever. |
+| **Plastic surgery** | 5 | $6–15k all-in case | 55–65% cosmetic | Light | 30–42% missed-call leak on $9k+ cases; consult speed matters. |
+
+> **Key named sources:** Roofing Contractor 2025 Homeowner Survey; CallRail / Invoca missed-call + speed-to-lead; NRCA, NAHB, ADA HPI, ACCA, NPMA/PCO cost studies; ASPS / AmSpa; NREL & Wood Mackenzie (solar); DataForSEO / Google Ads search volume (pulled 2026-06-26). Vendor/agency CPLs, close rates, and Map-pack click-share are flagged as directional throughout.
+
+---
+
+## Calculator presets (from the cited research)
+
+`avgJob $ · searchesMo · found% · missed/wk · close% · pastCustomers · return%/yr`
+
+| Niche | avgJob | searchesMo | found% | missed/wk | close% | past | return% |
+|---|---|---|---|---|---|---|---|
+| Roofing | 8,500 | 600 | 35 | 6 | 30 | 400 | 12 |
+| HVAC | 550* | 1,800 | 35 | 9 | 35 | 1,200 | 22 |
+| Plumbing | 475 | 250 | 30 | 7 | 50 | 600 | 35 |
+| Electrical | 450 | 1,500 | 35 | 9 | 30 | 800 | 30 |
+| Solar | 28,000 | 300 | 35 | 5 | 18 | 250 | 5 |
+| Restoration | 3,200 | 350 | 55 | 6 | 30 | 400 | 10 |
+| Kitchen & bath | 18,000 | 3,000 | 35 | 5 | 28 | 400 | 12 |
+| Windows & doors | 8,000 | 300 | 30** | 3 | 25 | 500 | 8 |
+| Pest control | 300 | 600 | 35 | 8 | 35 | 400 | 65 |
+| Lawn & landscaping | 2,000*** | 300 | 35 | 5 | 40 | 150 | 45 |
+| Pool service | 1,200 | 4,000 | 45 | 8 | 35 | 250 | 35 |
+| Water treatment | 2,300 | 250 | 35 | 7 | 28 | 400 | 18 |
+| Med spa | 500 | 600 | 35 | 8 | 30 | 800 | 40 |
+| Cosmetic dentistry | 5,000 | 1,200 | 25 | 8 | 35 | 2,000 | 30 |
+| Plastic surgery | 9,000 | 600 | 35 | 6 | 30 | 1,200 | 25 |
+
+**Reconciliation needed before wiring (one synthesis pass I'd run):**
+- `*` **HVAC / `***` lawn use the *service-call* ticket** ($550, $75) while roofing/solar use the *big-ticket job* ($8.5k, $28k). Pick one anchoring rule per the calculator's intent — recommend **blended primary-revenue job** (HVAC ~$1,200, lawn ~$2,000 annual contract) so totals are comparable across trades.
+- `**` Windows came back `found 8` — almost certainly meant 8% (i.e. badly found); set to ~30 for consistency unless we keep a "very-low-visibility" default.
+- `searchesMo` is order-of-magnitude and noisy month to month; **verify per target metro with DataForSEO/Ahrefs** before publishing.
+- The recovery %s and the $/searcher constant in `WholeFlowLeak` stay conservative regardless of niche.
+
+---
+
+## Strategic note
+
+- **Build the recurring + acute-leak niches first** (pest, med spa, pool, dental, HVAC/plumbing-recurring, + discovery's hormone/weight-loss): they make the **Retain** pillar the headline and give predictable LTV the calculator can show.
+- **Speed/urgency niches** (restoration, garage doors, septic, roofing) are the best **Convert** demos — the missed-call leak is largest and most visceral.
+- **Pure high-ticket-one-time + long-cycle** (solar, remodel, windows, custom homes, plastic surgery, hair, LASIK) bring revenue but the leak is **Bring + nurture**, not missed-call speed — they need a nurture-weighted Engine variant, and the current calculator understates them. Treat as a second wave, not the lead.
+
+## Next
+- One synthesis pass to reconcile the `avgJob` anchoring + the windows `found%`, then wire the preset set into `WholeFlowLeak` (home-services trade row first; medical gets its own preset row + labels).
+- Full per-niche source list lives in the run output (`tasks/w86j1lygi.output`); attach citations to any number before it goes on a public page.

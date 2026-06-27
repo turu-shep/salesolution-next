@@ -1,18 +1,16 @@
 import { ImageResponse } from 'next/og'
 
-import { business } from '@/lib/business'
-
-export const alt = 'Sale Solution — revenue systems that win modern search'
+export const alt = 'Sale Solution Revenue Engine — answer every call, book the job, prove the revenue'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 /**
- * Default Open Graph image for the site — served at /opengraph-image.
- * Next.js auto-wires this into metadata for every route that doesn't override
- * `openGraph.images`. Pages can still set their own (blog posts/guides use
- * Sanity-stored cover images).
+ * Open Graph image for the Revenue Engine cluster (/revenue-engine/*).
+ * Next.js cascades this to the vertical pages (home-services, dentists,
+ * medical, local-retail) unless they override it — so share + AI-preview
+ * cards under a local-service page read local, not industrial.
  */
-export default function OGImage() {
+export default function RevenueEngineOGImage() {
   return new ImageResponse(
     (
       <div
@@ -39,17 +37,16 @@ export default function OGImage() {
             color: '#9ca3af',
           }}
         >
-          salesolution.net
+          salesolution.net/revenue-engine
         </div>
 
-        {/* Middle: brand mark + headline */}
+        {/* Middle: wordmark + headline */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-          {/* Wordmark */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              fontSize: 108,
+              fontSize: 96,
               fontWeight: 700,
               letterSpacing: '-0.04em',
               lineHeight: 1,
@@ -59,41 +56,28 @@ export default function OGImage() {
             sale
             <div
               style={{
-                width: 20,
-                height: 20,
+                width: 18,
+                height: 18,
                 borderRadius: '50%',
                 background: '#2652ef',
                 margin: '0 6px',
-                transform: 'translateY(24px)',
+                transform: 'translateY(22px)',
               }}
             />
             solution
-            <div
-              style={{
-                fontSize: 36,
-                color: '#f97316',
-                fontWeight: 700,
-                fontFamily: 'monospace',
-                marginLeft: 6,
-                transform: 'translateY(-44px)',
-              }}
-            >
-              [1]
-            </div>
           </div>
 
-          {/* Tagline */}
           <div
             style={{
-              fontSize: 36,
-              fontWeight: 500,
-              maxWidth: 880,
-              color: '#d1d5db',
-              lineHeight: 1.25,
-              letterSpacing: '-0.01em',
+              fontSize: 40,
+              fontWeight: 600,
+              maxWidth: 920,
+              color: '#ffffff',
+              lineHeight: 1.2,
+              letterSpacing: '-0.015em',
             }}
           >
-            {business.tagline}
+            Answer every call. Book the job. Prove the revenue.
           </div>
         </div>
 
@@ -111,7 +95,7 @@ export default function OGImage() {
           }}
         >
           <div style={{ width: 36, height: 2, background: '#f97316' }} />
-          Industrial AI search · Local revenue systems
+          Revenue Engine · Home services · Dental · Medical
         </div>
       </div>
     ),

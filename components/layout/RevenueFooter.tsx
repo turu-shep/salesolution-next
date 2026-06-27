@@ -2,7 +2,26 @@ import Link from 'next/link'
 
 import { Logo } from '@/components/layout/Logo'
 import { business } from '@/lib/business'
-import { legalLinks } from '@/lib/navigation'
+import { legalLinks, type NavChild } from '@/lib/navigation'
+
+// Keeps the Revenue Engine cluster connected to the rest of the site. Without
+// these, /revenue-engine/* was a crawl dead-end — no path back to the verticals,
+// services, case studies, or the learning hub.
+const revenueEngineLinks: NavChild[] = [
+  { label: 'How it works', href: '/revenue-engine/' },
+  { label: 'Home & roofing', href: '/revenue-engine/home-services/' },
+  { label: 'Dental practices', href: '/revenue-engine/dentists/' },
+  { label: 'Medical & aesthetics', href: '/revenue-engine/medical/' },
+  { label: 'Local retail', href: '/revenue-engine/local-retail/' },
+]
+
+const moreLinks: NavChild[] = [
+  { label: 'Services', href: '/services/' },
+  { label: 'Case studies', href: '/case-studies/' },
+  { label: 'About', href: '/about/' },
+  { label: 'Glossary', href: '/glossary/' },
+  { label: 'Career paths', href: '/career-paths/' },
+]
 
 /**
  * Slim footer for the Revenue Engine cluster (/revenue-engine/*).
@@ -61,6 +80,14 @@ export function RevenueFooter() {
           </div>
         </div>
 
+        <nav
+          aria-label="More from Sale Solution"
+          className="mt-10 grid gap-8 border-t border-rule pt-8 sm:grid-cols-2"
+        >
+          <FooterLinkColumn title="Revenue Engine" links={revenueEngineLinks} />
+          <FooterLinkColumn title="More from Sale Solution" links={moreLinks} />
+        </nav>
+
         <div className="mt-10 flex flex-col gap-3 border-t border-rule pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">
             &copy; {new Date().getFullYear()} {business.legalName}
@@ -80,5 +107,27 @@ export function RevenueFooter() {
         </div>
       </div>
     </footer>
+  )
+}
+
+function FooterLinkColumn({ title, links }: { title: string; links: NavChild[] }) {
+  return (
+    <div>
+      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">
+        {title}
+      </p>
+      <ul className="mt-4 space-y-2.5 text-sm">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className="text-ink-700 transition-colors duration-200 hover:text-brand-600"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }

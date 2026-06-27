@@ -14,10 +14,11 @@ export function FounderNote({ id }: { id?: string }) {
       <div className="grid items-center gap-10 md:grid-cols-[15rem_1fr] md:gap-14">
         <div className="mx-auto w-44 md:mx-0 md:w-full">
           <Image
-            src="/artur-shepel.jpg"
+            src="/artur-shepel-480.webp"
             alt="Artur Shepel, founder of Sale Solution"
-            width={719}
-            height={1280}
+            width={480}
+            height={854}
+            unoptimized
             className="w-full rounded-xl object-cover"
           />
         </div>

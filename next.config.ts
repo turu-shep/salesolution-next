@@ -38,7 +38,23 @@ const nextConfig: NextConfig = {
   },
 
   async redirects() {
-    return redirectMap
+    return [
+      // Canonical host is the apex (non-www). Send any www request to the apex
+      // with a 308 so backlinks/citations pointing at www.salesolution.net
+      // don't split ranking signal or dead-end.
+      //
+      // ⚠ This only fires once www.salesolution.net actually terminates TLS:
+      //   add www as a domain in the Vercel project (Settings → Domains) so a
+      //   cert is issued. Until then a www request fails the SSL handshake
+      //   before it ever reaches Next, and no redirect can run.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.salesolution.net' }],
+        destination: 'https://salesolution.net/:path*',
+        permanent: true,
+      },
+      ...redirectMap,
+    ]
   },
 
   /**

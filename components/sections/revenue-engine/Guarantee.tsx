@@ -27,7 +27,7 @@ export function Guarantee({ id, abut = false }: { id?: string; abut?: boolean })
         </p>
         <blockquote className="mt-6 font-display text-balance text-3xl font-semibold leading-[1.15] tracking-[-0.015em] text-white sm:text-4xl md:text-5xl">
           &ldquo;If the revenue the system brings back doesn&rsquo;t beat my
-          fee by day 90, I work free until it does.&rdquo;
+          monthly fee by day 90, I work free until it does.&rdquo;
         </blockquote>
         <p className="mt-8 text-ink-200">
           That&rsquo;s the second line on your report &mdash; the work the

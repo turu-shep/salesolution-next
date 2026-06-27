@@ -186,6 +186,7 @@ export default function OutboundEmailServicePage() {
       <JsonLd
         data={serviceSchema({
           name: 'Outbound Email Marketing',
+          slug: 'outbound-email-marketing-services',
           description:
             'Deliverability-first cold outbound for B2B and B2B2C. Hand-built lists, sender-reputation engineering, multi-touch sequences with branching logic, and honest reporting on replies and sourced pipeline.',
           category: 'Digital Marketing',

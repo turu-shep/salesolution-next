@@ -26,10 +26,10 @@ export function BlogIndexHero({
         </h1>
 
         <p className="mt-10 max-w-2xl text-lg leading-relaxed text-ink-700 md:text-xl">
-          Frameworks we ship, case studies from industrial e&#8209;commerce
-          engagements, and the algorithm updates that actually moved
-          revenue. No listicle filler &mdash; only what we&rsquo;ve seen
-          work, or fail, on real client pipelines.
+          Frameworks we ship, case studies from real engagements across
+          industrial e&#8209;commerce and local services, and the algorithm
+          updates that actually moved revenue. No listicle filler &mdash; only
+          what we&rsquo;ve seen work, or fail, on real client pipelines.
         </p>
 
         <dl className="mt-14 grid max-w-md grid-cols-2 gap-x-10 border-t border-rule pt-6 md:mt-20">

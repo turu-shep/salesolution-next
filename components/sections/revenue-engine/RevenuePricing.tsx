@@ -23,7 +23,7 @@ const MODEL = [
 ]
 
 const TERMS = [
-  '90-day system install',
+  '90-day install, one-time fee',
   '3-month minimum, month-to-month after',
   'Client-funded ad accounts, zero markup',
   'No annual lock-in',

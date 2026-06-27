@@ -144,7 +144,9 @@ export default function AboutPage() {
           <div className="md:col-span-5">
             <div className="relative mb-6 aspect-[4/5] w-full max-w-[320px] overflow-hidden rounded-lg ring-1 ring-white/10">
               <Image
-                src={business.founder.image}
+                // WebP at native res — ~33% lighter than the JPG. The JPG stays
+                // the Person.image source (business.founder.image) for schema.
+                src="/artur-shepel.webp"
                 alt={`${business.founder.name}, ${business.founder.role}`}
                 fill
                 sizes="(min-width: 768px) 320px, 100vw"

@@ -7,9 +7,9 @@ import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { getAllPosts, type PostCard } from '@/sanity/lib/posts'
 
 export const metadata: Metadata = {
-  title: 'AI Search & B2B SEO Blog — Industrial E-commerce',
+  title: 'AI Search & B2B Growth Blog',
   description:
-    'Insights, frameworks, and field reports on AI search, GEO, technical SEO, content, and conversion for industrial e-commerce.',
+    'Insights, frameworks, and field reports on AI search, GEO, technical SEO, content, and conversion — for industrial e-commerce and local-service businesses.',
   alternates: { canonical: 'https://salesolution.net/category/blog/' },
 }
 

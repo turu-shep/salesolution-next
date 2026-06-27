@@ -147,10 +147,10 @@ export default function DentistsRevenueEnginePage() {
         primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}
         founder={{
           name: 'Artur Shepel',
-          src: '/artur-shepel.jpg',
+          src: '/artur-shepel-480.webp',
           caption: 'I run every account myself.',
           specs: [
-            { label: 'Setup', value: '90 days, on me' },
+            { label: 'Setup', value: '90 days, one-time fee' },
             { label: 'Minimum', value: '3 months' },
             { label: 'Lock-in', value: 'none' },
           ],

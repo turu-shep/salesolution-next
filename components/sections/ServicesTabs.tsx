@@ -226,7 +226,7 @@ function CitationArtifact() {
           <li className="flex items-center justify-between">
             <span className="flex items-center gap-2 text-white">
               <span className="rounded-[2px] bg-service-editorial-500 px-1 text-[9px] text-white">[1]</span>
-              northernhydraulics.com
+              northernhydraulics.net
             </span>
             <span className="text-ink-400">87%</span>
           </li>

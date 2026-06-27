@@ -27,6 +27,9 @@ export function organizationSchema() {
     '@id': orgId,
     name: business.name,
     alternateName: ['Sales Solution', 'Sales Solutions'],
+    slogan: business.tagline,
+    description:
+      'Sale Solution builds AI-search authority for industrial e-commerce and runs the Revenue Engine, a done-for-you system that captures, books, and recovers revenue for local-service businesses.',
     url: business.url,
     logo: {
       '@type': 'ImageObject',

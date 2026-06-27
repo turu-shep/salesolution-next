@@ -86,7 +86,7 @@ export function Concept3Calculator({ data, conceptLabel, header }: { data: LeakD
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">
             {fmtUSD(monthly)} a month
           </p>
-          <p className="mt-2 font-display text-5xl font-semibold tabular-nums leading-none">
+          <p className="mt-2 font-display text-6xl font-semibold tabular-nums leading-none text-accent-500 sm:text-7xl">
             {fmtUSD(annual)}
           </p>
           <p className="mt-3 text-sm leading-relaxed text-white/70">{calc.resultLabel}</p>

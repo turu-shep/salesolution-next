@@ -11,6 +11,7 @@ import { MetaPixel } from '@/components/integrations/MetaPixel'
 import { OutboundLinkTracker } from '@/components/integrations/OutboundLinkTracker'
 import { PublicOnly } from '@/components/integrations/PublicOnly'
 import { RouteChangeTracker } from '@/components/integrations/RouteChangeTracker'
+import { business } from '@/lib/business'
 import './globals.css'
 
 // Geist — Vercel's open-source family. Sharper and more distinctive than the
@@ -39,8 +40,7 @@ export const metadata: Metadata = {
     default: 'Sale Solution',
     template: '%s · Sale Solution',
   },
-  description:
-    'AI-engineered search for industrial e-commerce. Hydraulics, MRO, and technical distribution.',
+  description: `${business.tagline} AI search for industrial e-commerce, and the Revenue Engine for local-service businesses.`,
   openGraph: {
     type: 'website',
     siteName: 'Sale Solution',
@@ -74,6 +74,10 @@ export default function RootLayout({
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-surface text-ink-700 font-sans"
       >
+        {/* Warm the Sanity image CDN — the LCP image on glossary / guide / blog
+            pages is served from cdn.sanity.io through the custom image loader. */}
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+
         {/* Dev-only service-worker eviction. A previous PWA app on localhost:3000
             can leave a service worker registered against this origin; it then
             serves that dead app's cached `/_next/static/chunks/*.js` (dev chunk

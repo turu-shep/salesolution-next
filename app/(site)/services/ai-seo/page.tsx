@@ -179,6 +179,7 @@ export default function AISEOServicePage() {
       <JsonLd
         data={serviceSchema({
           name: 'AI-Search & Generative-Engine Optimization',
+          slug: 'ai-seo',
           description:
             'GEO, technical SEO, content authority, channel diversification, and conversion data — delivered by one senior operator for considered-purchase businesses: industrial distribution, technical B2B, and local service brands.',
           category: 'Digital Marketing',

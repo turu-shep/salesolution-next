@@ -1,4 +1,8 @@
+import { isValidElement } from 'react'
+
 import { SectionRail } from '@/components/layout/SectionRail'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { faqPageSchema } from '@/lib/schema'
 
 /**
  * FAQ section — reusable across home, services, and any page that needs
@@ -6,9 +10,38 @@ import { SectionRail } from '@/components/layout/SectionRail'
  *
  * Default items are the homepage set. Pass `items` to override per page;
  * pass `eyebrow` / `headline` / `kicker` to customize the heading slab.
+ *
+ * Emits FAQPage JSON-LD so AI answer engines + rich results can quote the
+ * Q&A verbatim. Answers are authored as JSX for layout, so we flatten each
+ * one to plain text at render time — the schema is always derived from the
+ * exact visible answer, which keeps the two from drifting apart.
  */
 
 export type QA = { q: string; a: React.ReactNode }
+
+// Block-level tags get whitespace padding when flattened so adjacent
+// paragraphs / list items don't run together into one word.
+const BLOCK_TAGS = new Set([
+  'p', 'div', 'section', 'br', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+])
+
+/** Flatten a React node tree to plain text for the FAQPage answer field. */
+function nodeToText(node: React.ReactNode): string {
+  if (node == null || typeof node === 'boolean') return ''
+  if (typeof node === 'string') return node
+  if (typeof node === 'number') return String(node)
+  if (Array.isArray(node)) return node.map(nodeToText).join('')
+  if (isValidElement(node)) {
+    const { children } = (node.props ?? {}) as { children?: React.ReactNode }
+    const inner = nodeToText(children)
+    const tag = typeof node.type === 'string' ? node.type : ''
+    return BLOCK_TAGS.has(tag) ? ` ${inner} ` : inner
+  }
+  return ''
+}
+
+const faqAnswerText = (a: React.ReactNode): string =>
+  nodeToText(a).replace(/\s+/g, ' ').trim()
 
 export const HOMEPAGE_FAQ_ITEMS: QA[] = [
   {
@@ -115,15 +148,23 @@ export function FAQ({
   headline,
   kicker = 'Pulled from real strategy calls. No marketing softening.',
   id,
+  defaultOpenFirst = false,
 }: {
   items?: QA[]
   eyebrow?: string
   headline?: React.ReactNode
   kicker?: React.ReactNode
   id?: string
+  /** Open the first item by default — useful for a short FAQ so the band isn't empty. */
+  defaultOpenFirst?: boolean
 }) {
+  const faqEntries = items
+    .map((item) => ({ question: item.q, answer: faqAnswerText(item.a) }))
+    .filter((entry) => entry.answer.length > 0)
+
   return (
     <SectionRail tone="surface" id={id}>
+      {faqEntries.length > 0 && <JsonLd data={faqPageSchema(faqEntries)} />}
       <div className="grid gap-12 md:grid-cols-12 md:gap-16">
         <div className="md:col-span-4">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
@@ -142,7 +183,7 @@ export function FAQ({
         <ul className="md:col-span-8">
           {items.map((item, i) => (
             <li key={i} className="border-t border-rule last:border-b">
-              <details className="group">
+              <details className="group" open={defaultOpenFirst && i === 0}>
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 transition-colors duration-200 hover:text-ink-900">
                   <span className="flex items-baseline gap-4">
                     <span className="font-mono text-[10px] uppercase tracking-[0.18em] tabular-nums text-ink-400">
