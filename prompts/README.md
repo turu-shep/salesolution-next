@@ -47,6 +47,9 @@ So you run ONE research prompt, get back N concrete authoring prompts, and run t
 | `interlinking/path-and-glossary-cross-links.md` | Link paths ↔ services and paths ↔ glossary. |
 | **foundations/** | |
 | `foundations/llms-txt-and-ai-crawler-audit.md` | Extend `public/llms.txt` + audit AI-crawler access (dogfooding). |
+| **niches/** (money pages — Revenue Engine vertical landing pages; Linear project "SS Niches"; has its own `README.md`) | |
+| `niches/rework-existing-page.md` | M1: re-lead one of the 4 live vertical pages from its niche brief (SAL-432…435). |
+| `niches/split-the-bundle.md` | M2: stand up a dedicated page per trade/specialty + turn the parents into hubs (SAL-436…443). |
 | **revenue-seo/** (separate from the hub — money pages; tracked in Linear project "SS SEO") | |
 | `revenue-seo/geo-agency-service-page.md` | Target "geo agency" on the AI-SEO service page (SAL-404). |
 | `revenue-seo/connect-gsc-and-analytics.md` | Connect GSC + web analytics so the site is measurable (SAL-405). |
