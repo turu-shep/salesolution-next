@@ -5,6 +5,7 @@ import { FAQ, type QA } from '@/components/sections/FAQ'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { SixCylinders } from '@/components/sections/revenue-engine/SixCylinders'
 import { EngagementShapes } from '@/components/sections/services/EngagementShapes'
+import { EngineBase } from '@/components/sections/services/EngineBase'
 import { HowServicesCombine } from '@/components/sections/services/HowServicesCombine'
 import { PickAService } from '@/components/sections/services/PickAService'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
@@ -14,9 +15,9 @@ import { business } from '@/lib/business'
 import { breadcrumbListSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'Services · The cylinders that fire your growth engine',
+  title: 'Services · SEO, ads, content, and your site — run as one system',
   description:
-    'The capability library behind the growth engine, grouped by the job each part does: get found, win the sale, keep it running. Fire one cylinder or hand the whole loop to one operator.',
+    'AI search and GEO, local SEO, content, catalog, website development, paid ads, outbound — the full growth function, run as one system instead of six vendors. We install the engine, then add the cylinders that pay back.',
   alternates: { canonical: 'https://salesolution.net/services/' },
 }
 
@@ -135,29 +136,31 @@ export default function ServicesHubPage() {
       <CompositeBar weight="hero" />
 
       <ServicesHero
-        eyebrow="The capability library"
-        title="The parts that stop your leaks."
-        titleAccent="One engine."
+        eyebrow="What we do"
+        title="SEO, ads, content, your site."
+        titleAccent="One system, not six vendors."
         lede={
           <>
-            Every part of the growth engine, grouped by the job it does: get
-            found, win the sale, keep it running. Fire the one that fixes your
-            loudest leak, or hand the whole loop to one operator who reads the
-            numbers and re-aims it each month.
+            AI search and GEO, local SEO, content, your catalog, your website,
+            paid ads, outbound. The work most owners split across a stack of
+            separate vendors, run as one machine where the parts actually hand
+            off to each other.
           </>
         }
-        primaryCta={{ label: 'Book a strategy call', href: '/book-growth-call/' }}
-        secondaryCta={{ label: 'See the cylinders', href: '#cylinders' }}
+        primaryCta={{ label: 'Book a Growth Call', href: '/book-growth-call/' }}
+        secondaryCta={{ label: 'See how it works', href: '#engine' }}
         anchors={[
-          { label: 'How it works as one machine', href: '#combinations' },
-          { label: 'The cylinders', href: '#cylinders' },
-          { label: 'Where to start', href: '#pick' },
+          { label: 'Why one system', href: '#combinations' },
+          { label: 'The engine', href: '#engine' },
+          { label: 'The parts', href: '#cylinders' },
           { label: 'Pricing', href: '#engagement' },
           { label: 'FAQ', href: '#faq' },
         ]}
       />
 
       <HowServicesCombine id="combinations" />
+
+      <EngineBase id="engine" />
 
       <SixCylinders id="cylinders" />
 
