@@ -2,210 +2,284 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { FAQ, type QA } from '@/components/sections/FAQ'
-import { AuditCTA } from '@/components/sections/revenue-engine/AuditCTA'
-import { Guarantee } from '@/components/sections/revenue-engine/Guarantee'
+import { FinalCTARail } from '@/components/sections/FinalCTARail'
+import { FounderNote } from '@/components/sections/revenue-engine/FounderNote'
+import { IterationLoop } from '@/components/sections/revenue-engine/IterationLoop'
 import { PlanByPillar } from '@/components/sections/revenue-engine/PlanByPillar'
+import { ProductWedge } from '@/components/sections/revenue-engine/ProductWedge'
 import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
-import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
-import { TheLeak } from '@/components/sections/revenue-engine/TheLeak'
+import { SixCylinders } from '@/components/sections/revenue-engine/SixCylinders'
 import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
-import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { serviceSchema } from '@/lib/schema'
+import { business } from '@/lib/business'
+import { PRODUCT_PILLAR_GROUPS, PRODUCT_PILLAR_PROVE } from '@/lib/revenue-engine'
+import { breadcrumbListSchema, itemListSchema, serviceSchema } from '@/lib/schema'
 
+// The cross-vertical PRODUCT page: "what the Revenue Engine is + how it works."
+// Parent of the niche pages (Dentists, Home services). The one page where the
+// concept leads as the H1 — title/eyebrow/H1 carry no industry modifier.
 export const metadata: Metadata = {
-  title: 'Revenue Engine · Convert demand into booked revenue',
+  title: 'How the Revenue Engine works',
   description:
-    'A done-for-you system for local service businesses — roofers and dental practices. It answers every call, replies in seconds, books the job, and chases the quotes that go cold, then shows you which revenue it drove. Book a free Revenue Leak Audit.',
+    'The Revenue Engine is one system that runs your whole sale: it brings the right buyers in, answers and books the ones who reach you, wins back the ones who went quiet, and proves the revenue in your own numbers. See the five steps and the six services that fire them.',
   alternates: { canonical: 'https://salesolution.net/revenue-engine/' },
 }
 
 const REVENUE_ENGINE_FAQ: QA[] = [
   {
-    q: 'Do you guarantee a number of leads?',
+    q: 'What is a Revenue Engine?',
     a: (
-      <>
-        <p>
-          No. I guarantee revenue the system can prove against my fee &mdash;
-          not lead counts. Volume promises are how lead vendors sell you
-          shared, unworked contacts. You see the revenue in your own
-          dashboard.
-        </p>
-      </>
+      <p>
+        It&rsquo;s one connected system that runs the whole sale: getting found,
+        answering and booking the people who reach you, winning back the ones who
+        went quiet, and proving the revenue in your own numbers. Not a single
+        tool. The job it does is close the gaps between the tools you already pay
+        for.
+      </p>
     ),
   },
   {
-    q: 'Is this just reselling me the same leads three other contractors got?',
+    q: 'How is this different from buying point tools?',
     a: (
-      <>
-        <p>
-          No. The engine works the demand you already create and the contacts
-          already in your phone and CRM &mdash; your calls, your forms, your
-          customers. No shared pool. Every call is recorded and logged to you.
-        </p>
-      </>
+      <p>
+        A website, a CRM, an ad account, a reviews app. Each one proves its own
+        slice fired. None of them owns whether you made money. The engine runs
+        them as one flow and reports on one thing: revenue you can trace back to
+        it.
+      </p>
     ),
   },
   {
-    q: 'Is my patient data safe to run through this?',
+    q: 'Do I have to take all six cylinders?',
     a: (
-      <>
-        <p>
-          Yes. Every tool that touches patient records runs under a signed
-          compliance agreement &mdash; call tracking, texts, and CRM. The full
-          detail is on the{' '}
-          <Link
-            href="/revenue-engine/dentists/"
-            className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600"
-          >
-            dental page
-          </Link>
-          .
-        </p>
-      </>
+      <p>
+        No. We start with the leak that&rsquo;s costing you the most and add
+        cylinders as they pay for themselves. Most owners don&rsquo;t need all
+        six on day one.
+      </p>
+    ),
+  },
+  {
+    q: 'How do you prove the revenue?',
+    a: (
+      <p>
+        Two lines on a monthly report: what your ads produced, and what the
+        system brought back. The second line is counted in your own dashboard,
+        not estimated on a spreadsheet. If it doesn&rsquo;t cover what you pay
+        us, you&rsquo;ll see that too.
+      </p>
     ),
   },
 ]
-
-// Generic, vertical-agnostic plan content for the pillar (PlanByPillar defaults to
-// roofing). The 5 steps grouped under Bring / Convert / Retain.
-const PILLAR_GROUPS = [
-  {
-    pillar: 'Bring',
-    outcome: 'Get found when they’re looking',
-    steps: [
-      {
-        key: 'Capture',
-        what: 'Show up on Google, Maps, and your own pages when someone nearby searches your trade — with an easy way to reach you. New demand, brought to your door.',
-        metric: 'More of the right searches turn into calls',
-      },
-    ],
-  },
-  {
-    pillar: 'Convert',
-    outcome: 'Win the ones who reach you',
-    steps: [
-      {
-        key: 'Respond',
-        what: 'Every call answered, 24/7 — even when you’re with a customer. Missed calls get an instant text back, every form a reply in under a minute, and a caller can always reach a human.',
-        metric: 'No job lost to a missed call or a slow reply',
-      },
-      {
-        key: 'Book',
-        what: 'Jobs and appointments qualified and booked straight to your calendar, with reminders so they show. Every call recorded and sorted, so nothing slips.',
-        metric: 'More of the leads you have turn into booked work',
-      },
-    ],
-  },
-  {
-    pillar: 'Retain',
-    outcome: 'Bring them back',
-    steps: [
-      {
-        key: 'Recover',
-        what: 'The quotes and plans that went cold get chased automatically, past customers get a reason to come back, and a steady stream of reviews lifts you in local search.',
-        metric: 'Revenue won back from work you already earned',
-      },
-    ],
-  },
-]
-
-const PILLAR_PROVE = {
-  key: 'Prove',
-  what: 'A dispute-proof log of every call, and a monthly dashboard showing what the system brought in — on its own line, separate from your ads.',
-  metric: 'What the system earned, against the fee',
-}
 
 export default function RevenueEnginePage() {
   return (
     <>
       <JsonLd
         data={serviceSchema({
-          name: 'Revenue Engine',
+          name: 'The Revenue Engine',
           // This page lives at /revenue-engine/, not /services/revenue-engine/,
           // so pass the real URL to keep @id/url aligned with the canonical above.
           url: 'https://salesolution.net/revenue-engine/',
           description:
-            'A done-for-you AI revenue system for local service businesses (home-services contractors and dental practices). It answers every call, replies in seconds, books the job, and chases the quotes that go cold — then proves the revenue it earned against the fee.',
+            'A done-for-you system that runs the whole sale for a local business: it brings the right buyers in, answers and books the ones who reach you, wins back the ones who went quiet, and proves the revenue in the owner’s own numbers. Five steps (Capture, Respond, Book, Recover, Prove), fired by six services.',
           category: 'Marketing',
+        })}
+      />
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: `${business.url}/` },
+          { name: 'The Revenue Engine', url: `${business.url}/revenue-engine/` },
+        ])}
+      />
+      <JsonLd
+        data={itemListSchema({
+          name: 'The Revenue Engine — by industry',
+          url: `${business.url}/revenue-engine/`,
+          // Live canonicals only. Home-services + dentists are built; the
+          // /industries/{...} pillar dirs are not, so they stay off this list
+          // until Phase 5 to avoid structured data pointing at 404s.
+          items: [
+            {
+              name: 'Revenue Engine for Home Services',
+              url: `${business.url}/revenue-engine/home-services/`,
+            },
+            {
+              name: 'Revenue Engine for Dental Practices',
+              url: `${business.url}/revenue-engine/dentists/`,
+            },
+          ],
         })}
       />
 
       <div className="h-1.5 w-full bg-brand-600" aria-hidden />
 
-      {/* 1 — HOOK + self-qualifier (reserved VSL slot until video is recorded) */}
+      {/* 1 — HERO: the one page where the concept leads the H1, kept concrete */}
       <RevenueHero
-        eyebrow={'For roofers, dentists & local shops'}
-        title="Get found. Win the sale. Keep them coming back."
+        eyebrow="The Revenue Engine"
+        title="One system that runs your whole sale,"
+        titleAccent="from getting found to getting paid again."
         lede={
           <>
-            The phone rings while you&rsquo;re on a roof or with a patient, and
-            it goes to voicemail. You pay for leads nobody calls back. You send
-            the quote and never hear back. At month&rsquo;s end you can&rsquo;t
-            say what your marketing actually did.
+            The Revenue Engine is one system that runs the whole sale: it gets you
+            found where buyers look, answers and books the ones who reach you,
+            wins back the ones who went quiet, and shows the revenue it drove in
+            your own numbers. One operator builds it and runs it.
           </>
         }
-        primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}
-        founder={{
-          name: 'Artur Shepel',
-          src: '/artur-shepel-480.webp',
-          caption: 'I run every account myself.',
-          specs: [
-            { label: 'Setup', value: '90 days, one-time fee' },
-            { label: 'Minimum', value: '3 months' },
-            { label: 'Lock-in', value: 'none' },
-          ],
+        primaryCta={{
+          label: 'Book a Revenue Leak Audit',
+          href: '/revenue-engine/home-services/#audit',
         }}
+        primaryCtaTag="revenue_leak_audit__re_product_router"
         selfQualifiers={[
-          { label: 'I run a clinic or practice', href: '/revenue-engine/medical/' },
-          { label: "I'm a contractor", href: '/revenue-engine/home-services/' },
-          { label: 'I run a shop or brand', href: '/revenue-engine/local-retail/' },
+          { label: 'I run a dental practice', href: '/revenue-engine/dentists/' },
+          { label: 'See all industries', href: '/industries/' },
         ]}
         anchors={[
-          { label: 'The leak', href: '#leak' },
-          { label: 'The plan', href: '#how' },
+          { label: 'The wedge', href: '#wedge' },
+          { label: 'How it works', href: '#how' },
+          { label: 'Six cylinders', href: '#cylinders' },
           { label: 'Proof', href: '#prove' },
-          { label: 'Pricing', href: '#pricing' },
-          { label: 'FAQ', href: '#faq' },
+          { label: 'Pick your industry', href: '#pick' },
         ]}
       />
 
-      {/* 2 — THE LEAK (the villain; make them feel the bleed first) */}
-      <TheLeak id="leak" />
+      {/* 2 — THE WEDGE: collapsed FlowBlock, banner form (not the full track) */}
+      <ProductWedge id="wedge" />
 
-      {/* 3 — THE FIX: "you've been sold pieces / I run the whole flow" (the mechanism) */}
-      <div id="flow">
-        <FlowBlock />
-      </div>
+      {/* 3 — HOW IT WORKS: the 5-step spine, vertical-agnostic prose. This is the
+          depth the homepage triptych omits (3 strokes there, 5 steps here). */}
+      <PlanByPillar
+        id="how"
+        groups={PRODUCT_PILLAR_GROUPS}
+        prove={PRODUCT_PILLAR_PROVE}
+        intro="Three jobs, five moving parts. We install the whole thing and run it as one system, not five tools you have to wire together yourself."
+        proveLine="We prove it paid."
+      />
 
-      {/* 4 — THE PLAN: the five steps grouped under Bring / Convert / Retain */}
-      <PlanByPillar id="how" groups={PILLAR_GROUPS} prove={PILLAR_PROVE} />
+      {/* 4 — SIX CYLINDERS: the six services grouped Bring/Convert/Retain,
+          each deep-linked to its /services/{slug}/ page */}
+      <SixCylinders id="cylinders" />
 
-      {/* 5 — HOW I REPORT IT (the method, dark) — closer hands into the guarantee */}
-      <TwoRevenueLines id="prove" />
+      {/* 5 — ITERATION LOOP: the methodology beat the homepage lacks */}
+      <IterationLoop />
 
-      {/* 6 — GUARANTEE (dark, abutted — reads as one conviction field with the report) */}
-      <Guarantee id="guarantee" abut />
-
-      {/* 7 — OFFER (the price, now that the risk is reversed) */}
-      <RevenuePricing id="pricing" />
-
-      {/* 7 — SLIM FAQ (the heavy objections already died in-story) */}
-      <FAQ
-        id="faq"
-        eyebrow="A few last questions"
+      {/* 6 — PROVE: two-revenue-lines mechanic, motion-neutral firm "we" */}
+      <TwoRevenueLines
+        id="prove"
+        eyebrow="How we report it"
         headline={
           <>
-            The rest{' '}
-            <span className="text-ink-500">I answered in the story above.</span>
+            Two lines on every report.{' '}
+            <span className="text-ink-300">The second is the revenue the system brought back.</span>
           </>
         }
-        kicker="Lead-volume promises, shared leads, patient privacy. Straight answers."
+        lede="Each cycle we split what your ads produced from what the system brought back, so you can see exactly what the engine earned on its own."
+        closer={
+          <>
+            The system line is calls won back, quotes chased, past customers
+            returning, and people who found you from new reviews. Counted in your
+            own dashboard, not estimated on a spreadsheet.
+          </>
+        }
+      />
+
+      {/* 7 — OPERATOR CREDIBILITY: you work with the operator (no guarantee, no price) */}
+      <FounderNote />
+
+      {/* 8 — FAQ: product / methodology questions (auto-emits FAQPage schema) */}
+      <FAQ
+        id="faq"
+        eyebrow="Before you pick"
+        headline={
+          <>
+            How the engine works,{' '}
+            in plain terms.
+          </>
+        }
+        kicker="What a Revenue Engine is, how it beats point tools, whether you need all six, and how we prove the revenue."
         items={REVENUE_ENGINE_FAQ}
       />
 
-      {/* 8 — FREE-AUDIT CLOSE (one confident step, no re-fork) */}
-      <AuditCTA id="audit" />
+      {/* 9 — DOWN-ROUTER to live niche canonicals, then the dual-door close */}
+      <NicheRouter id="pick" />
+      <FinalCTARail />
     </>
+  )
+}
+
+const NICHES = [
+  {
+    href: '/revenue-engine/home-services/',
+    kicker: 'Roofing · HVAC · plumbing · electrical',
+    title: 'Home services',
+    body: 'Answer every storm-season call, book the estimate, and chase the quote that went cold.',
+  },
+  {
+    href: '/revenue-engine/dentists/',
+    kicker: 'Group & single-location practices',
+    title: 'Dental practices',
+    body: 'Catch the calls your front desk can’t during chair time, book new patients, and follow up on treatment plans and recall.',
+  },
+]
+
+function NicheRouter({ id }: { id?: string }) {
+  return (
+    <section data-section-tone="light" id={id} className="relative scroll-mt-20 bg-paper py-24 md:py-32">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl">
+          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+            Pick your industry
+          </p>
+          <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
+            See the engine{' '}
+            built for your trade.
+          </h2>
+          <p className="mt-6 text-lg leading-relaxed text-ink-700">
+            Same engine, tuned to how you work. Each page has your pricing, your
+            proof, and the leaks specific to your trade.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
+          {NICHES.map((n) => (
+            <Link
+              key={n.href}
+              href={n.href}
+              data-cta="niche__re_product_router"
+              className="group flex flex-col overflow-hidden rounded-[4px] border border-rule-strong bg-surface transition-colors duration-200 hover:border-ink-900"
+            >
+              <div aria-hidden className="h-1 bg-brand-600" />
+              <div className="flex flex-1 flex-col p-7">
+                <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-brand-600">
+                  {n.kicker}
+                </span>
+                <span className="mt-3 font-display text-2xl font-semibold tracking-[-0.015em] text-ink-900">
+                  {n.title}
+                </span>
+                <span className="mt-3 flex-1 text-ink-700">{n.body}</span>
+                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[5px] transition-colors duration-200 group-hover:text-brand-600 group-hover:decoration-brand-600">
+                  See the {n.title.toLowerCase()} engine
+                  <span aria-hidden>→</span>
+                </span>
+              </div>
+            </Link>
+          ))}
+          <Link
+            href="/industries/"
+            data-cta="industries__re_product_router"
+            className="group flex flex-col justify-center rounded-[4px] border border-dashed border-rule-strong bg-paper p-7 transition-colors duration-200 hover:border-ink-900 sm:col-span-2"
+          >
+            <span className="inline-flex items-center gap-1.5 font-display text-lg font-semibold text-ink-900">
+              Sell a product, not a service? See all industries
+              <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5">
+                →
+              </span>
+            </span>
+          </Link>
+        </div>
+      </div>
+    </section>
   )
 }

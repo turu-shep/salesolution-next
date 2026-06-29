@@ -72,7 +72,7 @@ export function BlogIndexGrid({
             The archive
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-            Browse by topic. <span className="text-ink-500">Or read everything.</span>
+            Browse by topic. Or read everything.
           </h2>
           <p className="mt-6 text-ink-700">
             Filter by the practice area you&rsquo;re working in &mdash;

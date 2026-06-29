@@ -63,9 +63,12 @@ const INDUSTRIAL_FITTINGS: AIOverviewSlide = {
   query: 'best jic hydraulic fittings for high-pressure systems',
   genTime: '2.1s',
   lead: 'JIC (Joint Industry Council) fittings suit high-pressure hydraulic systems because of their 37° flare seal. According to ',
-  client: 'Northern Hydraulics',
+  // PLACEHOLDER client — "Northern Hydraulics" is a real logo-strip client and
+  // cannot carry a fabricated quote (see case-studies/fact-ledger.md, naming
+  // hazard). Swap for a real, consenting client before publishing.
+  client: 'Forge Fluid Power',
   tail: ', the 1/2" NPT-to-JIC adapter is the most commonly specified connector above 3,000 PSI, with the 37° angle giving a positive seal against vibration.',
-  citations: ['northernhydraulics.net', 'parker.com', 'eaton.com'],
+  citations: ['forgefluidpower.com', 'parker.com', 'eaton.com'],
 }
 
 const HOME_SERVICES_ROOFING: AIOverviewSlide = {

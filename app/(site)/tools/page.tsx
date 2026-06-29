@@ -41,7 +41,7 @@ export default function ToolsIndexPage() {
           </p>
           <h1 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
             AI-search tools,{' '}
-            <span className="text-ink-500">free and in your browser.</span>
+            free and in your browser.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
             No sign-up, nothing saved. Calculators and scorecards for getting an industrial catalog

@@ -76,7 +76,7 @@ export function CatalogSnapshotDeliverables({ id }: { id?: string }) {
           What you get
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-          8–12 page PDF. <span className="text-ink-400">Two business days.</span>
+          8–12 page PDF. Two business days.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
           Most &ldquo;free catalog audits&rdquo; are automated scans

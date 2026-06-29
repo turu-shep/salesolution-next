@@ -3,51 +3,53 @@ import Link from 'next/link'
 
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
+import { SixCylinders } from '@/components/sections/revenue-engine/SixCylinders'
 import { EngagementShapes } from '@/components/sections/services/EngagementShapes'
 import { HowServicesCombine } from '@/components/sections/services/HowServicesCombine'
 import { PickAService } from '@/components/sections/services/PickAService'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
-import { ServicesIndex } from '@/components/sections/services/ServicesIndex'
 import { CompositeBar } from '@/components/services/CompositeBar'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { business } from '@/lib/business'
 import { breadcrumbListSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'Services · Six services. One operator.',
+  title: 'Services · The cylinders that fire your growth engine',
   description:
-    'Six services for industrial and technical e-commerce: AI Search & GEO, Catalog AI, Editorial Authority, Website Development, Outbound Email, and Full Growth Ownership. Run standalone or coordinated by one operator.',
+    'The capability library behind the growth engine, grouped by the job each part does: get found, win the sale, keep it running. Fire one cylinder or hand the whole loop to one operator.',
   alternates: { canonical: 'https://salesolution.net/services/' },
 }
 
 const HUB_FAQ: QA[] = [
   {
-    q: 'Can I engage you for one service or do I have to take the whole stack?',
+    q: 'Can I fire one cylinder, or do I have to run the whole engine?',
     a: (
       <>
         <p>
-          Each of the six services runs as a standalone engagement. We&rsquo;ll
-          tell you on the first call whether one service moves the needle for
-          your situation or whether you&rsquo;d need two or three to see real impact.
+          Every cylinder runs as a standalone engagement. On the first call
+          we&rsquo;ll tell you whether one part moves the needle for your
+          situation, or whether two or three need to run together before you
+          see real impact.
         </p>
         <p className="mt-3">
-          For most industrial / technical-distribution clients, the sequence
-          that works is: AI search foundation first, then content (Editorial
-          Authority and/or Catalog AI), then channels (outbound). Dev is
-          usually a separate project tied to a replatform or new build.
+          For most industrial and technical-distribution clients the order that
+          works is AI search first, then content (Editorial Authority and
+          Catalog AI), then outbound. A new build is usually its own project,
+          tied to a replatform.
         </p>
       </>
     ),
   },
   {
-    q: 'How do I pick the right starting service?',
+    q: 'How do I know where to start?',
     a: (
       <>
         <p>
-          See the &ldquo;Which service do I need?&rdquo; section above &mdash;
-          six honest entry points. If none clearly fit, the free strategy
-          call exists for that. Paste your top 5 category URLs and we&rsquo;ll
-          walk through which constraint is actually capping growth right now.
+          See the &ldquo;Where does your system start?&rdquo; section above.
+          Each row points to the cylinder that fixes that specific leak. If
+          none of them obviously fit, that&rsquo;s what the free strategy call
+          is for. Paste your top 5 category URLs and we&rsquo;ll walk through
+          which constraint is actually capping growth right now.
         </p>
       </>
     ),
@@ -133,46 +135,45 @@ export default function ServicesHubPage() {
       <CompositeBar weight="hero" />
 
       <ServicesHero
-        eyebrow="Services"
-        title="Six services."
-        titleAccent="One coordinated system."
+        eyebrow="The capability library"
+        title="The parts that stop your leaks."
+        titleAccent="One engine."
         lede={
           <>
-            Each service runs standalone or combined under one operator. AI
-            search is the gravity well &mdash; most clients start there, then
-            layer the rest. Catalog AI handles product-level work at scale.
-            Editorial Authority builds the citation layer above. Outbound and
-            dev round out the growth motion.
+            Every part of the growth engine, grouped by the job it does: get
+            found, win the sale, keep it running. Fire the one that fixes your
+            loudest leak, or hand the whole loop to one operator who reads the
+            numbers and re-aims it each month.
           </>
         }
         primaryCta={{ label: 'Book a strategy call', href: '/book-growth-call/' }}
-        secondaryCta={{ label: 'See engagement options', href: '#engagement' }}
+        secondaryCta={{ label: 'See the cylinders', href: '#cylinders' }}
         anchors={[
-          { label: 'All services', href: '#services' },
-          { label: 'Engagement', href: '#engagement' },
-          { label: 'How to pick', href: '#pick' },
-          { label: 'How they combine', href: '#combinations' },
+          { label: 'How it works as one machine', href: '#combinations' },
+          { label: 'The cylinders', href: '#cylinders' },
+          { label: 'Where to start', href: '#pick' },
+          { label: 'Pricing', href: '#engagement' },
           { label: 'FAQ', href: '#faq' },
         ]}
       />
 
-      <ServicesIndex id="services" />
+      <HowServicesCombine id="combinations" />
 
-      <EngagementShapes id="engagement" />
+      <SixCylinders id="cylinders" />
 
       <PickAService id="pick" />
 
-      <HowServicesCombine id="combinations" />
+      <EngagementShapes id="engagement" />
 
       <FAQ
         id="faq"
-        eyebrow="Choosing between services"
+        eyebrow="Before you book"
         headline={
           <>
-            How to <span className="text-ink-500">pick what you need.</span>
+            How the engine fits together.
           </>
         }
-        kicker="Multi-service questions. Bundling. Replacing existing vendors."
+        kicker="Firing one cylinder vs running the whole loop. Where to start. Replacing the agencies you have now."
         items={HUB_FAQ}
       />
 

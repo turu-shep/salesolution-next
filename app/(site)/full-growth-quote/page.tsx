@@ -43,7 +43,7 @@ export default function FullGrowthQuotePage() {
               Full Growth Ownership &middot; qualifier
             </p>
             <h1 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl md:text-6xl">
-              Three questions. <span className="text-ink-400">One personal reply.</span>
+              Three questions. One personal reply.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-300">
               The qualifier takes about 3 minutes. We use it to figure out

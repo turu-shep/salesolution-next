@@ -227,7 +227,7 @@ export default function AISEOServicePage() {
           </p>
           <h2 className="mt-3 font-display text-3xl font-semibold tracking-[-0.015em] text-ink-900 text-balance sm:text-4xl">
             A GEO agency that&rsquo;s{' '}
-            <span className="text-ink-500">one senior operator.</span>
+            one senior operator.
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-ink-700 text-pretty">
             Shopping for a GEO agency to get your catalog cited inside ChatGPT,
@@ -288,7 +288,7 @@ export default function AISEOServicePage() {
           </p>
           <h2 className="mt-3 font-display text-2xl font-semibold tracking-[-0.015em] text-ink-900 sm:text-3xl">
             The vocabulary,{' '}
-            <span className="text-ink-500">and the roles behind it.</span>
+            and the roles behind it.
           </h2>
           <p className="mt-4 max-w-2xl text-ink-700 text-pretty">
             Free, ungated reference for the work above &mdash; the definitions AI
@@ -367,7 +367,7 @@ export default function AISEOServicePage() {
       <FAQ
         id="faq"
         eyebrow="Services FAQ"
-        headline={<>Questions <span className="text-ink-500">on the work itself.</span></>}
+        headline={<>Questions on the work itself.</>}
         kicker="Engagement specifics. Stack questions. The honest sizing thresholds."
         items={SERVICES_FAQ}
       />

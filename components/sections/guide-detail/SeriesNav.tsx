@@ -95,9 +95,7 @@ export function SeriesNav({
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
           The full series.{' '}
-          <span className="text-ink-400">
-            {ordered.length} of {totalParts} published.
-          </span>
+          {ordered.length} of {totalParts} published.
         </h2>
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-300">
           A multi-part reference — each entry stands alone, but the order

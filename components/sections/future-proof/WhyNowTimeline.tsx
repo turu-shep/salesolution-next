@@ -52,7 +52,7 @@ export function WhyNowTimeline() {
           Why now &middot; The roadmap
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          The window <span className="text-ink-500">closes in 18 months.</span>
+          The window closes in 18 months.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           AI search is on a one-way ramp. The shifts that hit organic

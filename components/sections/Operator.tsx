@@ -30,7 +30,7 @@ export function Operator() {
             Who&rsquo;s doing the work
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-            One operator. <span className="text-ink-400">No agency layer.</span>
+            One operator. No agency layer.
           </h2>
 
           <div className="mt-8 max-w-xl space-y-5 text-ink-300">
@@ -48,6 +48,30 @@ export function Operator() {
               to you next quarter.&rdquo; You work with the person whose
               name is on the proposal.
             </p>
+          </div>
+
+          <div className="mt-10 border-t border-white/10 pt-8">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
+              How we work
+            </p>
+            <ul className="mt-4 grid gap-2.5 text-sm text-ink-200 sm:grid-cols-2">
+              <li className="flex items-baseline gap-2">
+                <span aria-hidden className="shrink-0 text-accent-500">·</span>
+                <span><span className="font-medium text-white">No markup</span> on your ad spend.</span>
+              </li>
+              <li className="flex items-baseline gap-2">
+                <span aria-hidden className="shrink-0 text-accent-500">·</span>
+                <span><span className="font-medium text-white">You own</span> your code, data, and customer list.</span>
+              </li>
+              <li className="flex items-baseline gap-2">
+                <span aria-hidden className="shrink-0 text-accent-500">·</span>
+                <span><span className="font-medium text-white">No lock-in.</span> Leave anytime, keep everything.</span>
+              </li>
+              <li className="flex items-baseline gap-2">
+                <span aria-hidden className="shrink-0 text-accent-500">·</span>
+                <span><span className="font-medium text-white">Published prices.</span> You see them before we talk.</span>
+              </li>
+            </ul>
           </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">

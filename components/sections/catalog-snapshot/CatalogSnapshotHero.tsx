@@ -19,7 +19,7 @@ export function CatalogSnapshotHero() {
 
             <h1 className="mt-4 font-display text-5xl font-semibold leading-[1] tracking-[-0.03em] text-ink-900 sm:text-6xl md:text-[5.25rem]">
               <span className="block">Five of your products,</span>
-              <span className="block text-ink-500">rewritten both ways.</span>
+              <span className="block">rewritten both ways.</span>
             </h1>
 
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-ink-700 md:text-xl">

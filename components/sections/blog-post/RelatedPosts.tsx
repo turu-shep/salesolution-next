@@ -24,7 +24,7 @@ export function RelatedPosts({ posts }: { posts: PostCard[] }) {
           </p>
           <h2 className="mt-3 font-display text-balance text-3xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-4xl md:text-5xl">
             Related field notes.{' '}
-            <span className="text-ink-500">From the same desk.</span>
+            From the same desk.
           </h2>
           <p className="mt-6 max-w-md text-ink-700">
             Three pieces from the archive that pair with what you just read

@@ -5,11 +5,11 @@ import { ServiceColorDot } from '@/components/services/ServiceColorDot'
 import { SERVICES, type ServiceKey } from '@/components/services/service-colors'
 
 /**
- * "Which service do I need?" decision tree.
+ * "Where does your system start?" entry-point list.
  *
- * Six honest entry points framed as "If you..." prompts. Each row routes
- * to a service-detail page with a colored dot on either side so the eye
- * can thread from the situation to the recommended service.
+ * One way into the same machine, framed as "If you..." prompts. Each row
+ * routes to a built cylinder page with a colored dot on either side so the
+ * eye can thread from the situation to the cylinder that fires first.
  */
 
 type Row = {
@@ -68,14 +68,15 @@ export function PickAService({ id }: { id?: string }) {
     <SectionRail tone="surface" id={id}>
       <div className="max-w-3xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-          Decision tree
+          One machine, one way in
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Which service do I need?
+          Where does your system start?
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          Six honest entry points. Each routes to the page that fits your
-          situation.
+          You don&rsquo;t pick one service and stop. You pick the part that fixes
+          the loudest leak first, then add the rest as it earns the next step.
+          Find your situation below.
         </p>
       </div>
 
@@ -95,7 +96,7 @@ export function PickAService({ id }: { id?: string }) {
                   If you&hellip; {row.situation}
                 </p>
                 <p className="font-display text-base font-semibold text-ink-900 sm:text-lg">
-                  Start with:{' '}
+                  Fire first:{' '}
                   <span className="underline decoration-rule-strong underline-offset-[5px] transition-colors duration-200 group-hover:text-brand-600 group-hover:decoration-brand-600">
                     {row.serviceName}
                   </span>

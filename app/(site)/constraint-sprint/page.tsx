@@ -157,7 +157,7 @@ export default function ConstraintSprintPage() {
         eyebrow="Constraint Sprint FAQ"
         headline={
           <>
-            Sprint questions <span className="text-ink-500">answered straight.</span>
+            Sprint questions answered straight.
           </>
         }
         kicker="The terms, the deliverables, the refund — the things buyers actually ask before they apply."

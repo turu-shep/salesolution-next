@@ -147,7 +147,7 @@ export default function SpinePreviewPage() {
         eyebrow="A few last questions"
         headline={
           <>
-            Questions <span className="text-ink-500">before the audit.</span>
+            Questions before the audit.
           </>
         }
         kicker="New website, lead exclusivity, time to start. Straight answers."

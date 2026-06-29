@@ -30,9 +30,9 @@ type Vals = {
   rrate: number
 }
 
-type Preset = { key: string; label: string } & Vals
+export type Preset = { key: string; label: string } & Vals
 
-const PRESETS: Preset[] = [
+const DEFAULT_PRESETS: Preset[] = [
   { key: 'roofing', label: 'Roofing', avg: 4500, bvol: 180, brate: 25, cvol: 5, crate: 24, rvol: 300, rrate: 8 },
   { key: 'hvac', label: 'HVAC', avg: 1200, bvol: 300, brate: 25, cvol: 8, crate: 30, rvol: 500, rrate: 14 },
   { key: 'plumbing', label: 'Plumbing', avg: 450, bvol: 500, brate: 25, cvol: 15, crate: 35, rvol: 700, rrate: 20 },
@@ -49,7 +49,8 @@ const PILLARS = [
 ] as const
 
 type SliderMeta = { key: keyof Vals; label: string; min: number; max: number; step: number; fmt: 'n' | 'pct' | 'usd' }
-const FIELDS: Record<'bring' | 'convert' | 'retain', SliderMeta[]> = {
+export type FieldSet = Record<'bring' | 'convert' | 'retain', SliderMeta[]>
+const DEFAULT_FIELDS: FieldSet = {
   bring: [
     { key: 'bvol', label: 'Searches a month nearby', min: 0, max: 2000, step: 10, fmt: 'n' },
     { key: 'brate', label: 'Find you today', min: 0, max: 100, step: 1, fmt: 'pct' },
@@ -62,6 +63,15 @@ const FIELDS: Record<'bring' | 'convert' | 'retain', SliderMeta[]> = {
     { key: 'rvol', label: 'Past customers in your list', min: 0, max: 4000, step: 25, fmt: 'n' },
     { key: 'rrate', label: 'Return or refer in a year', min: 0, max: 50, step: 1, fmt: 'pct' },
   ],
+}
+
+export type LeakHeading = { eyebrow: string; titleA: string; titleB: string; intro: string }
+const DEFAULT_HEADING: LeakHeading = {
+  eyebrow: 'What the whole leak costs you',
+  titleA: 'It’s not just the calls you miss.',
+  titleB: 'You leak in three places.',
+  intro:
+    'Pick your trade, slide in your own numbers, and watch the whole thing add up — then see what the engine puts back.',
 }
 
 function usd(n: number) {
@@ -96,13 +106,31 @@ function useAnimatedNumber(target: number) {
   return val
 }
 
-export function WholeFlowLeak({ id }: { id?: string }) {
-  const [trade, setTrade] = useState(PRESETS[0].key)
-  const [v, setV] = useState<Vals>(stripKey(PRESETS[0]))
+export function WholeFlowLeak({
+  id,
+  presets = DEFAULT_PRESETS,
+  fields = DEFAULT_FIELDS,
+  avgLabel = 'Your average job',
+  unitLabel = 'job',
+  heading = DEFAULT_HEADING,
+}: {
+  id?: string
+  /** Trade/vertical presets. Each snaps every slider to that segment's reality. */
+  presets?: Preset[]
+  /** Per-pillar slider labels (so a vertical can speak its own language). */
+  fields?: FieldSet
+  /** Label for the shared per-unit value slider (e.g. "Your average case"). */
+  avgLabel?: string
+  /** Singular noun for one won unit of work — "job" (home services), "case" (dental). */
+  unitLabel?: string
+  heading?: LeakHeading
+}) {
+  const [trade, setTrade] = useState(presets[0].key)
+  const [v, setV] = useState<Vals>(stripKey(presets[0]))
   const [feeMo, setFeeMo] = useState(2500)
 
   function selectTrade(key: string) {
-    const p = PRESETS.find((x) => x.key === key) ?? PRESETS[0]
+    const p = presets.find((x) => x.key === key) ?? presets[0]
     setTrade(key)
     setV(stripKey(p))
   }
@@ -127,16 +155,12 @@ export function WholeFlowLeak({ id }: { id?: string }) {
     <SectionRail tone="surface" id={id}>
       <div className="max-w-3xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-          What the whole leak costs you
+          {heading.eyebrow}
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          It&rsquo;s not just the calls you miss.{' '}
-          <span className="text-ink-500">You leak in three places.</span>
+          {heading.titleA} {heading.titleB}
         </h2>
-        <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          Pick your trade, slide in your own numbers, and watch the whole thing add up &mdash;
-          then see what the engine puts back.
-        </p>
+        <p className="mt-6 text-lg leading-relaxed text-ink-700">{heading.intro}</p>
       </div>
 
       {/* Trade presets */}
@@ -145,7 +169,7 @@ export function WholeFlowLeak({ id }: { id?: string }) {
         your real figures.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
-        {PRESETS.map((p) => (
+        {presets.map((p) => (
           <button
             key={p.key}
             type="button"
@@ -167,7 +191,7 @@ export function WholeFlowLeak({ id }: { id?: string }) {
         {/* Inputs — sliders, grouped by pillar */}
         <div className="space-y-7 bg-surface p-6 sm:p-8">
           <Slider
-            label="Your average job"
+            label={avgLabel}
             value={v.avg}
             min={100}
             max={20000}
@@ -187,7 +211,7 @@ export function WholeFlowLeak({ id }: { id?: string }) {
                 </span>
               </div>
               <div className="mt-4 space-y-5">
-                {FIELDS[pk].map((f) => (
+                {fields[pk].map((f) => (
                   <Slider
                     key={f.key}
                     label={f.label}
@@ -262,7 +286,7 @@ export function WholeFlowLeak({ id }: { id?: string }) {
                 className="mt-2 w-full cursor-pointer accent-accent-500"
               />
               <p className="mt-2 text-sm font-semibold text-white">
-                The recovered work clears that fee in the first {jobsToFee} job
+                The recovered work clears that fee in the first {jobsToFee} {unitLabel}
                 {jobsToFee === 1 ? '' : 's'}.
               </p>
             </div>
@@ -291,7 +315,7 @@ export function WholeFlowLeak({ id }: { id?: string }) {
 
       <p className="mt-4 max-w-3xl font-mono text-[11px] uppercase tracking-[0.14em] text-ink-400">
         Your numbers, your assumptions &middot; bring assumes a conservative {Math.round(BRING_TO_JOB * 100)}% of
-        missed searches become a job; the engine recovers {Math.round(RECOVER.convert * 100)}% of convert,{' '}
+        missed searches become a {unitLabel}; the engine recovers {Math.round(RECOVER.convert * 100)}% of convert,{' '}
         {Math.round(RECOVER.bring * 100)}% of bring, {Math.round(RECOVER.retain * 100)}% of retain. I round
         down. The audit replaces every estimate with your real figures.
       </p>

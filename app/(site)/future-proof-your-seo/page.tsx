@@ -121,7 +121,7 @@ export default function FutureProofYourSEOPage() {
         eyebrow="About the checklist"
         headline={
           <>
-            Honest questions <span className="text-ink-500">about what you&rsquo;re opting into.</span>
+            Honest questions about what you&rsquo;re opting into.
           </>
         }
         kicker="What it is, what arrives in your inbox, and what isn’t included."

@@ -71,7 +71,7 @@ export function EditorialIncluded({ id }: { id?: string }) {
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           What every retainer ships{' '}
-          <span className="text-ink-500">&mdash; without asking.</span>
+          &mdash; without asking.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
           Answers the implicit objection: &ldquo;what does Focused at $4K

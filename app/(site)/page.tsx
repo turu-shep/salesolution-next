@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 
 import { DemandSystem } from '@/components/sections/DemandSystem'
-import { EngagementModel } from '@/components/sections/EngagementModel'
 import { Evidence } from '@/components/sections/Evidence'
 import { FAQ } from '@/components/sections/FAQ'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
@@ -35,7 +34,6 @@ export default function HomePage() {
       <WhoWeServe />
       <FrameworkTimeline />
       <GoalIndex />
-      <EngagementModel />
       <Evidence />
       <Operator />
       <Signals />

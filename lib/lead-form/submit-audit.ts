@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { LEAKS, type RevenueLeakAuditData, TRADES } from './revenue-leak-audit-schema'
+import { ALL_LEAKS, type RevenueLeakAuditData, VERTICAL_TRADES } from './revenue-leak-audit-schema'
 
 /**
  * Server-side submission for the Revenue Leak Audit (local-service funnel).
@@ -110,8 +110,8 @@ async function postToHubSpot(data: RevenueLeakAuditData, formId: string) {
     { objectTypeId: '0-1', name: 'company', value: data.company },
     ...(data.email ? [{ objectTypeId: '0-1', name: 'email', value: data.email }] : []),
     ...(data.website ? [{ objectTypeId: '0-1', name: 'website', value: data.website }] : []),
-    { objectTypeId: '0-1', name: 'trade', value: labelFor(TRADES, data.trade) },
-    { objectTypeId: '0-1', name: 'primary_leak', value: labelFor(LEAKS, data.leak) },
+    { objectTypeId: '0-1', name: 'trade', value: labelFor(VERTICAL_TRADES, data.trade) },
+    { objectTypeId: '0-1', name: 'primary_leak', value: labelFor(ALL_LEAKS, data.leak) },
   ]
 
   const res = await fetch(url, {
@@ -141,8 +141,8 @@ async function sendResendNotification(data: RevenueLeakAuditData) {
       `Company: ${data.company}`,
       `Email:   ${data.email || '—'}`,
       `Website: ${data.website || '—'}`,
-      `Trade:   ${labelFor(TRADES, data.trade)}`,
-      `Leak:    ${labelFor(LEAKS, data.leak)}`,
+      `Trade:   ${labelFor(VERTICAL_TRADES, data.trade)}`,
+      `Leak:    ${labelFor(ALL_LEAKS, data.leak)}`,
       '',
       `Source:  ${data.pageSource ?? 'unknown'}`,
     ].join('\n'),

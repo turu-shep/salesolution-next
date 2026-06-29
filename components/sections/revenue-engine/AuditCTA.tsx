@@ -12,7 +12,11 @@ import { business } from '@/lib/business'
  * path. The form posts to /api/revenue-leak-audit → /revenue-engine/audit-booked/.
  */
 
-export function AuditCTA({ id }: { id?: string }) {
+export function AuditCTA({ id, vertical = 'home-services' }: { id?: string; vertical?: 'home-services' | 'dental' }) {
+  const followUp =
+    vertical === 'dental'
+      ? 'the follow-up gap on your treatment plans and recall'
+      : 'the follow-up gap on your quotes'
   return (
     <SectionRail tone="dark" id={id} size="lg">
       <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-14">
@@ -26,8 +30,8 @@ export function AuditCTA({ id }: { id?: string }) {
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-200">
             In about 20 minutes I&rsquo;ll show you your own numbers &mdash; how
             many calls you&rsquo;re missing, your real response time, how your
-            Google profile is doing, and the follow-up gap on your quotes. Yours
-            to keep whether we work together or not. No pitch, no obligation.
+            Google profile is doing, and {followUp}. Yours to keep whether we
+            work together or not. No pitch, no obligation.
           </p>
 
           <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-ink-300">
@@ -50,7 +54,7 @@ export function AuditCTA({ id }: { id?: string }) {
         </div>
 
         <div className="lg:col-span-6">
-          <RevenueLeakAuditForm />
+          <RevenueLeakAuditForm vertical={vertical} />
         </div>
       </div>
     </SectionRail>

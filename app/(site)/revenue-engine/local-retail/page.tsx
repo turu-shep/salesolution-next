@@ -223,7 +223,7 @@ export default function LocalRetailRevenueEnginePage() {
         eyebrow="A few last questions"
         headline={
           <>
-            Questions <span className="text-ink-500">before the audit.</span>
+            Questions before the audit.
           </>
         }
         kicker="New website, in-store and online, competitive cities, time to start. Straight answers."

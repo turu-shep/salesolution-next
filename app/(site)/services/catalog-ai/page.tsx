@@ -249,7 +249,7 @@ export default function CatalogAIServicePage() {
       <FAQ
         id="faq"
         eyebrow="Catalog AI FAQ"
-        headline={<>Questions <span className="text-ink-500">on the work itself.</span></>}
+        headline={<>Questions on the work itself.</>}
         kicker="Tier differences. Quality controls. Ownership. The honest sizing thresholds."
         items={CATALOG_FAQ}
       />

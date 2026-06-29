@@ -35,7 +35,7 @@ const AUDIENCES: Audience[] = [
     pain: 'Buyers ask AI for the part and it names the manufacturer, not you. Amazon and the brands keep taking business that used to be yours.',
     fix: 'Become the company AI names for your products, and stop leaking the quotes you already get.',
     href: '/industries/industrial-distribution/',
-    cta: 'See the industrial playbook',
+    cta: 'See the engine',
     tone: 'brand',
   },
   {
@@ -45,7 +45,7 @@ const AUDIENCES: Audience[] = [
     pain: 'Your front desk is with a patient when the phone rings, and the new consult books with whoever picked up. High-value treatment plans get presented once and never followed up.',
     fix: 'A HIPAA-compliant system that answers during treatment, books new patients, and chases the plans and recalls worth the most — then proves the revenue.',
     href: '/revenue-engine/medical/',
-    cta: 'See it for medical & aesthetics',
+    cta: 'See the engine',
     tone: 'accent',
   },
   {
@@ -55,18 +55,18 @@ const AUDIENCES: Audience[] = [
     pain: 'The phone rings while you’re on a roof. You pay for leads nobody calls back, and estimates go cold.',
     fix: 'A system that answers every call, replies in seconds, books the job, and chases the quotes that stall.',
     href: '/revenue-engine/home-services/',
-    cta: 'See the Revenue Engine',
+    cta: 'See the engine',
     tone: 'accent',
   },
   {
     key: 'local-retail',
-    eyebrow: 'Retail & consumer brands',
-    sub: 'Jewelry · Flooring · Specialty goods',
-    pain: 'Shoppers near you search and find a competitor. The ones who do buy rarely come back, and the customer list you already paid to build never gets sold to again.',
-    fix: 'Show up first in Maps and AI for your area, bring back the shoppers who looked and left, and sell again to the customers you already won.',
+    eyebrow: 'Consumer & DTC brands',
+    sub: 'Jewelry · Apparel · Specialty goods',
+    pain: 'Shoppers search and find a competitor. The ones who do buy rarely come back, and the customer list you already paid to build never gets sold to again.',
+    fix: 'Get found for what you sell, win the visit, and bring buyers back for the next one — instead of paying to win them once.',
     href: '/revenue-engine/local-retail/',
-    cta: 'See it for retail',
-    tone: 'accent',
+    cta: 'See the engine',
+    tone: 'brand',
   },
 ]
 
@@ -90,14 +90,14 @@ export function WhoWeServe() {
     <SectionRail tone="surface">
       <div className="max-w-2xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-          Who we serve
+          Industries
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Four businesses we know cold.
+          Pick the engine for your business.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          The leak looks different in each one, and so does the fix. Find the
-          version that&rsquo;s yours.
+          Same system, tuned to your trade. The leak looks different in each one,
+          and so does the fix. Find the version that&rsquo;s yours.
         </p>
       </div>
 

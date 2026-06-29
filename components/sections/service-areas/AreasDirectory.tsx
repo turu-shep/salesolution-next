@@ -133,7 +133,7 @@ export function AreasDirectory({ id }: { id?: string }) {
           Coverage directory
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          All 50 states. <span className="text-ink-500">Grouped by where we&rsquo;ve actually delivered.</span>
+          All 50 states. Grouped by where we&rsquo;ve actually delivered.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
           Engagements are remote by default. The list below reflects

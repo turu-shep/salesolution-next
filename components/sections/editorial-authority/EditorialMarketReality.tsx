@@ -42,7 +42,7 @@ export function EditorialMarketReality({ id }: { id?: string }) {
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           Generalist content is now free.{' '}
-          <span className="text-ink-500">Cited content isn&rsquo;t.</span>
+          Cited content isn&rsquo;t.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
           AI engines harvest the web, paraphrase the answer, and keep the

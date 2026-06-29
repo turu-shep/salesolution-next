@@ -36,7 +36,7 @@ export function CatalogSnapshotFormSection({ id }: { id?: string }) {
             Book the snapshot
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl md:text-6xl">
-            Three minutes. <span className="text-ink-400">Your snapshot lands in two days.</span>
+            Three minutes. Your snapshot lands in two days.
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-300">
             We pick five of your products, rewrite each twice (Standard and

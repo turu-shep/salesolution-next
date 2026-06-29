@@ -17,7 +17,7 @@ export function CatalogWhereAIUsed({ id }: { id?: string }) {
           Positioning
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Where AI is used. <span className="text-ink-500">Where humans are used.</span>
+          Where AI is used. Where humans are used.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           Salesolution uses AI where it ships better outputs than humans can

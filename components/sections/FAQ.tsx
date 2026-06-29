@@ -173,7 +173,7 @@ export function FAQ({
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
             {headline ?? (
               <>
-                Questions founders <span className="text-ink-500">ask first.</span>
+                Questions founders ask first.
               </>
             )}
           </h2>

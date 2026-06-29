@@ -1,13 +1,15 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useCallback, useRef, useState } from 'react'
+import Link from 'next/link'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Turnstile } from '@/components/integrations/Turnstile'
 import { getGaClientId, track } from '@/lib/analytics'
 import { cn } from '@/lib/cn'
 import {
+  DENTAL_LEAKS,
   LEAKS,
   revenueLeakAuditSchema,
   type RevenueLeakAuditData,
@@ -18,6 +20,14 @@ import { useTrackOnView } from '@/lib/use-track-on-view'
 const FORM_ID = 'revenue_leak_audit_form'
 const FORM_NAME = 'Revenue Leak Audit'
 const LEAD_VALUE = 220
+
+// Stable per-submission id. Kept out of render (the impure Date.now/Math.random
+// fallback would otherwise re-run every render) and computed once via a guarded ref.
+function makeSubmissionId(): string {
+  return typeof crypto !== 'undefined' && 'randomUUID' in crypto
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(36).slice(2)}`
+}
 
 /**
  * Single-step native lead form for the Revenue Leak Audit (local-service funnel).
@@ -31,21 +41,34 @@ const LEAD_VALUE = 220
 export function RevenueLeakAuditForm({
   thankYouHref = '/revenue-engine/audit-booked/',
   className,
+  vertical = 'home-services',
 }: {
   thankYouHref?: string
   className?: string
+  /**
+   * Which landing page the form sits on. `dental` hides the home-services
+   * "Trade" picker (we already know the vertical from the page) and swaps in
+   * dental "Where it hurts most" options. `trade` is then recorded as `dental`.
+   */
+  vertical?: 'home-services' | 'dental'
 }) {
+  const showTrade = vertical !== 'dental'
+  const leakOptions = vertical === 'dental' ? DENTAL_LEAKS : LEAKS
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const turnstileRequired = !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
   const rootRef = useRef<HTMLFormElement>(null)
   const startedRef = useRef(false)
-  const submissionIdRef = useRef<string>(
-    typeof crypto !== 'undefined' && 'randomUUID' in crypto
-      ? crypto.randomUUID()
-      : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
-  )
+  const [submissionId] = useState(makeSubmissionId)
+
+  // Redirect to the thank-you page after a successful submit. Kept in an effect
+  // (not the handler) so the navigation side effect lives where effects belong;
+  // full-page nav preserved so the thank-you page fires its own page_view.
+  const [redirectTo, setRedirectTo] = useState<string | null>(null)
+  useEffect(() => {
+    if (redirectTo) window.location.href = redirectTo
+  }, [redirectTo])
 
   useTrackOnView(
     rootRef,
@@ -70,7 +93,11 @@ export function RevenueLeakAuditForm({
   } = useForm<RevenueLeakAuditData>({
     resolver: zodResolver(revenueLeakAuditSchema),
     mode: 'onBlur',
-    defaultValues: { fullName: '', phone: '', company: '', email: '', website: '', trade: '', leak: '' },
+    defaultValues: {
+      fullName: '', phone: '', company: '', email: '', website: '',
+      trade: vertical === 'dental' ? 'dental' : '',
+      leak: '',
+    },
   })
 
   async function onSubmit(data: RevenueLeakAuditData) {
@@ -81,7 +108,6 @@ export function RevenueLeakAuditForm({
       return
     }
     try {
-      const submissionId = submissionIdRef.current
       const res = await fetch('/api/revenue-leak-audit/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -122,7 +148,7 @@ export function RevenueLeakAuditForm({
         params: { value: LEAD_VALUE, currency: 'USD', submission_id: submissionId, transaction_id: submissionId },
       })
 
-      window.location.href = thankYouHref
+      setRedirectTo(thankYouHref)
     } catch {
       setSubmitError('Network error. Please call or text 561-531-4339, or try again.')
       track({ name: 'form_error', params: { form_id: FORM_ID, error_type: 'network' } })
@@ -153,24 +179,39 @@ export function RevenueLeakAuditForm({
           <input id="company" autoComplete="organization" {...register('company')} className="input" />
         </Field>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field id="trade" label="Trade" error={errors.trade?.message}>
-            <select id="trade" {...register('trade')} className="input">
-              <option value="">Choose…</option>
-              {TRADES.map((t) => (
-                <option key={t.value} value={t.value}>{t.label}</option>
-              ))}
-            </select>
-          </Field>
-          <Field id="leak" label="Where it hurts most" error={errors.leak?.message}>
-            <select id="leak" {...register('leak')} className="input">
-              <option value="">Pick one…</option>
-              {LEAKS.map((l) => (
-                <option key={l.value} value={l.value}>{l.label}</option>
-              ))}
-            </select>
-          </Field>
-        </div>
+        {showTrade ? (
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field id="trade" label="Trade" error={errors.trade?.message}>
+              <select id="trade" {...register('trade')} className="input">
+                <option value="">Choose…</option>
+                {TRADES.map((t) => (
+                  <option key={t.value} value={t.value}>{t.label}</option>
+                ))}
+              </select>
+            </Field>
+            <Field id="leak" label="Where it hurts most" error={errors.leak?.message}>
+              <select id="leak" {...register('leak')} className="input">
+                <option value="">Pick one…</option>
+                {leakOptions.map((l) => (
+                  <option key={l.value} value={l.value}>{l.label}</option>
+                ))}
+              </select>
+            </Field>
+          </div>
+        ) : (
+          <>
+            {/* Vertical known from the landing page — record it, don't ask. */}
+            <input type="hidden" {...register('trade')} />
+            <Field id="leak" label="Where it hurts most" error={errors.leak?.message}>
+              <select id="leak" {...register('leak')} className="input">
+                <option value="">Pick one…</option>
+                {leakOptions.map((l) => (
+                  <option key={l.value} value={l.value}>{l.label}</option>
+                ))}
+              </select>
+            </Field>
+          </>
+        )}
 
         <Field id="email" label="Email (optional)" error={errors.email?.message}>
           <input id="email" type="email" autoComplete="email" {...register('email')} className="input" />
@@ -202,7 +243,7 @@ export function RevenueLeakAuditForm({
 
       <p className="mt-4 text-xs leading-relaxed text-ink-400">
         No pitch, no obligation. Your numbers are yours to keep. By submitting you agree to our{' '}
-        <a href="/privacy-policy/" className="underline hover:text-accent-600">privacy policy</a>.
+        <Link href="/privacy-policy/" className="underline hover:text-accent-600">privacy policy</Link>.
       </p>
     </form>
   )

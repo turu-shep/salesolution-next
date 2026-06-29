@@ -67,7 +67,7 @@ export function RevenueFooter() {
 
           <div className="shrink-0">
             <Link
-              href="/revenue-engine/#audit"
+              href="/revenue-engine/home-services/#audit"
               data-cta="revenue_leak_audit__footer"
               data-cta-location="footer"
               className="group inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 transition-colors duration-200 hover:text-brand-600"

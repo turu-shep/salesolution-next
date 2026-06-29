@@ -24,7 +24,7 @@ export function CaseStudyResults({ study, id }: { study: CaseStudy; id?: string 
         </p>
         <h2 className="mt-3 font-display text-3xl font-semibold leading-[1.08] tracking-[-0.015em] text-ink-900 sm:text-4xl">
           The results.{' '}
-          <span className="text-ink-500">As measured, dips included.</span>
+          As measured, dips included.
         </h2>
       </div>
 

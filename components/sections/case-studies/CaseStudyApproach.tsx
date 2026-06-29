@@ -38,7 +38,7 @@ export function CaseStudyApproach({ study, id }: { study: CaseStudy; id?: string
         </p>
         <h2 className="mt-3 font-display text-3xl font-semibold leading-[1.08] tracking-[-0.015em] text-white sm:text-4xl">
           The work, phase by phase.{' '}
-          <span className="text-ink-400">What shipped, and when.</span>
+          What shipped, and when.
         </h2>
       </div>
 

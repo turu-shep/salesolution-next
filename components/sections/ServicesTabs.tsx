@@ -317,7 +317,7 @@ export function ServicesTabs({ id }: { id?: string }) {
           What we ship
         </p>
         <h2 className="mt-3 font-display text-balance text-3xl font-semibold leading-[1.1] tracking-[-0.015em] text-white sm:text-4xl">
-          Six services. <span className="text-ink-400">One operator-led team.</span>
+          Six services. One operator-led team.
         </h2>
       </div>
 

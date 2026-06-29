@@ -20,7 +20,7 @@ export function SprintHero() {
 
         <h1 className="mt-4 font-display text-5xl font-semibold leading-[1] tracking-[-0.03em] text-ink-900 sm:text-6xl md:text-[5.5rem]">
           <span className="block">Find the constraint.</span>
-          <span className="block text-ink-500">Install the fix.</span>
+          <span className="block">Install the fix.</span>
         </h1>
 
         <p className="mt-10 max-w-2xl text-lg leading-relaxed text-ink-700 md:text-xl">

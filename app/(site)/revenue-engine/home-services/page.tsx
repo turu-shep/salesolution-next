@@ -181,7 +181,7 @@ export default function HomeServicesRevenueEnginePage() {
         eyebrow="A few last questions"
         headline={
           <>
-            Questions <span className="text-ink-500">before the audit.</span>
+            Questions before the audit.
           </>
         }
         kicker="New website, lead exclusivity, your Google rep, time to start. Straight answers."

@@ -32,7 +32,7 @@ export default function Error({
 
         <h1 className="mt-5 font-display text-5xl font-semibold leading-[1] tracking-[-0.03em] text-ink-900 sm:text-6xl md:text-7xl">
           <span className="block">Our end, not yours.</span>
-          <span className="block text-ink-500">This page hit an error.</span>
+          <span className="block">This page hit an error.</span>
         </h1>
 
         <p className="mt-8 max-w-xl text-lg leading-relaxed text-ink-700">

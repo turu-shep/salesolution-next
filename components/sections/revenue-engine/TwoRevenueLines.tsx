@@ -10,23 +10,46 @@ import { SectionRail } from '@/components/layout/SectionRail'
  * dashboard. A proof slot waits for a real, figure-filled dashboard image.
  */
 
-export function TwoRevenueLines({ id }: { id?: string }) {
+export function TwoRevenueLines({
+  id,
+  eyebrow = 'How I report it',
+  headline = (
+    <>
+      Two lines on every report.{' '}
+      The second has to clear my fee.
+    </>
+  ),
+  lede = 'Each month I split what your ads produced from what the system brought back. The honest test: the recovered line alone should cover what you pay me.',
+  closer = (
+    <>
+      The system line is calls won back, quotes chased, past customers brought back, and
+      people who found you from new reviews &mdash; counted in your own dashboard, not
+      estimated on my spreadsheet.{' '}
+      <span className="font-medium text-white">
+        If it doesn&rsquo;t clear the fee, the next section is for you.
+      </span>
+    </>
+  ),
+}: {
+  id?: string
+  /** Defaults to the founder "I" voice; the cross-vertical product page passes
+   *  firm "we" copy with no fee phrasing. */
+  eyebrow?: React.ReactNode
+  headline?: React.ReactNode
+  lede?: React.ReactNode
+  closer?: React.ReactNode
+}) {
   return (
     <SectionRail tone="dark" id={id} glow="strong">
       <div className="grid items-center gap-12 md:grid-cols-12 md:gap-16">
         <div className="md:col-span-5">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
-            How I report it
+            {eyebrow}
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-            Two lines on every report.{' '}
-            <span className="text-ink-400">The second has to clear my fee.</span>
+            {headline}
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-ink-200">
-            Each month I split what your ads produced from what the system
-            brought back. The honest test: the recovered line alone should
-            cover what you pay me.
-          </p>
+          <p className="mt-6 text-lg leading-relaxed text-ink-200">{lede}</p>
         </div>
 
         <div className="md:col-span-7">
@@ -76,14 +99,7 @@ export function TwoRevenueLines({ id }: { id?: string }) {
               </span>
             </div>
 
-            <p className="mt-6 text-sm leading-relaxed text-ink-300">
-              The system line is calls won back, quotes chased, past customers brought back,
-              and people who found you from new reviews &mdash; counted in your own dashboard,
-              not estimated on my spreadsheet.{' '}
-              <span className="font-medium text-white">
-                If it doesn&rsquo;t clear the fee, the next section is for you.
-              </span>
-            </p>
+            <p className="mt-6 text-sm leading-relaxed text-ink-300">{closer}</p>
           </div>
           {/* PROOF-SLOT: real attribution-dashboard image once first-cohort data exists (spec §2.4 / DP-5). */}
         </div>

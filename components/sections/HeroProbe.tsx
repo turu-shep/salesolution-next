@@ -58,10 +58,10 @@ const LANES: Lane[] = [
   },
   {
     key: 'retail',
-    chip: 'Retail',
+    chip: 'Consumer brands',
     href: '/revenue-engine/local-retail/',
-    cta: 'See it for retail & consumer brands',
-    tone: 'accent',
+    cta: 'See it for consumer brands',
+    tone: 'brand',
   },
 ]
 
@@ -129,7 +129,10 @@ export function HeroProbe() {
       <section data-section-tone="light" className="relative bg-paper">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 pb-16 pt-14 sm:px-6 md:pt-20 lg:grid-cols-12 lg:items-center lg:gap-12 lg:px-8 lg:pb-20">
           <div className="lg:col-span-7">
-            <h1 className="font-display text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.03em] text-ink-900 sm:text-5xl lg:text-[4.25rem]">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-600">
+              The Revenue Engine <span className="text-ink-400">·</span> one per business
+            </p>
+            <h1 className="mt-5 text-balance font-display text-[2.5rem] font-semibold leading-[1.07] tracking-[-0.03em] text-ink-900 sm:text-[3rem] lg:text-[3.5rem]">
               <span className="block">Get found.</span>
               <span className="block">Win the sale.</span>
               <span className="block">Keep them coming back.</span>
@@ -202,8 +205,8 @@ export function HeroProbe() {
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
                 What it looks like when we&rsquo;ve done the work
               </p>
-              <p className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400 sm:block">
-                Real query · Real citation · Real client
+              <p className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500 sm:block">
+                Real queries · the AI answer, engineered
               </p>
             </div>
             <AIOverviewMockup slides={slides} />

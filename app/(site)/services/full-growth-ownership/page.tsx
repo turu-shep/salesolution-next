@@ -222,7 +222,7 @@ export default function FullGrowthOwnershipPage() {
       <FAQ
         id="faq"
         eyebrow="Before you ask for a quote"
-        headline={<>Questions <span className="text-ink-500">on the engagement itself.</span></>}
+        headline={<>Questions on the engagement itself.</>}
         kicker="Two shapes. Minimum-term mechanics. Where the price comes from. When this isn't the right fit."
         items={FULL_GROWTH_FAQ}
       />

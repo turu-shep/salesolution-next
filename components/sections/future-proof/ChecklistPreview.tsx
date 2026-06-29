@@ -52,7 +52,7 @@ export function ChecklistPreview() {
             What you&rsquo;re getting
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-            A 60-point audit. <span className="text-ink-400">Run it in an hour.</span>
+            A 60-point audit. Run it in an hour.
           </h2>
           <div className="mt-6 max-w-md space-y-4 text-ink-300">
             <p>

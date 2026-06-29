@@ -31,7 +31,7 @@ export function ProofBand() {
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
           This isn&rsquo;t a forecast.{' '}
-          <span className="text-ink-400">It&rsquo;s already in your analytics.</span>
+          It&rsquo;s already in your analytics.
         </h2>
       </div>
 

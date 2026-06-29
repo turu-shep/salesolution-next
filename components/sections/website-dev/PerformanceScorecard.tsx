@@ -133,7 +133,7 @@ export function PerformanceScorecard({ id }: { id?: string }) {
           The quality bar
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          The numbers we ship at. <span className="text-ink-500">Not the screenshots we cherry-pick.</span>
+          The numbers we ship at. Not the screenshots we cherry-pick.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           Median Core Web Vitals across four industrial e&#8209;commerce

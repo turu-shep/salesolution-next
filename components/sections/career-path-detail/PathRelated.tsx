@@ -48,7 +48,7 @@ export function PathRelated({
           </p>
           <h2 className="mt-3 font-display text-balance text-3xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-4xl">
             {heading}{' '}
-            <span className="text-ink-500">{headingMuted}</span>
+            {headingMuted}
           </h2>
         </div>
         <Link

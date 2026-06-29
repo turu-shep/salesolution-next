@@ -13,8 +13,8 @@ import { PillarIcon } from './pillar-icons'
  *
  * Default content is home-services; pass `groups`/`prove` to retune per vertical.
  */
-type Step = { key: string; what: string; metric: string }
-type PillarGroup = { pillar: string; outcome: string; steps: Step[] }
+export type Step = { key: string; what: string; metric: string }
+export type PillarGroup = { pillar: string; outcome: string; steps: Step[] }
 
 const HS_GROUPS: PillarGroup[] = [
   {
@@ -85,10 +85,17 @@ export function PlanByPillar({
   id,
   groups = HS_GROUPS,
   prove = HS_PROVE,
+  intro = 'Three jobs, five moving parts. I install and run all of it — the 90-day setup is on me.',
+  proveLine = 'I prove it paid.',
 }: {
   id?: string
   groups?: PillarGroup[]
   prove?: Step
+  /** Lede under the heading. Defaults to the founder "I" voice; the cross-vertical
+   *  product page passes a firm "we" line. */
+  intro?: React.ReactNode
+  /** The Prove capstone's one-line claim. Defaults to "I prove it paid." */
+  proveLine?: React.ReactNode
 }) {
   // Flat 1–5 numbering across the groups, so "five moving parts" is drawn.
   // Each group's first step number is the count of all steps in prior groups.
@@ -103,12 +110,9 @@ export function PlanByPillar({
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">The plan</p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           The whole machine,{' '}
-          <span className="text-ink-500">one part at a time.</span>
+          one part at a time.
         </h2>
-        <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          Three jobs, five moving parts. I install and run all of it — the 90-day setup is on
-          me.
-        </p>
+        <p className="mt-6 text-lg leading-relaxed text-ink-700">{intro}</p>
       </div>
 
       <div className="mt-14 space-y-12">
@@ -145,7 +149,7 @@ export function PlanByPillar({
               And then · {prove.key}
             </p>
           </div>
-          <p className="mt-1.5 font-display text-xl font-semibold text-ink-900">I prove it paid.</p>
+          <p className="mt-1.5 font-display text-xl font-semibold text-ink-900">{proveLine}</p>
         </div>
         <p className="leading-relaxed text-ink-700">
           {prove.what} <span className="text-ink-500">↓</span>

@@ -190,7 +190,7 @@ function SplitTitle({ title }: { title: string }) {
       return (
         <>
           <span className="block text-ink-900">{head.trim()}</span>
-          <span className="block text-ink-500">{tail}</span>
+          <span className="block">{tail}</span>
         </>
       )
     }

@@ -31,47 +31,47 @@ type Phase = {
 const PHASES: Phase[] = [
   {
     number: '01',
-    name: 'Foundation',
-    window: 'Months 1–3',
-    outcome: { value: 12, prefix: '+', unit: '%', label: 'more AI answers cite you' },
-    title: 'Get AI-ready',
+    name: 'Bring',
+    window: 'Get found',
+    outcome: { value: 12, prefix: '+', unit: '%', label: 'more of the right buyers find you' },
+    title: 'Get found wherever buyers look',
     description:
-      'The groundwork that lets AI and search engines actually read your site and understand what you sell.',
+      'Search, maps, and the AI answer. We get you named where your buyer is already looking — for what you actually sell.',
     items: [
-      { title: 'The plumbing', body: 'Fast pages, clean product info, and a site AI can actually read. The boring stuff everything else needs.' },
-      { title: 'Show up where buyers look', body: 'A presence on YouTube and LinkedIn, aimed at the people who actually buy from you.' },
-      { title: 'Pages that answer real questions', body: 'Product pages and guides written so a buyer — and an AI — gets a straight answer fast.' },
-      { title: 'Make it easy to buy', body: "Checkout and quote requests that don't make a ready buyer jump through hoops." },
+      { title: 'Named in the AI answer', body: 'When a buyer asks Google’s AI or ChatGPT, the answer names you — not the manufacturer or a competitor.' },
+      { title: 'Found for what you sell', body: 'Part numbers, specs, "near me" — the searches that bring a real buyer, not vanity traffic.' },
+      { title: 'The source AI quotes', body: 'The guides and pages that make you the authority AI reaches for first.' },
+      { title: 'Reach the rest', body: 'Targeted outreach to the right buyers who aren’t searching yet.' },
     ],
   },
   {
     number: '02',
-    name: 'Amplify',
-    window: 'Months 4–9',
-    outcome: { value: 43, prefix: '+', unit: '%', label: 'qualified leads' },
-    title: 'Become the name they trust',
+    name: 'Convert',
+    window: 'Win the sale',
+    outcome: { value: 43, prefix: '+', unit: '%', label: 'more of those leads turn into jobs' },
+    title: 'Win the demand you already have',
     description:
-      'Go deep enough on your subject that AI keeps quoting you and buyers keep choosing you — and it builds quarter after quarter.',
+      'Every call answered, every quote chased, every page built to close — so the leads you already pay for stop slipping out the back.',
     items: [
-      { title: 'Treat repeat buyers like regulars', body: 'Use what you know about customers to bring them back and grow what each one is worth.' },
-      { title: 'Ads that keep up with AI', body: 'Paid search tuned for how people actually ask questions now, including inside AI tools.' },
-      { title: 'One clear story everywhere', body: 'The same straight message wherever a buyer — or an AI — runs into you.' },
-      { title: 'Numbers that tell the truth', body: "Plain measures of whether you're getting found and chosen, reviewed every quarter." },
+      { title: 'Answer in seconds', body: 'The call, the form, the message — caught and replied to before a competitor gets there.' },
+      { title: 'A site that closes', body: 'Fast pages and a clear quote path that don’t make a ready buyer jump through hoops.' },
+      { title: 'Chase the quotes that stall', body: 'The follow-up that turns a sent quote into a signed one, instead of a maybe.' },
+      { title: 'Book the job', body: 'Scheduling and reminders that put the work on the calendar, not in limbo.' },
     ],
   },
   {
     number: '03',
-    name: 'Lead',
-    window: 'Months 10+',
-    outcome: { value: 2.5, decimals: 1, unit: '×', label: 'return on spend' },
-    title: 'Stay out front',
+    name: 'Retain',
+    window: 'Keep them coming back',
+    outcome: { value: 2.5, decimals: 1, unit: '×', label: 'more revenue from customers you already won' },
+    title: 'Keep them — and sell again',
     description:
-      'Steady improvements that keep you ahead when Google and AI change the rules, instead of scrambling every time they do.',
+      'The cheapest revenue you have is the customer you already won. We bring them back, and win back the ones who went quiet.',
     items: [
-      { title: 'Own your subject', body: 'Deep, well-organized content that makes you the source AI reaches for first.' },
-      { title: 'Get mentioned where it counts', body: 'Trade press, podcasts, and webinars — the places AI trusts and quotes.' },
-      { title: 'Watch what AI says about you', body: 'Track how often AI names you, how it describes you, and where you stand against competitors.' },
-      { title: 'More from every visit', body: 'Test, follow up, and improve so each visitor is worth more over time.' },
+      { title: 'Win back the lapsed', body: 'The dormant customer list you already paid to build, sold to again.' },
+      { title: 'Recover cold quotes', body: 'The estimates and RFQs that went silent, chased until they close or die for a reason.' },
+      { title: 'Reviews and referrals', body: 'Turn happy customers into the reviews and referrals that feed the top of the funnel.' },
+      { title: 'Grow what each is worth', body: 'Reorders, upsells, and the next job — more from every customer over time.' },
     ],
   },
 ]
@@ -81,30 +81,28 @@ export function FrameworkTimeline({ id }: { id?: string }) {
     <SectionRail tone="paper" id={id}>
       <div className="max-w-3xl">
         <h2 className="font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Three phases. Each one earns the next.
+          One system runs the whole sale.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          One operator runs all three. We don&rsquo;t move to the next phase
-          until the last one has done its job &mdash; so each win sits on solid
-          ground, not a shaky foundation.
+          Get found, win the sale, keep them coming back. Three jobs every sale
+          runs through. Most businesses buy them from three vendors who never
+          talk, so customers fall through the gaps between them. We run all three
+          as one engine.
         </p>
       </div>
 
       {/* The track + stations. Each station has phase header above the dashed
           rail, then a hard drop-line into the items column below. */}
-      <div className="mt-16 grid grid-cols-3 gap-x-8 md:gap-x-12">
+      <div className="mt-16 grid grid-cols-1 gap-y-10 gap-x-8 md:grid-cols-3 md:gap-y-0 md:gap-x-12">
         {PHASES.map((p, i) => (
           <div key={p.number} className="relative">
             {/* Station header: phase number + outcome metric */}
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">
-                  Phase &middot; {p.number}
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
+                  Job &middot; {p.number} <span className="text-ink-400">/</span> {p.name}
                 </p>
-                <p className="mt-1 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
-                  {p.name}
-                </p>
-                <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">
+                <p className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
                   {p.window}
                 </p>
               </div>
@@ -117,8 +115,8 @@ export function FrameworkTimeline({ id }: { id?: string }) {
 
             {/* Outcome metric — what you should see by end of phase */}
             <div className="mt-6 border-t border-rule pt-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">
-                Outcome by end of phase
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-600">
+                What good looks like
               </p>
               <p className="mt-2 font-display text-5xl font-semibold leading-[0.95] tabular-nums tracking-[-0.02em] text-ink-900 sm:text-6xl">
                 <CountUp
@@ -141,8 +139,12 @@ export function FrameworkTimeline({ id }: { id?: string }) {
         ))}
       </div>
 
+      <p className="mt-8 max-w-2xl font-mono text-[10px] uppercase tracking-[0.16em] text-ink-400">
+        Illustrative targets, not past results &mdash; your real numbers show up in the monthly report.
+      </p>
+
       {/* Dashed rail with station markers below the headers */}
-      <div className="relative mt-12">
+      <div className="relative mt-12 hidden md:block">
         <svg
           viewBox="0 0 1000 24"
           preserveAspectRatio="none"
@@ -200,6 +202,18 @@ export function FrameworkTimeline({ id }: { id?: string }) {
           </li>
         ))}
       </ol>
+
+      {/* Prove — the measurement spine under all three jobs */}
+      <div className="mt-16 border-t border-rule pt-8">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+          And then &mdash; Prove
+        </p>
+        <p className="mt-3 max-w-3xl text-lg leading-relaxed text-ink-700">
+          Every month, two revenue lines: what your ad spend brought in, and what
+          the system brought back. The line the system recovered should clear what
+          you pay us. That&rsquo;s the whole proof.
+        </p>
+      </div>
     </SectionRail>
   )
 }

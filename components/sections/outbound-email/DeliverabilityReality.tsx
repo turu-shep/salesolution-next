@@ -50,7 +50,7 @@ export function DeliverabilityReality({ id }: { id?: string }) {
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
           The problem isn&rsquo;t your copy.{' '}
-          <span className="text-ink-400">It&rsquo;s the inbox.</span>
+          It&rsquo;s the inbox.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
           Gmail, Outlook, and Microsoft 365 tightened sender rules three times

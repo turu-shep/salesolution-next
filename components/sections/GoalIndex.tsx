@@ -6,53 +6,43 @@ import { cn } from '@/lib/cn'
 import { InView } from './InView'
 
 /**
- * Home § — "The Intent Index" (cross-vertical goal picker).
+ * Home § — name the leak, meet the part.
  *
- * Replaces the old industrial six-service menu (moved to the industrial hub).
- * The buyer starts with the OUTCOME they want, not our deliverables. Six
- * owner-voice "I want to ___" rows; each routes to ONE funnel per click — never
- * co-locating the two doors, so the funnels stay separate.
+ * FrameworkTimeline (just above) shows the engine as three jobs. This is the
+ * concrete follow-through: the owner names the outcome they want in their own
+ * words, and we point them at the ONE cylinder that fixes it — its real
+ * /services/ page when it's built, the product page when it's still Coming soon.
  *
- * Distinct from WhoWeServe on purpose: that's a 3-CARD vertical splitter ("who
- * are you"); this is a numbered ROW index ("what do you want"). Rows-vs-cards is
- * the anti-redundancy guard.
+ * Replaces the old two-door "Intent Index", which routed every goal to an
+ * industrial-vs-revenue funnel — the two-funnel model the rebrand collapses.
+ * One machine now; goals map to its parts, not to separate funnels.
  *
- * Each destination = a short colored funnel TAG (mono, carries the funnel for
- * colorblind users + crawlers) + a sentence-case action. Industrial = brand-blue,
- * Revenue Engine = accent-orange. Ordinals + row hover make it read as an index
- * you pick from, not a static list.
+ * Distinct from WhoWeServe (3-card "who are you" industry router) and from
+ * FrameworkTimeline (the engine as a process): this is a numbered ROW index of
+ * "what do you want" → a named part. Rows-vs-cards is the anti-redundancy guard.
  *
- * Static + server-rendered: every tag, label, and href is in the first response
- * (no JS gating), so crawlers and AI answers can read the goal → solution map.
+ * Value-first: the headline stays in plain outcome language; "cylinder" never
+ * appears as a word to decode — the parts are named only as the destinations.
+ *
+ * Static + server-rendered: every label and href is in the first response, so
+ * crawlers and AI answers can read the goal → part map.
  */
 
-type Funnel = 'industrial' | 'revenue'
-
-type GoalLink = {
+type Cylinder = {
+  /** the part's name — shown as the mono destination tag */
+  name: string
+  /** the job it fires, written as an owner-facing action */
+  action: string
+  /** built parts deep-link their /services page; the rest point at the product page */
   href: string
-  tag: string
-  text: string
-  funnel: Funnel
-  vertical?: 'homeservices' | 'dental'
-  secondary?: boolean
+  built: boolean
 }
 
 type Goal = {
   id: string
   label: string
   stake: string
-  links: GoalLink[]
-}
-
-const TONE: Record<Funnel, { tag: string; hover: string }> = {
-  industrial: {
-    tag: 'text-brand-700',
-    hover: 'group-hover/dest:text-brand-700 group-hover/dest:decoration-brand-400',
-  },
-  revenue: {
-    tag: 'text-accent-700',
-    hover: 'group-hover/dest:text-accent-700 group-hover/dest:decoration-accent-400',
-  },
+  cylinder: Cylinder
 }
 
 const GOALS: Goal[] = [
@@ -60,84 +50,94 @@ const GOALS: Goal[] = [
     id: 'g1',
     label: 'I want to show up when people ask AI.',
     stake: 'A buyer asks ChatGPT or Google’s AI for what you sell, and your name never comes up.',
-    links: [
-      { href: '/services/ai-seo/', tag: 'Industrial', text: 'See who AI names for your products', funnel: 'industrial' },
-      { href: '/revenue-engine/', tag: 'Local shop', text: 'Get found in your area', funnel: 'revenue', secondary: true },
-    ],
+    cylinder: {
+      name: 'AI Search & GEO',
+      action: 'Get named in the AI answer',
+      href: '/services/ai-seo/',
+      built: true,
+    },
   },
   {
     id: 'g2',
-    label: 'I want more people to know my company.',
-    stake: 'People who’d buy from you have never heard your name.',
-    links: [
-      { href: '/services/editorial-authority/', tag: 'Industrial', text: 'Become the name buyers and AI cite', funnel: 'industrial' },
-      { href: '/revenue-engine/', tag: 'Local', text: 'Win the reviews that get you picked', funnel: 'revenue' },
-    ],
+    label: 'I want to be the name buyers already trust.',
+    stake: 'The people who’d buy from you have never heard of you, so they go with whoever they have heard of.',
+    cylinder: {
+      name: 'Editorial Authority',
+      action: 'Earn the citations that build the name',
+      href: '/services/editorial-authority/',
+      built: true,
+    },
   },
   {
     id: 'g3',
-    label: 'I want more work coming in.',
-    stake: 'Not enough quotes. Not enough booked jobs. The number you watch.',
-    links: [
-      { href: '/industries/industrial-distribution/', tag: 'Industrial', text: 'See the industrial playbook', funnel: 'industrial' },
-      { href: '/revenue-engine/', tag: 'Revenue Engine', text: 'See the Revenue Engine', funnel: 'revenue' },
-    ],
+    label: 'I just want more work coming in.',
+    stake: 'Not enough quotes, not enough booked jobs. The number you actually watch.',
+    cylinder: {
+      name: 'Outbound Email',
+      action: 'Reach the buyers who never came inbound',
+      href: '/services/outbound-email-marketing-services/',
+      built: true,
+    },
   },
   {
     id: 'g4',
-    label: 'I want to stop losing the quotes and calls I already pay for.',
-    stake: 'The work arrives and slips away: buyers bounce off a slow site, calls get missed, estimates go cold.',
-    links: [
-      { href: '/services/website-development-design-services/', tag: 'Industrial', text: 'Fix the site buyers bounce off', funnel: 'industrial' },
-      { href: '/revenue-engine/', tag: 'Revenue Engine', text: 'Answer every call, book the job', funnel: 'revenue' },
-    ],
+    label: 'I want to stop losing buyers who land and leave.',
+    stake: 'You pay for the visit, then a slow, hard-to-read site sends the quote request somewhere else.',
+    cylinder: {
+      name: 'Website Development',
+      action: 'Fix the site buyers bounce off',
+      href: '/services/website-development-design-services/',
+      built: true,
+    },
   },
   {
     id: 'g5',
     label: 'I want every call answered, even after hours.',
     stake: 'The phone rings while you’re on a roof or with a patient. The 9pm lead books with whoever picks up first.',
-    links: [
-      { href: '/revenue-engine/home-services/', tag: 'Home services', text: 'Roofing, HVAC, plumbing, electrical', funnel: 'revenue', vertical: 'homeservices' },
-      { href: '/revenue-engine/dentists/', tag: 'Dental', text: 'How it works for your practice', funnel: 'revenue', vertical: 'dental' },
-    ],
+    cylinder: {
+      name: 'Answer & Book',
+      action: 'Answer every call, text back the missed ones',
+      href: '/services/answer-and-book/',
+      built: true,
+    },
   },
   {
     id: 'g6',
-    label: 'I want to keep my customers, and win back the ones who went quiet.',
-    stake: 'Repeat buyers and revived accounts are the cheapest revenue you’ve got.',
-    links: [
-      { href: '/services/outbound-email-marketing-services/', tag: 'Industrial', text: 'Win-back email to your own list', funnel: 'industrial' },
-      { href: '/revenue-engine/', tag: 'Revenue Engine', text: 'Chase cold quotes, bring buyers back', funnel: 'revenue' },
-    ],
+    label: 'I want back the quotes and customers that went quiet.',
+    stake: 'Cold estimates and dormant accounts are the cheapest revenue you have, and nobody is chasing them.',
+    cylinder: {
+      name: 'Recover & Reactivate',
+      action: 'Chase cold quotes, win back the list',
+      href: '/services/recover-reactivate/',
+      built: true,
+    },
   },
 ]
 
-function GoalDestination({ goalId, link }: { goalId: string; link: GoalLink }) {
-  const t = TONE[link.funnel]
-  const cta = `goal-${goalId}-${link.funnel}${link.vertical ? `-${link.vertical}` : ''}`
+function GoalDestination({ goalId, cylinder }: { goalId: string; cylinder: Cylinder }) {
   return (
     <Link
-      href={link.href}
-      data-cta={cta}
+      href={cylinder.href}
+      data-cta={`goal-${goalId}-${cylinder.built ? 'part' : 'soon'}`}
       data-cta-location="home-intent-index"
-      className="group/dest flex items-baseline gap-x-3 py-1"
+      className="group/dest flex flex-col gap-y-1"
     >
-      <span
-        className={cn(
-          'shrink-0 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.14em] md:w-32',
-          t.tag,
+      <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-brand-700">
+        <span aria-hidden className="h-1 w-1 rounded-full bg-brand-500" />
+        {cylinder.name}
+        {!cylinder.built && (
+          <span className="rounded-full border border-rule px-1.5 py-px text-[9px] font-medium tracking-[0.1em] text-ink-400">
+            Coming soon
+          </span>
         )}
-      >
-        {link.tag}
       </span>
       <span
         className={cn(
-          'font-medium leading-snug underline decoration-transparent underline-offset-[3px] transition-colors',
-          link.secondary ? 'text-[13px] text-ink-500' : 'text-[15px] text-ink-800',
-          t.hover,
+          'text-[15px] font-medium leading-snug text-ink-800 underline decoration-transparent underline-offset-[3px] transition-colors',
+          'group-hover/dest:text-brand-700 group-hover/dest:decoration-brand-400',
         )}
       >
-        {link.text}
+        {cylinder.action}
         <span aria-hidden className="ml-1 inline-block transition-transform group-hover/dest:translate-x-0.5">
           →
         </span>
@@ -157,8 +157,8 @@ export function GoalIndex({ id }: { id?: string }) {
           Tell us the outcome. We&rsquo;ll point you to the fix.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          Six things owners ask us for, in plain words. Pick yours and go straight
-          to it &mdash; no service menu to wade through.
+          Six things owners ask us for, in plain words. Each points to the part that
+          fixes it. Run that one, or hand us all of them.
         </p>
       </div>
 
@@ -178,26 +178,24 @@ export function GoalIndex({ id }: { id?: string }) {
               <p className="font-display text-xl font-semibold leading-snug text-ink-900">
                 {goal.label}
               </p>
-              <p className="mt-2 text-base leading-relaxed text-ink-500">{goal.stake}</p>
+              <p className="mt-2 text-base leading-relaxed text-ink-600">{goal.stake}</p>
             </dt>
-            <dd className="flex flex-col gap-y-2.5 md:col-span-5">
-              {goal.links.map((link) => (
-                <GoalDestination key={link.href + link.tag} goalId={goal.id} link={link} />
-              ))}
+            <dd className="md:col-span-5">
+              <GoalDestination goalId={goal.id} cylinder={goal.cylinder} />
             </dd>
           </div>
         ))}
       </InView>
 
       <p className="mt-8 text-sm leading-relaxed text-ink-500">
-        Not sure which?{' '}
+        Want the whole picture?{' '}
         <Link
-          href="/industries/industrial-distribution/"
-          data-cta="goal-escape-industrial"
+          href="/services/"
+          data-cta="goal-escape-services"
           data-cta-location="home-intent-index"
           className="font-medium text-ink-700 underline decoration-rule-strong underline-offset-4 transition-colors hover:text-ink-900"
         >
-          See everything for distributors
+          See every part of the engine
         </Link>{' '}
         ·{' '}
         <Link
@@ -206,7 +204,7 @@ export function GoalIndex({ id }: { id?: string }) {
           data-cta-location="home-intent-index"
           className="font-medium text-ink-700 underline decoration-rule-strong underline-offset-4 transition-colors hover:text-ink-900"
         >
-          or for local service
+          or how the whole engine runs
         </Link>
         .
       </p>

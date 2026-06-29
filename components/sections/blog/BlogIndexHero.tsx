@@ -22,7 +22,7 @@ export function BlogIndexHero({
 
         <h1 className="mt-4 font-display text-5xl font-semibold leading-[1] tracking-[-0.03em] text-ink-900 sm:text-6xl md:text-[6rem]">
           <span className="block">Field notes from</span>
-          <span className="block text-ink-500">the AI search frontier.</span>
+          <span className="block">the AI search frontier.</span>
         </h1>
 
         <p className="mt-10 max-w-2xl text-lg leading-relaxed text-ink-700 md:text-xl">

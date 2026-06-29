@@ -636,6 +636,13 @@
       "status": "new",
       "source": "career-path:seo-specialist",
       "addedAt": "2026-06-17"
+    },
+    {
+      "term": "map pack",
+      "normalized": "map pack",
+      "status": "new",
+      "source": "page:revenue-engine-dentists",
+      "addedAt": "2026-06-27"
     }
   ]
 }

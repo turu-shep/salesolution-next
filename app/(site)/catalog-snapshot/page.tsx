@@ -118,7 +118,7 @@ export default function CatalogSnapshotPage() {
       <FAQ
         id="faq"
         eyebrow="Common questions"
-        headline={<>Last questions <span className="text-ink-500">before you book.</span></>}
+        headline={<>Last questions before you book.</>}
         kicker="What's in the PDF. Who it’s for. What we won’t do with your details."
         items={SNAPSHOT_FAQ}
       />

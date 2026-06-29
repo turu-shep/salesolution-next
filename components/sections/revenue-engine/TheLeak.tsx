@@ -70,7 +70,7 @@ export function TheLeak({
           {headline ?? (
             <>
               It isn&rsquo;t your ad budget.{' '}
-              <span className="text-ink-500">It&rsquo;s everything after the phone rings.</span>
+              It&rsquo;s everything after the phone rings.
             </>
           )}
         </h2>

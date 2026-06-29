@@ -70,7 +70,7 @@ export function CatalogProcess({ id }: { id?: string }) {
           How it works
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Four steps. <span className="text-ink-500">The pilot is the trust gate.</span>
+          Four steps. The pilot is the trust gate.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           Missing the day-7 pilot is the single most damaging failure mode

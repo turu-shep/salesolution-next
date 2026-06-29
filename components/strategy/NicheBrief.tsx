@@ -140,7 +140,7 @@ export function NicheBriefView({ brief }: { brief: NicheBrief }) {
             {brief.heading.options.map((o, i) => (
               <li key={i} className="rounded-md border border-rule bg-surface p-4">
                 <p className="font-display text-xl font-semibold leading-tight text-ink-900">
-                  {o.title} <span className="text-ink-500">{o.accent}</span>
+                  {o.title} {o.accent}
                 </p>
                 <p className="mt-2 text-sm text-ink-500">{o.why}</p>
               </li>
@@ -152,7 +152,7 @@ export function NicheBriefView({ brief }: { brief: NicheBrief }) {
         {/* 2 — The leak */}
         <Section n="02" title="The leak" maps="“three places you lose…” evidence">
           <p className="font-display text-2xl font-semibold leading-tight text-ink-900">
-            {brief.leak.headlineA} <span className="text-ink-500">{brief.leak.headlineB}</span>
+            {brief.leak.headlineA} {brief.leak.headlineB}
           </p>
           <p className="mt-3 leading-relaxed text-ink-700">{brief.leak.intro}</p>
           <div className="mt-5 grid gap-4 sm:grid-cols-3">
@@ -208,7 +208,7 @@ export function NicheBriefView({ brief }: { brief: NicheBrief }) {
         <Section n="04" title="The difference" maps="“same lead, two endings”">
           <p className="font-display text-2xl font-semibold leading-tight text-ink-900">
             {brief.difference.headlineA}{' '}
-            <span className="text-ink-500">{brief.difference.headlineB}</span>
+            {brief.difference.headlineB}
           </p>
           {brief.difference.intro ? (
             <p className="mt-3 leading-relaxed text-ink-700">{brief.difference.intro}</p>

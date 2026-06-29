@@ -19,7 +19,7 @@ export function EmailCaptureSection() {
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
             Five questions.{' '}
-            <span className="text-ink-500">A personalised score.</span>
+            A personalised score.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-ink-700">
             We tune the 60-point checklist to your traffic mix and timeline

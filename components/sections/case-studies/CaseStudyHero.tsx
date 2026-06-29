@@ -76,7 +76,7 @@ export function CaseStudyHero({ study }: { study: CaseStudy }) {
         <h1 className="mt-6 max-w-4xl font-display text-4xl font-semibold leading-[1.04] tracking-[-0.02em] text-ink-900 sm:text-5xl md:text-6xl">
           {study.title}
           {study.titleMuted && (
-            <span className="block text-ink-500">{study.titleMuted}</span>
+            <span className="block">{study.titleMuted}</span>
           )}
         </h1>
 

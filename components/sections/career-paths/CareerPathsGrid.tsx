@@ -40,7 +40,7 @@ export function CareerPathsGrid({
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
             Paths in progress.{' '}
-            <span className="text-ink-500">First two land this quarter.</span>
+            First two land this quarter.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-ink-700">
             The SEO Specialist and Content Strategy Specialist tracks are
@@ -100,7 +100,7 @@ export function CareerPathsGrid({
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           {paths.length === 1 ? 'One path.' : `${paths.length} paths.`}{' '}
-          <span className="text-ink-500">All free, all self-paced.</span>
+          All free, all self-paced.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           Each path is a numbered run of skill modules &mdash; a real scenario,

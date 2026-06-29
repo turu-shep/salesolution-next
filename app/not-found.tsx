@@ -25,7 +25,7 @@ export default function NotFound() {
 
         <h1 className="mt-5 font-display text-5xl font-semibold leading-[1] tracking-[-0.03em] text-ink-900 sm:text-6xl md:text-7xl">
           <span className="block">Wrong turn.</span>
-          <span className="block text-ink-500">No page here.</span>
+          <span className="block">No page here.</span>
         </h1>
 
         <p className="mt-8 max-w-xl text-lg leading-relaxed text-ink-700">

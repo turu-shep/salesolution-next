@@ -76,7 +76,7 @@ export function AuditPreview({ id }: { id?: string }) {
           What the report looks like
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          One page. <span className="text-ink-500">Six findings. The constraint, named.</span>
+          One page. Six findings. The constraint, named.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
           We don&rsquo;t send a 40-slide deck. The audit is a single

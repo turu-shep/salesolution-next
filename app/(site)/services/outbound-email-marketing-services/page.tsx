@@ -250,7 +250,7 @@ export default function OutboundEmailServicePage() {
         eyebrow="Outbound FAQ"
         headline={
           <>
-            Questions <span className="text-ink-500">on the work itself.</span>
+            Questions on the work itself.
           </>
         }
         kicker="Compliance, reputation, what realistic reply rates look like. No marketing softening."

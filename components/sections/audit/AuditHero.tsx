@@ -23,7 +23,7 @@ export function AuditHero() {
 
             <h1 className="mt-4 font-display text-5xl font-semibold leading-[1] tracking-[-0.03em] text-ink-900 sm:text-6xl md:text-[5.25rem]">
               <span className="block">The one constraint</span>
-              <span className="block text-ink-500">slowing your store down.</span>
+              <span className="block">slowing your store down.</span>
             </h1>
 
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-ink-700 md:text-xl">

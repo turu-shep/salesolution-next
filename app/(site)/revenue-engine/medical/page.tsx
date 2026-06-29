@@ -231,7 +231,7 @@ export default function MedicalRevenueEnginePage() {
         eyebrow="A few last questions"
         headline={
           <>
-            Questions <span className="text-ink-500">before the audit.</span>
+            Questions before the audit.
           </>
         }
         kicker="Front desk, your specialty, patient data, budget. Straight answers."

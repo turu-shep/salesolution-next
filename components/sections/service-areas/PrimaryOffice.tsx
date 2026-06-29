@@ -19,7 +19,7 @@ export function PrimaryOffice({ id }: { id?: string }) {
           Headquarters &middot; FL
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-          One physical office. <span className="text-ink-400">The rest of the team is distributed.</span>
+          One physical office. The rest of the team is distributed.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
           Mail, in-person meetings, and the operator&rsquo;s home base

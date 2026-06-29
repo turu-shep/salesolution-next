@@ -64,7 +64,7 @@ export function BuildPrinciples({ id }: { id?: string }) {
           How we build
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-          Six engineering principles. <span className="text-ink-400">In every SOW.</span>
+          Six engineering principles. In every SOW.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
           Most agencies sell the build, then upsell performance, schema,

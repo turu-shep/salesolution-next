@@ -26,7 +26,7 @@ export function ServicesHero({
   title,
   titleAccent,
   lede,
-  primaryCta = { label: 'Book a strategy call', href: '/book-growth-call/' },
+  primaryCta = { label: 'Book a Growth Call', href: '/book-growth-call/' },
   secondaryCta,
   anchors,
   serviceName,
@@ -55,13 +55,13 @@ export function ServicesHero({
   return (
     <section ref={sectionRef} data-section-tone="light" className="relative bg-paper">
       <div className="mx-auto max-w-6xl px-4 pb-12 pt-16 sm:px-6 md:pb-16 md:pt-24 lg:px-8">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-600">
           {eyebrow}
         </p>
 
         <h1 className="mt-4 font-display text-5xl font-semibold leading-[1] tracking-[-0.03em] text-ink-900 sm:text-6xl md:text-[6rem]">
           <span className="block">{title}</span>
-          <span className="block text-ink-500">{titleAccent}</span>
+          <span className="block text-ink-900">{titleAccent}</span>
         </h1>
 
         <p className="mt-10 max-w-2xl text-lg leading-relaxed text-ink-700 md:text-xl">

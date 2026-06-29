@@ -39,7 +39,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 pb-14 pt-16 sm:px-6 md:pb-20 md:pt-24 lg:px-8">
         <p className="font-display text-5xl font-semibold leading-[1] tracking-[-0.03em] text-white sm:text-6xl md:text-[5.5rem]">
           Engineered<br />
-          <span className="text-ink-400">to be cited.</span>
+          to be cited.
         </p>
       </div>
 

@@ -39,7 +39,7 @@ export function CaseStudyProseSection({
                 {block.headingMuted && (
                   <>
                     {' '}
-                    <span className="text-ink-500">{block.headingMuted}</span>
+                    {block.headingMuted}
                   </>
                 )}
               </h2>

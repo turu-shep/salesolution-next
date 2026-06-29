@@ -132,7 +132,7 @@ export default function BookGrowthCallPage() {
         eyebrow="Before you book"
         headline={
           <>
-            Questions <span className="text-ink-500">about the call.</span>
+            Questions about the call.
           </>
         }
         kicker="Not the service. Not the engagement. Just the 15 minutes themselves."

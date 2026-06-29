@@ -34,7 +34,7 @@ export function LeakShell({
       <div className="max-w-3xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">{eyebrow}</p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          {headlineA} <span className="text-ink-500">{headlineB}</span>
+          {headlineA} {headlineB}
         </h2>
         {intro && <p className="mt-6 text-lg leading-relaxed text-ink-700">{intro}</p>}
       </div>

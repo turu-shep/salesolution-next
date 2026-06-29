@@ -100,7 +100,7 @@ export function FullGrowthComparison({ id }: { id?: string }) {
           Honest comparison
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Three real options. <span className="text-ink-500">Picked apart.</span>
+          Three real options. Picked apart.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           Full Growth Ownership compared to the two alternatives most

@@ -27,6 +27,7 @@ export function RevenueHero({
   titleAccent,
   lede,
   primaryCta,
+  primaryCtaTag = 'revenue_leak_audit__hero',
   founder,
   selfQualifiers,
   videoUrl,
@@ -37,6 +38,10 @@ export function RevenueHero({
   titleAccent?: React.ReactNode
   lede: React.ReactNode
   primaryCta: CTA
+  /** `data-cta` telemetry value for the primary CTA. Niche heroes use the
+   *  default (their on-page form); the product page routes off-page, so it
+   *  passes a distinct tag. */
+  primaryCtaTag?: string
   founder?: Founder
   selfQualifiers?: SelfQualifier[]
   videoUrl?: string
@@ -45,13 +50,13 @@ export function RevenueHero({
   return (
     <section data-section-tone="light" className="relative bg-paper">
       <div className="mx-auto max-w-6xl px-4 pb-16 pt-16 sm:px-6 md:pb-24 md:pt-24 lg:px-8">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-600">
           {eyebrow}
         </p>
 
         <h1 className="mt-4 font-display text-balance text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.03em] text-ink-900 sm:text-5xl md:text-[3.5rem]">
           <span className="block">{title}</span>
-          {titleAccent && <span className="block text-ink-500">{titleAccent}</span>}
+          {titleAccent && <span className="block text-ink-900">{titleAccent}</span>}
         </h1>
 
         <p className="mt-10 max-w-2xl text-lg leading-relaxed text-ink-700 md:text-xl">
@@ -61,7 +66,7 @@ export function RevenueHero({
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
           <Link
             href={primaryCta.href}
-            data-cta="revenue_leak_audit__hero"
+            data-cta={primaryCtaTag}
             data-cta-location="hero"
             className="inline-flex items-center justify-center rounded-[4px] bg-brand-600 px-6 py-3.5 text-base font-semibold text-white shadow-cta transition-colors duration-200 hover:bg-brand-700"
           >

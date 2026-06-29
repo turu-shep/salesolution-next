@@ -54,7 +54,7 @@ export function AuditSocialProof({ id }: { id?: string }) {
           Why brands trust the audit
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-          The diagnosis lands. <span className="text-ink-400">Then the work compounds.</span>
+          The diagnosis lands. Then the work compounds.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
           We&rsquo;ve run 42 of these in the last 18 months &mdash; for

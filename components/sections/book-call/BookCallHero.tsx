@@ -27,7 +27,7 @@ export function BookCallHero() {
 
             <h1 className="mt-4 font-display text-5xl font-semibold leading-[1] tracking-[-0.03em] text-ink-900 sm:text-6xl md:text-[5.5rem]">
               <span className="block">Book the call.</span>
-              <span className="block text-ink-500">No deck. No pitch.</span>
+              <span className="block">No deck. No pitch.</span>
             </h1>
 
             <p className="mt-10 max-w-xl text-lg leading-relaxed text-ink-700 md:text-xl">

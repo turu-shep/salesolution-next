@@ -44,7 +44,7 @@ export function AfterCall() {
           After the call
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-          What lands in your inbox. <span className="text-ink-400">In hours, not weeks.</span>
+          What lands in your inbox. In hours, not weeks.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
           The buying experience IS the proof. We respond on the timeline

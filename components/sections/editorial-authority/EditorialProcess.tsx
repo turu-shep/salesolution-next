@@ -58,7 +58,7 @@ export function EditorialProcess({ id }: { id?: string }) {
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           Ten days, five gates.{' '}
-          <span className="text-ink-500">No black box.</span>
+          No black box.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
           Every piece moves through the same pipeline. You see the artifact

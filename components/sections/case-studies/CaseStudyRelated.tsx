@@ -80,7 +80,7 @@ export function CaseStudyRelated({
             </p>
             <h2 className="mt-3 font-display text-3xl font-semibold leading-[1.08] tracking-[-0.015em] text-ink-900 sm:text-4xl">
               Other distributors.{' '}
-              <span className="text-ink-500">Same standard of proof.</span>
+              Same standard of proof.
             </h2>
           </div>
           <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -57,7 +57,7 @@ export function ProcessTimeline({ id }: { id?: string }) {
           What happens after you book
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-          First 30 days. <span className="text-ink-400">No black box.</span>
+          First 30 days. No black box.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
           Every founder we&rsquo;ve worked with was burned by an opaque

@@ -69,7 +69,7 @@ export function ContactDirectory() {
             Direct channels
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-            Pick one. <span className="text-ink-500">They all reach the same person.</span>
+            Pick one. They all reach the same person.
           </h2>
           <p className="mt-6 text-ink-700">
             No SDR queue, no routing form, no &ldquo;assistant to the

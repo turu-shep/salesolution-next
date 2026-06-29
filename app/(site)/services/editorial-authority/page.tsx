@@ -242,7 +242,7 @@ export default function EditorialAuthorityServicePage() {
         headline={
           <>
             Questions{' '}
-            <span className="text-ink-500">about the work itself.</span>
+            about the work itself.
           </>
         }
         kicker="Tools, turnaround, scope split with Catalog AI, why we're not the cheapest."

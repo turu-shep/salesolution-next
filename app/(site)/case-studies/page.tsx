@@ -150,7 +150,7 @@ export default async function CaseStudiesPage() {
                 </p>
                 <h2 className="mt-3 font-display text-3xl font-semibold leading-[1.08] tracking-[-0.015em] text-ink-900 sm:text-4xl">
                   Other distributors.
-                  <span className="block text-ink-500">
+                  <span className="block">
                     Different problems, one standard of proof.
                   </span>
                 </h2>

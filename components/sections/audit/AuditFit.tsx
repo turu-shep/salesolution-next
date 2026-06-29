@@ -32,7 +32,7 @@ export function AuditFit({ id }: { id?: string }) {
           Honest fit check
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Is this audit for you? <span className="text-ink-500">We&rsquo;ll tell you straight.</span>
+          Is this audit for you? We&rsquo;ll tell you straight.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
           The audit is free, but it&rsquo;s most useful to a specific kind

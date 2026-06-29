@@ -50,7 +50,7 @@ const COMBINATIONS: Combination[] = [
   },
   {
     services: ['composite'],
-    label: 'All 5 services',
+    label: 'The whole engine',
     fit: 'Full growth function with one operator',
     spend: 'Full Growth Ownership pricing',
   },
@@ -61,24 +61,25 @@ export function HowServicesCombine({ id }: { id?: string }) {
     <SectionRail tone="paper" id={id}>
       <div className="max-w-3xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-          Cross-service compounding
+          One machine, not a menu
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Most engagements combine two or three services.
+          The parts hand off to each other.
         </h2>
         <div className="mt-6 space-y-4 text-lg leading-relaxed text-ink-700">
           <p>
-            The unspoken truth of marketing-services pricing is that buying
-            one service often produces 60% of the result it could. The other
-            40% comes from cross-service compounding &mdash; catalog content
-            linking to editorial pillars, schema feeding outbound prospect
-            research, AI search optimization compounding with the citation
-            work writers produce.
+            Buying one part gets you about 60% of the result it could. The
+            other 40% comes from the handoffs: catalog content linking to
+            editorial pillars, machine-readable product data feeding outbound
+            research, AI search work compounding with the pages your writers
+            publish. Most of the leaks live exactly where two parts should hand
+            off and don&rsquo;t.
           </p>
           <p>
-            Most agencies don&rsquo;t have all five capabilities in-house, so
-            they pretend cross-service work doesn&rsquo;t matter. We&rsquo;re
-            priced and structured around it.
+            Five agencies, no accountability. That&rsquo;s the usual setup, and
+            none of them owns the handoff. We run the parts as one engine, with
+            one operator who reads both revenue lines and re-aims the weakest
+            part each cycle.
           </p>
         </div>
       </div>

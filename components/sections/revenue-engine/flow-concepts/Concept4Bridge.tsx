@@ -17,7 +17,7 @@ export function Concept4Bridge() {
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           Three places you lose customers.{' '}
-          <span className="text-ink-500">Three I run.</span>
+          Three I run.
         </h2>
       </div>
 

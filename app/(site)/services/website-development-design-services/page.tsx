@@ -247,7 +247,7 @@ export default function WebDevServicePage() {
       <FAQ
         id="faq"
         eyebrow="Build FAQ"
-        headline={<>Questions <span className="text-ink-500">before you commit to a rebuild.</span></>}
+        headline={<>Questions before you commit to a rebuild.</>}
         kicker="Platform picks, migration timelines, performance commitments — the honest answers we give on first calls."
         items={WEBDEV_FAQ}
       />

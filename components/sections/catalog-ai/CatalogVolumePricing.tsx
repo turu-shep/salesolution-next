@@ -66,7 +66,7 @@ export function CatalogVolumePricing() {
           Volume pricing
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Per-SKU rates. <span className="text-ink-500">Volume breaks at 10K and 50K.</span>
+          Per-SKU rates. Volume breaks at 10K and 50K.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           Pricing is the same shape across all three tiers: per-SKU base

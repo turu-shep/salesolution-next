@@ -12,12 +12,13 @@ export type NavItem = { label: string; href: string; children?: NavChild[] }
 export const primaryNav: NavItem[] = [
   { label: 'Services', href: '/services/' },
   {
-    // Audience-led entry, sitting beside the capability-led "Services" so a
-    // visitor can self-identify by industry in one click. Parent is the
-    // cross-vertical /industries/ index; each child routes to its own hub
-    // (industrial proof-led page; the Revenue Engine verticals to their
-    // tailored offer pages), keeping the two funnels separate.
-    label: 'Who We Serve',
+    // Audience-led entry beside the capability-led "Services": a visitor
+    // self-identifies by industry in one click. Parent is the cross-vertical
+    // /industries/ index. NOTE (Phase 1): label is now "Industries"; the
+    // children still point at their current live targets and repoint to the
+    // /industries/{industry}/ pillars in Phase 5 (after the pillar dirs + 301s
+    // exist) — see docs/strategy/multi-vertical-pivot/06-product-page-and-nav-plan.md.
+    label: 'Industries',
     href: '/industries/',
     children: [
       { label: 'Industrial & Technical B2B', href: '/industries/industrial-distribution/' },
@@ -27,11 +28,14 @@ export const primaryNav: NavItem[] = [
     ],
   },
   { label: 'Case Studies', href: '/case-studies/' },
-  { label: 'Framework', href: '/future-proof-your-seo/' },
+  // The Revenue Engine product page (what it is + how it works). Replaces the
+  // mislabeled "Framework" link, which pointed at the AI Search Readiness
+  // checklist — that now lives as an Insights child below.
+  { label: 'The Revenue Engine', href: '/revenue-engine/' },
   {
-    // "Resources" folded in here to keep the top-level bar at six items once
-    // "Who We Serve" was added (the AI Search Readiness Checklist lived at
-    // /future-proof-your-seo/, already top-levelled as "Framework").
+    // "Resources" folded in here to keep the top-level bar at six items. The AI
+    // Search Readiness checklist (/future-proof-your-seo/) now sits here as a
+    // child instead of being top-levelled as "Framework".
     label: 'Insights',
     href: '/category/blog/',
     children: [
@@ -40,6 +44,7 @@ export const primaryNav: NavItem[] = [
       { label: 'Learning Hub', href: '/career-paths/' },
       { label: 'Glossary', href: '/glossary/' },
       { label: 'Tools', href: '/tools/' },
+      { label: 'AI Search Readiness', href: '/future-proof-your-seo/' },
     ],
   },
   { label: 'Contact', href: '/contact-me/' },

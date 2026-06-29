@@ -72,7 +72,7 @@ export function AuditDeliverables({ id }: { id?: string }) {
           What you get
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-          Three lenses. <span className="text-ink-400">One report. 24 hours.</span>
+          Three lenses. One report. 24 hours.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
           Most &ldquo;free audits&rdquo; are automated scans wrapped in a

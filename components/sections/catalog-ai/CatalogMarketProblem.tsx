@@ -55,7 +55,7 @@ export function CatalogMarketProblem({ id }: { id?: string }) {
           Why now
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-          AI Overviews cite product pages. <span className="text-ink-400">Most catalogs aren&rsquo;t built for it.</span>
+          AI Overviews cite product pages. Most catalogs aren&rsquo;t built for it.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
           For a distributor with 10,000 SKUs the math is brutal: every

@@ -37,7 +37,7 @@ export function AuditFormSection({ id }: { id?: string }) {
             Book the audit
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl md:text-6xl">
-            Eight minutes. <span className="text-ink-400">Your audit lands tomorrow.</span>
+            Eight minutes. Your audit lands tomorrow.
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-300">
             Fill the form. We&rsquo;ll review your store against the

@@ -39,7 +39,7 @@ export function CaseStudyFeature({ study, id }: { study: CaseStudyCardData; id?:
           <h2 className="mt-5 font-display text-balance text-4xl font-semibold leading-[1.06] tracking-[-0.02em] text-white sm:text-5xl">
             <Link href={href} className="transition-colors hover:text-ink-200">
               {study.title}
-              {study.titleMuted && <span className="text-ink-400"> {study.titleMuted}</span>}
+              {study.titleMuted && <> {study.titleMuted}</>}
             </Link>
           </h2>
 

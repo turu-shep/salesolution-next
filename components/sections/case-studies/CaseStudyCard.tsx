@@ -68,7 +68,7 @@ export function CaseStudyCard({ study }: { study: CaseStudyCardData }) {
           <Link href={`/case-studies/${study.slug}/`} className="focus:outline-none">
             <span aria-hidden className="absolute inset-0" />
             {study.title}
-            {study.titleMuted && <span className="text-ink-500"> {study.titleMuted}</span>}
+            {study.titleMuted && <> {study.titleMuted}</>}
           </Link>
         </h3>
         {study.summary && (

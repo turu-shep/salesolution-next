@@ -44,7 +44,7 @@ export function RevenueRateCard({
             {headline ?? (
               <>
                 Published,{' '}
-                <span className="text-ink-500">not quoted on a call.</span>
+                not quoted on a call.
               </>
             )}
           </h2>

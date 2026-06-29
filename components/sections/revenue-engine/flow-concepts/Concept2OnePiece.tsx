@@ -17,7 +17,7 @@ export function Concept2OnePiece() {
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           Everyone sells you one piece.{' '}
-          <span className="text-ink-500">I run the whole flow.</span>
+          I run the whole flow.
         </h2>
       </div>
 

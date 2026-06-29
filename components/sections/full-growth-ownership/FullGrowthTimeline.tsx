@@ -56,7 +56,7 @@ export function FullGrowthTimeline({ id }: { id?: string }) {
           Engagement shape
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-          First 60 days. <span className="text-ink-400">No black box.</span>
+          First 60 days. No black box.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
           The timeline below is what you can expect from the moment you

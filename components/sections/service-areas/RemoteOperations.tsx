@@ -50,7 +50,7 @@ export function RemoteOperations({ id }: { id?: string }) {
           How remote delivery works
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Distance isn&rsquo;t the constraint. <span className="text-ink-500">Calendar overlap is.</span>
+          Distance isn&rsquo;t the constraint. Calendar overlap is.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
           Four operating principles that make the &ldquo;where&rdquo;

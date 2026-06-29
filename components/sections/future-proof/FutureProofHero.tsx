@@ -101,7 +101,7 @@ export function FutureProofHero() {
         {/* Big two-tone H1 — homepage rhythm */}
         <h1 className="mt-4 font-display text-5xl font-semibold leading-[1] tracking-[-0.03em] text-ink-900 sm:text-6xl md:text-[6rem]">
           <span className="block">AI search is erasing</span>
-          <span className="block text-ink-500">1 in 3 of your clicks.</span>
+          <span className="block">1 in 3 of your clicks.</span>
         </h1>
 
         <p className="mt-10 max-w-2xl text-lg leading-relaxed text-ink-700 md:text-xl">

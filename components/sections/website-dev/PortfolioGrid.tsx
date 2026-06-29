@@ -75,7 +75,7 @@ export function PortfolioGrid({ id }: { id?: string }) {
           Recent builds
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-          Four shipped builds. <span className="text-ink-400">Anonymised, not embellished.</span>
+          Four shipped builds. Anonymised, not embellished.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
           Industrial distributors rarely co-sign a logo on a case study and

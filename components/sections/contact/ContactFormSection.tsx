@@ -35,7 +35,7 @@ export function ContactFormSection() {
             Send the details
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-            The form, <span className="text-ink-500">if that&rsquo;s easier.</span>
+            The form, if that&rsquo;s easier.
           </h2>
           <p className="mt-6 text-ink-700">
             Two short steps. Nothing here is gating &mdash; you can call or

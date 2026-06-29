@@ -19,7 +19,7 @@ export function CatalogSnapshotCTA() {
             Free catalog snapshot &middot; 2 business days
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-            See what your catalog is missing. <span className="text-ink-400">Both tiers, side by side.</span>
+            See what your catalog is missing. Both tiers, side by side.
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-300">
             Send us your URL and approximate SKU count. We rewrite 5 of

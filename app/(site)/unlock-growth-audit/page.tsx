@@ -131,7 +131,7 @@ export default function UnlockGrowthAuditPage() {
       <FAQ
         id="faq"
         eyebrow="Common questions"
-        headline={<>Last questions <span className="text-ink-500">before you book.</span></>}
+        headline={<>Last questions before you book.</>}
         kicker="What the audit covers, what it costs, what we do with your data, and what happens after the report lands."
         items={AUDIT_FAQ}
       />
