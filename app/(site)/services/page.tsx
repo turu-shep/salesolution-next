@@ -8,7 +8,7 @@ import { EngagementShapes } from '@/components/sections/services/EngagementShape
 import { EngineBase } from '@/components/sections/services/EngineBase'
 import { HowServicesCombine } from '@/components/sections/services/HowServicesCombine'
 import { PickAService } from '@/components/sections/services/PickAService'
-import { ServicesHero } from '@/components/sections/services/ServicesHero'
+import { ServicesHubHero } from '@/components/sections/services/ServicesHubHero'
 import { CompositeBar } from '@/components/services/CompositeBar'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { business } from '@/lib/business'
@@ -135,34 +135,13 @@ export default function ServicesHubPage() {
 
       <CompositeBar weight="hero" />
 
-      <ServicesHero
-        eyebrow="What we do"
-        title="SEO, ads, content, your site."
-        titleAccent="One system, not six vendors."
-        lede={
-          <>
-            AI search and GEO, local SEO, content, your catalog, your website,
-            paid ads, outbound. The work most owners split across a stack of
-            separate vendors, run as one machine where the parts actually hand
-            off to each other.
-          </>
-        }
-        primaryCta={{ label: 'Book a Growth Call', href: '/book-growth-call/' }}
-        secondaryCta={{ label: 'See how it works', href: '#engine' }}
-        anchors={[
-          { label: 'Why one system', href: '#combinations' },
-          { label: 'The engine', href: '#engine' },
-          { label: 'The parts', href: '#cylinders' },
-          { label: 'Pricing', href: '#engagement' },
-          { label: 'FAQ', href: '#faq' },
-        ]}
-      />
-
-      <HowServicesCombine id="combinations" />
+      <ServicesHubHero />
 
       <EngineBase id="engine" />
 
       <SixCylinders id="cylinders" />
+
+      <HowServicesCombine id="combinations" />
 
       <PickAService id="pick" />
 
