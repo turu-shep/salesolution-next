@@ -114,7 +114,9 @@ Canonical list in `lib/revenue-engine.ts` (`CYLINDER_GROUPS`); rendered on `/rev
 **Goal:** the cross-industry index becomes "Pick the engine for your business" — the faceted discovery entry listing the 4 industry pillars.
 **Scope:** reframe `/industries/` (exists) to the four-pillar router; nav "Industries" parent points here.
 **Reuse/rework:** IndustriesShowcase, WhoWeServe.
-**Status:** not started.
+**Status (2026-06-29): ✅ DONE — reframe only.** The index was already a working four-pillar router (`IndustriesShowcase`: pillar-level image cards for Industrial / Medical & aesthetics / Home & local / Retail & consumer, motion-color-graded). Reframed the **hero** to the canonical "Pick the engine for your business." + a one-engine-per-business lede that names the two motions; aligned the **metadata** description to pillar level. Validated desktop + mobile; tsc/lint clean, route 200.
+- **Pillar destinations today:** industrial → `/industries/industrial-distribution/` (live); home/medical/consumer cards still point at `/revenue-engine/{home-services,medical,local-retail}/` until the **Phase-5 remap** repoints them.
+- **Left to Phase 5 (deliberately not touched here):** the `local-retail` card's orange/book-jobs coloring — the **consumer motion-flip scrub** rides with the URL remap. `IndustriesShowcase` still keeps its own AUDIENCES copy mirroring homepage `WhoWeServe` (re-sync, or extract a shared router, when the pillars are built).
 
 ## Phase 5 — Industry pillars (4)
 
