@@ -10,10 +10,11 @@ import { DeliverabilityScorePanel } from '@/components/sections/outbound-email/D
 import { OutboundComparison } from '@/components/sections/outbound-email/OutboundComparison'
 import { OutboundEngagement } from '@/components/sections/outbound-email/OutboundEngagement'
 import { SequenceFramework } from '@/components/sections/outbound-email/SequenceFramework'
+import { EngineStrip } from '@/components/sections/services/EngineStrip'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { CrossServiceCallout } from '@/components/services/CrossServiceCallout'
-import { serviceSchema } from '@/lib/schema'
+import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Outbound Email Marketing Services',
@@ -192,6 +193,13 @@ export default function OutboundEmailServicePage() {
           category: 'Digital Marketing',
         })}
       />
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: 'https://salesolution.net/' },
+          { name: 'Services', url: 'https://salesolution.net/services/' },
+          { name: 'Outbound Email', url: 'https://salesolution.net/services/outbound-email-marketing-services/' },
+        ])}
+      />
 
       <div className="h-1.5 w-full bg-service-outbound-500" aria-hidden />
       <ServicesHero
@@ -244,6 +252,8 @@ export default function OutboundEmailServicePage() {
       <OutboundComparison id="comparison" />
 
       <OutboundEngagement id="engagement" />
+
+      <EngineStrip currentSlug="outbound-email-marketing-services" />
 
       <FAQ
         id="faq"

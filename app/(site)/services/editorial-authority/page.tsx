@@ -10,10 +10,11 @@ import { EditorialIncluded } from '@/components/sections/editorial-authority/Edi
 import { EditorialMarketReality } from '@/components/sections/editorial-authority/EditorialMarketReality'
 import { EditorialPricing } from '@/components/sections/editorial-authority/EditorialPricing'
 import { EditorialProcess } from '@/components/sections/editorial-authority/EditorialProcess'
+import { EngineStrip } from '@/components/sections/services/EngineStrip'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { ServiceColorDot } from '@/components/services/ServiceColorDot'
-import { serviceSchema } from '@/lib/schema'
+import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Editorial Authority · Senior-writer content for technical B2B',
@@ -195,6 +196,13 @@ export default function EditorialAuthorityServicePage() {
           category: 'Content Marketing',
         })}
       />
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: 'https://salesolution.net/' },
+          { name: 'Services', url: 'https://salesolution.net/services/' },
+          { name: 'Editorial Authority', url: 'https://salesolution.net/services/editorial-authority/' },
+        ])}
+      />
 
       <div className="h-1.5 w-full bg-service-editorial-500" aria-hidden />
 
@@ -235,6 +243,8 @@ export default function EditorialAuthorityServicePage() {
       <EditorialPricing id="pricing" />
       <EditorialIncluded id="included" />
       <EditorialCaseStudy id="case-study" />
+
+      <EngineStrip currentSlug="editorial-authority" />
 
       <FAQ
         id="faq"

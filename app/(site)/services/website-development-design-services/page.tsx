@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { SectionRail } from '@/components/layout/SectionRail'
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
+import { EngineStrip } from '@/components/sections/services/EngineStrip'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { BuildPrinciples } from '@/components/sections/website-dev/BuildPrinciples'
 import { BuildReality } from '@/components/sections/website-dev/BuildReality'
@@ -13,7 +14,7 @@ import { StackTypes } from '@/components/sections/website-dev/StackTypes'
 import { WebDevPricing } from '@/components/sections/website-dev/WebDevPricing'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { CrossServiceCallout } from '@/components/services/CrossServiceCallout'
-import { serviceSchema } from '@/lib/schema'
+import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'High-Performance Website Development & Design',
@@ -197,6 +198,13 @@ export default function WebDevServicePage() {
           category: 'Web Development',
         })}
       />
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: 'https://salesolution.net/' },
+          { name: 'Services', url: 'https://salesolution.net/services/' },
+          { name: 'Website Development', url: 'https://salesolution.net/services/website-development-design-services/' },
+        ])}
+      />
 
       <div className="h-1.5 w-full bg-service-dev-500" aria-hidden />
 
@@ -244,6 +252,7 @@ export default function WebDevServicePage() {
       <PerformanceScorecard id="performance" />
       <PortfolioGrid id="portfolio" />
       <WebDevPricing id="engagement" />
+      <EngineStrip currentSlug="website-development-design-services" />
       <FAQ
         id="faq"
         eyebrow="Build FAQ"

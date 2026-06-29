@@ -9,12 +9,13 @@ import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { FrameworkTimeline } from '@/components/sections/FrameworkTimeline'
 import { ServicesTabs } from '@/components/sections/ServicesTabs'
 import { Comparison } from '@/components/sections/services/Comparison'
+import { EngineStrip } from '@/components/sections/services/EngineStrip'
 import { MarketReality } from '@/components/sections/services/MarketReality'
 import { ProcessTimeline } from '@/components/sections/services/ProcessTimeline'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { CrossServiceCallout } from '@/components/services/CrossServiceCallout'
-import { serviceSchema } from '@/lib/schema'
+import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'GEO Agency for Industrial E-commerce',
@@ -87,10 +88,11 @@ const SERVICES_FAQ: QA[] = [
     a: (
       <>
         <p>
-          Revenue and ARR are the primary KPIs. Leading indicators we
-          report monthly: AIO citation coverage on target queries,
-          citation-share vs competitors, schema completeness rate, and
-          qualified-lead inflows segmented by intent.
+          Revenue is the number that matters. Each month we also report
+          the leading signs: how often AI answers name you for the searches
+          that matter, how that compares to your competitors, how complete
+          your schema is, and how many qualified leads came in, sorted by
+          what they were trying to do.
         </p>
       </>
     ),
@@ -113,9 +115,9 @@ const SERVICES_FAQ: QA[] = [
       <>
         <p>
           We see the best results above $200k/month in revenue, roughly
-          $2.5M ARR, or at multi-location and franchise scale. Below that,
-          our standalone pricing is hard to justify against simpler
-          agencies &mdash; we&rsquo;ll tell you so on the first call.
+          $2.5M a year, or at multi-location and franchise scale. Below
+          that, our standalone pricing is hard to justify against simpler
+          agencies, and we&rsquo;ll tell you so on the first call.
         </p>
       </>
     ),
@@ -184,6 +186,13 @@ export default function AISEOServicePage() {
             'GEO, technical SEO, content authority, channel diversification, and conversion data — delivered by one senior operator for considered-purchase businesses: industrial distribution, technical B2B, and local service brands.',
           category: 'Digital Marketing',
         })}
+      />
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: 'https://salesolution.net/' },
+          { name: 'Services', url: 'https://salesolution.net/services/' },
+          { name: 'AI Search & GEO', url: 'https://salesolution.net/services/ai-seo/' },
+        ])}
       />
 
       <div className="h-1.5 w-full bg-service-search-500" aria-hidden />
@@ -364,6 +373,9 @@ export default function AISEOServicePage() {
       <EngagementModel id="engagement" serviceColorKey="search" />
       <ProcessTimeline />
       <Evidence />
+
+      <EngineStrip currentSlug="ai-seo" />
+
       <FAQ
         id="faq"
         eyebrow="Services FAQ"

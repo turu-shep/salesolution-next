@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { FullGrowthComparison } from '@/components/sections/full-growth-ownership/FullGrowthComparison'
@@ -10,7 +11,7 @@ import { FullGrowthTimeline } from '@/components/sections/full-growth-ownership/
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { CompositeBar } from '@/components/services/CompositeBar'
-import { serviceSchema } from '@/lib/schema'
+import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Full Growth Ownership · Fractional growth lead + coordinated retainer',
@@ -165,8 +166,12 @@ const FULL_GROWTH_FAQ: QA[] = [
       <>
         <p>
           Then Full Growth Ownership isn&rsquo;t the right shape. Pick
-          the service that fits, and engage on its Sprint or Retainer
-          tier directly. We won&rsquo;t try to sell you the wrong product.
+          the service that fits from{' '}
+          <Link href="/services/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
+            all the cylinders
+          </Link>
+          , and engage on its Sprint or Retainer tier directly. We
+          won&rsquo;t try to sell you the wrong product.
         </p>
       </>
     ),
@@ -184,6 +189,13 @@ export default function FullGrowthOwnershipPage() {
             'A premium-tier engagement that resolves into one of two shapes: a fractional GTM engineer embedded in leadership, or a coordinated retainer bundling 2–5 services (AI search, editorial content, catalog AI, website development, outbound email) under one accountable operator.',
           category: 'Digital Marketing',
         })}
+      />
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: 'https://salesolution.net/' },
+          { name: 'Services', url: 'https://salesolution.net/services/' },
+          { name: 'Full Growth Ownership', url: 'https://salesolution.net/services/full-growth-ownership/' },
+        ])}
       />
 
       <CompositeBar weight="hero" />

@@ -13,9 +13,10 @@ import { CatalogSnapshotCTA } from '@/components/sections/catalog-ai/CatalogSnap
 import { CatalogTiers } from '@/components/sections/catalog-ai/CatalogTiers'
 import { CatalogVolumePricing } from '@/components/sections/catalog-ai/CatalogVolumePricing'
 import { CatalogWhereAIUsed } from '@/components/sections/catalog-ai/CatalogWhereAIUsed'
+import { EngineStrip } from '@/components/sections/services/EngineStrip'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { serviceSchema } from '@/lib/schema'
+import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Catalog AI · AI-rewritten product catalogs for industrial e-commerce',
@@ -207,6 +208,13 @@ export default function CatalogAIServicePage() {
           category: 'Digital Marketing',
         })}
       />
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: 'https://salesolution.net/' },
+          { name: 'Services', url: 'https://salesolution.net/services/' },
+          { name: 'Catalog AI', url: 'https://salesolution.net/services/catalog-ai/' },
+        ])}
+      />
 
       <div className="h-1 w-full bg-service-catalog-500" aria-hidden />
 
@@ -245,6 +253,8 @@ export default function CatalogAIServicePage() {
       <CatalogCaseStudyCallout />
       <CatalogSnapshotCTA />
       <CatalogExclusions />
+
+      <EngineStrip currentSlug="catalog-ai" />
 
       <FAQ
         id="faq"

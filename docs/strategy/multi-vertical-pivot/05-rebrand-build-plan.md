@@ -87,16 +87,16 @@ Canonical list in `lib/revenue-engine.ts` (`CYLINDER_GROUPS`); rendered on `/rev
   - Retain: Recover/Reactivation (cold-quote + dormant-list recovery), Reviews/Reputation engine.
   - These map to the Bring/Convert/Retain levers in `operating-concept-bring-convert-retain.md`.
 - Keep `/services/*` slugs (SEO money pages). New cylinders get new `/services/{slug}/` pages.
-**Status (2026-06-29): STARTED.** ✅ GoalIndex → goal→part index shipped as the lead-off (homepage — see the Phase 1 carry-forward above). Cylinder-page rework + new cylinder pages not yet started. **Blocks Phase 5** (pillars deep-link cylinders) and **Phase 6** (niches fire cylinders).
+**Status (2026-06-29): ✅ COMPLETE.** GoalIndex → goal→part index (lead-off), all 6 new cylinder pages built (catalog now 12/12), and all 6 existing cylinder pages reworked. Phase 3 done; Phase 5 (pillars) and Phase 6 (niches) are now unblocked. **Next per sequence: Phase 4 — /industries/ index.**
 
 ### Phase 3 execution plan + grounded findings (2026-06-29 scan)
 
-**A. Rework the 6 built cylinder pages** (slugs frozen; each becomes a confident keyword-true money page that also reads as a part of the engine). Shared fixes confirmed by scan:
-- **Breadcrumb JSON-LD is MISSING on all 6** (ai-seo, catalog-ai, editorial-authority, website-development-design-services, outbound-email-marketing-services, full-growth-ownership). Add `BreadcrumbList` to each (Home → Services → {cylinder}); the product page already has it.
-- **`ai-seo` is the heaviest de-jargon job:** GEO / "generative engine" / ARR / "AIO citation coverage" sit in the META description, hero, and FAQ — the exact ICP-friction words. Lead with the plain outcome ("get named when a buyer asks AI who to use"), demote GEO/generative-engine to a second clause, cut ARR + "AIO citation coverage" from cold copy (keep them in the deeper "what we report" detail, not the glance).
-- **Sprint price:** stated only on ai-seo ("$12–24k, 4 weeks"). Reconcile against the hub's `EngagementShapes` pricing during the rework (confirm one number).
-- Add the "part of the engine" frame (link up to the engine / sibling cylinders) without diluting the head keyword.
-- Suggested order (jargon-worst + highest-intent first): **ai-seo → catalog-ai → editorial-authority → website-development-design-services → outbound-email-marketing-services → full-growth-ownership.**
+**A. Rework the 6 built cylinder pages — ✅ DONE (2026-06-29).** Slugs/copy/keywords/prices preserved; each now reads as a part of the engine.
+- **Breadcrumb JSON-LD added to all 6** (Home → Services → {cylinder}) via `breadcrumbListSchema`.
+- **Engine framing:** new shared `components/sections/services/EngineStrip.tsx` — auto-derives from `CYLINDER_GROUPS` by slug, names the cylinder's pillar, and cards its pillar-siblings (with their catalog `fires` lines + deep-links) + "the whole engine / all cylinders". Added before the FAQ on ai-seo, catalog-ai, editorial-authority, website-development-design-services, outbound-email-marketing-services. **Full Growth Ownership got breadcrumb only** (it IS the whole engine, not one cylinder — EngineStrip would mis-label it) + one inline link to the cylinder library.
+- **`ai-seo` de-jargon (conservative):** softened two customer-facing FAQ answers — dropped "ARR", "AIO citation coverage on target queries", "citation-share", "schema completeness rate" clinical pile-up → plain language. KEPT all keywords verbatim (GEO, generative engine optimization, AI Overviews, ChatGPT, Perplexity, GEO agency) and every price.
+- **Sprint price:** investigated — ai-seo + book-growth-call both state **$12–24k** (consistent); the industrial pillar's "$9K–$35K" reads as the cross-cylinder umbrella range and website-dev's "$15–35K" is website-specific. No conflict for ai-seo → no change made. **Open (founder call):** if a single canonical Sprint number is wanted across the site, that's a pricing decision to confirm; not fabricated here.
+- Validated: tsc/lint clean, all 6 routes 200, breadcrumb present on each, EngineStrip spot-checked on Bring (5-sibling) + Convert (2-sibling) variants.
 
 **B. Build new cylinder pages — "as earned"** (catalog locked at 12; 6 are 🔜). Recommend building the two the local-service motion most needs and that GoalIndex already points at:
 1. ✅ **Answer & Book** (Convert) — BUILT 2026-06-29 at `/services/answer-and-book/`. Hero "Answer every call. Book the job. Even the 9pm ones.", dark "leak", 4-step "pick up / text back / qualify / log", "Convert cylinder" engine framing + sibling links, FAQ, service+breadcrumb+FAQ JSON-LD. Visual loop (5 critiques + n+1). GoalIndex row 5 now deep-links it (was "Coming soon").
