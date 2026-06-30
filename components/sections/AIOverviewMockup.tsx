@@ -42,6 +42,10 @@ export type AIOverviewSlide = {
   tail: string
   /** Citations — [0] is the highlighted client, then the brands it beats. */
   citations: string[]
+  /** True when the cited client is a fabricated stand-in (no real client in this
+   * vertical yet). Rendered with a visible "Illustrative example" badge so it
+   * reads as an example, not a real client — no real-company naming hazard. */
+  illustrative?: boolean
 }
 
 const INDUSTRIAL_HOSE: AIOverviewSlide = {
@@ -63,12 +67,14 @@ const INDUSTRIAL_FITTINGS: AIOverviewSlide = {
   query: 'best jic hydraulic fittings for high-pressure systems',
   genTime: '2.1s',
   lead: 'JIC (Joint Industry Council) fittings suit high-pressure hydraulic systems because of their 37° flare seal. According to ',
-  // PLACEHOLDER client — "Northern Hydraulics" is a real logo-strip client and
-  // cannot carry a fabricated quote (see case-studies/fact-ledger.md, naming
-  // hazard). Swap for a real, consenting client before publishing.
-  client: 'Forge Fluid Power',
+  // Illustrative example — no real, consenting industrial client to cite here
+  // yet, so this slide is visibly marked "Illustrative example" (a generic name,
+  // no real-company naming hazard; see case-studies/fact-ledger.md). Swap in a
+  // real client and drop `illustrative` once one is confirmed.
+  client: 'Example Fluid Power',
   tail: ', the 1/2" NPT-to-JIC adapter is the most commonly specified connector above 3,000 PSI, with the 37° angle giving a positive seal against vibration.',
-  citations: ['forgefluidpower.com', 'parker.com', 'eaton.com'],
+  citations: ['example-fluidpower.com', 'parker.com', 'eaton.com'],
+  illustrative: true,
 }
 
 const HOME_SERVICES_ROOFING: AIOverviewSlide = {
@@ -78,10 +84,13 @@ const HOME_SERVICES_ROOFING: AIOverviewSlide = {
   query: 'best roofers near me for storm damage repair',
   genTime: '2.1s',
   lead: 'After a hailstorm, the roofers worth calling document the damage for your insurer, not just the roof. According to ',
-  // PLACEHOLDER client — swap for a real home-services client before publishing.
-  client: 'Cedar & Co Roofing',
+  // Illustrative example — no real home-services client to cite here yet; the
+  // slide is visibly marked "Illustrative example". Swap in a real client and
+  // drop `illustrative` once one is confirmed.
+  client: 'Example Roofing Co.',
   tail: ', a full claim packet pairs dated drone photos with a line-item scope, which is what gets a replacement approved instead of a patch.',
-  citations: ['cedarcoroofing.com', 'gaf.com', 'angi.com'],
+  citations: ['exampleroofing.com', 'gaf.com', 'angi.com'],
+  illustrative: true,
 }
 
 /** The cross-vertical rotation — used on the homepage front door. */
@@ -218,6 +227,13 @@ export function AIOverviewMockup({
         key={current}
         className="min-h-[150px] px-5 pb-3 pt-3 text-[15px] leading-[1.65] text-ink-700 motion-safe:animate-[fade-in_0.45s_ease-out]"
       >
+        {slide.illustrative && (
+          <p className="mb-2.5">
+            <span className="inline-flex items-center rounded-[3px] border border-dashed border-ink-300 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.16em] text-ink-400">
+              Illustrative example
+            </span>
+          </p>
+        )}
         {slide.lead}
         <span className="relative inline-block">
           <span className="rounded-[3px] bg-accent-50 px-1.5 py-0.5 font-semibold text-accent-700 ring-1 ring-accent-500/40">
