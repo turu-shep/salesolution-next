@@ -2,161 +2,167 @@ import Link from 'next/link'
 
 import { SectionRail } from '@/components/layout/SectionRail'
 import { CompositeBar } from '@/components/services/CompositeBar'
-import { cn } from '@/lib/cn'
 
 /**
- * Generic engagement shapes for the Services hub.
+ * Pricing for the Services hub — priced the way the page is framed: the engine
+ * is the base you install once, the cylinders are the parts you add on top.
  *
- * Every service has three engagement shapes — Sprint, Operator Retainer,
- * Full Growth Ownership. The exact deliverables differ by service; the
- * shapes are the same. This is the generic, service-agnostic version
- * rendered on /services/ (the per-service EngagementModel takes a
- * `serviceColorKey` and is rendered on the individual service pages).
+ * Two moves: a one-time install that puts the Revenue Engine in (~90 days,
+ * 3-month engagement), then the cylinders you choose, billed monthly — or one
+ * operator owning the whole thing (Full Growth Ownership). A single cylinder can
+ * still run standalone to prove it first (the footnote), which is the job the
+ * old Sprint shape did. This block diverges on purpose from the per-service
+ * EngagementModel (Sprint / Retainer / Full Growth), which the cylinder pages
+ * keep — the hub tells the engine-as-base story; the service pages don't.
  */
-
-type Shape = {
-  key: 'sprint' | 'retainer' | 'composite'
-  name: string
-  cadence: string
-  price: string
-  forWhom: string
-  body: React.ReactNode
-  cta: { label: string; href: string; ctaToken: string }
-  featured?: boolean
-}
-
-const SHAPES: Shape[] = [
-  {
-    key: 'sprint',
-    name: 'Sprint',
-    cadence: '4–6 weeks · fixed scope',
-    price: '$9–35K',
-    forWhom: '"Show me this works before we commit."',
-    body: (
-      <>
-        Productized first engagement. Specific deliverables, fixed price,
-        written SOW within 48 hours. Available on AI Search, Editorial
-        Authority (as Pillar Pack), Website Development, Outbound Email.
-      </>
-    ),
-    cta: {
-      label: 'Book a Growth Call',
-      href: '/book-growth-call/',
-      ctaToken: 'book_call__engagement_sprint',
-    },
-  },
-  {
-    key: 'retainer',
-    name: 'Operator Retainer',
-    cadence: 'Ongoing · quarterly review',
-    price: '$4–15K / month',
-    forWhom: '"We know we have the structural problem. Fix it."',
-    featured: true,
-    body: (
-      <>
-        Ongoing service execution. Direct Slack to the operator, monthly
-        outcome reviews, no PMs in the middle. 3-month minimum.
-      </>
-    ),
-    cta: {
-      label: 'Book a Growth Call',
-      href: '/book-growth-call/',
-      ctaToken: 'book_call__engagement_retainer',
-    },
-  },
-  {
-    key: 'composite',
-    name: 'Full Growth Ownership',
-    cadence: 'Multi-service · by scope',
-    price: 'From $20K / month',
-    forWhom: '"We need someone running our entire growth function."',
-    body: (
-      <>
-        One operator across multiple services. Either Fractional GTM
-        Engineer (full ownership) or 4-in-1 Coordinated Retainer (bundled
-        execution). 3&ndash;6 month minimum.
-      </>
-    ),
-    cta: {
-      label: 'Get a quote',
-      href: '/services/full-growth-ownership/',
-      ctaToken: 'full_growth_ownership__engagement_card',
-    },
-  },
-]
-
 export function EngagementShapes({ id }: { id?: string }) {
   return (
     <SectionRail tone="paper" id={id}>
       <div className="max-w-3xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-          How engagements are shaped
+          How it&rsquo;s priced
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Three ways in.{' '}
-          <span className="text-ink-900">The same shape, every service.</span>
+          Install the base. Then add the parts.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          Every service has three engagement shapes. The exact deliverables
-          differ by service; the shapes are the same.
+          One system, billed in two moves: a one-time install that puts the
+          engine in, then the cylinders you choose, monthly. Or hand the whole
+          thing to one operator.
         </p>
       </div>
 
-      <ul className="mt-14 grid gap-6 md:grid-cols-3">
-        {SHAPES.map((s) => (
-          <li
-            key={s.key}
-            className={cn(
-              'relative flex flex-col overflow-hidden border bg-surface transition-shadow duration-200',
-              s.featured
-                ? 'border-ink-900 shadow-[0_30px_80px_-30px_rgba(15,20,30,0.25)]'
-                : 'border-rule hover:border-ink-700',
-            )}
-          >
-            {s.key === 'composite' && <CompositeBar weight="card" />}
+      {/* The base — the foundation you install once. */}
+      <div className="mt-12 rounded-[8px] border border-rule border-t-2 border-t-brand-600 bg-surface p-7 shadow-[0_24px_56px_-32px_rgba(15,20,30,0.28)] sm:p-9">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-brand-600">
+            The base &middot; installed once
+          </p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">
+            ~90 days &middot; 3-month engagement
+          </p>
+        </div>
+        <div className="mt-3 flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+          <h3 className="font-display text-2xl font-semibold tracking-[-0.015em] text-ink-900">
+            The Revenue Engine
+          </h3>
+          <p className="font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
+            $30K{' '}
+            <span className="text-lg font-medium text-ink-500">one-time</span>
+          </p>
+        </div>
+        <p className="mt-4 max-w-2xl leading-relaxed text-ink-700">
+          Answer the call, book the job, recover what went cold, prove the
+          revenue. The foundation every cylinder bolts onto.
+        </p>
+      </div>
 
-            {s.featured && (
-              <span className="absolute -top-3 left-6 inline-flex items-center rounded-[3px] bg-ink-900 px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-                Most engagements start here
-              </span>
-            )}
+      {/* connector — the parts bolt onto the base */}
+      <div className="flex flex-col items-center">
+        <span aria-hidden className="h-7 w-px bg-rule-strong" />
+        <span className="my-2 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
+          then bolt on the parts
+        </span>
+        <span aria-hidden className="h-7 w-px bg-rule-strong" />
+      </div>
 
-            <div className="border-b border-rule px-6 py-5">
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-                {s.cadence}
-              </p>
-              <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
-                {s.name}
-              </h3>
-              <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-                {s.price}
-              </p>
-            </div>
+      <ul className="grid gap-6 md:grid-cols-2">
+        {/* Add cylinders — where most start. */}
+        <li className="relative flex flex-col border border-ink-900 bg-surface shadow-[0_30px_80px_-30px_rgba(15,20,30,0.25)]">
+          <span className="absolute -top-3 left-6 inline-flex items-center rounded-[3px] bg-ink-900 px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
+            Where most start
+          </span>
+          <div className="border-b border-rule px-6 py-5">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+              Per part &middot; monthly
+            </p>
+            <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
+              Add cylinders
+            </h3>
+            <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
+              $4&ndash;15K{' '}
+              <span className="text-lg font-medium text-ink-500">/ mo each</span>
+            </p>
+          </div>
+          <div className="flex-1 px-6 py-6">
+            <p className="text-sm italic text-ink-500">
+              &ldquo;Pick the parts that move our number.&rdquo;
+            </p>
+            <p className="mt-4 text-sm text-ink-700">
+              AI search, content, local SEO, paid, outbound, reviews &mdash;
+              added on top of the base, run and re-aimed each cycle. Start with
+              one, add more as they pay back.
+            </p>
+          </div>
+          <div className="border-t border-rule px-6 py-4">
+            <Link
+              href="/book-growth-call/"
+              data-cta="book_call__engagement_cylinders"
+              data-cta-location="mid_body"
+              className="inline-flex w-full items-center justify-center gap-1.5 rounded-[4px] bg-ink-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-brand-600"
+            >
+              Book a Growth Call
+              <span aria-hidden>&rarr;</span>
+            </Link>
+          </div>
+        </li>
 
-            <div className="flex-1 px-6 py-6">
-              <p className="text-sm italic text-ink-500">{s.forWhom}</p>
-              <p className="mt-4 text-sm text-ink-700">{s.body}</p>
-            </div>
-
-            <div className="border-t border-rule px-6 py-4">
-              <Link
-                href={s.cta.href}
-                data-cta={s.cta.ctaToken}
-                data-cta-location="mid_body"
-                className={cn(
-                  'inline-flex w-full items-center justify-center gap-1.5 rounded-[4px] px-5 py-2.5 text-sm font-semibold transition-colors duration-200',
-                  s.featured
-                    ? 'bg-ink-900 text-white hover:bg-brand-600'
-                    : 'border border-ink-300 bg-surface text-ink-900 hover:border-ink-900',
-                )}
-              >
-                {s.cta.label}
-                <span aria-hidden>&rarr;</span>
-              </Link>
-            </div>
-          </li>
-        ))}
+        {/* Own the whole engine — Full Growth Ownership. */}
+        <li className="relative flex flex-col overflow-hidden border border-rule bg-surface transition-shadow duration-200 hover:border-ink-700">
+          <CompositeBar weight="card" />
+          <div className="border-b border-rule px-6 py-5">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+              Whole engine &middot; one operator
+            </p>
+            <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
+              Full Growth Ownership
+            </h3>
+            <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
+              From $20K{' '}
+              <span className="text-lg font-medium text-ink-500">/ mo</span>
+            </p>
+          </div>
+          <div className="flex-1 px-6 py-6">
+            <p className="text-sm italic text-ink-500">
+              &ldquo;Run our entire growth function.&rdquo;
+            </p>
+            <p className="mt-4 text-sm text-ink-700">
+              One operator owns the base and every cylinder, reads both revenue
+              lines, and re-aims the weakest part each cycle. 3&ndash;6 month
+              minimum.
+            </p>
+          </div>
+          <div className="border-t border-rule px-6 py-4">
+            <Link
+              href="/services/full-growth-ownership/"
+              data-cta="full_growth_ownership__engagement_card"
+              data-cta-location="mid_body"
+              className="inline-flex w-full items-center justify-center gap-1.5 rounded-[4px] border border-ink-300 bg-surface px-5 py-2.5 text-sm font-semibold text-ink-900 transition-colors duration-200 hover:border-ink-900"
+            >
+              Get a quote
+              <span aria-hidden>&rarr;</span>
+            </Link>
+          </div>
+        </li>
       </ul>
+
+      {/* The reframe: read the numbers above against what staying put costs. */}
+      <div className="mt-10 border-l-2 border-brand-600 pl-5 sm:pl-6">
+        <p className="font-display text-lg font-semibold tracking-[-0.01em] text-ink-900">
+          The fee isn&rsquo;t the expensive part.
+        </p>
+        <p className="mt-2 max-w-2xl leading-relaxed text-ink-700">
+          You already spend $15&ndash;40K a month on agencies, and get less for
+          it. Six vendors, no one accountable, and you still can&rsquo;t say
+          which lever moved revenue. The costly line item is another year
+          exactly where you are, demand leaking the whole time.
+        </p>
+      </div>
+
+      <p className="mt-7 max-w-2xl text-sm leading-relaxed text-ink-600">
+        Want proof before the full install? Any cylinder can run as a standalone
+        engagement first &mdash; fixed scope, written SOW in 48 hours.
+      </p>
     </SectionRail>
   )
 }

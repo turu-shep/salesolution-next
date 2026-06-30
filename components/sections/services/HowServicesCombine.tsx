@@ -21,7 +21,7 @@ const COMBINATIONS: Combination[] = [
   {
     services: ['search', 'editorial'],
     label: 'AI Search + Editorial Authority',
-    fit: 'Brand wants to win organic + AIO citation share',
+    fit: 'You want to win Google rankings and AI-answer mentions',
     spend: '$13–22K / mo',
   },
   {
@@ -33,7 +33,7 @@ const COMBINATIONS: Combination[] = [
   {
     services: ['editorial', 'catalog'],
     label: 'Editorial Authority + Catalog AI',
-    fit: 'Two-layer content strategy (category + product)',
+    fit: 'Content at both levels: category pages and every product',
     spend: '$11–22K / mo',
   },
   {
@@ -45,7 +45,7 @@ const COMBINATIONS: Combination[] = [
   {
     services: ['outbound', 'search', 'editorial'],
     label: 'Outbound + AI Search + Editorial',
-    fit: 'Pipeline motion supported by visible expertise',
+    fit: 'Outreach that lands because buyers can already find you',
     spend: '$20–32K / mo',
   },
   {
@@ -76,7 +76,7 @@ export function HowServicesCombine({ id }: { id?: string }) {
             off and don&rsquo;t.
           </p>
           <p>
-            Five agencies, no accountability. That&rsquo;s the usual setup, and
+            Six vendors, no accountability. That&rsquo;s the usual setup, and
             none of them owns the handoff. We run the parts as one engine, with
             one operator who reads both revenue lines and re-aims the weakest
             part each cycle.
