@@ -65,8 +65,8 @@ export type NicheBrief = {
 
 /** Display labels + ordering for the landing pages the niches group under. */
 export const LANDING_PAGES: { key: string; label: string; href: string }[] = [
-  { key: 'home-services', label: 'Home services', href: '/revenue-engine/home-services/' },
+  { key: 'home-services', label: 'Home services', href: '/industries/home-services/' },
   { key: 'dentists', label: 'Dental', href: '/revenue-engine/dentists/' },
-  { key: 'medical', label: 'Medical & aesthetics', href: '/revenue-engine/medical/' },
-  { key: 'local-retail', label: 'Local retail', href: '/revenue-engine/local-retail/' },
+  { key: 'medical', label: 'Medical & aesthetics', href: '/industries/medical-aesthetics/' },
+  { key: 'local-retail', label: 'Local retail', href: '/industries/consumer-brands/' },
 ]

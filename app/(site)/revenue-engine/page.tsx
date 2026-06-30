@@ -102,7 +102,7 @@ export default function RevenueEnginePage() {
           items: [
             {
               name: 'Revenue Engine for Home Services',
-              url: `${business.url}/revenue-engine/home-services/`,
+              url: `${business.url}/industries/home-services/`,
             },
             {
               name: 'Revenue Engine for Dental Practices',
@@ -129,7 +129,7 @@ export default function RevenueEnginePage() {
         }
         primaryCta={{
           label: 'Book a Revenue Leak Audit',
-          href: '/revenue-engine/home-services/#audit',
+          href: '/industries/home-services/#audit',
         }}
         primaryCtaTag="revenue_leak_audit__re_product_router"
         selfQualifiers={[
@@ -211,7 +211,7 @@ export default function RevenueEnginePage() {
 
 const NICHES = [
   {
-    href: '/revenue-engine/home-services/',
+    href: '/industries/home-services/',
     kicker: 'Roofing · HVAC · plumbing · electrical',
     title: 'Home services',
     body: 'Answer every storm-season call, book the estimate, and chase the quote that went cold.',

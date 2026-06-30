@@ -14,17 +14,17 @@ export const primaryNav: NavItem[] = [
   {
     // Audience-led entry beside the capability-led "Services": a visitor
     // self-identifies by industry in one click. Parent is the cross-vertical
-    // /industries/ index. NOTE (Phase 1): label is now "Industries"; the
-    // children still point at their current live targets and repoint to the
-    // /industries/{industry}/ pillars in Phase 5 (after the pillar dirs + 301s
-    // exist) — see docs/strategy/multi-vertical-pivot/06-product-page-and-nav-plan.md.
+    // /industries/ index. Children are the four industry pillars (Phase 5 remap,
+    // 2026-06-30); Dentists is the one live niche (under Medical & aesthetics)
+    // surfaced here. Jewelry joins once its niche page ships (Phase 6).
     label: 'Industries',
     href: '/industries/',
     children: [
       { label: 'Industrial & Technical B2B', href: '/industries/industrial-distribution/' },
-      { label: 'Medical & Aesthetics', href: '/revenue-engine/medical/' },
-      { label: 'Home & Local Services', href: '/revenue-engine/home-services/' },
-      { label: 'Retail & Consumer Brands', href: '/revenue-engine/local-retail/' },
+      { label: 'Home & Local Services', href: '/industries/home-services/' },
+      { label: 'Medical & Aesthetics', href: '/industries/medical-aesthetics/' },
+      { label: 'Consumer & DTC Brands', href: '/industries/consumer-brands/' },
+      { label: 'Dentists', href: '/revenue-engine/dentists/' },
     ],
   },
   { label: 'Case Studies', href: '/case-studies/' },

@@ -53,7 +53,7 @@ export function FinalCTARail() {
         </Link>
 
         <Link
-          href="/revenue-engine/home-services/#audit"
+          href="/industries/home-services/#audit"
           data-cta="revenue-leak-audit__final_rail"
           data-cta-location="final_rail"
           className="group flex flex-col border border-white/15 bg-white/[0.03] transition-colors duration-200 hover:border-white/40"

@@ -76,4 +76,10 @@ export const redirects: Redirect[] = [
   // merged into editorial-authority. Preserve SEO equity from both old URLs.
   { source: '/services/content-writing-services/', destination: '/services/editorial-authority/', permanent: true },
   { source: '/services/website-content-writing-packages/', destination: '/services/editorial-authority/', permanent: true },
+
+  // ── 2026-06-30: multi-vertical IA remap — the three Revenue Engine verticals
+  // became /industries/ pillars. Preserve equity from the old vertical URLs.
+  { source: '/revenue-engine/home-services/', destination: '/industries/home-services/', permanent: true },
+  { source: '/revenue-engine/medical/', destination: '/industries/medical-aesthetics/', permanent: true },
+  { source: '/revenue-engine/local-retail/', destination: '/industries/consumer-brands/', permanent: true },
 ]

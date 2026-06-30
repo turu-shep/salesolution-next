@@ -18,7 +18,7 @@ import {
 } from '@/components/sections/revenue-engine/WholeFlowLeak'
 import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { serviceSchema } from '@/lib/schema'
+import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Revenue Engine for Dental Practices · Recover cold cases & recall',
@@ -222,6 +222,14 @@ export default function DentistsRevenueEnginePage() {
             'A HIPAA-compliant revenue system for dental practices: treatment-plan and recall recovery, call answering during chair time, online booking, front-desk scoring, and attribution.',
           category: 'Marketing',
         })}
+      />
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: 'https://salesolution.net/' },
+          { name: 'Industries', url: 'https://salesolution.net/industries/' },
+          { name: 'Medical & aesthetics', url: 'https://salesolution.net/industries/medical-aesthetics/' },
+          { name: 'Dentists', url: 'https://salesolution.net/revenue-engine/dentists/' },
+        ])}
       />
 
       <div className="h-1.5 w-full bg-brand-600" aria-hidden />

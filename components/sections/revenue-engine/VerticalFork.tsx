@@ -13,7 +13,7 @@ import { SectionRail } from '@/components/layout/SectionRail'
 
 const VERTICALS = [
   {
-    href: '/revenue-engine/home-services/',
+    href: '/industries/home-services/',
     kicker: 'Roofing · HVAC · plumbing · electrical',
     title: 'Home services',
     body: 'Answer every storm-season call, book the estimate, and chase the quote that went cold — built for crews who are on a roof, not at a desk.',

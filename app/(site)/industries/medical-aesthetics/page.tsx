@@ -14,13 +14,13 @@ import { Concept3Calculator } from '@/components/sections/revenue-engine/leak-co
 import { Concept4BeforeAfter } from '@/components/sections/revenue-engine/leak-concepts/Concept4BeforeAfter'
 import { LEAK_DATA } from '@/components/sections/revenue-engine/leak-concepts/data'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { serviceSchema } from '@/lib/schema'
+import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Revenue Engine for Medical & Aesthetics · Dental, med spa, plastic surgery',
   description:
     'A HIPAA-compliant system for elective and aesthetic practices — dental, med spa, plastic surgery, derm. It answers calls during treatment, books new consults, follows up the high-value plans, and proves the revenue. Book a free Revenue Leak Audit.',
-  alternates: { canonical: 'https://salesolution.net/revenue-engine/medical/' },
+  alternates: { canonical: 'https://salesolution.net/industries/medical-aesthetics/' },
 }
 
 const leak = LEAK_DATA['medical']
@@ -118,17 +118,24 @@ const MEDICAL_FAQ: QA[] = [
   },
 ]
 
-export default function MedicalRevenueEnginePage() {
+export default function MedicalAestheticsPillarPage() {
   return (
     <>
       <JsonLd
         data={serviceSchema({
           name: 'Revenue Engine for Medical & Aesthetics',
-          url: 'https://salesolution.net/revenue-engine/medical/',
+          url: 'https://salesolution.net/industries/medical-aesthetics/',
           description:
             'A HIPAA-compliant AI revenue system for elective and aesthetic practices (dental, med spa, plastic surgery, derm): call answering, online consult booking, treatment-plan and recall follow-up, front-desk scoring, and attribution.',
           category: 'Marketing',
         })}
+      />
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: 'https://salesolution.net/' },
+          { name: 'Industries', url: 'https://salesolution.net/industries/' },
+          { name: 'Medical & aesthetics', url: 'https://salesolution.net/industries/medical-aesthetics/' },
+        ])}
       />
 
       <div className="h-1.5 w-full bg-brand-600" aria-hidden />

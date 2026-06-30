@@ -18,10 +18,10 @@ Sale Solution runs two motions. For industrial and technical-distribution e-comm
 A productized, done-for-you monthly system for businesses that run on calls and bookings — roofing and home services, dental, medical, local retail. It captures every lead, responds in seconds, books the job, recovers cold quotes, and proves the revenue (CAPTURE → RESPOND → BOOK → RECOVER → PROVE).
 
 - [Revenue Engine](https://salesolution.net/revenue-engine/): How the system captures, responds, books, recovers, and proves — with the revenue-leak math. Book a Revenue Leak Audit here.
-- [Home services & roofing](https://salesolution.net/revenue-engine/home-services/): Answer every call, reply in seconds, and chase the quotes that go cold.
+- [Home services & roofing](https://salesolution.net/industries/home-services/): Answer every call, reply in seconds, and chase the quotes that go cold.
 - [Dental practices](https://salesolution.net/revenue-engine/dentists/): Capture new-patient calls and book them before they ring the next office.
-- [Medical & aesthetic practices](https://salesolution.net/revenue-engine/medical/): Capture and book consults without adding front-desk headcount.
-- [Local retail](https://salesolution.net/revenue-engine/local-retail/): Turn calls and quote requests into booked, paid work.
+- [Medical & aesthetic practices](https://salesolution.net/industries/medical-aesthetics/): Capture and book consults without adding front-desk headcount.
+- [Local retail](https://salesolution.net/industries/consumer-brands/): Turn calls and quote requests into booked, paid work.
 
 ## Learning hub
 

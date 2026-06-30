@@ -14,13 +14,13 @@ import { Concept3Calculator } from '@/components/sections/revenue-engine/leak-co
 import { Concept4BeforeAfter } from '@/components/sections/revenue-engine/leak-concepts/Concept4BeforeAfter'
 import { LEAK_DATA } from '@/components/sections/revenue-engine/leak-concepts/data'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { serviceSchema } from '@/lib/schema'
+import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Revenue Engine for Home Services · Roofing, HVAC, plumbing, electrical',
   description:
     'A done-for-you system for home-services contractors. It answers every call 24/7, books estimates, chases the quotes that go cold, and logs every storm-season lead — so the leads you pay for turn into booked jobs. Book a free Revenue Leak Audit.',
-  alternates: { canonical: 'https://salesolution.net/revenue-engine/home-services/' },
+  alternates: { canonical: 'https://salesolution.net/industries/home-services/' },
 }
 
 const leak = LEAK_DATA['home-services']
@@ -68,17 +68,24 @@ const HS_FAQ: QA[] = [
   },
 ]
 
-export default function HomeServicesRevenueEnginePage() {
+export default function HomeServicesPillarPage() {
   return (
     <>
       <JsonLd
         data={serviceSchema({
           name: 'Revenue Engine for Home Services',
-          url: 'https://salesolution.net/revenue-engine/home-services/',
+          url: 'https://salesolution.net/industries/home-services/',
           description:
             'A done-for-you AI revenue system for home-services contractors (roofing, HVAC, plumbing, electrical): call answering, instant quotes, estimate recovery, and a dispute-proof lead log.',
           category: 'Marketing',
         })}
+      />
+      <JsonLd
+        data={breadcrumbListSchema([
+          { name: 'Home', url: 'https://salesolution.net/' },
+          { name: 'Industries', url: 'https://salesolution.net/industries/' },
+          { name: 'Home services', url: 'https://salesolution.net/industries/home-services/' },
+        ])}
       />
 
       <div className="h-1.5 w-full bg-brand-600" aria-hidden />
