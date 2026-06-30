@@ -400,7 +400,7 @@ export default async function IndustrialDistributionPage() {
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
           {LEAKS.map((l) => (
             <div key={l.title} className="border border-white/10 bg-white/[0.03] p-7 md:p-8">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-300">
                 {l.stroke}
               </p>
               <h3 className="mt-3 font-display text-2xl font-semibold tracking-[-0.01em] text-white">
@@ -482,11 +482,11 @@ export default async function IndustrialDistributionPage() {
             How the engine runs
           </p>
           <h2 className="mt-3 font-display text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-            Three jobs. Six cylinders. One engine.
+            Three jobs. The cylinders. One engine.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-ink-700">
             Each cylinder is a service we run in-house. A distributor doesn&rsquo;t
-            fire all six on day one. We light the ones that pay back first, then
+            fire all of them on day one. We light the ones that pay back first, then
             add the rest as the work compounds. Each one links to the full spec.
           </p>
         </div>

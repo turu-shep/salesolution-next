@@ -6,7 +6,7 @@ import { CYLINDER_GROUPS } from '@/lib/revenue-engine'
 import { PillarIcon } from './pillar-icons'
 
 /**
- * "Six cylinders, one engine" — the six /services/* offerings grouped by the job
+ * "The cylinders, one engine" — the /services/* offerings grouped by the job
  * each fires (Bring / Convert / Retain). Each card deep-links to its service
  * page. This page names and describes the services; it does not target their
  * head keywords (those belong to /services/{slug}/).

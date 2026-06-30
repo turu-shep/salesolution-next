@@ -21,7 +21,7 @@ import { breadcrumbListSchema, itemListSchema, serviceSchema } from '@/lib/schem
 export const metadata: Metadata = {
   title: 'How the Revenue Engine works',
   description:
-    'The Revenue Engine is one system that runs your whole sale: it brings the right buyers in, answers and books the ones who reach you, wins back the ones who went quiet, and proves the revenue in your own numbers. See the five steps and the six services that fire them.',
+    'The Revenue Engine is one system that runs your whole sale: it brings the right buyers in, answers and books the ones who reach you, wins back the ones who went quiet, and proves the revenue in your own numbers. See the five steps and the services that fire them.',
   alternates: { canonical: 'https://salesolution.net/revenue-engine/' },
 }
 
@@ -50,12 +50,12 @@ const REVENUE_ENGINE_FAQ: QA[] = [
     ),
   },
   {
-    q: 'Do I have to take all six cylinders?',
+    q: 'Do I have to take every cylinder?',
     a: (
       <p>
         No. We start with the leak that&rsquo;s costing you the most and add
         cylinders as they pay for themselves. Most owners don&rsquo;t need all
-        six on day one.
+        of them on day one.
       </p>
     ),
   },
@@ -82,7 +82,7 @@ export default function RevenueEnginePage() {
           // so pass the real URL to keep @id/url aligned with the canonical above.
           url: 'https://salesolution.net/revenue-engine/',
           description:
-            'A done-for-you system that runs the whole sale for a local business: it brings the right buyers in, answers and books the ones who reach you, wins back the ones who went quiet, and proves the revenue in the owner’s own numbers. Five steps (Capture, Respond, Book, Recover, Prove), fired by six services.',
+            'A done-for-you system that runs the whole sale for a local business: it brings the right buyers in, answers and books the ones who reach you, wins back the ones who went quiet, and proves the revenue in the owner’s own numbers. Five steps (Capture, Respond, Book, Recover, Prove), fired by the services behind them.',
           category: 'Marketing',
         })}
       />
@@ -139,7 +139,7 @@ export default function RevenueEnginePage() {
         anchors={[
           { label: 'The wedge', href: '#wedge' },
           { label: 'How it works', href: '#how' },
-          { label: 'Six cylinders', href: '#cylinders' },
+          { label: 'The cylinders', href: '#cylinders' },
           { label: 'Proof', href: '#prove' },
           { label: 'Pick your industry', href: '#pick' },
         ]}
@@ -158,7 +158,7 @@ export default function RevenueEnginePage() {
         proveLine="We prove it paid."
       />
 
-      {/* 4 — SIX CYLINDERS: the six services grouped Bring/Convert/Retain,
+      {/* 4 — THE CYLINDERS: the services grouped Bring/Convert/Retain,
           each deep-linked to its /services/{slug}/ page */}
       <SixCylinders id="cylinders" />
 
@@ -198,7 +198,7 @@ export default function RevenueEnginePage() {
             in plain terms.
           </>
         }
-        kicker="What a Revenue Engine is, how it beats point tools, whether you need all six, and how we prove the revenue."
+        kicker="What a Revenue Engine is, how it beats point tools, whether you need all of them, and how we prove the revenue."
         items={REVENUE_ENGINE_FAQ}
       />
 

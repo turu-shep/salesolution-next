@@ -63,11 +63,10 @@ export const PRODUCT_PILLAR_PROVE: Step = {
 
 /**
  * The cylinders, grouped by the job they fire in the engine (Bring / Convert /
- * Retain). Built ones carry a `slug` and deep-link to /services/{slug}/; the
- * rest are listed without a slug (no link, "Coming soon") until their page
- * exists — see the catalog-expansion decision (2026-06-29). The product page
- * names and describes them; it does not target their head keywords (those
- * belong to the service pages).
+ * Retain). Each carries a `slug` and deep-links to its /services/{slug}/ page;
+ * the full catalog is built (catalog-expansion decision, 2026-06-29). The
+ * product page names and describes them; it does not target their head keywords
+ * (those belong to the service pages).
  */
 export type Cylinder = { name: string; fires: string; slug?: string }
 export type CylinderGroup = { pillar: string; job: string; cylinders: Cylinder[] }

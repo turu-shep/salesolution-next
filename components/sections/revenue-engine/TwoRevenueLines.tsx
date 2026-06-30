@@ -58,7 +58,7 @@ export function TwoRevenueLines({
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
                 Your monthly report
               </p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-400">
+              <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-300">
                 your figures
               </p>
             </div>
@@ -67,7 +67,7 @@ export function TwoRevenueLines({
               <li className="py-5">
                 <div className="flex items-baseline justify-between gap-4">
                   <p className="font-display text-lg font-semibold text-white">Media-driven</p>
-                  <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-400">
+                  <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-300">
                     from your ads
                   </span>
                 </div>
