@@ -49,8 +49,11 @@ const SPECS = {
       'A residential roof with a professional roofing contractor working, seen ' +
       'from a respectful distance at golden hour, suburban neighborhood. ' + STYLE,
   },
+  // Consumer & DTC brands is a SELL-PRODUCT motion (Phase 5 flip) → brand-blue,
+  // matching industrial. (Image file stays local-retail.webp; the pillar lives
+  // at /industries/consumer-brands/.)
   'local-retail': {
-    tone: ACCENT,
+    tone: BRAND,
     prompt:
       'A bright modern local retail showroom interior with tidy product ' +
       'displays and warm inviting light, no shoppers. ' + STYLE,
