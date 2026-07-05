@@ -1,8 +1,8 @@
 # 00 — Offer Architecture (Canonical)
 
-**Status:** DRAFT for founder sign-off. Nothing here ships to a page without explicit approval. All copy-adjacent lines are marked **GATE:HUMAN**.
+**Status:** ✅ **SIGNED 2026-07-05** — D1–D12 adopted **with the §16 verification corrections folded in**. Founder decisions: (1) all twelve recommendations stand, corrected per §16 (ROI stats sell-product-side only; floor line reworded to the approved formula; credit sentence split + scoped to priced cylinders; contractors vertical = `/industries/home-services/`); (2) all unattested proof numbers (42-sprints/never-invoked, 60/30/10 split, audit-page 42/+32%/4.9-Clutch + rebuild additions) are **removed/de-numbered in the migration pass** — any later attested can return with a claims-library row; (3) the book-jobs option trio is **renamed per §16** (working names "The leak sealed" / "Sealed, plus demand" / "The whole flow, run for you"; final wording GATE:HUMAN on the proposal template). Individual copy lines still carry their GATE:HUMAN marks — sign-off here is the architecture, not the sentences.
 **Date:** 2026-07-05
-**Owner:** Artur (decisions) / this doc (spec of record once signed)
+**Owner:** Artur (decisions) / this doc (spec of record)
 
 ## 0. Ground-truth note — read this first
 
