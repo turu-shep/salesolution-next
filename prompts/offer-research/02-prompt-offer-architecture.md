@@ -89,7 +89,7 @@ decision context).
    guarantee is banned (published price, week-4 work shown, 48h SOW, pilot/snapshot doors,
    exit terms). Assess a "pilot-priced first cylinder credits toward the install" mechanic.
 
-**Deliverable → write to `docs/strategy/offers/00-offer-architecture.md`:**
+**Deliverable → write to `docs/strategy/offer-research/00-offer-architecture.md`:**
 - The canonical ladder (one diagram): entry doors → install (floor price + value-scaling
   rule, length, contents per motion) → retainer (framed as access + ownership) → FGO.
   Which numbers appear on which page type, and which are never published.

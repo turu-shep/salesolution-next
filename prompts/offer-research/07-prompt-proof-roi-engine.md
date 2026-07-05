@@ -11,7 +11,7 @@ of hype, because the buyer is agency-burned and the voice rules ban manufactured
 and unsourced claims. I'm the founder. Deliverable: a system spec + component-level plan.
 
 **Read first:** `prompts/offer-research/01-offer-audit-2026-07-05.md` (the gap list is
-your work order), `docs/strategy/offers/00-offer-architecture.md` (if present),
+your work order), `docs/strategy/offer-research/00-offer-architecture.md` (if present),
 `.agents/product-marketing-context.md`, `lib/stats.ts` (approved: $378M driven, 91%
 retention, **2.5x avg ROI in 12 months**, **5.2x lifetime**, 96 NPS, $575K ARR/client),
 `app/(site)/revenue-engine/dentists/page.tsx` (the reference pattern: fee slider,
@@ -59,7 +59,7 @@ retention, **2.5x avg ROI in 12 months**, **5.2x lifetime**, 96 NPS, $575K ARR/c
    exist) so we learn which anchors/blocks move audit bookings and growth calls — define
    the before/after metrics for this whole offer push.
 
-**Deliverable → `docs/strategy/offers/proof-payback-system.md`:** the payback-block spec
+**Deliverable → `docs/strategy/offer-research/proof-payback-system.md`:** the payback-block spec
 (props, variants, mount map), the ROI-stat deployment map, the proof roadmap (now vs
 first-cohort), the urgency library (sourced, GATE:HUMAN), the close patterns, the
 measurement plan, and a build-order list sized S/M/L per component. Constraints: no

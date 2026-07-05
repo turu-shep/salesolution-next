@@ -11,7 +11,7 @@ one live niche — and the best conversion page on the site; improve it, don't f
 I'm the founder. Deliverable: an offer spec + wording kit.
 
 **Read first:** `prompts/offer-research/01-offer-audit-2026-07-05.md`,
-`docs/strategy/offers/00-offer-architecture.md` (if present — it wins on prices),
+`docs/strategy/offer-research/00-offer-architecture.md` (if present — it wins on prices),
 `.agents/product-marketing-context.md`, the live pages
 `app/(site)/industries/medical-aesthetics/page.tsx` and
 `app/(site)/revenue-engine/dentists/page.tsx`, and — critically —
@@ -75,7 +75,7 @@ kill-list enforced; humanizer pass on every block):**
   payback line, the close ("That guarantee has my name on it" stays), and the
   install-price presentation if architecture says show it.
 
-**Deliverable → `docs/strategy/offers/medical-dental-offer-spec.md`:** qualification
+**Deliverable → `docs/strategy/offer-research/medical-dental-offer-spec.md`:** qualification
 tiers + offer table, sourced number bank (GATE:HUMAN), wording kits for both pages,
 page-maps, and the med-spa niche brief outline (next niche candidate). Constraints: no
 fabricated proof; HIPAA claims stay plain-language and legally conservative; the day-90

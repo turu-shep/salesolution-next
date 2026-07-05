@@ -10,7 +10,7 @@ vertical: `/industries/industrial-distribution/` and the sell-product services b
 it. I'm the founder. Deliverable: an offer spec + wording kit, not shipped copy.
 
 **Read first:** `prompts/offer-research/01-offer-audit-2026-07-05.md`,
-`docs/strategy/offers/00-offer-architecture.md` (if present — it wins on prices),
+`docs/strategy/offer-research/00-offer-architecture.md` (if present — it wins on prices),
 `.agents/product-marketing-context.md`, `docs/strategy/icp/industrial-distribution.md`
 (the ICP in their own words + anti-jargon rules), then the live pages:
 `app/(site)/industries/industrial-distribution/page.tsx`, `app/(site)/services/page.tsx`,
@@ -71,7 +71,7 @@ kill-list enforced; run the humanizer skill on every block):**
   not a marketing line item ("You're not buying marketing. You're building what the
   business is worth." — sharpen it in his words).
 
-**Deliverable → `docs/strategy/offers/industrial-offer-spec.md`:** offer table (price,
+**Deliverable → `docs/strategy/offer-research/industrial-offer-spec.md`:** offer table (price,
 term, contents, bridge to retainer), the sourced number bank (GATE:HUMAN), the wording kit,
 and a page-map (which block replaces which section of the live page). Constraints: no
 fabricated proof or clients (Northern Hydraulics name is hard-blocked); only approved or

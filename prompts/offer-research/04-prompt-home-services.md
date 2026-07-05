@@ -11,7 +11,7 @@ book-jobs funnel converges on) and, later, per-trade niche pages. I'm the founde
 Deliverable: an offer spec + wording kit.
 
 **Read first:** `prompts/offer-research/01-offer-audit-2026-07-05.md`,
-`docs/strategy/offers/00-offer-architecture.md` (if present — it wins on prices),
+`docs/strategy/offer-research/00-offer-architecture.md` (if present — it wins on prices),
 `.agents/product-marketing-context.md`, `docs/strategy/roofing/` (the full Revenue Engine
 spec: rate card, claims C-01…C-06, guarantee terms), then the live page
 `app/(site)/industries/home-services/page.tsx` and
@@ -67,7 +67,7 @@ kill-list enforced; humanizer pass on every block):**
   audit CTA microcopy naming the artifact ("your numbers, in writing, yours to keep");
   the not-doing-this close in jobs and quotes, not percentages.
 
-**Deliverable → `docs/strategy/offers/home-services-offer-spec.md`:** offer table per trade
+**Deliverable → `docs/strategy/offer-research/home-services-offer-spec.md`:** offer table per trade
 tier, sourced number bank (GATE:HUMAN), wording kit, page-map of what replaces what, and
 the per-trade niche short-list (which trade earns the first niche page and the 3 numbers
 its page leads with). Constraints: no fabricated proof; C-06-class unsourced stats stay

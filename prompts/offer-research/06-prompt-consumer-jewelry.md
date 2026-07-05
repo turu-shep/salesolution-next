@@ -12,7 +12,7 @@ Diamonds is a real client in this space). I'm the founder. Deliverable: an offer
 wording kit.
 
 **Read first:** `prompts/offer-research/01-offer-audit-2026-07-05.md`,
-`docs/strategy/offers/00-offer-architecture.md` (if present — it wins on prices),
+`docs/strategy/offer-research/00-offer-architecture.md` (if present — it wins on prices),
 `.agents/product-marketing-context.md`, the live page
 `app/(site)/industries/consumer-brands/page.tsx`, and `lib/strategy/niches/` for any
 consumer briefs.
@@ -74,7 +74,7 @@ cheap marketing instantly; kill-list enforced; humanizer pass on every block):**
 - Jewelry niche page: full outline (hero → leak → calculator → offer → objections →
   close) with the numbers bank slotted in, ready to build when the niche is earned.
 
-**Deliverable → `docs/strategy/offers/consumer-jewelry-offer-spec.md`:** profile tiers +
+**Deliverable → `docs/strategy/offer-research/consumer-jewelry-offer-spec.md`:** profile tiers +
 floor, offer table, sourced number bank (GATE:HUMAN), wording kits, page-map for the
 pillar, jewelry niche outline. Constraints: no fabricated proof (Liori usable only with
 consent — PROOF-SLOT otherwise); no invented stats (this vertical has none approved —

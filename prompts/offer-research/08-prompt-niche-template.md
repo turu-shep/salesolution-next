@@ -15,8 +15,8 @@ which will live at {URL — /revenue-engine/{slug}/ for book-jobs niches, or und
 Deliverable: a niche offer spec + wording kit + full page outline.
 
 **Read first:** `prompts/offer-research/01-offer-audit-2026-07-05.md`,
-`docs/strategy/offers/00-offer-architecture.md` (canonical prices — inherit, don't
-reinvent), `docs/strategy/offers/{PARENT}-offer-spec.md` (the parent vertical's research,
+`docs/strategy/offer-research/00-offer-architecture.md` (canonical prices — inherit, don't
+reinvent), `docs/strategy/offer-research/{PARENT}-offer-spec.md` (the parent vertical's research,
 if it exists), `.agents/product-marketing-context.md` (motion rules decide guarantee/
 voice/CTA — the niche's `motion` field, never its breadcrumb), and
 `app/(site)/revenue-engine/dentists/page.tsx` (the reference niche page pattern:
@@ -53,7 +53,7 @@ options, the joined leak-math block with the payback line in {NICHE} units, offe
 presentation (inherited prices), 5 niche-specific objection rewrites, CTA microcopy,
 the not-doing-this close, FAQ additions (schema-bound).
 
-**Deliverable → `docs/strategy/offers/{slug}-niche-spec.md`:** go/no-go verdict with the
+**Deliverable → `docs/strategy/offer-research/{slug}-niche-spec.md`:** go/no-go verdict with the
 qualification floor, offer table, sourced number bank (GATE:HUMAN), wording kit, full
 page outline mapped to the dentists-page section pattern, and the measurement plan
 (target query, data-cta tags). Constraints: no fabricated proof; inherit canonical

@@ -34,7 +34,7 @@ full audit of every live commercial surface (see `01-offer-audit-2026-07-05.md`)
 1. Open a fresh Claude Code session in this repo.
 2. Paste a prompt file's **PROMPT** section verbatim. Prefix with `ultracode` for maximum
    research depth (multi-agent). The Ahrefs + DataForSEO MCPs are available for demand data.
-3. Each prompt writes its output to `docs/strategy/offers/…` so results accumulate in one place.
+3. Each prompt writes its output to `docs/strategy/offer-research/…` so results accumulate in one place.
 4. Every number a prompt proposes for live copy needs a source URL + date and **GATE:HUMAN**
    (your sign-off) before it ships — the prompts enforce this.
 
