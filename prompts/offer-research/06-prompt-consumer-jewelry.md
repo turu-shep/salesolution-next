@@ -54,6 +54,14 @@ stats exist yet. So:
 5. **Wedge check.** Current wedge is "shoppers find a competitor; past buyers never come
    back." Validate against how jewelry owners actually describe the pain (forums, trade
    press, r/jewelers, JCK) and sharpen to their words.
+6. **The improved condition (Weiss value anchor — governs the fee, see the architecture
+   doc).** A jeweler whose demand is owned (search + AI + Maps + a worked customer list)
+   instead of rented (Instagram, the mall's foot traffic) is a different asset: the
+   customer list with a live win-back engine is enterprise value, and repeat/referral
+   revenue changes what the business is worth at exit (source retail/jewelry valuation
+   practice, 2024–26). The fee is a fraction of that condition — floor $30K+, scaled to
+   the brand's size. Draft the three-options proposal for this vertical, options named
+   by outcome condition, not scope.
 
 **Wording kit (voice: "we", plain, premium-calm — this buyer sells luxury and smells
 cheap marketing instantly; kill-list enforced; humanizer pass on every block):**

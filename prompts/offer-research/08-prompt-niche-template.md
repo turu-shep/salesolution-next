@@ -24,11 +24,15 @@ retain-led wedge, WholeFlowLeak calculator with fee slider + do-nothing chart, p
 model, day-90 guarantee with the founder's name on it, on-page audit form).
 
 **Research:**
-1. **Unit economics.** {NICHE}'s average ticket, customer LTV, close/book rates,
-   missed-call and follow-up failure rates, seasonality — sourced from 2024–26 industry
-   data (trade associations, vertical SaaS benchmark reports, credible trade press).
-   Verdict: does this niche clear a ≥10x model on the $30K+ install? If not, the
-   qualification floor (size/revenue/mix) that does.
+1. **Unit economics + the improved condition.** {NICHE}'s average ticket, customer LTV,
+   close/book rates, missed-call and follow-up failure rates, seasonality — sourced from
+   2024–26 industry data (trade associations, vertical SaaS benchmark reports, credible
+   trade press). Verdict: does this niche clear a ≥10x model on the $30K+ install floor?
+   If not, the qualification floor (size/revenue/mix) that does. Then the Weiss value
+   anchor (see the architecture doc — it governs the fee): what the business becomes
+   worth with owned demand and a working Retain loop ({NICHE}'s valuation multiples,
+   sourced) — the fee is a fraction of that condition, scaled to the operation's size,
+   presented as three options named by outcome, never by scope.
 2. **The leak formula in THEIR units.** Bring/Convert/Retain inputs with sourced
    defaults, tuned so honest defaults land 5–15x the fee. Every number: URL + date +
    GATE:HUMAN. Recovery rates conservative, "round down" survives.

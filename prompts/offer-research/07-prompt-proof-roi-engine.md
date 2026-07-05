@@ -45,7 +45,17 @@ retention, **2.5x avg ROI in 12 months**, **5.2x lifetime**, 96 NPS, $575K ARR/c
 5. **The "not doing this costs more" close, systematized.** One pattern per motion that
    turns the calculator output into the close ("Do nothing and $X is gone by month 12"
    exists on dentists — spec the generalized version) without scare tactics.
-6. **Measurement.** Which numbers on which pages need conversion tracking (data-cta tags
+6. **The value layer above payback (Weiss, *Value-Based Fees*).** Year-1 leak recovery is
+   the entry math; the durable story is the **improved condition** — a compounding system
+   that changes what the business is worth to its owner (each vertical prompt sources its
+   sector's multiples). Spec where this layer lives: page copy stays concrete (payback in
+   their units), while the improved-condition math carries the proposal, the growth-call
+   script, and the FGO page. Define the boundary so the two never blur — a pillar page
+   that talks enterprise value cold will read like a wealth-management pitch; a proposal
+   that only talks month-1 payback invites commodity comparison. The fee is always
+   presented as a fraction of the condition, per the architecture doc's three-options
+   structure.
+7. **Measurement.** Which numbers on which pages need conversion tracking (data-cta tags
    exist) so we learn which anchors/blocks move audit bookings and growth calls — define
    the before/after metrics for this whole offer push.
 

@@ -57,6 +57,14 @@ exact rate in the audit. Anti-persona: won't sign BAAs.
 6. **Claims expansion.** 3–5 new sourced stats for the claims library (no-show costs,
    unscheduled-treatment pool sizes, recall lapse rates). URL + date + GATE:HUMAN. C-06
    (treatment-plan acceptance %) stays qualitative until you source it properly — try.
+7. **The improved condition (Weiss value anchor — governs the fee, see the architecture
+   doc).** Practices are valued on collections/EBITDA multiples in an active DSO
+   acquisition market (source 2024–26 practice-transition data): recovered recall, higher
+   case acceptance, and answered phones lift the practice's sale value directly, not just
+   this year's production. The fee is a fraction of that condition — floor $30K+, scaled
+   to practice size and case mix. Draft the three-options proposal for this vertical
+   (options named by the condition they buy), and note where the financing framing
+   presents the install itself as a monthly figure without commoditizing it.
 
 **Wording kit (voice: "I", plain language, HIPAA woven not shouted, financing framing,
 kill-list enforced; humanizer pass on every block):**

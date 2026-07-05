@@ -17,6 +17,17 @@ full audit of every live commercial surface (see `01-offer-audit-2026-07-05.md`)
   certainty (sell-product). Never a naked "1000% ROI" claim — that phrase converts skeptics
   into ex-visitors and violates the claims library. The dentists page already has the best
   version of this pattern; the prompts export it everywhere.
+- **Pricing doctrine: value-based fees (Alan Weiss, *Value-Based Fees*).** The fee anchors to
+  the value of the client's **improved condition** — we help owners build $5–50M/yr
+  businesses, and the fee is a small fraction of that, never a markup on deliverables or a
+  market-comp number. **$30K+ is the floor, not the price: it scales with the value at
+  stake.** The core install and Full Growth Ownership are never commoditized — a buyer must
+  not be able to comparison-shop them. Published bands survive only as entry doors and
+  honesty artifacts (cylinders, per-SKU math). Weiss's sequence is required — objectives →
+  measures → value → *then* fee (our Leak Audit and Growth Call ARE that conversation; the
+  number lands after value is established, in writing, same day) — as is his "choice of
+  yeses": three options escalating by value, not scope. Retainers are re-framed his way:
+  ongoing access to the operator + ownership of a compounding system, not monthly tasks.
 
 ## How to run
 

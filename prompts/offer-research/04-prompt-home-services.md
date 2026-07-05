@@ -49,6 +49,14 @@ live page shows no number at all. The calculator says the average visitor leaks
    season, one-operator capacity ("I install N systems a quarter" — only if true; ask me).
 6. **Claims expansion.** Beyond C-01…C-05: find 3–5 new sourced stats (missed-call rates,
    speed-to-lead conversion decay, quote follow-up rates in trades). URL + date + GATE:HUMAN.
+7. **The improved condition (Weiss value anchor — governs the fee, see the architecture
+   doc).** A $1.5M/yr contractor becoming a $4M/yr business that books jobs without the
+   owner answering the phone is a different asset: home-services businesses trade on
+   SDE/EBITDA multiples where documented systems and recurring demand expand the multiple
+   (source 2024–26 trade-business brokerage data). The install is building a sellable
+   business, not buying leads — and the fee is a fraction of that condition, floor $30K+,
+   scaled to the value at stake. Draft the three-options proposal for this vertical,
+   options named by outcome condition, not scope.
 
 **Wording kit (voice: first-person "I", plain trade language, no unexplained acronyms,
 kill-list enforced; humanizer pass on every block):**

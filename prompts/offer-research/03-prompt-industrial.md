@@ -45,6 +45,14 @@ signal), published prices, SOW in 48h, "we" voice, CTA Book a Growth Call.
 5. **AI-search urgency, legitimately.** The land-grab data (AI Overviews share of industrial
    queries, citation-window evidence) as the honest urgency mechanism — sourced, no
    countdowns.
+6. **The improved condition (Weiss value anchor — governs the fee, see the architecture
+   doc).** Beyond year-1 leak recovery: what a distributor growing from $8M to $15M is
+   worth to its owner — distribution-sector enterprise-value/EBITDA multiples (sourced,
+   2024–26), succession and exit leverage, house-account durability as an asset. The fee
+   is presented as a fraction of that condition; $30K+ is the floor, scaled to the value
+   at stake (a $40M distributor doesn't pay what an $8M one pays). Draft the
+   three-options proposal for this vertical, each option named by the condition it buys,
+   never by scope.
 
 **Wording kit to produce (voice: operator, terse, "X, not Y", numbers before adjectives,
 kill-list enforced; run the humanizer skill on every block):**
@@ -59,6 +67,9 @@ kill-list enforced; run the humanizer skill on every block):**
 - CTA microcopy: Book a Growth Call + the written-diagnostic secondary door, each naming
   what the buyer walks away with.
 - The "not doing this" close: cost-of-inaction in distributor units, no scare tactics.
+- An "asset value" close variant: the engine as compounding what the business sells for,
+  not a marketing line item ("You're not buying marketing. You're building what the
+  business is worth." — sharpen it in his words).
 
 **Deliverable → `docs/strategy/offers/industrial-offer-spec.md`:** offer table (price,
 term, contents, bridge to retainer), the sourced number bank (GATE:HUMAN), the wording kit,
