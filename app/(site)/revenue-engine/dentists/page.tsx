@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 }
 
 const SPECS = [
-  { label: 'Setup', value: '90 days, one-time fee' },
+  { label: 'Install', value: 'by day 60, one-time fee' },
   { label: 'Minimum', value: '3 months' },
   { label: 'Lock-in', value: 'none' },
 ]

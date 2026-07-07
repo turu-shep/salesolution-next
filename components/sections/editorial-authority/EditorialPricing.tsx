@@ -181,7 +181,7 @@ export function EditorialPricing({ id }: { id?: string }) {
               Editorial Retainer
             </h3>
             <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-              $4K–14K
+              $4–15K
               <span className="ml-1 text-base font-medium text-ink-500">
                 / month
               </span>

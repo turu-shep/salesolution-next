@@ -108,7 +108,7 @@ export default function HomeServicesPillarPage() {
           src: '/artur-shepel-480.webp',
           caption: 'I run every account myself.',
           specs: [
-            { label: 'Setup', value: '90 days, one-time fee' },
+            { label: 'Install', value: 'by day 60, one-time fee' },
             { label: 'Minimum', value: '3 months' },
             { label: 'Lock-in', value: 'none' },
           ],

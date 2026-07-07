@@ -104,7 +104,7 @@ export function SprintDeliverables() {
             If we can&rsquo;t isolate a clear, evidence-backed constraint by
             the end of Week 1, we refund the full sprint fee. You keep every
             artifact produced &mdash; the scan, the scoreboard, the
-            in-progress asset. No clawback. Never been invoked in 42 sprints.
+            in-progress asset. No clawback.
           </p>
         </div>
       </div>

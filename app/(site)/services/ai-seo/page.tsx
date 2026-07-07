@@ -164,8 +164,8 @@ const SERVICES_FAQ: QA[] = [
           </li>
         </ul>
         <p className="mt-3">
-          About 70% of AI Search engagements pair with one of these within 90
-          days. If you want all three coordinated under one operator, see{' '}
+          Most AI Search engagements pair with one of these once the first
+          quarter proves out. If you want all three coordinated under one operator, see{' '}
           <Link href="/services/full-growth-ownership/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
             Full Growth Ownership
           </Link>.

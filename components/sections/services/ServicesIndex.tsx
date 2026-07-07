@@ -208,9 +208,9 @@ export function ServicesIndex({ id }: { id?: string }) {
       </ul>
 
       <p className="mt-10 max-w-3xl text-sm text-ink-500">
-        Each service runs standalone. About 70% of AI Search clients add
-        content within 90 days. About 60% of builds pair with Catalog AI
-        within 6 months. Cross-service work is most of the value over time.
+        Each service runs standalone. Most clients start with one, then add a
+        second once it proves out. Cross-service work is most of the value
+        over time.
       </p>
     </SectionRail>
   )

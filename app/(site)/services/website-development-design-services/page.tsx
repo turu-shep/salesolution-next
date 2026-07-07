@@ -175,8 +175,9 @@ const WEBDEV_FAQ: QA[] = [
           </li>
         </ul>
         <p className="mt-3">
-          About 60% of builds are paired with at least one of these within 6
-          months. For coordinated multi-service engagements, see{' '}
+          A build usually pairs with one of these, so the site launches with
+          pages AI can actually quote. For coordinated multi-service
+          engagements, see{' '}
           <Link href="/services/full-growth-ownership/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
             Full Growth Ownership
           </Link>.

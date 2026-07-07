@@ -49,9 +49,8 @@ export function AuditHero() {
             </ul>
 
             <p className="mt-10 max-w-md text-sm text-ink-500">
-              42 e&#8209;commerce brands have run this audit. Best fit:
-              $200k+/month in revenue, technical or industrial catalog,
-              growth plateaued in the last 2&ndash;4 quarters.
+              Built for $200k+/month stores with a technical or industrial
+              catalog, growth plateaued in the last 2&ndash;4 quarters.
             </p>
           </div>
 

@@ -155,7 +155,7 @@ const FULL_GROWTH_FAQ: QA[] = [
         <p className="mt-3">
           If you&rsquo;re in that zone, we&rsquo;ll usually recommend you
           hire and help you find the right person (we&rsquo;ve placed
-          three CMOs from our network in the past 18 months at no fee).
+          CMOs from our network before, at no fee).
         </p>
       </>
     ),

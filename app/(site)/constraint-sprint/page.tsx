@@ -82,11 +82,10 @@ const SPRINT_FAQ: QA[] = [
     a: (
       <>
         <p>
-          Three outcomes, all supported. About 60% of sprint clients
-          roll into a retainer ($8&ndash;14k/month) for ongoing execution.
-          Another 30% take the Ticket Pack to their in-house team and
-          execute themselves. The remaining 10% pause and revisit in a
-          quarter or two.
+          Three outcomes, all supported. Some clients roll into a retainer
+          ($8&ndash;14k/month) for ongoing execution. Others take the Ticket
+          Pack to their in-house team and run it themselves. Some pause and
+          revisit a quarter or two later.
         </p>
         <p className="mt-3">
           No clawback on artifacts in any case. The work is yours.
@@ -102,8 +101,7 @@ const SPRINT_FAQ: QA[] = [
           If we can&rsquo;t isolate a clear, evidence-backed growth
           constraint by the end of Week 1, we refund the full sprint fee.
           You keep every deliverable already produced &mdash; the scan,
-          the scoreboard, the in-progress asset. No clawback. Never been
-          invoked in 42 sprints.
+          the scoreboard, the in-progress asset. No clawback.
         </p>
       </>
     ),

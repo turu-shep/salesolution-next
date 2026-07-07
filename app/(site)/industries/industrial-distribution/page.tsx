@@ -762,7 +762,7 @@ export default async function IndustrialDistributionPage() {
             <p className="mt-4 leading-relaxed text-ink-200">
               A growth lead runs about $200K base plus benefits, equity, and
               recruiting. Call it $300K/year all-in. Full Growth Ownership is
-              $20K&ndash;$35K/month. It ships faster, scales down on 30 days&rsquo;
+              $20K&ndash;$35K/month. It ships faster, scales down on 90 days&rsquo;
               notice, and carries no severance risk.
             </p>
           </div>
@@ -784,7 +784,7 @@ export default async function IndustrialDistributionPage() {
             <p className="mt-4 leading-relaxed text-ink-200">
               For most $5M&ndash;$25M distributors, yes. The exception is exit
               prep, raising capital, or building toward $50M+. We&rsquo;ve also
-              placed three CMOs from our network in the last 18 months, no fee. If
+              placed CMOs from our network before, at no fee. If
               that&rsquo;s the real need, we&rsquo;ll say so.
             </p>
           </div>
