@@ -125,6 +125,8 @@ export function ServicesHero({
  * own copy through the `primaryCta` / `secondaryCta` props.
  */
 function ctaIdForHref(href: string, role: string): string | undefined {
+  // Book-jobs cylinder pages route their hero CTA to the Revenue Leak Audit form.
+  if (href.startsWith('/industries/home-services/')) return `revenue_leak_audit__${role}`
   if (href.startsWith('/book-growth-call/')) return `book_call__${role}`
   if (href.startsWith('/unlock-growth-audit/')) return `audit__${role}`
   if (href.startsWith('/constraint-sprint/')) return `sprint__${role}`

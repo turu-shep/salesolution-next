@@ -367,6 +367,13 @@ export default function ConsumerBrandsPillarPage() {
             customer from three years ago whose next piece someone else just
             sold. None of them will tell you. The report would.
           </p>
+          {/* Named client per founder consent 2026-07-07 (D-C4). Scoped to what
+              we actually run for them (search + content) — no outcome claims,
+              no numbers, per the claims-hygiene rules. */}
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-300">
+            We already run the search and content side of this engine for Liori
+            Diamonds, a New York diamond brand.
+          </p>
           <p className="mt-4 max-w-xl text-lg leading-relaxed text-ink-300">
             Tell us your numbers and we&rsquo;ll show you where your brand is
             leaking sales, and what the engine would fix first. No deck, no

@@ -134,7 +134,7 @@ Columns: **Layer | Bought alone (range/floor only) | *[internal-only source colu
 
 ## 5. The 48-hour SOW and the three options
 
-<!-- Sell-product delivery = written SOW within 48 hours of the Growth Call, date-stamped. Harmonize any residual "written quote in 24h" mentions to 48h (GATE:HUMAN). This is NOT the book-jobs same-day rate letter. -->
+<!-- Sell-product delivery = written SOW within 48 hours of the Growth Call, date-stamped. This is NOT the book-jobs same-day rate letter. FOUNDER DECISION 2026-07-07: FGO's OWN standalone quote turnaround stays 24 HOURS (founder confirmed he can deliver it) — do NOT harmonize FGO pages/funnel to 48h. The 48h standard applies to install/cylinder SOWs like this one; the tiering is deliberate (the premium tier gets faster paper). -->
 <!-- R8: NO bare monthly figure on the install. There is no "$X/mo across the first year" line. The only monthly figures are the FGO floor (Option 3) and per-cylinder retainers -- never presented as install affordability. Affordability = staged billing only; any extended schedule is [DECIDE]-gated, priced as true year-one all-in, and is a "payment schedule," never "financing." -->
 <!-- Floor line (sell-product): "From $30,000, one-time -- floor, not price. Scaled to the value at stake: max($30K, ~10% of the modeled 12-month gain)." Never "scaled to what the audit finds." -->
 
