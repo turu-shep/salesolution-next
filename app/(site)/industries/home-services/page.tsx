@@ -8,9 +8,9 @@ import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
 import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
 import { Seasonality } from '@/components/sections/revenue-engine/Seasonality'
 import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
+import { WholeFlowLeak } from '@/components/sections/revenue-engine/WholeFlowLeak'
 import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
 import { Concept2Evidence } from '@/components/sections/revenue-engine/leak-concepts/Concept2Evidence'
-import { Concept3Calculator } from '@/components/sections/revenue-engine/leak-concepts/Concept3Calculator'
 import { Concept4BeforeAfter } from '@/components/sections/revenue-engine/leak-concepts/Concept4BeforeAfter'
 import { LEAK_DATA } from '@/components/sections/revenue-engine/leak-concepts/data'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -26,6 +26,46 @@ export const metadata: Metadata = {
 const leak = LEAK_DATA['home-services']
 
 const HS_FAQ: QA[] = [
+  {
+    q: '“$30K? The other guys charge $500 a month.”',
+    a: (
+      <p>
+        They do. Price their stack: an answering service, a review tool, a
+        missed-call app, call tracking, and a CRM run $850 to $1,900 a month
+        &mdash; $10K to $23K a year &mdash; with you as the unpaid integrator.
+        Nobody in that stack records and sorts every call. Nobody splits system
+        revenue from ad revenue. Nobody&rsquo;s name is on a day-90 guarantee.
+        $500 a month rents you a tool. The install builds you an asset a buyer
+        can see working when they look at your books.
+      </p>
+    ),
+  },
+  {
+    q: '“I can’t float $30K right now.”',
+    a: (
+      <p>
+        You don&rsquo;t hand me $30K on day one. Half at signing, a quarter
+        when your dashboard goes live around day 30, the last quarter at the
+        day-60 punch-list walkthrough. You&rsquo;re never more money out than
+        installed system. Prefer one payment? Take 5% off. Then run the
+        calculator above with your own numbers: at your average job, the install
+        is the first few jobs the system recovers. What you&rsquo;re floating
+        right now is the leak.
+      </p>
+    ),
+  },
+  {
+    q: '“How do I know ‘revenue it brings back’ isn’t marketing math?”',
+    a: (
+      <p>
+        Every call is recorded, transcribed, and sorted: booked, lost,
+        recovered. The dashboard splits what your ads drove from what the system
+        saved &mdash; and it&rsquo;s your dashboard. Fire me and you keep it,
+        with every number in it. The audit works the same way: your call log,
+        your quote list, your Google profile, in writing, yours to keep.
+      </p>
+    ),
+  },
   {
     q: 'Do I need a new website?',
     a: (
@@ -60,9 +100,11 @@ const HS_FAQ: QA[] = [
     q: 'How fast can we start?',
     a: (
       <p>
-        The full system installs over 90 days, but the first automations
-        &mdash; call answering and missed-call text-back &mdash; are live
-        within the first couple of weeks, before the next demand spike.
+        Fast. Call answering and missed-call text-back go live in the first
+        couple of weeks, before the next storm. The full install runs against a
+        written punch-list we walk together on day 60, so every piece has a date
+        on it. Your dashboard goes live around day 30, and day 90 is when the
+        report settles the guarantee.
       </p>
     ),
   },
@@ -93,13 +135,14 @@ export default function HomeServicesPillarPage() {
       {/* 1 — HOOK */}
       <RevenueHero
         eyebrow={'For roofing, HVAC, plumbing & electrical'}
-        title="Built for contractors who miss calls"
-        titleAccent="because they're on a roof."
+        title="You drove out, measured the roof, sent the quote."
+        titleAccent="Then nobody chased it."
         lede={
           <>
-            You&rsquo;re on a roof when the phone rings &mdash; and the lead you
-            paid for dials the next contractor on the list. The estimate you
-            drove out for goes quiet. Each one is a booked job you never see.
+            The estimate you spent half a day on dies in a text thread. The call
+            that would&rsquo;ve booked the next one rings while you&rsquo;re on a
+            ladder. I run the system that catches both, and I prove what it paid
+            you back.
           </>
         }
         primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}
@@ -137,17 +180,12 @@ export default function HomeServicesPillarPage() {
         />
       </div>
 
-      {/* 3 — QUANTIFY YOUR LEAK */}
-      <Concept3Calculator
-        data={leak}
-        header={{
-          eyebrow: 'Your leak, in dollars',
-          headlineA: 'Put a number on it.',
-          headlineB: 'Your number, not mine.',
-          intro: 'Three figures from your own week. The math is in the open — change them.',
-          closer: '',
-        }}
-      />
+      {/* 3 — THE WHOLE-FLOW LEAK: the contractor's own numbers across all three
+          pillars, then what the engine recovers + the D12 install-frame payback.
+          book-jobs motion (default) auto-renders the $30K anchor + the guarantee
+          hand-off into the <Guarantee> mounted below. DEFAULT_PRESETS already
+          default to the four trades with per-trade payback units. */}
+      <WholeFlowLeak avgLabel="Your average job" />
 
       {/* 3 — THE FIX: "you've been sold pieces / I run the whole flow" */}
       <div id="flow">
@@ -180,7 +218,10 @@ export default function HomeServicesPillarPage() {
       <Guarantee id="guarantee" abut />
 
       {/* 8 — OFFER (the price, now that the risk is reversed) */}
-      <RevenuePricing id="pricing" />
+      <RevenuePricing
+        id="pricing"
+        floorLine="Installs start at $30,000. The exact number comes from the audit — in writing, same day."
+      />
 
       {/* 7 — FAQ */}
       <FAQ
@@ -191,7 +232,7 @@ export default function HomeServicesPillarPage() {
             Questions before the audit.
           </>
         }
-        kicker="New website, lead exclusivity, your Google rep, time to start. Straight answers."
+        kicker="The price gap, floating the install, proof you can trust, plus the basics. Straight answers."
         items={HS_FAQ}
       />
 

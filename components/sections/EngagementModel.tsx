@@ -30,6 +30,9 @@ type Engagement = {
   forWhom: string
   includes: string[]
   featured?: boolean
+  /** Sprint-fee-credits-toward-install line, shown under the price on
+   * service-page mounts (D7 credit mechanic, sell-product surfaces only). */
+  creditLine?: string
 }
 
 const ENGAGEMENTS: Engagement[] = [
@@ -38,6 +41,8 @@ const ENGAGEMENTS: Engagement[] = [
     name: 'Sprint',
     cadence: '4 weeks · fixed scope',
     price: '$12–24k',
+    creditLine:
+      'Take the engine install within 90 days and this sprint fee credits toward it, in full.',
     forWhom: '"Show me this works before we commit."',
     includes: [
       'Single-category schema rewrite',
@@ -134,6 +139,11 @@ export function EngagementModel({ id, serviceColorKey }: Props) {
               <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
                 {e.price}
               </p>
+              {serviceColorKey && e.creditLine && (
+                <p className="mt-3 text-xs leading-relaxed text-ink-500">
+                  {e.creditLine}
+                </p>
+              )}
             </div>
 
             <div className="flex-1 px-6 py-6">

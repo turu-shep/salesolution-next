@@ -35,6 +35,9 @@ type Tier = {
   stackPrices?: StackPrice[]
   cta: { label: string; href: string }
   featured?: boolean
+  /** Sprint-fee-credits-toward-install line, shown under the price
+   * (D7 credit mechanic, sell-product surfaces only). */
+  creditLine?: string
 }
 
 const TIERS: Tier[] = [
@@ -43,6 +46,8 @@ const TIERS: Tier[] = [
     name: 'Build Sprint',
     cadence: '4–6 weeks · fixed scope',
     price: '$15–35K',
+    creditLine:
+      'Take the engine install within 90 days and this Build Sprint fee credits toward it, in full.',
     forWhom:
       '"Show me the build approach works before we commit to a full replatform."',
     includes: [
@@ -156,6 +161,11 @@ export function WebDevPricing({ id }: { id?: string }) {
                 <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
                   {t.price}
                 </p>
+                {t.creditLine && (
+                  <p className="mt-3 text-xs leading-relaxed text-ink-500">
+                    {t.creditLine}
+                  </p>
+                )}
               </div>
 
               <div className="flex-1 px-6 py-6">

@@ -106,7 +106,7 @@ const DENTAL_GROUPS = [
     steps: [
       {
         key: 'Recover',
-        what: 'Every presented plan that didn’t schedule gets a structured follow-up with financing on the table, so “I’ll think about it” gets reopened instead of going cold. Overdue recall and dormant patients get win-back texts that rebook them — automatically, off your own list.',
+        what: 'The average practice schedules just 45% of the treatment it presents; the top 10% reach 75% (Henry Schein One 2026 Catalyst Index). The gap is the pool this works. Every presented plan that didn’t schedule gets a structured follow-up with financing on the table, so “I’ll think about it” gets reopened instead of going cold. Overdue recall and dormant patients get win-back texts that rebook them — automatically, off your own list.',
         metric: 'Accepted-but-unscheduled plans booked, overdue patients back in the chair',
       },
     ],
@@ -299,7 +299,8 @@ export default function DentistsRevenueEnginePage() {
       </SectionRail>
 
       {/* 2 — THE WHOLE-FLOW LEAK (Retain-led): the owner's own numbers across all
-          three pillars, then what the engine recovers vs an editable fee */}
+          three pillars, then what the engine recovers + the D12 install-frame
+          payback (book-jobs motion, default) that hands into the guarantee below */}
       <WholeFlowLeak
         id="leak"
         presets={DENTAL_PRESETS}
@@ -334,7 +335,10 @@ export default function DentistsRevenueEnginePage() {
       <Guarantee id="guarantee" abut />
 
       {/* 8 — OFFER (the price, now that the risk is reversed) */}
-      <RevenuePricing id="pricing" />
+      <RevenuePricing
+        id="pricing"
+        floorLine="Installs start at $30,000. The exact number comes from the audit — in writing, same day."
+      />
 
       {/* 9 — FAQ */}
       <FAQ

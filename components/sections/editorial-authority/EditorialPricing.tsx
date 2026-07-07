@@ -135,6 +135,10 @@ export function EditorialPricing({ id }: { id?: string }) {
             <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
               $6–14K
             </p>
+            <p className="mt-3 text-xs leading-relaxed text-ink-500">
+              Take the engine install within 90 days and this Pillar Pack fee
+              credits toward it, in full.
+            </p>
           </div>
           <div className="flex-1 px-6 py-6">
             <p className="text-sm italic text-ink-500">

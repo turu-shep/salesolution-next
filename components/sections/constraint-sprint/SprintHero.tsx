@@ -39,6 +39,11 @@ export function SprintHero() {
           <SpecCell label="Guarantee" value="Week-1 refund" />
         </dl>
 
+        <p className="mt-6 max-w-2xl text-sm leading-relaxed text-ink-500">
+          Take the engine install within 90 days and the sprint fee credits
+          toward it, in full.
+        </p>
+
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
           <Link
             href="#apply"

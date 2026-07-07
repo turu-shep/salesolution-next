@@ -29,7 +29,15 @@ const TERMS = [
   'No annual lock-in',
 ]
 
-export function RevenuePricing({ id }: { id?: string }) {
+export function RevenuePricing({
+  id,
+  floorLine,
+}: {
+  id?: string
+  /** Emphasized floor line under the heading (e.g. the §16 canonical
+   *  "Installs start at $30,000…"). Undefined renders nothing. */
+  floorLine?: string
+}) {
   return (
     <SectionRail tone="surface" id={id}>
       <div className="grid items-start gap-12 md:grid-cols-12 md:gap-16">
@@ -41,6 +49,9 @@ export function RevenuePricing({ id }: { id?: string }) {
             Published model.{' '}
             No games on a call.
           </h2>
+          {floorLine && (
+            <p className="mt-6 text-lg font-semibold text-ink-900">{floorLine}</p>
+          )}
           <p className="mt-6 text-lg leading-relaxed text-ink-700">
             You see exactly how this is priced before we ever talk. The number
             depends on your trade, location, and scope &mdash; you get it in the

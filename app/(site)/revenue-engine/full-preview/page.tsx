@@ -8,8 +8,8 @@ import { PlanByPillar } from '@/components/sections/revenue-engine/PlanByPillar'
 import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
 import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
 import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
+import { WholeFlowLeak } from '@/components/sections/revenue-engine/WholeFlowLeak'
 import { Concept2Evidence } from '@/components/sections/revenue-engine/leak-concepts/Concept2Evidence'
-import { Concept3Calculator } from '@/components/sections/revenue-engine/leak-concepts/Concept3Calculator'
 import { Concept4BeforeAfter } from '@/components/sections/revenue-engine/leak-concepts/Concept4BeforeAfter'
 import { LEAK_DATA } from '@/components/sections/revenue-engine/leak-concepts/data'
 import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
@@ -94,16 +94,7 @@ export default function RevenueEngineFullPreview() {
       </div>
 
       {/* 3 — QUANTIFY YOUR OWN LEAK (calculator, pulled up next to the villain) */}
-      <Concept3Calculator
-        data={hs}
-        header={{
-          eyebrow: 'Your leak, in dollars',
-          headlineA: 'Put a number on it.',
-          headlineB: 'Your number, not mine.',
-          intro: 'Three figures from your own week. The math is in the open — change them.',
-          closer: '',
-        }}
-      />
+      <WholeFlowLeak />
 
       {/* 4 — THE MECHANISM: I run the whole flow */}
       <FlowBlock />

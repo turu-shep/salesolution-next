@@ -78,9 +78,10 @@ const CALL_FAQ: QA[] = [
           We&rsquo;ll tell you on the call. Below $200k/month, the
           retainer math typically doesn&rsquo;t hold &mdash; the 4-week
           Sprint engagement ($12&ndash;24k, fixed scope) is purpose-built
-          for the category-overhaul use-case. Below that still, you&rsquo;re
-          better with a generalist agency, and we&rsquo;ll usually point
-          you at one.
+          for the category-overhaul use-case. Take the engine install within
+          90 days and the sprint fee credits toward it, in full. Below that
+          still, you&rsquo;re better with a generalist agency, and
+          we&rsquo;ll usually point you at one.
         </p>
       </>
     ),

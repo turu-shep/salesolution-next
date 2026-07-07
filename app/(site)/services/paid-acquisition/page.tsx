@@ -80,8 +80,8 @@ export default function PaidAcquisitionPage() {
             services, practices, and distributors that want spend they can see.
           </>
         }
-        primaryCta={{ label: 'Book a Growth Call', href: '/book-growth-call/' }}
-        secondaryCta={{ label: 'See how it works', href: '#how' }}
+        primaryCta={{ label: 'Book a Revenue Leak Audit', href: '/industries/home-services/#audit' }}
+        secondaryCta={{ label: 'Book a Growth Call', href: '/book-growth-call/' }}
         anchors={[
           { label: 'The leak', href: '#leak' },
           { label: 'How it works', href: '#how' },

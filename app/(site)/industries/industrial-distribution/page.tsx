@@ -201,13 +201,25 @@ const INDUSTRIAL_FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'How do you price it, and where do I see the numbers?',
-    a: 'Three shapes, all published: a Sprint at $9K–$35K for one cylinder installed and handed over, an Operator Retainer at $4K–$15K/month for a few cylinders run by the operator directly, and Full Growth Ownership from $20K/month for the whole engine. When Catalog AI fires, the per-SKU math is on the page too. You see the model before we ever talk.',
+    a: 'The model is published before we ever talk. The engine installs once, from $30,000, scaled to the value at stake, and your exact number arrives in the written SOW within 48 hours of the call. After that the cylinders run it, $4,000–$15,000 a month each, and each cylinder\'s page shows its own band. Any of the five service cylinders can run first as a fixed-scope sprint at its published band. Take the install within 90 days and the sprint fee credits toward it, in full. Full Growth Ownership, from $20,000 a month, is the whole engine under one operator. When Catalog AI fires, the per-SKU math is on the page too.',
   },
   {
     q: 'Why won’t you guarantee a number of quotes?',
     a: 'A distributor’s cycle is too long and too lumpy for a count-by-a-date to mean anything, and anyone who promises it is selling you a metric, not margin. Instead we publish the prices, show the work in week four, and put both revenue lines in front of you every month. If the system-driven line doesn’t justify the fee, you’ll see it before we do, and you can leave on 90 days’ notice.',
   },
 ]
+
+// Fill-in blank for the static leak-math block (the buyer writes his own
+// quarter's numbers — no calculator, per IND-3). Renders an underline on the
+// text baseline, sized for a two-to-three-digit figure.
+function LeakBlank() {
+  return (
+    <span
+      aria-hidden
+      className="inline-block w-12 border-b border-dashed border-white/40 align-baseline"
+    />
+  )
+}
 
 function CylinderCard({ c }: { c: Cylinder }) {
   const sc = SERVICE_CLASSES[c.service]
@@ -298,15 +310,14 @@ export default async function IndustrialDistributionPage() {
               Revenue Engine for Industrial Distributors
             </p>
             <h1 className="mt-6 text-balance font-display text-[2.125rem] font-semibold leading-[1.1] tracking-[-0.02em] text-ink-900 sm:text-[2.5rem] lg:text-[3.125rem] lg:leading-[1.08]">
-              Get found.{' '}
-              <span className="block sm:mt-1">Win the quote.</span>
-              <span className="block sm:mt-1">Keep the account.</span>
+              A buyer asked ChatGPT who stocks the part.{' '}
+              <span className="block sm:mt-1">It named someone else.</span>
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-ink-700">
-              A buyer asks an AI which supplier carries the part, and it names
-              someone else. The RFQ that does reach you sits in an inbox over a
-              long weekend. The account you won last year reorders from whoever
-              emailed them first. We close all three.
+              That answer is deciding who gets the quote, and your catalog was
+              built for a web that&rsquo;s gone. We rebuild what you sell so
+              ChatGPT and Google&rsquo;s AI name you first&mdash;then run
+              everything that follows: the quote, the reorder, the account.
             </p>
 
             {/* Founder spec-card */}
@@ -321,9 +332,11 @@ export default async function IndustrialDistributionPage() {
               </div>
               <div>
                 <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
-                  Pricing
+                  Install
                 </dt>
-                <dd className="mt-1 text-sm font-semibold text-ink-900">Published prices</dd>
+                <dd className="mt-1 text-sm font-semibold text-ink-900">
+                  From $30,000, scaled to the value at stake
+                </dd>
               </div>
               <div>
                 <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
@@ -415,6 +428,38 @@ export default async function IndustrialDistributionPage() {
           Every RFQ that didn&rsquo;t close is margin you already spent to win.
           The leak isn&rsquo;t the ad budget. It&rsquo;s everything the ad budget
           hands off to.
+        </p>
+
+        {/* IND-3 / IND-6 — the static three-line leak-math block (no calculator). */}
+        <div className="mt-12 max-w-3xl border border-white/10 bg-white/[0.03] p-7 md:p-8">
+          <h3 className="font-display text-2xl font-semibold tracking-[-0.01em] text-white">
+            Three numbers from last quarter size the leak.
+          </h3>
+          <p className="mt-5 text-lg leading-relaxed text-ink-100">
+            RFQs that waited more than a day for a quote:{' '}
+            <LeakBlank />, at your average order of $<LeakBlank />. Quotes sent
+            and never chased: <LeakBlank />. Accounts that ordered last year and
+            not this year: <LeakBlank />, at $<LeakBlank /> a year each.
+          </p>
+          <p className="mt-4 text-lg leading-relaxed text-ink-200">
+            Multiply it out. That number repeats every quarter until something
+            changes.
+          </p>
+          <p className="mt-6 border-t border-white/10 pt-6 text-sm leading-relaxed text-ink-300">
+            The model starts from our own defaults, labeled as ours: about 60
+            RFQs a week, a $2,000 average order, a quarter of quotes never
+            chased. They prove nothing about your business&mdash;the written
+            diagnostic swaps in your real numbers within 24 hours.
+          </p>
+        </div>
+
+        {/* The payback line — joins the leak to the published install floor. */}
+        <p className="mt-8 max-w-3xl text-lg leading-relaxed text-white">
+          Now put the install next to it. One house account runs $<LeakBlank />{' '}
+          a year at your margin. The install starts at $30,000,
+          once&mdash;scaled to what&rsquo;s actually at stake, in writing, 48
+          hours after the call. If the engine brings back one account that went
+          quiet, the install is paid for. Everything after that is return.
         </p>
       </SectionRail>
 
@@ -747,48 +792,59 @@ export default async function IndustrialDistributionPage() {
       <SectionRail tone="dark" glow="strong" id="cmo">
         <div className="max-w-3xl">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-300">
-            What it replaces
+            What it&rsquo;s priced against
           </p>
           <h2 className="mt-3 font-display text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-white sm:text-5xl">
-            Priced against the hire you&rsquo;d otherwise make.
+            Priced against the money already leaving.
           </h2>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
           <div className="border border-white/10 bg-white/[0.03] p-7 md:p-8">
             <h3 className="font-display text-xl font-semibold tracking-[-0.01em] text-white">
-              Versus a full-time growth hire
+              The toll on the lane you own
             </h3>
             <p className="mt-4 leading-relaxed text-ink-200">
-              A growth lead runs about $200K base plus benefits, equity, and
-              recruiting. Call it $300K/year all-in. Full Growth Ownership is
-              $20K&ndash;$35K/month. It ships faster, scales down on 90 days&rsquo;
-              notice, and carries no severance risk.
+              Every order that migrates to Amazon keeps handing Amazon a cut of
+              that revenue, this year and every year after. It isn&rsquo;t a
+              hire you&rsquo;re deciding whether to make. It&rsquo;s a fee
+              you&rsquo;re already paying on business that used to route through
+              you, and it grows every quarter the catalog stays unfound.
             </p>
           </div>
           <div className="border border-white/10 bg-white/[0.03] p-7 md:p-8">
             <h3 className="font-display text-xl font-semibold tracking-[-0.01em] text-white">
-              Versus five separate retainers
+              Margin you already spent
             </h3>
             <p className="mt-4 leading-relaxed text-ink-200">
-              If you&rsquo;re already spending $20K+/month across disjointed
-              vendors, you&rsquo;re paying a coordination tax to yourself, in your
-              own hours. We collect a portion of that in exchange for doing the
-              coordinating.
+              A quote that dies unchased isn&rsquo;t a missed maybe. You already
+              paid to surface that buyer, and paid the rep hours to work him.
+              Let the quote go cold and that spend walks back out with nothing
+              to show. The engine recovers money that already left the building.
             </p>
           </div>
           <div className="border border-white/10 bg-white/[0.03] p-7 md:p-8">
             <h3 className="font-display text-xl font-semibold tracking-[-0.01em] text-white">
-              Does it replace a CMO?
+              The account that funds the others
             </h3>
             <p className="mt-4 leading-relaxed text-ink-200">
-              For most $5M&ndash;$25M distributors, yes. The exception is exit
-              prep, raising capital, or building toward $50M+. We&rsquo;ve also
-              placed CMOs from our network before, at no fee. If
-              that&rsquo;s the real need, we&rsquo;ll say so.
+              A short list of accounts pays for most of what you keep. Lose one
+              to whoever emailed first and you&rsquo;re not down one customer of
+              many&mdash;you&rsquo;re down a slice of the few that carry the
+              rest. Put your own biggest account in that line, at what it
+              reorders in a year. That&rsquo;s the number to weigh this against.
             </p>
           </div>
         </div>
+
+        <p className="mt-8 max-w-3xl leading-relaxed text-ink-300">
+          Two smaller comparisons sit underneath those. Full Growth Ownership is
+          cheaper than the growth lead you keep deciding not to hire, and it
+          closes on 90 days&rsquo; notice with no severance. And if you&rsquo;re
+          already writing checks to a handful of separate agencies, you&rsquo;re
+          paying a coordination tax in your own hours&mdash;we do the
+          coordinating instead.
+        </p>
       </SectionRail>
 
       {/* 10 — THE TWO-STATE ON-RAMP */}

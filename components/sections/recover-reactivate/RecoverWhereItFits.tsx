@@ -103,6 +103,18 @@ export function RecoverWhereItFits({ id }: { id?: string }) {
           </Link>
           .
         </p>
+        <p className="mt-3 text-base leading-relaxed text-ink-600">
+          Run inside the Revenue Engine, it carries the day-90 guarantee.{' '}
+          <Link
+            href="/industries/home-services/"
+            data-cta="recover-guarantee"
+            data-cta-location="recover-engine"
+            className="font-medium text-ink-900 underline decoration-rule-strong underline-offset-4 transition-colors hover:text-brand-700"
+          >
+            See how it works on the home services page
+          </Link>
+          .
+        </p>
       </div>
     </SectionRail>
   )

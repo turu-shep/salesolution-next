@@ -17,7 +17,7 @@ import { breadcrumbListSchema } from '@/lib/schema'
 export const metadata: Metadata = {
   title: 'Services · SEO, ads, content, and your site — run as one system',
   description:
-    'AI search and GEO, local SEO, content, catalog, website development, paid ads, outbound — the full growth function, run as one system instead of six vendors. We install the engine, then add the cylinders that pay back.',
+    'AI search and GEO, local SEO, content, catalog, website development, paid ads, outbound — the full growth function, run as one system instead of five separate vendors. We install the engine, then add the cylinders that pay back.',
   alternates: { canonical: 'https://salesolution.net/services/' },
 }
 

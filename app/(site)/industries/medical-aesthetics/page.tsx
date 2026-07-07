@@ -8,9 +8,14 @@ import { PlanByPillar } from '@/components/sections/revenue-engine/PlanByPillar'
 import { RevenueHero } from '@/components/sections/revenue-engine/RevenueHero'
 import { RevenuePricing } from '@/components/sections/revenue-engine/RevenuePricing'
 import { TwoRevenueLines } from '@/components/sections/revenue-engine/TwoRevenueLines'
+import {
+  WholeFlowLeak,
+  type FieldSet,
+  type LeakHeading,
+  type Preset,
+} from '@/components/sections/revenue-engine/WholeFlowLeak'
 import { FlowBlock } from '@/components/sections/revenue-engine/flow-concepts/FlowBlock'
 import { Concept2Evidence } from '@/components/sections/revenue-engine/leak-concepts/Concept2Evidence'
-import { Concept3Calculator } from '@/components/sections/revenue-engine/leak-concepts/Concept3Calculator'
 import { Concept4BeforeAfter } from '@/components/sections/revenue-engine/leak-concepts/Concept4BeforeAfter'
 import { LEAK_DATA } from '@/components/sections/revenue-engine/leak-concepts/data'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -24,6 +29,44 @@ export const metadata: Metadata = {
 }
 
 const leak = LEAK_DATA['medical']
+
+// WholeFlowLeak — medical/aesthetic presets (Retain-led). Ports the dentists
+// pattern to the pillar (MED-8.2): the biggest recoverable pool is unscheduled
+// treatment plans, overdue recall, and the injectable re-treatment window, so
+// Retain is the largest slice in every preset. Average case/visit values are the
+// sourced sub-niche figures (medical spec §1.5 / §2.2–2.3): dental-cosmetic
+// $6,000, ortho $6,100, med spa $527/visit, injectables $500/visit.
+//
+// GATE:HUMAN — illustrative volumes pending founder sign-off (mirrors dentists page pattern)
+const MEDICAL_PRESETS: Preset[] = [
+  { key: 'dental-cosmetic', label: 'Dental — cosmetic & implant', unit: 'case', avg: 6000, bvol: 90, brate: 35, cvol: 2, crate: 25, rvol: 220, rrate: 18 },
+  { key: 'ortho', label: 'Orthodontics', unit: 'case', avg: 6100, bvol: 110, brate: 35, cvol: 2, crate: 25, rvol: 180, rrate: 20 },
+  { key: 'med-spa', label: 'Med spa', unit: 'visit', avg: 527, bvol: 400, brate: 40, cvol: 8, crate: 30, rvol: 900, rrate: 25 },
+  { key: 'injectables', label: 'Injectables', unit: 'visit', avg: 500, bvol: 500, brate: 40, cvol: 10, crate: 30, rvol: 1200, rrate: 28 },
+]
+
+const MEDICAL_FIELDS: FieldSet = {
+  bring: [
+    { key: 'bvol', label: 'Patient searches a month nearby', min: 0, max: 1000, step: 10, fmt: 'n' },
+    { key: 'brate', label: 'Find you today', min: 0, max: 100, step: 1, fmt: 'pct' },
+  ],
+  convert: [
+    { key: 'cvol', label: 'New-patient calls missed a week', min: 0, max: 40, step: 1, fmt: 'n' },
+    { key: 'crate', label: 'Book rate when you reach them', min: 0, max: 100, step: 1, fmt: 'pct' },
+  ],
+  retain: [
+    { key: 'rvol', label: 'Past patients + overdue recall', min: 0, max: 4000, step: 25, fmt: 'n' },
+    { key: 'rrate', label: 'Share you’d rebook with follow-up', min: 0, max: 50, step: 1, fmt: 'pct' },
+  ],
+}
+
+const MEDICAL_LEAK_HEADING: LeakHeading = {
+  eyebrow: 'What the whole leak costs you',
+  titleA: 'The leak is bigger than the missed call.',
+  titleB: 'You lose the patient in three places.',
+  intro:
+    'Pick your practice, slide in your own numbers, and watch all three add up — then see what the engine puts back.',
+}
 
 const MEDICAL_GROUPS = [
   {
@@ -188,16 +231,16 @@ export default function MedicalAestheticsPillarPage() {
         />
       </div>
 
-      {/* 3 — QUANTIFY YOUR LEAK */}
-      <Concept3Calculator
-        data={leak}
-        header={{
-          eyebrow: 'Your leak, in dollars',
-          headlineA: 'Put a number on it.',
-          headlineB: 'Your number, not mine.',
-          intro: 'Three figures from your own week. The math is in the open — change them.',
-          closer: '',
-        }}
+      {/* 3 — THE WHOLE-FLOW LEAK (Retain-led): the practice's own numbers across
+          all three pillars, then what the engine recovers + the D12 install-frame
+          payback. book-jobs motion (default) auto-renders the $30K anchor + the
+          guarantee hand-off into the <Guarantee> mounted below. */}
+      <WholeFlowLeak
+        presets={MEDICAL_PRESETS}
+        fields={MEDICAL_FIELDS}
+        avgLabel="Your average case"
+        unitLabel="case"
+        heading={MEDICAL_LEAK_HEADING}
       />
 
       {/* 3 — THE FIX: "you've been sold pieces / I run the whole flow" */}
@@ -230,7 +273,10 @@ export default function MedicalAestheticsPillarPage() {
       <Guarantee id="guarantee" abut />
 
       {/* 8 — OFFER (the price, now that the risk is reversed) */}
-      <RevenuePricing id="pricing" />
+      <RevenuePricing
+        id="pricing"
+        floorLine="Installs start at $30,000. The exact number comes from the audit — in writing, same day."
+      />
 
       {/* 7 — FAQ */}
       <FAQ

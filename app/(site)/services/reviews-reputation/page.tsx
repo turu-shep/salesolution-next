@@ -76,7 +76,7 @@ export default function ReviewsReputationPage() {
             businesses whose reputation should be doing more of the selling.
           </>
         }
-        primaryCta={{ label: 'Book a Growth Call', href: '/book-growth-call/' }}
+        primaryCta={{ label: 'Book a Revenue Leak Audit', href: '/industries/home-services/#audit' }}
         secondaryCta={{ label: 'See how it works', href: '#how' }}
         anchors={[
           { label: 'The leak', href: '#leak' },
