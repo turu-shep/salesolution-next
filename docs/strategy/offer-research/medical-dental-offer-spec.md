@@ -178,7 +178,14 @@ Voice: "I", plain, HIPAA woven not shouted, financing framing, kill-list enforce
 > **Headline:** The price is published. / The promise has a date on it.
 > **Lede:** Installs start at $30,000, and your exact number comes out of the audit in writing, the same day. Installed by day 60. Proving by day 90. If the revenue the system brings back doesn't beat my monthly fee by day 90, I work free until it does. No discovery-call theater. No number that moves once you sound interested.
 
-#### FOUNDER VERDICT 2026-07-07: A/B/C rejected — re-cut system-first (pick from D/E/F below)
+#### ✅ PICKED 2026-07-07: **D+F combined** (founder direction: merge D and F; "quoted plan," not "plan"; no guarantee mention in the hero). Final shipped wording:
+
+> **Headline:** A working system, / not another campaign.
+> **Lede:** Every practice leaks somewhere different. For some it's the calls that ring during chair time; for others, the $6,000 quoted plan nobody reopened, or recall running months behind. I don't guess which is yours — the audit counts it, in your numbers. The system covers the whole path: answered, booked, chased, proven. Installed by day 60, proving by day 90, and the price is published.
+
+D/E/F record below (E and F survive as alternates for future testing):
+
+#### FOUNDER VERDICT 2026-07-07: A/B/C rejected — re-cut system-first (D/E/F)
 
 Artur's critique of A/B/C: A and B "cherry-pick an assumption of what their problem is" — the
 pillar spans four sub-niches whose biggest leak differs, so a single-pain hero is wrong for most

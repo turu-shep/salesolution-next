@@ -186,14 +186,16 @@ export default function MedicalAestheticsPillarPage() {
       {/* 1 — HOOK */}
       <RevenueHero
         eyebrow={'For med spa, surgical & aesthetic practices'}
-        title="Built for the practice"
-        titleAccent="losing its highest-value patients to voicemail."
+        title="A working system,"
+        titleAccent="not another campaign."
         lede={
           <>
-            A new patient calls about a high-ticket case while your front desk is
-            mid-treatment, and the call goes to voicemail &mdash; and to the
-            practice down the road. The consult you did present goes quiet. The
-            revenue leaks before anyone notices.
+            Every practice leaks somewhere different. For some it&rsquo;s the
+            calls that ring during chair time; for others, the $6,000 quoted
+            plan nobody reopened, or recall running months behind. I don&rsquo;t
+            guess which is yours &mdash; the audit counts it, in your numbers.
+            The system covers the whole path: answered, booked, chased, proven.
+            Installed by day 60, proving by day 90, and the price is published.
           </>
         }
         primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}
