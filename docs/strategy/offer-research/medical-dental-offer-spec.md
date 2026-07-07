@@ -178,6 +178,30 @@ Voice: "I", plain, HIPAA woven not shouted, financing framing, kill-list enforce
 > **Headline:** The price is published. / The promise has a date on it.
 > **Lede:** Installs start at $30,000, and your exact number comes out of the audit in writing, the same day. Installed by day 60. Proving by day 90. If the revenue the system brings back doesn't beat my monthly fee by day 90, I work free until it does. No discovery-call theater. No number that moves once you sound interested.
 
+#### FOUNDER VERDICT 2026-07-07: A/B/C rejected — re-cut system-first (pick from D/E/F below)
+
+Artur's critique of A/B/C: A and B "cherry-pick an assumption of what their problem is" — the
+pillar spans four sub-niches whose biggest leak differs, so a single-pain hero is wrong for most
+readers; worse, if the buyer already paid an agency to fix that exact pain and it failed, leading
+with it reads as *the same pitch again* (agency-burned buyer). C was closest ("you are getting the
+working system") but leads with the price instead of the thing bought. Re-cuts below lead with the
+working system and make no assumption about which leak is theirs. **MED-hero stays OPEN until one
+is picked (GATE:HUMAN).** Recommendation: **E**, with F's "I don't guess — the audit counts it"
+line reused as the calculator-section intro regardless of pick.
+
+**Hero D — the system, dated (C's confidence, outcome-first):**
+> **Headline:** A working system, not another campaign.
+> **Lede:** It answers the calls your desk can't take during treatment, books the consults, chases the plans and recall that went quiet, and counts what it brought back in your own dashboard. Installed by day 60. Proving by day 90. The price is published, and the guarantee has a date on it.
+
+**Hero E — the burned-buyer aikido (RECOMMENDED):**
+> **Headline:** Every vendor sold you a piece. / I install the whole system.
+> **Lede:** A website from one, ads from another, an answering service that takes messages. Each proved its own slice worked, and the revenue kept leaking between them. One system that answers, books, follows up, and proves what it brought back — wherever your practice leaks, it's covered.
+> *Why: doesn't just dodge the "I already tried fixing that" objection — it uses their failed attempts as evidence for the whole-system thesis (the last fix failed because it was a piece). Medical skin of brand canon ("You've been sold pieces. We run the whole flow").*
+
+**Hero F — no assumption, the audit decides:**
+> **Headline:** Every practice leaks somewhere different. / One system covers all of it.
+> **Lede:** For some it's the calls that ring during chair time. For others it's the $6,000 plan nobody reopened, or recall running months behind. I don't guess which is yours — the audit counts it, in your numbers. The system covers the whole path: answered, booked, chased, proven.
+
 #### Joined leak-math block (the beat the pillar lacks)
 
 Assumes the pillar's calculator is re-anchored to a realistic case value (see §6 — the $1,200 default is the live bug). Recommended block:
