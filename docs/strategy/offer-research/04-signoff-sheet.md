@@ -2,6 +2,8 @@
 
 **Date:** 2026-07-07 · **Owner:** Artur · **Companion:** `03-migration-build-plan.md` (tasks 1–2, 4–6, 8–10). This sheet is task 3 + task 7 folded in.
 
+> **✅ §A SIGNED 2026-07-07 (founder, via session):** all §A1 rows + the §A2 C-06 claims row signed **as recommended**, with two riders: **(1) MED-hero = OPEN** — founder asked to see the §5.1 A/B/C texts before picking; the medical hero swap holds until the pick (everything else on the pillar migrates). **(2) MED-8.5 = SIGNED, dental skin adopted** — "The cases you already earned" / "Earned, plus new patients" / "The whole practice, run for you" (03 §2.8), proposal-template-only, re-wordable per rate letter. Fabricated-proof strays (ARCH-3) proceed as the pre-signed default: **removed, none attested**. §B and the claims tables (C-07…C-13, industrial/jewelry banks) remain open — pages ship qualitative until signed per row. §D13 stays PARKED. Build authorized from this session, batches per 03 Task 10.
+
 ## How to sign
 Write **SIGNED**, **REJECTED**, or **DEFER** next to each **row id** below (front of the id cell is fine). One pass, top to bottom. A signed row clears the GATE:HUMAN on the copy blocks it governs; a rejected row leaves the page shipping its current/qualitative version; a deferred row parks with no build impact. Sign **§A first** — those rows gate the migration PR and the live Beautiful Smiles deal. **§B and the claims/ledger tables can wait.** **§D13 is PARKED — do not sign; build nothing from it.**
 
