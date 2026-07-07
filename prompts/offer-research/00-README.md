@@ -38,19 +38,22 @@ full audit of every live commercial surface (see `01-offer-audit-2026-07-05.md`)
 4. Every number a prompt proposes for live copy needs a source URL + date and **GATE:HUMAN**
    (your sign-off) before it ships — the prompts enforce this.
 
-## Run order
+## Run order — status as of 2026-07-07
 
-| # | File | Produces | Run when |
-|---|------|----------|----------|
-| 1 | `02-prompt-offer-architecture.md` | The canonical offer ladder + pricing decisions (resolves the two contradictory models) | **First** — everything else inherits it |
-| 2 | `03-prompt-industrial.md` | Industrial offer spec + wording | After #1 |
-| 3 | `04-prompt-home-services.md` | Home-services offer spec + wording (roofing-forward) | After #1 |
-| 4 | `05-prompt-medical-dentists.md` | Medical pillar + dentists niche offer spec + wording | After #1 |
-| 5 | `06-prompt-consumer-jewelry.md` | Consumer/DTC pillar + jewelry niche offer spec + wording | After #1 |
-| 6 | `07-prompt-proof-roi-engine.md` | The cross-page proof/payback system (calculators joined to price, claims library expansion, legitimate urgency) | After the verticals, or in parallel with them |
-| 7 | `08-prompt-niche-template.md` | Reusable template for any future niche (HVAC, med spa, watches…) | Whenever a niche is earned |
+| # | File | Produced | Status |
+|---|------|----------|--------|
+| 1 | `02-prompt-offer-architecture.md` | `docs/strategy/offer-research/00-offer-architecture.md` | ✅ **SIGNED** (D1–D12 + §16 corrections) |
+| 2 | `03-prompt-industrial.md` | `industrial-offer-spec.md` (48 verified claims, +§4b) | ✅ done, GATE:HUMAN pending |
+| 3 | `04-prompt-home-services.md` | `home-services-offer-spec.md` (C-07…C-13, +§3b) | ✅ done, GATE:HUMAN pending |
+| 4 | `05-prompt-medical-dentists.md` | `medical-dental-offer-spec.md` (C-06 unblocked) | ✅ done, GATE:HUMAN pending |
+| 5 | `06-prompt-consumer-jewelry.md` | `consumer-jewelry-offer-spec.md` (calculator defect fixed, +§4.4) | ✅ done, GATE:HUMAN pending |
+| 6 | `07-prompt-proof-roi-engine.md` | **REWRITTEN 2026-07-07 → consolidation prompt**: unified payback component, the single sign-off sheet, SEARCH-row verification sweep, proposal templates, the sequenced build plan → `03-migration-build-plan.md` + `04-signoff-sheet.md` | ▶️ **next** |
+| 7 | `08-prompt-niche-template.md` | Per-niche spec (**roofing queued first** — lead numbers banked in home-services §12) | as earned (after #6) |
 
-Prompts 2–5 are independent of each other — they can run in parallel sessions.
+**Also in `docs/strategy/offer-research/` (born from the Beautiful Smiles deal, 2026-07-07):**
+`01-anchor-ladder.md` (D13 wide ladder $30/$45/$200K-class — **PARKED by founder**, future) ·
+`02-visible-value-pass.md` (D14 priced-foundations proposal layer, rules R1–R9 — folded into
+the three vertical specs' §3b/§4.4/§4b; proposal artifacts only, never pages).
 
 ## Non-negotiables baked into every prompt
 
