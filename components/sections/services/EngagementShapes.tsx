@@ -47,13 +47,18 @@ export function EngagementShapes({ id }: { id?: string }) {
             The Revenue Engine
           </h3>
           <p className="font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-            $30K{' '}
+            From $30K{' '}
             <span className="text-lg font-medium text-ink-500">one-time</span>
           </p>
         </div>
         <p className="mt-4 max-w-2xl leading-relaxed text-ink-700">
           Answer the call, book the job, recover what went cold, prove the
           revenue. The foundation every cylinder bolts onto.
+        </p>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-600">
+          Scaled to the value at stake, never to a menu. Your exact number
+          comes in a written SOW within 48 hours &mdash; date-stamped, yours to
+          keep either way.
         </p>
       </div>
 
@@ -153,15 +158,16 @@ export function EngagementShapes({ id }: { id?: string }) {
         </p>
         <p className="mt-2 max-w-2xl leading-relaxed text-ink-700">
           You already spend $15&ndash;40K a month on agencies, and get less for
-          it. Six vendors, no one accountable, and you still can&rsquo;t say
+          it. Five vendors, no one accountable, and you still can&rsquo;t say
           which lever moved revenue. The costly line item is another year
           exactly where you are, demand leaking the whole time.
         </p>
       </div>
 
       <p className="mt-7 max-w-2xl text-sm leading-relaxed text-ink-600">
-        Want proof before the full install? Any cylinder can run as a standalone
-        engagement first &mdash; fixed scope, written SOW in 48 hours.
+        Want proof before the full install? Any of the five service cylinders
+        can run first as a fixed-scope sprint at its published band. Take the
+        install within 90 days and the sprint fee credits toward it, in full.
       </p>
     </SectionRail>
   )

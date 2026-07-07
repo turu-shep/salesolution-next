@@ -12,7 +12,10 @@ import { cn } from '@/lib/cn'
  *  - Trade presets snap every default to that trade's reality.
  *  - Sliders + a counting-up total make it tactile.
  *  - Models the leak across all three pillars (Bring / Convert / Retain), then
- *    shows what the engine RECOVERS and the payback vs an (editable) fee.
+ *    shows what the engine RECOVERS and the install-frame payback in the buyer's
+ *    own units (D12/R8: no fee slider, no bare monthly figure, either motion).
+ *    book-jobs anchors the $30K floor and hands off to the guarantee below;
+ *    sell-product carries the pieces frame + 48h-SOW line, no guarantee language.
  *  - A 12-month projection makes "do nothing" visibly expensive.
  *
  * Honesty: the visitor's own numbers, editable assumptions, conservative
@@ -30,13 +33,15 @@ type Vals = {
   rrate: number
 }
 
-export type Preset = { key: string; label: string } & Vals
+/** `unit` lets one mount speak per-trade payback nouns (roofs/installs/jobs);
+ *  falls back to the mount-level `unitLabel` when absent. */
+export type Preset = { key: string; label: string; unit?: string } & Vals
 
 const DEFAULT_PRESETS: Preset[] = [
-  { key: 'roofing', label: 'Roofing', avg: 4500, bvol: 180, brate: 25, cvol: 5, crate: 24, rvol: 300, rrate: 8 },
-  { key: 'hvac', label: 'HVAC', avg: 1200, bvol: 300, brate: 25, cvol: 8, crate: 30, rvol: 500, rrate: 14 },
-  { key: 'plumbing', label: 'Plumbing', avg: 450, bvol: 500, brate: 25, cvol: 15, crate: 35, rvol: 700, rrate: 20 },
-  { key: 'electrical', label: 'Electrical', avg: 600, bvol: 300, brate: 25, cvol: 10, crate: 33, rvol: 450, rrate: 16 },
+  { key: 'roofing', label: 'Roofing', unit: 'roof', avg: 4500, bvol: 180, brate: 25, cvol: 5, crate: 24, rvol: 300, rrate: 8 },
+  { key: 'hvac', label: 'HVAC', unit: 'install', avg: 1200, bvol: 300, brate: 25, cvol: 8, crate: 30, rvol: 500, rrate: 14 },
+  { key: 'plumbing', label: 'Plumbing', unit: 'job', avg: 450, bvol: 500, brate: 25, cvol: 15, crate: 35, rvol: 700, rrate: 20 },
+  { key: 'electrical', label: 'Electrical', unit: 'job', avg: 600, bvol: 300, brate: 25, cvol: 10, crate: 33, rvol: 450, rrate: 16 },
 ]
 
 const BRING_TO_JOB = 0.02 // conservative: share of missed nearby searches that become a job
@@ -112,7 +117,16 @@ export function WholeFlowLeak({
   fields = DEFAULT_FIELDS,
   avgLabel = 'Your average job',
   unitLabel = 'job',
+  avgNoun = 'job',
   heading = DEFAULT_HEADING,
+  motion = 'book-jobs',
+  installFloor = 30000,
+  cta = {
+    label: 'Turn this into your real number',
+    href: '#audit',
+    tag: 'revenue_leak_audit__calculator',
+    sub: '20 min · free · yours to keep',
+  },
 }: {
   id?: string
   /** Trade/vertical presets. Each snaps every slider to that segment's reality. */
@@ -121,13 +135,22 @@ export function WholeFlowLeak({
   fields?: FieldSet
   /** Label for the shared per-unit value slider (e.g. "Your average case"). */
   avgLabel?: string
-  /** Singular noun for one won unit of work — "job" (home services), "case" (dental). */
+  /** Singular noun for one won unit of work — "job" (home services), "case" (dental), "piece" (retail). */
   unitLabel?: string
+  /** Noun for the value slider in running copy — "at your average {avgNoun}". */
+  avgNoun?: string
   heading?: LeakHeading
+  /** Both motions render the install frame (D12: no fee slider, no bare monthly
+   *  figure). 'book-jobs' hands off to the guarantee the page mounts below;
+   *  'sell-product' carries the 48h-SOW line and no guarantee language. */
+  motion?: 'book-jobs' | 'sell-product'
+  /** One-time install floor the sell-product payback line anchors to. */
+  installFloor?: number
+  /** Panel CTA. Defaults to the book-jobs audit anchor. */
+  cta?: { label: string; href: string; tag?: string; sub?: string }
 }) {
   const [trade, setTrade] = useState(presets[0].key)
   const [v, setV] = useState<Vals>(stripKey(presets[0]))
-  const [feeMo, setFeeMo] = useState(2500)
 
   function selectTrade(key: string) {
     const p = presets.find((x) => x.key === key) ?? presets[0]
@@ -144,8 +167,10 @@ export function WholeFlowLeak({
   const recovered = Math.floor(
     amounts.bring * RECOVER.bring + amounts.convert * RECOVER.convert + amounts.retain * RECOVER.retain,
   )
-  const feeYr = feeMo * 12
-  const jobsToFee = v.avg > 0 ? Math.ceil(feeYr / v.avg) : 0
+  const unitsToInstall = v.avg > 0 ? Math.ceil(installFloor / v.avg) : 0
+  const unitsRecovered = v.avg > 0 ? Math.round(recovered / v.avg) : 0
+  // Per-trade payback noun: the selected preset's unit, else the mount's unitLabel.
+  const unit = presets.find((p) => p.key === trade)?.unit ?? unitLabel
 
   const animTotal = useAnimatedNumber(total)
   const animRecovered = useAnimatedNumber(recovered)
@@ -267,57 +292,75 @@ export function WholeFlowLeak({
               </span>{' '}
               of that comes back a year.
             </p>
-            <div className="mt-4 border-t border-white/10 pt-4">
-              <label
-                htmlFor="flow-fee"
-                className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-white/50"
-              >
-                <span>If a system like this runs</span>
-                <span className="text-white/80">{usd(feeMo)}/mo</span>
-              </label>
-              <input
-                id="flow-fee"
-                type="range"
-                min={500}
-                max={12000}
-                step={100}
-                value={feeMo}
-                onChange={(e) => setFeeMo(e.target.valueAsNumber)}
-                className="mt-2 w-full cursor-pointer accent-accent-500"
-              />
-              <p className="mt-2 text-sm font-semibold text-white">
-                The recovered work clears that fee in the first {jobsToFee} {unitLabel}
-                {jobsToFee === 1 ? '' : 's'}.
-              </p>
-            </div>
+            {motion === 'sell-product' ? (
+              /* Install frame (D12, sell-product): the floor in the buyer's own
+                 units, live from the avg slider. No fee slider, no guarantee. */
+              <div className="mt-4 border-t border-white/10 pt-4">
+                <p className="text-sm font-semibold text-white">
+                  The install starts at {usd(installFloor)}. At your average {avgNoun}, that&rsquo;s{' '}
+                  {unitsToInstall} {unit}
+                  {unitsToInstall === 1 ? '' : 's'}
+                  {' '}&mdash; once.
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-ink-100">
+                  {unitsRecovered > 0 && (
+                    <>
+                      Everything after that is return &mdash; the model above recovers about{' '}
+                      {unitsRecovered} {unit}
+                      {unitsRecovered === 1 ? '' : 's'} a year.{' '}
+                    </>
+                  )}
+                  Your exact number comes in the written SOW, within 48 hours.
+                </p>
+              </div>
+            ) : (
+              /* Install frame (D12, book-jobs): same floor + live payback in
+                 their unit, then hand off to the guarantee the page mounts
+                 below. No fee slider, no bare monthly figure (R8). */
+              <div className="mt-4 border-t border-white/10 pt-4">
+                <p className="text-sm font-semibold text-white">
+                  The install starts at {usd(installFloor)}, scaled to what the audit models. At your
+                  average {unit}, the recovered work above covers it in the first {unitsToInstall}{' '}
+                  {unit}
+                  {unitsToInstall === 1 ? '' : 's'}.
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-ink-100">
+                  After that, the fee is monthly and it has one test: the recovered line on your
+                  report beats it &mdash; the guarantee below.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* CTA — anchored to the bottom of the panel (turn the estimate into the real number) */}
           <div className="mt-auto pt-8">
             <Link
-              href="#audit"
-              data-cta="revenue_leak_audit__calculator"
+              href={cta.href}
+              data-cta={cta.tag ?? 'revenue_leak_audit__calculator'}
               data-cta-location="calculator"
               className="inline-flex w-full items-center justify-center gap-1.5 rounded-[4px] bg-brand-600 px-5 py-3.5 text-base font-semibold text-white shadow-cta transition-colors duration-200 hover:bg-brand-700"
             >
-              Turn this into your real number
+              {cta.label}
               <span aria-hidden>→</span>
             </Link>
-            <p className="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.16em] text-white/40">
-              20 min · free · yours to keep
-            </p>
+            {cta.sub && (
+              <p className="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.16em] text-white/40">
+                {cta.sub}
+              </p>
+            )}
           </div>
         </div>
       </div>
 
-      {/* 12-month projection */}
-      <Projection total={total} recovered={recovered} feeYr={feeYr} />
+      {/* 12-month projection — both motions chart the one-time install floor */}
+      <Projection total={total} recovered={recovered} installFloor={installFloor} />
 
       <p className="mt-4 max-w-3xl font-mono text-[11px] uppercase tracking-[0.14em] text-ink-400">
         Your numbers, your assumptions &middot; bring assumes a conservative {Math.round(BRING_TO_JOB * 100)}% of
         missed searches become a {unitLabel}; the engine recovers {Math.round(RECOVER.convert * 100)}% of convert,{' '}
-        {Math.round(RECOVER.bring * 100)}% of bring, {Math.round(RECOVER.retain * 100)}% of retain. I round
-        down. The audit replaces every estimate with your real figures.
+        {Math.round(RECOVER.bring * 100)}% of bring, {Math.round(RECOVER.retain * 100)}% of retain.{' '}
+        {motion === 'sell-product' ? 'We round' : 'I round'} down. The audit replaces every estimate
+        with your real figures.
       </p>
     </SectionRail>
   )
@@ -367,8 +410,18 @@ function Slider({
   )
 }
 
-/** Cumulative leak (do nothing) vs recovered (start now), 12 months. */
-function Projection({ total, recovered, feeYr }: { total: number; recovered: number; feeYr: number }) {
+/** Cumulative leak (do nothing) vs recovered (start now), 12 months. The cost
+ *  reference is the cumulative monthly fee (book-jobs) or the flat one-time
+ *  install floor (sell-product) — recovered crossing it is the payback moment. */
+function Projection({
+  total,
+  recovered,
+  installFloor,
+}: {
+  total: number
+  recovered: number
+  installFloor: number
+}) {
   const W = 100
   const H = 34
   const pad = 2
@@ -378,7 +431,7 @@ function Projection({ total, recovered, feeYr }: { total: number; recovered: num
   const months = Array.from({ length: 13 }, (_, m) => m)
   const leakPts = months.map((m) => `${x(m)},${y((total * m) / 12)}`).join(' ')
   const recPts = months.map((m) => `${x(m)},${y((recovered * m) / 12)}`).join(' ')
-  const feePts = months.map((m) => `${x(m)},${y((feeYr * m) / 12)}`).join(' ')
+  const installY = y(Math.min(installFloor, maxY))
 
   return (
     <div className="mt-6 rounded-xl border border-rule bg-paper p-6 sm:p-7">
@@ -394,7 +447,7 @@ function Projection({ total, recovered, feeYr }: { total: number; recovered: num
         <polygon points={`0,${H - pad} ${leakPts} ${W},${H - pad}`} className="fill-ink-900/[0.05]" />
         <polyline points={leakPts} className="fill-none stroke-ink-500" strokeWidth={1.25} vectorEffect="non-scaling-stroke" />
         <polyline points={recPts} className="fill-none stroke-accent-500" strokeWidth={2.5} vectorEffect="non-scaling-stroke" />
-        <polyline points={feePts} className="fill-none stroke-ink-300" strokeWidth={1} strokeDasharray="3 2" vectorEffect="non-scaling-stroke" />
+        <line x1={0} y1={installY} x2={W} y2={installY} className="stroke-ink-300" strokeWidth={1} strokeDasharray="3 2" vectorEffect="non-scaling-stroke" />
       </svg>
       <div className="mt-1.5 flex justify-between font-mono text-[10px] uppercase tracking-[0.14em] text-ink-400">
         <span>Now</span>
@@ -409,7 +462,7 @@ function Projection({ total, recovered, feeYr }: { total: number; recovered: num
           <span className="h-2 w-3 rounded-[1px] bg-accent-500" aria-hidden /> Recovered with the engine
         </span>
         <span className="flex items-center gap-2 font-mono uppercase tracking-[0.14em] text-ink-400">
-          <span className="h-px w-3 bg-ink-300" aria-hidden /> The fee
+          <span className="h-px w-3 bg-ink-300" aria-hidden /> The install, once
         </span>
       </div>
     </div>

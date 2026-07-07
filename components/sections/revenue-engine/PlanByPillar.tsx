@@ -85,7 +85,7 @@ export function PlanByPillar({
   id,
   groups = HS_GROUPS,
   prove = HS_PROVE,
-  intro = 'Three jobs, five moving parts. I install and run all of it — the 90-day setup is on me.',
+  intro = 'Three jobs, five moving parts. I install and run all of it — the 60-day install is on me.',
   proveLine = 'I prove it paid.',
 }: {
   id?: string

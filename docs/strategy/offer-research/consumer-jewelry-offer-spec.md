@@ -179,12 +179,12 @@ The architecture's sell-product stack, plus four research-backed additions nativ
 
 | Layer | Bought alone | Source status |
 |---|---|---|
-| Jewelry site (catalog-connected, conversion-built) | jewelry SaaS $199–400+/mo, no upfront · custom $10,000–$30,000 | **OPENED (Punchmark pricing + digital-marketing pages — the strongest anchors in this vertical)** / SEARCH (custom band) |
-| Content library (~30 buying-guide articles — see D-C7) | $4,500–$15,000 ($150–500/article); jewelry comp: content marketing from $249/mo | OPENED (Punchmark) / SEARCH (per-article) |
-| Local SEO + GBP program | $1,500–$3,000/mo typical (jewelry-SaaS tier from $199/mo; comprehensive to $6K/mo) | OPENED (Punchmark) / SEARCH |
-| Email/SMS retention engine (bridal→band→anniversary flows) | $1,000–$5,000 setup + $2,500–$10,000/mo agency mgmt + platform | SEARCH (Yocto/Sequenzy; Klaviyo/Postscript tiers) |
-| Review/reputation | $299–$449/mo per location | SEARCH (Birdeye tiers) |
-| Response layer (missed call / DM) | $40–$300/mo | SEARCH |
+| Jewelry site (catalog-connected, conversion-built) | jewelry SaaS $199–400+/mo, no upfront · custom $10,000–$30,000+ | **OPENED (Punchmark pricing + digital-marketing pages — the strongest anchors in this vertical)** / OPENED 2026-07-07 (custom band — CartCoders: https://cartcoders.com/blog/shopify-development/jewellery-website-design-development-cost/ states "Advanced jewellery eCommerce store: $10,000 – $30,000+", matches the claimed band) |
+| Content library (~30 buying-guide articles — see D-C7) | $4,500–$15,000 ($150–700/article, corrected from $150–500); jewelry comp: content marketing from $249/mo (still unsourced) | OPENED (Punchmark) / OPENED 2026-07-07 (per-article — Joy Joya: https://joyjoya.com/what-you-can-expect-to-pay-for-jewelry-marketing/ states "$150 to $700 per piece"; the $4,500–$15,000 library total is a derived 30× calc, and the $249/mo comp still needs its own openable source) |
+| Local SEO + GBP program | $500–$3,000/mo (WebFX retainer range; corrected from "$1,500–$3,000/mo typical" — that sits at the top of the range, small-business avg ~$1,000/mo) (jewelry-SaaS tier from $199/mo and comprehensive to $6K/mo unconfirmed at this source) | OPENED (Punchmark) / OPENED 2026-07-07 (WebFX: https://www.webfx.com/local-seo/pricing/ states "$500 – $3,000 per month for monthly retainers") |
+| Email/SMS retention engine (bridal→band→anniversary flows) | $1,000–$5,000 setup + $2,500–$10,000/mo agency mgmt + platform | OPENED 2026-07-07 (mgmt range — trypropel: https://www.trypropel.ai/resources/blogs/best-klaviyo-email-marketing-agencies states "$2,000 to $10,000+ per month", freelancer floor ~$1,500/mo; the $1,000–$5,000 setup fee and Yocto/Sequenzy/Klaviyo/Postscript platform tiers still SEARCH — need their own openable source) |
+| Review/reputation | $299–$449/mo per location (Birdeye: Starter $299 / Growth $349 / Dominate $449 per location/mo; Premium 4+ = custom) | OPENED 2026-07-07 (Birdeye tiers — costbench: https://costbench.com/software/review-management/birdeye/; primary canonical: https://birdeye.com/pricing/) |
+| Response layer (missed call / DM) | $40–$300/mo ($40–$120 typical small-business, up to $300+ platform tier) | OPENED 2026-07-07 (helpgenie: https://helpgenie.ai/blog/missed-call-text-back-software-pricing/ states category runs $20–$300/mo, typical $40–$120, platform $150–$300+) |
 | Measurement/attribution | no clean standalone market price — present as bundled, never a priced line | — |
 | 3 months managed operation | ~$9,000–$27,000 (recurring stack $3–9K/mo) | derived |
 | **Σ assembled** | **~$25,000–$75,000**, clustering $30–55K — at a $4,600 average sale, that's **5–16 pieces**; the install is **7 pieces, once** | derived |

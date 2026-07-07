@@ -159,7 +159,7 @@ export default function MedicalAestheticsPillarPage() {
           src: '/artur-shepel-480.webp',
           caption: 'I run every account myself.',
           specs: [
-            { label: 'Setup', value: '90 days, one-time fee' },
+            { label: 'Install', value: 'by day 60, one-time fee' },
             { label: 'Minimum', value: '3 months' },
             { label: 'Lock-in', value: 'none' },
           ],
@@ -245,8 +245,9 @@ export default function MedicalAestheticsPillarPage() {
         items={MEDICAL_FAQ}
       />
 
-      {/* 8 — FREE-AUDIT CLOSE */}
-      <AuditCTA id="audit" />
+      {/* 8 — FREE-AUDIT CLOSE (dental vertical: treatment-plan/recall wording +
+          dental leak options, not the contractor default) */}
+      <AuditCTA id="audit" vertical="dental" />
     </>
   )
 }

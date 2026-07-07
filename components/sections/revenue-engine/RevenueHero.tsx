@@ -28,6 +28,7 @@ export function RevenueHero({
   lede,
   primaryCta,
   primaryCtaTag = 'revenue_leak_audit__hero',
+  primaryCtaSub,
   founder,
   selfQualifiers,
   videoUrl,
@@ -42,6 +43,9 @@ export function RevenueHero({
    *  default (their on-page form); the product page routes off-page, so it
    *  passes a distinct tag. */
   primaryCtaTag?: string
+  /** One line under the CTA that names the artifact the call produces
+   *  (e.g. "a written plan within 48 hours"). Optional — omit for none. */
+  primaryCtaSub?: React.ReactNode
   founder?: Founder
   selfQualifiers?: SelfQualifier[]
   videoUrl?: string
@@ -89,6 +93,10 @@ export function RevenueHero({
             </Link>
           )}
         </div>
+
+        {primaryCtaSub && (
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-ink-600">{primaryCtaSub}</p>
+        )}
 
         {/* Founder spec-card — a named face + named terms is the calm-operator
             trust signal, shown not asserted. Wired off an optional prop so the

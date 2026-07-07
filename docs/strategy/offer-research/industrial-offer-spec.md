@@ -155,7 +155,7 @@ Names locked by the architecture's §16 voice check. Each option is named by the
 | Catalog / product-data (money SKUs machine-readable) | **from $30,000** as an implementation project — and the PIM software license alone starts at $45K/yr (use as "that's before the software," never as the work's price) | OPENED (GetApp/Akeneo $45K; Macopedia pre-analysis €5–9K) |
 | AI-search / SEO foundation | $10,000–$30,000 one-time (technical-audit comp; B2B SEO retainers run $7–15K/mo — one quarter retained exceeds this whole slice). No published GEO-specific price exists; this comp understates novelty | OPENED (Directive, 2026-03) |
 | Measurement layer (two lines, quote-log instrumentation) | $7,500–$15,000 (near-exact GA4 mid-market comp) | OPENED (Coders.dev, 2026-03) |
-| Editorial foundation | rate-based only: $0.50–$1.00/word for spec/technical content — no packaged market comp exists; never print a hard dollar range | SEARCH (Upwork/ClearVoice rates) |
+| Editorial foundation | rate-based only: $0.50–$1.50/word for expert/specialized technical content (was: $0.50–$1.00/word — corrected up; expert/specialized technical writing reaches $0.50–$1.50/word) — no packaged market comp exists; never print a hard dollar range | OPENED 2026-07-07 (biztoolkit.co per-word rates, 2026 — ClearVoice URL fails DNS/ENOTFOUND, unopenable) |
 | Outbound program setup (list, sequences, deliverability) | $1,500–$5,000 setup (ongoing mgmt $2–7.5K/mo is the recurring-alternative contrast) | OPENED (Reachoutly, 2025-12) |
 | **Σ assembled from vendors** | **~$110,000 (lean) to $330,000+ (loaded)** — vs the from-$30K install | derived |
 
