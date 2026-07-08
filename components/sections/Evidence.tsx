@@ -19,8 +19,11 @@ import { CountUp } from './CountUp'
 const LEAD_PATH = [1840, 1990, 2210, 2360, 2480, 2640]
 const MONTHS = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan']
 
+// Quote is the fact-ledger "trimmed" form — the "qualified leads doubled inside
+// two quarters" sentence contradicts +43.5% and was resolved-removed; don't
+// reinstate (docs/strategy/case-studies/fact-ledger.md §1).
 const PULL_QUOTE = {
-  text: 'They rebuilt our product schema and rewrote our pillar pages so AI Overviews cite us instead of the manufacturer. Qualified leads doubled inside two quarters.',
+  text: 'They rebuilt our product schema and rewrote our pillar pages so AI Overviews cite us instead of the manufacturer.',
   attrib: 'Operations Director',
   org: 'Industrial hydraulics distributor · ~8,500 SKUs',
 }
@@ -80,7 +83,7 @@ export function Evidence() {
               data-cta-location="mid_body"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[6px] transition hover:text-brand-600 hover:decoration-brand-600"
             >
-              Book a similar audit
+              Book a Growth Call
               <span aria-hidden>→</span>
             </Link>
           </div>

@@ -141,7 +141,7 @@ export function Signals() {
           </Link>
           <Link
             href="/revenue-engine/"
-            data-cta="revenue-leak-audit__signals"
+            data-cta="revenue_leak_audit__signals"
             data-cta-location="mid_body"
             className={cn(
               'inline-flex items-center justify-center gap-1.5 rounded-[4px] px-5 py-3 text-sm font-semibold transition-colors duration-200',

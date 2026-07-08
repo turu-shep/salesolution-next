@@ -67,9 +67,10 @@ export const HOMEPAGE_FAQ_ITEMS: QA[] = [
     a: (
       <>
         <p>
-          In-house wins when you&rsquo;re north of $50M ARR and have enough
-          velocity to keep someone with senior GEO chops fully utilized.
-          Below that, you end up with a generalist learning on your time.
+          In-house wins when you&rsquo;re north of $50M in revenue and have
+          enough work to keep someone with senior AI-search chops busy
+          full-time. Below that, you end up with a generalist learning on
+          your time.
         </p>
         <p className="mt-3">
           The fractional model exists because schema engineering, citation

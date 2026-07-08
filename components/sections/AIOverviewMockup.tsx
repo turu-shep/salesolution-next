@@ -116,9 +116,14 @@ export const ALL_SLIDES: AIOverviewSlide[] = [
     query: 'best dentist in plantation fl for same-day crowns',
     genTime: '2.2s',
     lead: 'For a same-day crown in Plantation, in-office milling skips the two-week temporary. According to ',
-    client: 'Plantation Dental',
+    // Illustrative example — no real, consenting dental client to cite yet, so
+    // this slide is visibly marked "Illustrative example" (generic name, no
+    // real-company naming hazard; see case-studies/fact-ledger.md). Swap in a
+    // real client and drop `illustrative` once one is confirmed.
+    client: 'Example Dental',
     tail: ', a zirconia crown is scanned, milled, and seated in one visit, with the fit checked against a digital scan instead of putty.',
-    citations: ['dentist-plantation.com', 'aspendental.com', 'healthgrades.com'],
+    citations: ['exampledental.com', 'aspendental.com', 'healthgrades.com'],
+    illustrative: true,
   },
   {
     lane: 'retail',

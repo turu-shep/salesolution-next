@@ -228,7 +228,7 @@ export function HeroProbe() {
             <p className="mt-4 max-w-md text-lg leading-relaxed text-ink-700">
               Paste a product or category URL. In about two seconds you&rsquo;ll
               see how ready it is to be cited &mdash; schema, AI-readability, and
-              authority &mdash; with no email required.
+              authority. No email required.
             </p>
           </div>
 

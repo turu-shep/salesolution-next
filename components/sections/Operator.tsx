@@ -15,10 +15,13 @@ import { business } from '@/lib/business'
  * them.
  */
 
+// One attested row only. "Verticals shipped 8" / "Engagements active 6" were
+// unattested counts — removed per the attest-or-remove default (offer
+// architecture §16 item 6 / ARCH-3); restore a row only with a filed
+// claims-library entry. "14 years" is sourced from the approved founder bio
+// (lib/business.ts).
 const CREDENTIALS = [
   { label: 'Years operating', value: '14', unit: 'yrs' },
-  { label: 'Verticals shipped', value: '8', unit: '' },
-  { label: 'Engagements active', value: '6', unit: '' },
 ]
 
 export function Operator() {
@@ -65,11 +68,11 @@ export function Operator() {
               </li>
               <li className="flex items-baseline gap-2">
                 <span aria-hidden className="shrink-0 text-accent-500">·</span>
-                <span><span className="font-medium text-white">No lock-in.</span> Leave anytime, keep everything.</span>
+                <span><span className="font-medium text-white">No annual lock-in.</span> Leave after the minimum, keep everything.</span>
               </li>
               <li className="flex items-baseline gap-2">
                 <span aria-hidden className="shrink-0 text-accent-500">·</span>
-                <span><span className="font-medium text-white">Published prices.</span> You see them before we talk.</span>
+                <span><span className="font-medium text-white">Published pricing model.</span> You see it before we talk.</span>
               </li>
             </ul>
           </div>

@@ -7,7 +7,9 @@ import { SectionRail } from '@/components/layout/SectionRail'
  *
  * Cross-vertical close: one door per funnel, tagged by audience, keeping the
  * two funnels separate. Industrial → Book a Growth Call; local-service → the
- * Revenue Leak Audit (routes through /revenue-engine/, its own funnel home).
+ * Revenue Leak Audit (currently deep-links the home-services audit anchor —
+ * set in the Phase-5 URL remap; whether it should route via /revenue-engine/
+ * instead is an open founder call, see the home alignment report).
  * Both are framed as a diagnosis the owner keeps — the brand's honesty stance.
  *
  * The shared `FinalCTA` component is still used on 19 other routes; it stays
@@ -54,7 +56,7 @@ export function FinalCTARail() {
 
         <Link
           href="/industries/home-services/#audit"
-          data-cta="revenue-leak-audit__final_rail"
+          data-cta="revenue_leak_audit__final_rail"
           data-cta-location="final_rail"
           className="group flex flex-col border border-white/15 bg-white/[0.03] transition-colors duration-200 hover:border-white/40"
         >
