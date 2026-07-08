@@ -49,6 +49,7 @@ full audit of every live commercial surface (see `01-offer-audit-2026-07-05.md`)
 | 5 | `06-prompt-consumer-jewelry.md` | `consumer-jewelry-offer-spec.md` (calculator defect fixed, +§4.4) | ✅ done, GATE:HUMAN pending |
 | 6 | `07-prompt-proof-roi-engine.md` | **REWRITTEN 2026-07-07 → consolidation prompt**: unified payback component, the single sign-off sheet, SEARCH-row verification sweep, proposal templates, the sequenced build plan → `03-migration-build-plan.md` + `04-signoff-sheet.md` | ▶️ **next** |
 | 7 | `08-prompt-niche-template.md` | Per-niche spec (**roofing queued first** — lead numbers banked in home-services §12) | as earned (after #6) |
+| 8 | `09-prompt-page-alignment.md` | **Per-page alignment audit** — checks any page against the signed spirit (value-based, system-first, burned-buyer-safe) + structure (§9.1 matrix, canonical blocks, claims discipline); fixes what canon decides, GATEs the rest → `docs/strategy/offer-research/alignment/{slug}.md` | **now, one page per run** — queue: `/` → the doors (`/unlock-growth-audit/`, `/book-growth-call/`, `/future-proof-your-seo/`, `/catalog-snapshot/`) → `/about/`, `/case-studies/`, `/tools/` → FGO + hub deep passes |
 
 **Also in `docs/strategy/offer-research/` (born from the Beautiful Smiles deal, 2026-07-07):**
 `01-anchor-ladder.md` (D13 wide ladder $30/$45/$200K-class — **PARKED by founder**, future) ·
