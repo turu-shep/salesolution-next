@@ -201,12 +201,15 @@ export function HeroProbe() {
           {/* The proof, beside the message — min-w-0 stops the long-URL chrome
               from blowing out the grid track on mobile. */}
           <div className="min-w-0 lg:col-span-5">
-            <div className="mb-4 flex items-center justify-between">
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
+            <div className="mb-4 flex items-start justify-between gap-6">
+              <p className="max-w-[30ch] font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
                 What it looks like when we&rsquo;ve done the work
               </p>
-              <p className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500 sm:block">
-                Real queries · the AI answer, engineered
+              {/* "Recreated answers", not "the AI answer, engineered": SERP-checked
+                  2026-07-08 — none of the real-client citations verifies live, so
+                  the panel is labeled as a recreation (alignment G2). */}
+              <p className="hidden shrink-0 text-right font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500 sm:block">
+                Real queries · recreated answers
               </p>
             </div>
             <AIOverviewMockup slides={slides} />
@@ -302,7 +305,7 @@ function ProbeResultPanel({ state }: { state: ProbeState }) {
       <div className="space-y-3 border-t border-rule bg-surface-alt/60 px-5 py-5">
         <SkeletonRow label="Schema" />
         <SkeletonRow label="AI-readable" />
-        <SkeletonRow label="E-E-A-T" />
+        <SkeletonRow label="Authority" />
         <p className="pt-1 font-mono text-[11px] text-ink-400">
           Awaiting URL · Results in ~2s
         </p>
@@ -315,7 +318,7 @@ function ProbeResultPanel({ state }: { state: ProbeState }) {
       <div className="space-y-3 border-t border-rule px-5 py-5">
         <ScoreRow label="Schema" value={null} />
         <ScoreRow label="AI-readable" value={null} />
-        <ScoreRow label="E-E-A-T" value={null} />
+        <ScoreRow label="Authority" value={null} />
         <p className="pt-1 font-mono text-[11px] text-ink-500">
           Fetching · Parsing JSON-LD · Running heuristics…
         </p>
@@ -345,7 +348,7 @@ function ProbeResultPanel({ state }: { state: ProbeState }) {
       <div className="space-y-4">
         <ScoreRow label="Schema" value={scores.schema} />
         <ScoreRow label="AI-readable" value={scores.readable} />
-        <ScoreRow label="E-E-A-T" value={scores.authority} />
+        <ScoreRow label="Authority" value={scores.authority} />
       </div>
       <div className="mt-6 flex items-center justify-between border-t border-rule pt-4">
         <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">

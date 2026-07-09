@@ -64,7 +64,7 @@ committed copies **agree** on the headline numbers). Chart values come from `Evi
 | Category pages | 150+ | Evidence + Callout | — | ⚠ | engagement scope doc |
 | SKUs | ~8,500 | Evidence + Callout | matches replatform study ✅ | ⚠ | catalog count |
 | "No new ad spend" | claim | Evidence | — | ⚠ | ad-account spend flat Aug-24→Jan-25 |
-| Quote | Operations Director | Evidence (trimmed) | "doubled" sentence removed ✅ | ⚠ | client approval of attribution+text |
+| Quote | Operations Director | Evidence (trimmed) | "doubled" sentence removed ✅ | ✅ | founder approved attribution+text 2026-07-08 (homepage alignment G6); re-confirm with client only if the study is ever flipped to `named` |
 
 **Window:** Aug 2024 – Jan 2025 (both committed copies agree — treat as ✅ pending retro sign-off).
 **Resolved already:** the "qualified leads doubled inside two quarters" quote sentence was dropped

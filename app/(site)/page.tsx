@@ -13,7 +13,8 @@ import { Signals } from '@/components/sections/Signals'
 import { WhoWeServe } from '@/components/sections/WhoWeServe'
 
 export const metadata: Metadata = {
-  title: 'Digital Marketing & Sales: SEO Expert Guides and Services',
+  // Layout template appends "· Sale Solution" — don't repeat the brand here.
+  title: 'Revenue systems for businesses that sell parts, book jobs, and fill chairs',
   description:
     'Win the customers you already pay for. We get industrial and local-service businesses named by AI — and stop the calls, quotes, and leads they miss.',
   alternates: { canonical: 'https://salesolution.net/' },

@@ -73,9 +73,10 @@ export const HOMEPAGE_FAQ_ITEMS: QA[] = [
           your time.
         </p>
         <p className="mt-3">
-          The fractional model exists because schema engineering, citation
-          tracking, and AIO-aware PPC don&rsquo;t need a 40-hour week from
-          one person &mdash; they need 5–15 hours from the right one.
+          The fractional model exists because the work doesn&rsquo;t need a
+          40-hour week from one person. It needs 5&ndash;15 hours from the
+          right one: someone who can make your catalog readable to AI and
+          track who the answers actually cite.
         </p>
       </>
     ),
@@ -89,9 +90,9 @@ export const HOMEPAGE_FAQ_ITEMS: QA[] = [
           revenue numbers move:
         </p>
         <ul className="mt-3 space-y-1.5 pl-5 [list-style-type:square]">
-          <li>AIO citation coverage on your top 50 commercial queries</li>
-          <li>Schema completeness rate across the product catalog</li>
-          <li>Inbound query mix (informational vs commercial split)</li>
+          <li>How often the AI answer cites you on the 50 queries that matter to your revenue</li>
+          <li>How much of your catalog AI can actually read</li>
+          <li>Whether the buyers finding you are still researching or ready to buy</li>
         </ul>
         <p className="mt-3">
           You see them in the monthly outcome review. Qualified-lead lift

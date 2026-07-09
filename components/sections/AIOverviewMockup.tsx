@@ -312,7 +312,7 @@ export function AIOverviewMockup({
       {/* Annotation — what we want the visitor to take away */}
       <div className="absolute -right-3 top-32 hidden translate-x-full -rotate-2 lg:block">
         <div className="rounded-md bg-ink-900 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-white">
-          ← engineered by us
+          ← the spot we engineer
         </div>
         <div className="-mt-1 ml-3 h-3 w-3 rotate-45 bg-ink-900" />
       </div>

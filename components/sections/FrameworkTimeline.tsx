@@ -1,14 +1,18 @@
 import { SectionRail } from '@/components/layout/SectionRail'
 
-import { CountUp } from './CountUp'
-
 /**
  * Home § 03 — Framework.
  *
  * The track is the centerpiece visual: three phase stations connected by
- * a dashed rail, each with a window label, an outcome metric, and a vertical
+ * a dashed rail, each with a window label, an outcome line, and a vertical
  * drop-line into the items column below. Reads as an engineering process
  * diagram, not a slide-deck triptych.
+ *
+ * "What good looks like" is deliberately number-free: the old +12% / +43% /
+ * 2.5× illustrative targets were de-numbered per the homepage alignment
+ * sign-off (founder, 2026-07-08, G1 Option A) — unattested numbers don't
+ * ship, and 2.5× collided with the locked lib/stats.ts label. Real numbers
+ * live in the monthly report.
  */
 
 type Item = { title: string; body: string }
@@ -16,13 +20,8 @@ type Phase = {
   number: string
   name: string
   window: string
-  outcome: {
-    value: number
-    decimals?: number
-    prefix?: string
-    unit: string
-    label: string
-  }
+  /** "What good looks like" — the outcome in owner words, no numbers. */
+  outcome: string
   title: string
   description: string
   items: Item[]
@@ -33,7 +32,7 @@ const PHASES: Phase[] = [
     number: '01',
     name: 'Bring',
     window: 'Get found',
-    outcome: { value: 12, prefix: '+', unit: '%', label: 'more of the right buyers find you' },
+    outcome: 'The AI answer starts naming you for what you sell.',
     title: 'Get found wherever buyers look',
     description:
       'Search, maps, and the AI answer. We get you named where your buyer is already looking — for what you actually sell.',
@@ -48,7 +47,7 @@ const PHASES: Phase[] = [
     number: '02',
     name: 'Convert',
     window: 'Win the sale',
-    outcome: { value: 43, prefix: '+', unit: '%', label: 'more of those leads turn into jobs' },
+    outcome: 'Answered calls and chased quotes turn into booked work.',
     title: 'Win the demand you already have',
     description:
       'Every call answered, every quote chased, every page built to close — so the leads you already pay for stop slipping out the back.',
@@ -63,7 +62,7 @@ const PHASES: Phase[] = [
     number: '03',
     name: 'Retain',
     window: 'Keep them coming back',
-    outcome: { value: 2.5, decimals: 1, unit: '×', label: 'more revenue from customers you already won' },
+    outcome: 'The customers you already won buy again.',
     title: 'Keep them — and sell again',
     description:
       'The cheapest revenue you have is the customer you already won. We bring them back, and win back the ones who went quiet.',
@@ -113,34 +112,25 @@ export function FrameworkTimeline({ id }: { id?: string }) {
               )}
             </div>
 
-            {/* Outcome metric — what you should see by end of phase */}
+            {/* Outcome — what you should see by end of phase, in owner words */}
             <div className="mt-6 border-t border-rule pt-5">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-600">
                 What good looks like
               </p>
-              <p className="mt-2 font-display text-5xl font-semibold leading-[0.95] tabular-nums tracking-[-0.02em] text-ink-900 sm:text-6xl">
-                <CountUp
-                  value={p.outcome.value}
-                  decimals={p.outcome.decimals ?? 0}
-                  prefix={
-                    p.outcome.prefix ? (
-                      <span className={i === 0 ? 'text-accent-500' : 'text-brand-600'}>
-                        {p.outcome.prefix}
-                      </span>
-                    ) : null
-                  }
-                  className={i === 0 ? 'text-accent-500' : 'text-brand-600'}
-                />
-                <span className="text-ink-400">{p.outcome.unit}</span>
+              <p
+                className={`mt-3 max-w-[22ch] font-display text-2xl font-semibold leading-snug tracking-[-0.015em] sm:text-[1.7rem] ${
+                  i === 0 ? 'text-accent-600' : 'text-brand-700'
+                }`}
+              >
+                {p.outcome}
               </p>
-              <p className="mt-2 text-sm text-ink-700">{p.outcome.label}</p>
             </div>
           </div>
         ))}
       </div>
 
       <p className="mt-8 max-w-2xl font-mono text-[10px] uppercase tracking-[0.16em] text-ink-400">
-        Illustrative targets, not past results &mdash; your real numbers show up in the monthly report.
+        Your real numbers show up in the monthly report.
       </p>
 
       {/* Dashed rail with station markers below the headers */}
