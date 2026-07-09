@@ -72,7 +72,7 @@ export const footerColumns = [
       { label: 'Services', href: '/services/' },
       { label: 'Case Studies', href: '/case-studies/' },
       { label: 'About', href: '/about/' },
-      { label: 'Book a strategy call', href: '/book-growth-call/' },
+      { label: 'Book a Growth Call', href: '/book-growth-call/' },
       { label: 'Contact', href: '/contact-me/' },
     ],
   },

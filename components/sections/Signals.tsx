@@ -48,7 +48,7 @@ export function Signals() {
   }[tier]
 
   return (
-    <SectionRail tone="surface">
+    <SectionRail tone="paper">
       <div className="max-w-3xl">
         <h2 className="font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           Recognize any of these?

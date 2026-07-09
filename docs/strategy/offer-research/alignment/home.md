@@ -190,5 +190,22 @@ Founder: count everything mentioned on the website; itemized list given. **Filed
 
 The flow findings (§B) were greenlit by the founder 2026-07-09, to be executed in a fresh session. **Full self-contained handoff: `docs/handoff/2026-07/09/homepage-flow-rework.md`** — target arc, the three build-time GATE decisions (DemandSystem disposition, probe placement, Signals→FAQ gap), the do-not-regress commit list, canon constraints, footer + chat-widget ride-alongs, and the verification protocol.
 
+### §E — Flow rework: EXECUTED 2026-07-09
+
+Founder GATE answers: **D-A** move DemandSystem to `/services/` · **D-B** probe stays in the fold (no HeroProbe split) · **D-C** flip Signals `surface → paper` (FAQ tone is hardcoded and shared with `/services/`, so flipping FAQ would create a new collision there — flipped Signals instead).
+
+**What moved (order + disposition only, no copy rewrites):**
+- Homepage `app/(site)/page.tsx`: **DemandSystem removed.** New order = the target arc verbatim: HeroProbe → ProblemShift → WhoWeServe → FrameworkTimeline → GoalIndex → Evidence → Operator → Signals → FAQ → FinalCTARail. Wedge now at beat 2; Evidence ~3 screens earlier; one industry-router moment after the wedge.
+- Services `app/(site)/services/page.tsx`: **DemandSystem mounted** between HowServicesCombine (paper) and PickAService (surface) — its `dark` tone gives a clean paper→dark→surface rhythm.
+- `DemandSystem.tsx`: `data-cta-location` retagged `home-demand-system → services-demand-system` for GA4 accuracy. **Visible copy/href untouched** — its one CTA still reads "See how the engine works → `/revenue-engine/`" (a cross-motion link now living on the sell-product hub; flagged for a founder call, not changed here).
+- `Signals.tsx`: `tone` surface → paper (D-C dead-zone fix).
+
+**Ride-alongs (§5 of the handoff):**
+- Footer positioning line (`components/layout/Footer.tsx`): industrial-only "AI search engineered for industrial e-commerce. Hydraulics, MRO, technical distribution." → the canonical tagline, now wired to `business.tagline` (SSOT). Footer headline "Engineered to be cited." left as-is (brand line; founder call).
+- Footer nav label (`lib/navigation.ts`): "Book a strategy call" → "Book a Growth Call" (href already correct).
+- Chat auto-open: **no code change available.** The chat is HubSpot's hosted widget (`components/integrations/HubSpotTracking.tsx` injects `js.hs-scripts.com`); auto-open + mobile behavior are portal settings, not in the repo. **Founder action:** disable/delay auto-open in HubSpot → Conversations → Chatflows (targeting/display rules) so it stops covering the cookie banner on the mobile fold.
+
+**Verification (definition of done):** `tsc --noEmit` clean, eslint clean on changed files, `pnpm test` 8/8. Visual loop (webpack dev, desktop 1440×900 + mobile 390×844, scroll-through): homepage desktop **11,558px** (was 13,776 — **2,218px / ~2.5 screens shorter**), mobile **17,625px** (was 20,368); order confirmed against the arc; Signals(paper)→FAQ(surface) boundary now reads; services DemandSystem dark band renders with no tone collision; no page-level horizontal overflow (only intentional clipped elements — logo marquee, the "spot we engineer" badge, the HowServicesCombine `min-w` table in its own scroll wrapper). No canon regressions: no numbers/floors/guarantee introduced, `data-cta` id families intact. **Reorder shipped 2026-07-09** (flow-rework session; see `git log` for the commit) — the date GA4 before/after comparisons anchor to (03 Task 9.2).
+
 ## Known BY-DESIGN, checked and left alone
 Homepage proof bars carry the four `lib/stats.ts` headline stats (the approved surface) · the only quantified proof on the front door is industrial (recorded pre-migration state; the migration table's homepage row covers proof bars only) · the hero has no default CTA until a lane is picked (recorded design) · `audit__*` is the established id family for the written-diagnostic door · "Not ten vendors. One system." is the SSOT voice example.

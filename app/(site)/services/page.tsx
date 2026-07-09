@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
+import { DemandSystem } from '@/components/sections/DemandSystem'
 import { FAQ, type QA } from '@/components/sections/FAQ'
 import { FinalCTARail } from '@/components/sections/FinalCTARail'
 import { SixCylinders } from '@/components/sections/revenue-engine/SixCylinders'
@@ -142,6 +143,8 @@ export default function ServicesHubPage() {
       <SixCylinders id="cylinders" />
 
       <HowServicesCombine id="combinations" />
+
+      <DemandSystem id="demand-system" />
 
       <PickAService id="pick" />
 

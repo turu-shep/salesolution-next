@@ -55,8 +55,7 @@ export function Footer() {
           <div className="md:col-span-4">
             <Logo tone="dark" className="text-2xl" />
             <p className="mt-5 max-w-xs text-sm leading-relaxed">
-              AI search engineered for industrial e&#8209;commerce.
-              Hydraulics, MRO, technical distribution.
+              {business.tagline}
             </p>
             <ul className="mt-7 flex items-center gap-2">
               {(

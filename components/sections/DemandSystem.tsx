@@ -342,7 +342,7 @@ export function DemandSystem({ id }: { id?: string }) {
           <Link
             href="/revenue-engine/"
             data-cta="demand-system-engine"
-            data-cta-location="home-demand-system"
+            data-cta-location="services-demand-system"
             className="inline-flex shrink-0 items-center gap-1.5 rounded-[4px] border border-white/20 px-6 py-3.5 text-sm font-semibold text-white transition-colors duration-200 hover:border-white hover:bg-white hover:text-ink-900"
           >
             See how the engine works
