@@ -6,6 +6,8 @@
 
 ---
 
+> **Round 1 sign-off (founder, 2026-07-08) — implemented in `17139fe`.** G1 Option A (de-numbered), G4 approved (FAQ rewrites + Authority label), G5 approved (final rail → `/revenue-engine/`), G6 approved (ledger row closed), G7 Option A (tagline title; brand suffix via layout template). G2 resolved with SERP evidence (see addendum §A). **Still open: G3 (founder answers below) + the Liori-slide residual option + the flow findings (addendum §B).**
+
 ## Verdict: NEEDS CHANGES → fixed this pass → **ALIGNED WITH NITS** (7 GATE items open)
 
 The homepage gets the hard things right: it is a true neutral front door — no floor lines, no bands, no exact fees, no guarantee language, one spine told once (Bring → Convert → Retain + Prove), pains named plural per lane instead of one pain-guess bet, both motion doors correct at the close. What was wrong was proof hygiene, not structure: a testimonial sentence the fact ledger had already killed ("qualified leads doubled inside two quarters") was back on the page; the Operator panel carried two unattested counts ("8 verticals shipped", "6 engagements active"); a fabricated dental client ("Plantation Dental") sat in the AI-answer mockup without its illustrative badge; "Leave anytime" contradicted your signed 3-month minimums; and two Revenue-Leak-Audit CTA ids were hyphenated so they fell outside the measured `revenue_leak_audit__*` family. All of that is fixed with canon-supplied wording in commit **`0bb97e4`**. What needs you: whether the three illustrative percentages in the framework stay numeric (one of them is 2.5× — the same number as your locked ROI stat, meaning something different, on the same page), whether the real-client AI-answer slides (Hosebox, Modern Wood Flooring, Liori) depict citations you can actually check — Liori's recorded consent excludes outcome claims — plus the legacy SEO title and two smaller routing/wording calls.
@@ -132,6 +134,55 @@ Current: "Digital Marketing & Sales: SEO Expert Guides and Services" — legacy,
 - **C:** `Sale Solution | AI search & revenue systems for industrial and local-service businesses`
 
 ---
+
+## Addendum (2026-07-08, round 1)
+
+### §A — G2 resolved: the citations do not verify (SERP-checked)
+
+Live Google checks via DataForSEO, 2026-07-08, desktop:
+
+| Slide | Query (as depicted) | Location | AI Overview? | Client in results? |
+|---|---|---|---|---|
+| Hose Box | "best custom hydraulic hose assemblies for high-pressure equipment" | United States | **No AIO triggers at all** | hosebox.com absent from top 10 |
+| Modern Wood Flooring | "best wood flooring for brooklyn apartments" | New York | AIO triggers (content loads async, not capturable) | modernwoodflooring.com absent from top 10 + local pack |
+| Liori Diamonds | "best lab grown diamond engagement rings in nyc" | New York | AIO triggers (async) | lioridiamonds.com absent from top 10 + local pack |
+
+**Action taken (canon: no fabricated outcome depiction; D-C4 = no outcome claims for Liori):** panel label → **"Real queries · recreated answers"**; annotation → **"← the spot we engineer"**. The slides now read as demonstrations of the service, not records of achieved citations. Both are one-line reverts per slide if a citation later verifies. **To spot-check manually:** google the exact query from the slide's search box (US location, logged-out/incognito) and look for the client's domain in the AI Overview's citation chips. AI Overviews are volatile and location-dependent, so a hit on a variant query wouldn't cover the depicted one.
+**Residual founder option:** if Liori shouldn't appear in any outcome-shaped frame until the named case study exists, say so and the slide swaps to the generic pattern (same one-line mechanism as the dental slide).
+
+### §B — Scroll/story audit (founder-requested; screenshots on file)
+
+Method: Playwright scroll-through, desktop 1440×900 (10 stops) + mobile 390×844 (6 stops), first-visit state (consent banner up, chat widget in default behavior).
+
+**The numbers first:** the page is **13,776px on desktop (~15 screens) and 20,368px on mobile (~24 screens)**. The story it scrolls: promise → interactive tool → 2.5-screen funnel lecture (dark) → the wedge ("You've been sold pieces") → industry router → second mechanism section (three jobs) → goal router → industrial proof → operator → self-diagnosis → FAQ → two doors.
+
+**What works:** the hero is genuinely strong (promise + the AI-answer artifact side by side, on the fold); the de-numbered framework reads clean and confident; Operator lands right before the ask; Signals → FAQ → two-door close is the correct ending and the doors are honest. Voice holds the whole way down.
+
+**The five flow findings (all GATE — structural, your call):**
+
+1. **FLOW-1 — the wedge is buried.** "You've been sold pieces. We run the whole flow." is the emotional core for an agency-burned buyer, and it sits at beat 4, *after* a 2.5-screen funnel diagram has already explained the solution. Problem-before-mechanism is the natural arc for this buyer (high market sophistication, per the pillar storyboard).
+2. **FLOW-2 — two mechanism sections tell the same thesis.** DemandSystem (funnel stages, TOFU/MOFU/BOFU — marketer grammar) and FrameworkTimeline (three jobs — owner grammar) both argue "one system, every stage." The ICP canon says the buyer is an owner, not a marketer; FrameworkTimeline is the right grammar. DemandSystem is the most practitioner-flavored thing on the page and costs ~2.5 screens.
+3. **FLOW-3 — three routing moments.** Hero chips and WhoWeServe route to the same four destinations; GoalIndex routes by goal. Two of the three asks ("which are you?") are redundant with each other.
+4. **FLOW-4 — the proof arrives at screen ~11 of 15** and is industrial-only (known state). Readers in the three other lanes have usually forked away before any proof; industrial readers wait 10 screens for it.
+5. **FLOW-5 — first-visit chrome eats the mobile fold.** Cookie banner + the chat widget's auto-opened "Got any questions?" popup together cover ~45% of the first mobile screen, and the popup overlaps the consent UI. Recommend: no auto-open on mobile (or auto-open only after consent interaction / N seconds of scroll).
+
+**Proposed arc (pick or edit — nothing moves without your sign-off):**
+
+> Hero (+probe) → **ProblemShift** (wedge, moved up) → **WhoWeServe** (one router, right after the wedge) → **FrameworkTimeline** (the one mechanism) → **GoalIndex** (goal-level router, now the "so which part do you need?" beat) → **Evidence** (proof three screens earlier) → Operator → Signals → FAQ → FinalCTARail.
+> DemandSystem: demote to `/services/` or `/revenue-engine/` as the practitioner-depth section (or compress to one screen). Net effect: wedge at beat 2, proof ~3 screens earlier, one "which are you?" instead of two, ~2–3 screens shorter.
+
+**Cross-page findings recorded here because the homepage visitor hits them (fixes belong to a layout/footer pass, not this page):**
+- The shared **footer still carries the industrial-only positioning** — "AI search engineered for industrial e-commerce. Hydraulics, MRO, technical distribution." — plus the headline "Engineered to be cited." The page tells a four-vertical story for 15 screens and the footer takes three of the verticals back. The canonical tagline (now the homepage title) is the obvious replacement.
+- Footer nav says **"Book a strategy call"** — non-canonical door name (canon: Book a Growth Call).
+- Signals → FAQ are both `surface`-tone sections, so the rail stacks two full paddings with no rule between them — a dead ~1-screen gap right before the FAQ.
+
+### §C — G3 (B1 signed): the attestation questions
+
+Answer these and the counts return to the Operator panel with filed claims rows; anything unanswered stays off the page.
+
+1. **Verticals shipped — what counts as "shipped"?** Proposed definition: a paying engagement where the system/work went live (not proposals, not pilots that didn't launch). Yes/no, or your own definition.
+2. **List the verticals that meet it.** Candidates visible from the repo: industrial distribution (hydraulics/fluid power), fasteners distribution, automation distribution, wood flooring / consumer retail, jewelry (Liori), plus any I can't see — dental? home services? staffing/other past work? The count on the page will be the length of this list, nothing rounder.
+3. **Engagements active — as of July 2026, how many are paying right now?** And do you want a live count on the page at all? It goes stale and stale counts read fake. If yes: it ships as "N engagements active · July 2026" and gets a quarterly reminder. If no: the no-staleness alternative is a row that's always true — "Account managers · 0".
 
 ## Known BY-DESIGN, checked and left alone
 Homepage proof bars carry the four `lib/stats.ts` headline stats (the approved surface) · the only quantified proof on the front door is industrial (recorded pre-migration state; the migration table's homepage row covers proof bars only) · the hero has no default CTA until a lane is picked (recorded design) · `audit__*` is the established id family for the written-diagnostic door · "Not ten vendors. One system." is the SSOT voice example.
