@@ -15,13 +15,15 @@ import { business } from '@/lib/business'
  * them.
  */
 
-// One attested row only. "Verticals shipped 8" / "Engagements active 6" were
-// unattested counts — removed per the attest-or-remove default (offer
-// architecture §16 item 6 / ARCH-3); restore a row only with a filed
-// claims-library entry. "14 years" is sourced from the approved founder bio
-// (lib/business.ts).
+// Attested rows only. "Years operating 14" traces to the approved founder bio
+// (lib/business.ts); "Verticals shipped 7" is claims row F-01
+// (docs/strategy/sales/_claims-library.md, founder-attested 2026-07-09, list
+// itemized there). A live "engagements active" count was declined by the
+// founder (goes stale); a third row is pending his pick — add nothing here
+// without a claims row.
 const CREDENTIALS = [
   { label: 'Years operating', value: '14', unit: 'yrs' },
+  { label: 'Verticals shipped', value: '7', unit: '' },
 ]
 
 export function Operator() {

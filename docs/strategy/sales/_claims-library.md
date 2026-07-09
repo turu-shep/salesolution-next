@@ -26,6 +26,14 @@
 
 ---
 
+## Founder-attested credentials (F-rows — distinct prefix, avoids the C-ID collision)
+
+| ID | Max-strength phrasing permitted | Source | Status | Where it's used |
+|---|---|---|---|---|
+| **F-01** | "Verticals shipped: 7" — itemized: (1) industrial distribution/wholesale (hydraulics, automation, fasteners distributors), (2) industrial manufacturing — fitting kits / fluid power (Hosebox; fluid-power OEM), (3) jewelry — lab-grown diamonds, online + NYC retail (Liori Diamonds), (4) motorsports — race-car chassis (Longhorn), (5) wood-flooring retail (Modern Wood Flooring), (6) dental (practice in Plantation, FL), (7) roofing (Miami). Deventor (logo strip) unclassified — folds into the industrial family, not counted separately. | Founder attestation, 2026-07-09 (homepage alignment G3): "count all the projects mentioned on the website" + itemized list. | **VERIFIED (founder-attested).** The count is the length of the list — do not round up. | Homepage `Operator.tsx` credentials panel. |
+
+> The dental (Plantation, FL) and roofing (Miami) engagements are attested as real but have **no recorded naming consent** — internal reference only, never named in copy (client-naming rules). "Years operating: 14" needs no row — it traces to the approved founder bio (`lib/business.ts`). A live "engagements active" count was **declined by the founder 2026-07-09** (staleness) — do not add one.
+
 ## Phrasing constraints that travel with the claims
 
 - **C-01 (47 hours):** state it as the *industry* average, never as this client's reply time, unless measured for them. Cite the source the first time it appears.

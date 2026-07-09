@@ -149,6 +149,7 @@ Live Google checks via DataForSEO, 2026-07-08, desktop:
 
 **Action taken (canon: no fabricated outcome depiction; D-C4 = no outcome claims for Liori):** panel label → **"Real queries · recreated answers"**; annotation → **"← the spot we engineer"**. The slides now read as demonstrations of the service, not records of achieved citations. Both are one-line reverts per slide if a citation later verifies. **To spot-check manually:** google the exact query from the slide's search box (US location, logged-out/incognito) and look for the client's domain in the AI Overview's citation chips. AI Overviews are volatile and location-dependent, so a hit on a variant query wouldn't cover the depicted one.
 **Residual founder option:** if Liori shouldn't appear in any outcome-shaped frame until the named case study exists, say so and the slide swaps to the generic pattern (same one-line mechanism as the dental slide).
+**Round-2 note (2026-07-09):** the founder attested that a **real dental engagement (practice in Plantation, FL)** and a **real roofing engagement (Miami)** exist (see claims row F-01). So the mockup's dental and roofing slides could one day carry real clients — but only after (a) naming consent is recorded per the client-naming rules and (b) the depicted citation verifies, or the slide stays inside the "recreated answers" frame. Until both, the generic-name + badge state stands.
 
 ### §B — Scroll/story audit (founder-requested; screenshots on file)
 
@@ -176,13 +177,18 @@ Method: Playwright scroll-through, desktop 1440×900 (10 stops) + mobile 390×84
 - Footer nav says **"Book a strategy call"** — non-canonical door name (canon: Book a Growth Call).
 - Signals → FAQ are both `surface`-tone sections, so the rail stacks two full paddings with no rule between them — a dead ~1-screen gap right before the FAQ.
 
-### §C — G3 (B1 signed): the attestation questions
+### §C — G3: RESOLVED (founder answers 2026-07-09) + one open pick
 
-Answer these and the counts return to the Operator panel with filed claims rows; anything unanswered stays off the page.
+Founder: count everything mentioned on the website; itemized list given. **Filed as claims row F-01** (`docs/strategy/sales/_claims-library.md`): **Verticals shipped = 7** — industrial distribution/wholesale · fitting-kits manufacturing & distribution · lab-grown jewelry (online + NYC) · motorsports chassis (Longhorn) · wood flooring · dental (Plantation, FL) · roofing (Miami). Deventor unclassified, folded into the industrial family, not counted. Panel restored: "Years operating · 14" + "Verticals shipped · 7".
 
-1. **Verticals shipped — what counts as "shipped"?** Proposed definition: a paying engagement where the system/work went live (not proposals, not pilots that didn't launch). Yes/no, or your own definition.
-2. **List the verticals that meet it.** Candidates visible from the repo: industrial distribution (hydraulics/fluid power), fasteners distribution, automation distribution, wood flooring / consumer retail, jewelry (Liori), plus any I can't see — dental? home services? staffing/other past work? The count on the page will be the length of this list, nothing rounder.
-3. **Engagements active — as of July 2026, how many are paying right now?** And do you want a live count on the page at all? It goes stale and stale counts read fake. If yes: it ships as "N engagements active · July 2026" and gets a quarterly reminder. If no: the no-staleness alternative is a row that's always true — "Account managers · 0".
+**Live engagement count: declined** (staleness), and "Account managers · 0" rejected — founder wants a different angle for the third row. Options on the table (GATE:HUMAN, pick one or none):
+- **"Case studies · 5"** — a credential, auditable at `/case-studies/` (the fact ledger documents exactly five), only ever under-counts as more ship. Recommended.
+- **"Markup on your ads · $0"** — a number that never stales; duplicates the "How we work" bullet on the same screen, which is the argument against it.
+- **"Monthly report · 2 lines"** — names the Prove artifact (what ad spend brought in / what the system brought back); most differentiated, least self-explanatory.
+
+### §D — Flow rework: handed off
+
+The flow findings (§B) were greenlit by the founder 2026-07-09, to be executed in a fresh session. **Full self-contained handoff: `docs/handoff/2026-07/09/homepage-flow-rework.md`** — target arc, the three build-time GATE decisions (DemandSystem disposition, probe placement, Signals→FAQ gap), the do-not-regress commit list, canon constraints, footer + chat-widget ride-alongs, and the verification protocol.
 
 ## Known BY-DESIGN, checked and left alone
 Homepage proof bars carry the four `lib/stats.ts` headline stats (the approved surface) · the only quantified proof on the front door is industrial (recorded pre-migration state; the migration table's homepage row covers proof bars only) · the hero has no default CTA until a lane is picked (recorded design) · `audit__*` is the established id family for the written-diagnostic door · "Not ten vendors. One system." is the SSOT voice example.
