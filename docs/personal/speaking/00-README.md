@@ -15,6 +15,7 @@
 | [05-week3-sessions.md](./05-week3-sessions.md) | Week 3 (Jul 20–26) as ready-to-run daily sheets — every take prescribed, every landing pre-decided. Next week's sheets generate at Sunday review (`week done`). |
 | [06-cold-topic-bank.md](./06-cold-topic-bank.md) | 48 zero-prep topics for the cold-drill slot. Random number first, read one line only. |
 | [07-how-and-why.md](./07-how-and-why.md) | **Read once before training.** The reasoning behind every piece (problem → rule → drill), how to do a take properly with worked examples, and the full morning warm-up routine. |
+| [08-pronunciation.md](./08-pronunciation.md) | The sound layer — pronunciation/accent work, separate from structure. From your tutor's 2026-07-21 guide, corrected against standard dictionary stress and extended with two gaps (vowel reduction, final-consonant devoicing). Weekly focus folds into the warm-up, no extra takes. |
 
 ## How this pack relates to the sales playbook
 

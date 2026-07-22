@@ -25,6 +25,7 @@ This is the executable layer. The library holds the material, the calendar holds
 | `canon` | Reveals the card you just drew: canon ID, the word-for-word line, the door. You read it aloud twice, re-record once. |
 | `spar` (or `spar T1`) | Full text sparring: Claude plays the prospect, pushes back **twice**, then holds the line. Then a debrief against the canon card — where you drifted, whether you hit the door. |
 | `cold` | One zero-prep topic (never from a list you've seen). 60–90s take, landing-first: 5 seconds to pick the final sentence, then speak. |
+| `sound` | This week's pronunciation focus from [08-pronunciation.md](./08-pronunciation.md) — target words, the practice sentence, a 60-second drill. For the morning warm-up's articulation step, or anytime. |
 | `score:` + pasted Whisper transcript | Fixed format, no praise inflation: restarts/min → completion rate → fillers/min → landing hit y/n → open/close strength & dead-ends. Then **exactly ONE drill for tomorrow.** Never a list. |
 | `log` | Walks the group-session post-event log (reacting vs directing minutes, one directed moment, one yielded moment, names used). |
 | `week done` | Sunday: compares the week's scores, names the week's ONE theme, generates next week's session sheets. |

@@ -23,7 +23,7 @@ Block IDs → [01-block-library.md](./01-block-library.md). Roulette → [02-obj
 | Sat 25 | G2 — "ads are fuel" opinion (PREP) |
 | Sun 26 | Unsaid-log story + weekly review |
 
-**Roulette pool:** starting ten #1–5 only — small pool, high reps. **Maintenance:** whatever weeks 1–2 built, plus A1/A2 spines. **Group rule of the week:** Rule 1 — finish to the period, same pace through interruptions.
+**Roulette pool:** starting ten #1–5 only — small pool, high reps. **Maintenance:** whatever weeks 1–2 built, plus A1/A2 spines. **Group rule of the week:** Rule 1 — finish to the period, same pace through interruptions. **Sound focus (morning warm-up):** schwa reduction + corrected word stress — [08-pronunciation.md](./08-pronunciation.md).
 
 ## Week 4 (Jul 27 – Aug 2) — price, trust, and the verbatim blocks
 
@@ -37,7 +37,7 @@ Block IDs → [01-block-library.md](./01-block-library.md). Roulette → [02-obj
 | Sat 1 | G1 — "volume SEO is dead for small sites" |
 | Sun 2 | Personal story + review |
 
-**Roulette pool:** full starting ten. **Group rule:** Rule 2 — hand the floor by name (carries the Anki people-deck work).
+**Roulette pool:** full starting ten. **Group rule:** Rule 2 — hand the floor by name (carries the Anki people-deck work). **Sound focus:** final-consonant devoicing + sentence stress — pairs with this week's price/trust material ("close," "deal," "budget" all show up).
 **Plateau notice:** weeks 4–6 regression is consolidation, not failure (handoff trajectory). Don't change the system; log it and keep the reps.
 
 ## Week 5 (Aug 3–9) — assembly: the set-pieces
@@ -52,7 +52,7 @@ Block IDs → [01-block-library.md](./01-block-library.md). Roulette → [02-obj
 | Sat 8 | G3 — "the dormant list is the cheapest revenue" |
 | Sun 9 | Personal + review |
 
-**Roulette pool:** + competitor and price sections. **Group rule:** Rule 3 — enter early, land, stop; hold the silence after a point.
+**Roulette pool:** + competitor and price sections. **Group rule:** Rule 3 — enter early, land, stop; hold the silence after a point. **Sound focus:** pitch range + TH sounds — good week to add vocal dynamism now that this material is fluent.
 
 ## Week 6 (Aug 10–16) — transfer and the convergence benchmark
 
@@ -66,7 +66,7 @@ Block IDs → [01-block-library.md](./01-block-library.md). Roulette → [02-obj
 | Sat 15 | G4 + G5 opinions |
 | Sun 16 | **Month benchmark:** re-record three week-1 blocks; compare restarts/min and completion rate against baseline |
 
-**Roulette pool:** full deck, specials and compliance included. **Group focus:** the synthesis move — name what the conversation is doing.
+**Roulette pool:** full deck, specials and compliance included. **Group focus:** the synthesis move — name what the conversation is doing. **Sound focus:** American R + the connected-speech register correction (let reductions happen on calls — matters most now that you're doing live call simulations).
 **Rotation exception — deliberate.** Transfer week trades the strict Mon/Wed/Fri–Tue/Thu split for transfer work: group-block prep lands on a Thu (an identity day) and the benchmark takes the Sun slot. One week, by design; the standard rotation resumes in week 7.
 
 ---
@@ -101,5 +101,5 @@ Names used to hand the floor:
 
 - **End of wk 4:** completion rate >90% on prepared material; fillers down 60–70% on rehearsed blocks; objection answers starting under 1s.
 - **Wk 4–6:** plateau or regression = consolidation. Expected.
-- **Month 2 (August):** ~40 blocks; cold ≈ rehearsed convergence begins; live calls noticeably smoother. If calling consistently, booking rate should move. *(Program started July; week 3 is Jul 20, so month 2 = August. Month 3 ≈ September: 60–70 blocks, land-first/forward-only on autopilot.)*
+- **Month 2 (August):** ~40 blocks; cold ≈ rehearsed convergence begins; live calls noticeably smoother. If calling consistently, booking rate should move. *(Program started July; week 3 is Jul 20, so month 2 = August. Month 3 ≈ September: 60–70 blocks, land-first/forward-only on autopilot.)* Also re-run the pronunciation self-eval checklist ([08-pronunciation.md](./08-pronunciation.md)) — same monthly cadence.
 - **Recordings run 2–3 weeks ahead of live rooms.** The gap is social load, not skill — group sessions are the transfer environment, not a second exam.
