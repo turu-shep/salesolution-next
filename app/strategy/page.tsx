@@ -13,6 +13,11 @@ const docs: Doc[] = [
     name: 'Revenue Engine — niche research',
     desc: '15 niches + 14 discovery candidates, source-cited. Which verticals to build next, the per-niche economics, and the calculator presets. High-ticket / high-margin / recurring filter.',
   },
+  {
+    href: '/strategy/ceo/speach',
+    name: 'CEO — speaking program',
+    desc: 'Personal, not customer-facing: a 12-week speaking & performance program — the block library, objection-roulette deck, training calendar, and pronunciation work.',
+  },
 ]
 
 export default function StrategyHubPage() {
