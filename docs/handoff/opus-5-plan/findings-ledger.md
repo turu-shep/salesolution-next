@@ -195,9 +195,31 @@ Found while establishing the baseline. Nothing was fixed.
 
 **Failure scenario:** Low-vision users can't read the muted text pairs anywhere on the site (WCAG 2.2 AA 1.4.3 fails on every page); the homepage probe example chips are too small to hit reliably on touch.
 
-**Found by:** fable-5 (phase 0, axe-core) · **Verified by:** — · **Fixed by:** —
+**Found by:** fable-5 (phase 0, axe-core) · **Verified by:** opus-5 (phase 2, per-node re-measurement + independent WCAG math) · **Fixed by:** —
 
-**Notes:** One token-level fix likely clears most of the 116 — lens E identifies the exact token/class pairs. Full node lists in session `axe-results.json`; method in `baseline/a11y.md`.
+**Notes:** Full node lists in session `axe-results.json`; method in `baseline/a11y.md`.
+
+**Diagnosis (opus-5, 2026-07-24).** Lens E was assigned this and didn't take it, so it was re-measured directly: all 116 contrast nodes resolve to **19 distinct colour pairs, and two design tokens account for ~102 of them.**
+
+| Token | Value | On `#fbfbfa` paper | On `#ffffff` | Comment in the code says |
+|---|---|---|---|---|
+| `--color-ink-500` | `#69778b` | **4.40** ✗ | 4.55 ✓ | "5.6:1 on paper, passes AA" |
+| `--color-ink-400` | `#6b7689` | **4.43** ✗ | 4.59 ✓ | "4.5:1 on paper, passes AA" |
+
+**Root cause: both tokens pass against pure white and fail against the paper background the site actually renders on.** They were validated against `#ffffff`, not `--color-paper` (`#fbfbfa`), and the passing numbers were written into [globals.css:60-61](../../../app/globals.css#L60-L61) as fact. `ink-400` even carries a note that it was already fixed once (`was #737d9d / 3.94:1`) — that fix moved it to 4.43 and stopped just short of the line. Axe's numbers and an independent WCAG relative-luminance computation agree to two decimals, so this is not a tooling artifact.
+
+Ratios get worse on the other surfaces in use: `#fafafa` 4.36/4.40, `#f7f7f7` 4.25/4.28. `ink-500` on the dark surface is 4.05.
+
+**Values that clear 4.5 on every background in use** (hue preserved, computed not guessed): `#636f84` gives ink-500 4.90 on paper / 4.74 on `#f7f7f7`; `#667184` gives 4.76 / 4.60. Recommend `#636f84` for the margin.
+
+**Two nodes are not token near-misses and need their own treatment** — these are real failures, not rounding:
+- **`#ffffff` on `bg-accent-500` (`#f97316`) = 2.80** — the worst contrast on the site. Homepage "Start" badge, 9px semibold uppercase.
+- **`#eb5e15` (accent-600) on white = 3.42** — homepage footnote markers `[1]`, 10px.
+- (`#c2410c` on `#feeadc` = 4.44 is a third near-miss, `/unlock-growth-audit/`.)
+
+**Also worth fixing while in there: the scale is inverted at this step.** `ink-400` (L 0.1788) is fractionally *darker* than `ink-500` (L 0.1807), so the two tokens are functionally interchangeable and one is misnamed. Whoever fixes the values should re-separate the steps.
+
+Belongs in the UX/a11y wave, not the security wave. The token change is a visual change on every page and needs before/after screenshots.
 
 ---
 
