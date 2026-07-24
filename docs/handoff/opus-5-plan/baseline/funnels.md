@@ -97,7 +97,7 @@ Noindex strays with no funnel role: `/revenue-engine/full-preview/`, `/spine-pre
 | Route | Destination | Turnstile | Zod | Rate limit |
 |---|---|---|---|---|
 | `POST /api/lead` | Turnstile → HubSpot Forms → Resend → GA4 MP events. No Sanity. **No channels configured → `console.log` + `ok:true`** | env-gated (`submit.ts:33-45`) | Yes | `lib/rate-limit.ts` 5/10min |
-| `POST /api/revenue-leak-audit` | same shape, flat GA4 `value:220` | env-gated | Yes | same |
+| `POST /api/revenue-leak-audit` | same shape, flat GA4 `value:220`; HubSpot form id is `HUBSPOT_AUDIT_FORM_ID ?? HUBSPOT_FORM_ID` ([submit-audit.ts:48](../../../lib/lead-form/submit-audit.ts#L48)) | env-gated | Yes | same |
 | `POST /api/full-growth-quote` | same + auto-ack email to lead; generic `submit-failed` errors | env-gated | Yes | same |
 | `POST /api/probe` | fetch + score, nothing persisted | **No** | **No** (typeof + SSRF guard) | `limits.mjs` probe: 30/h,100/d per IP, no global |
 | `POST /api/probe/ai` | re-fetch + re-score + Claude (`claude-haiku-4-5` default, `PROBE_AI_MODEL` override); gate cookie rewritten | **No** | **No** | gate + ai: 6/h,10/d per IP, **200/d global** |
