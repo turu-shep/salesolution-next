@@ -85,6 +85,7 @@ export const CORE_PAGES: SitemapUrl[] = [
   u('/revenue-engine/', 'monthly', 0.8),
   u('/revenue-engine/dentists/', 'monthly', 0.8),
   u('/service-areas/', 'monthly', 0.5),
+  u('/ai-readiness/methodology/', 'monthly', 0.7),
   u('/privacy-policy/', 'yearly', 0.2),
   u('/terms-of-service/', 'yearly', 0.2),
   u('/disclaimer/', 'yearly', 0.2),

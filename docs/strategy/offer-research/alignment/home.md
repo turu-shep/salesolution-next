@@ -209,3 +209,169 @@ Founder GATE answers: **D-A** move DemandSystem to `/services/` · **D-B** probe
 
 ## Known BY-DESIGN, checked and left alone
 Homepage proof bars carry the four `lib/stats.ts` headline stats (the approved surface) · the only quantified proof on the front door is industrial (recorded pre-migration state; the migration table's homepage row covers proof bars only) · the hero has no default CTA until a lane is picked (recorded design) · `audit__*` is the established id family for the written-diagnostic door · "Not ten vendors. One system." is the SSOT voice example.
+
+### §F — Hero probe verification: WORKING (2026-07-09)
+
+Part A of `prompts/tools/hero-probe-verify-and-ai-upgrade.md` executed against production.
+
+**API matrix (prod):** valid URL → 200 with four scores in 0.2–0.5s · repeat call byte-identical (deterministic claim holds) · salesolution.net canary = **79** (schema 100 / readable 88 / authority 50) · bad URL / private IP / localhost / empty → 400 with correct messages · PDF + 5-hop redirect → 502 · http→https redirect chain → 200, same scores as apex.
+
+**UI (Playwright, prod, 1440×900 + 390×844):** idle skeleton, loading, result (bars + tier pill + `audit__hero_probe_result` CTA → `/unlock-growth-audit/`), and error states all render; form recovers after error; schemeless input auto-prefixes https; no horizontal overflow either viewport.
+
+**Findings (not regressions, but known limits):**
+1. **Bot-walled sites fail generically.** Fastenal, Zoro, Motion, Aspen Dental, a big roofing corp → 502 "Could not analyze that URL." (their WAFs 403 the probe's honest UA). Small SMB sites — the actual ICP — score fine (roofsimple.com 83, abchomeandcommercial.com 73). Improvement idea: detect upstream 403/challenge and say "your site's bot protection blocked us — the same wall AI crawlers hit," turning the dead end into the pitch.
+2. **Challenge pages can score as the site.** mscdirect.com returns 200 with a bot-challenge page → probe reports 0/0/0 as if it were MSC's real score; grainger.com similarly scores 17. Misleading to an owner who knows their site has schema. Same fix as #1: detect challenge-page signatures before scoring.
+3. **Prod runs 6 commits behind local main** — deployed band still shows "E-E-A-T" label + old sentence; HEAD (17139fe) already de-jargoned it to "Authority". Resolves at next push/deploy; not a probe defect.
+4. Worst-case latency: multi-hop redirect chains ~5s vs the "about two seconds" claim. Typical case is 0.2–0.5s; acceptable.
+
+**Verdict: WORKING.** Part C (AI v2: Claude read + per-IP rate limit + email gate after first run) not built — waits on the Part B founder gate. Cost basis for that gate: Haiku 4.5 at $1/$5 per MTok → ~8k in / ~500 out ≈ **$0.01 per AI run**; at proposed caps (3/hr, 10/day per IP) even 100 AI runs/day ≈ $1/day.
+
+### §G — Probe scoring engine v1.1: expanded + page-type aware (2026-07-09)
+
+Follow-up to §F. The founder flagged the scoring as too thin and page-type-blind (a homepage was
+penalized for missing `article:author`). Rebuilt:
+
+- **Scoring extracted to `lib/probe/score.mjs`** (pure, JSDoc-typed, 11 unit tests in
+  `score.test.mjs`; `pnpm test` now 19/19). Route (`app/api/probe/route.ts`) keeps fetch + SSRF
+  guards and imports the engine.
+- **~3× more signals per category, normalized to the points that APPLY to the page:**
+  Schema 10 signals (adds BreadcrumbList, Organization identity, sameAs, Open Graph, canonical,
+  expanded type set incl. LocalBusiness/BlogPosting/Service). AI-readable 13 (adds robots.txt
+  AI-crawler check — GPTBot/ClaudeBot/PerplexityBot etc., fetched in parallel with the page —
+  title-tag band, subheading count, lists/tables, text-to-markup ratio that catches JS shells,
+  viewport). Authority 10–11 (adds contact info, legal links, social profiles, freshness).
+- **Page-type aware:** detects article / product / home / generic from JSON-LD + URL path.
+  Author + dates signals apply ONLY to article pages; homepages/product pages are judged on
+  org-trust instead (Person markup, reviews/AggregateRating, freshness).
+- **API shape unchanged** (`{schema, readable, authority, overall}`) so `HeroProbe.tsx` is
+  untouched; `pageType` + per-signal `details` ride along for a future breakdown UI / AI v2.
+- **New baselines** (deterministic, will shift vs §F's): salesolution.net 88 (was 79),
+  northernhydraulics.net 75 (was 72, authority 47→54 from the byline fix).
+- Verified: tsc clean, eslint clean, node --test 19/19, live dev-server curls on both canaries.
+  NOT deployed — ships with the next push. Term capture skipped: `glossary-queue.json` is dirty
+  from another session (AGENTS.md never-edit list).
+
+### §H — Probe report flow: personalized link + warm audit handoff (2026-07-09)
+
+Follow-up to §G. Founder flagged two flow problems: the result panel dumped people onto a cold,
+generic /unlock-growth-audit/, and results vanished on refresh. Built:
+
+- **/ai-readiness/[token]/ — the full report page** (`app/(site)/ai-readiness/[token]/page.tsx`).
+  The token IS the report: base64url of the scored URL (`lib/probe/token.ts`), nothing stored —
+  the page re-runs the deterministic scan on every open, so a shared link never expires (beats
+  the 24h ask) and the band's "No data stored" claim stays true. noindex,nofollow; never in
+  sitemap/nav. Renders: host + "Scored as: {page type}" chip, overall + tier + mini bars,
+  **"Fix these first"** (top 5 missed signals by lost points), full per-signal breakdown for all
+  three categories, dark CTA rail → audit. Error states: broken token, unreachable site, and a
+  dedicated **bot-wall page** ("your site turned our scanner away — AI crawlers hit the same
+  wall") that converts the §F dead-end into the pitch, with its own audit door.
+- **Band CTA rewired** (`HeroProbe.tsx`): primary "See the full report →" →
+  `/ai-readiness/<token>/` (new id `probe_report__hero_probe_result`); the audit door stays as a
+  secondary text link keeping `audit__hero_probe_result` for GA4 continuity.
+- **Warm audit arrival**: report's audit door carries `?site=<host>&probe=<score>`. `LeadForm`
+  reads them client-side after mount (page stays static): prefills the website field
+  (verified on step 2) and shows a "From your report — your page scored N/100" note above step 1.
+  Applies to both LeadForm mounts on the audit page.
+- **Refactor**: fetch + SSRF layer extracted to `lib/probe/fetch.ts`, shared by the API route and
+  the report page; route is now a thin wrapper. Two signal labels de-jargoned ("chrome",
+  "entity").
+- **Verified**: tsc clean, eslint clean on changed files (LeadForm line-90 `Date.now` purity
+  errors are pre-existing), tests 19/19, full Playwright click-through on dev (band → report →
+  audit prefill) desktop 1440×900 + mobile 390×844, no overflow; bot-wall + broken-token states
+  exercised. NOT deployed. GATE:HUMAN for founder: new copy lines (report page + form note +
+  "Or skip ahead" link) shipped per in-chat direction; flag if any wording should change.
+
+### §I — Probe scoring v1.2: citation-grade bar (2026-07-09)
+
+Founder call: the test should grade harder so prospects see room to improve. Done three ways, all
+defensible (the bar moved to citation-grade standards; nothing is arbitrarily deflated):
+
+1. **Stricter + new signals:** existence checks devalued (JSON-LD present 10→5pts); NEW
+   recommended-props signal (brand/sku/aggregateRating, address/contactPoint/sameAs,
+   WebSite SearchAction — 15pts); NEW **llms.txt check** (8pts, fetched in parallel, SPA
+   soft-404-guarded) and **question-form headings** (8pts, answer-engine formatting); citations
+   need 5 outbound domains (was 3); contact needs phone AND email/address; sameAs needs 3;
+   Person markup needs a role for full credit; word floor 300; title 15–60; meta description
+   sweet spot 70–160; text-ratio bar 0.10→0.15.
+2. **Weakest-gate overall:** `0.6·mean + 0.4·min` — an answer engine trips on the worst layer,
+   not the average.
+3. **Tier thresholds raised** (band + report): On track ≥85 (was 70), Gaps ≥55 (was 40).
+
+**New canary baselines:** northernhydraulics.net 75→**65 (Gaps)** · roofsimple.com 83→**59** ·
+abchomeandcommercial.com 73→**59** · salesolution.net 88→**84 — now shows "Gaps" on our own
+site**, mainly llms.txt (we don't publish one), title length, text ratio. FOUNDER FLAG: adding
+llms.txt to salesolution.net is cheap, on-brand, and would push us back over 85 — recommended
+follow-up, not done in this pass.
+
+Verified: tsc clean, eslint clean, 22/22 tests (14 probe), live canary curls. NOT deployed.
+
+### §J — Probe v1.3: Domain strength (DataForSEO off-page category) (2026-07-09)
+
+Founder call after §I: on-page scores flatter weak domains (salesolution.net at 84 was
+"laughable"). Added the fourth scored category, pulled automatically — no manual DA field:
+
+- **`lib/probe/domain.ts`**: DataForSEO `backlinks/summary/live` per apex domain (env
+  `DATAFORSEO_USERNAME/PASSWORD`, already in `.env.local`; falls back to `DFS_LOGIN/PASSWORD`).
+  Cached 24h per domain via `unstable_cache` (~$0.02–0.03 per FRESH domain, cache-free repeats).
+  Fails soft: no creds / timeout / API error → category simply absent, probe scores on-page only.
+- **`scoreDomain()` in score.mjs**: rank/500 (40pts) + log-scaled referring domains (35) +
+  log-scaled backlinks (25). Weakest-gate overall now spans all four categories.
+- **UI**: band shows a 4th "Domain" bar when present; report page gets a "Domain strength"
+  category card ("Perfect markup on a weak domain still loses the citation") + mini bar.
+- **New baselines:** salesolution.net 84 → **69** (domain 56 = the weakest gate — our DR-10
+  reality, honest now) · northernhydraulics.net 65 (their domain is 70 — stronger link profile
+  than ours, which the report now shows).
+- Latency: 0.83s fresh (parallel with page fetch), 0.15s cached — "about two seconds" holds.
+- **FOUNDER FLAG:** the probe now spends ~2–3¢ per fresh domain. A scripted abuser could burn
+  DataForSEO credits; the per-IP rate limiting planned in
+  `prompts/tools/hero-probe-verify-and-ai-upgrade.md` Part C is worth pulling forward even
+  before the AI layer.
+- Verified: tsc clean, eslint clean, 23/23 tests, live canaries with real DFS data. NOT deployed.
+
+### §K — Part C shipped: AI read + gate + rate limits + methodology page (2026-07-09)
+
+Founder confirmed Part A and greenlit Part C, asking first how to make the tool link-worthy.
+
+**Link-worthiness (workflow: 4 lenses × ~30 ideas → judged synthesis):** strategy = build the
+indexable anchors linkers cite; count noindex-report virality as distribution, not links.
+Build-now set: (1) **methodology page — BUILT** (below); (2) indexable `/ai-readiness/` tool
+landing page for "AI readiness checker / GEO checker" queries + roundup outreach; (3)
+threshold-gated embeddable badge, dofollow → methodology, live re-verified, self-revoking;
+(4) render the AI read as a shareable "how an AI describes you" card. Roadmap: per-vertical
+benchmark study once scan volume exists (needs anonymized aggregate logging), per-signal
+explainers feeding /glossary, curated compare pages, forwardable fix-bundle, re-scan alerts,
+agency co-brand param. Skips incl. public "roast" challenges (wrong for burned-buyer ICP).
+Full result: session task w2puz05bf.
+
+**Shipped this pass (all local):**
+- **AI read** (`lib/probe/ai.ts`, `/api/probe/ai/`): Claude (default claude-haiku-4-5, ~1¢)
+  reads the fetched page → verdict / engine summary / closest-winnable query / top-3 fixes,
+  schema-constrained JSON, URL+page treated as untrusted (prompt-injection hardened).
+  `PROBE_AI_MOCK=1` dev mode (active in `.env.local` — REMOVE when key added).
+- **Gate** (`lib/probe/gate.mjs` signed cookie): 1 free anonymous run → email unlocks 6 total →
+  audit door. Unlock (`/api/probe/unlock/`) lands in HubSpot + Resend (marked UNVERIFIED).
+- **Rate limits** (`lib/probe/limits.mjs` + Upstash-or-memory store): per-IP ai 6/h 10/d,
+  probe 30/h 100/d (band + report page), og 20/h, unlock 5/h; GLOBAL daily ledgers: ai 200,
+  unlock 100, **dfs 500 (one DataForSEO ledger consumed on every cache-missing lookup from any
+  surface — closes the domain-enumeration spend hole)**. Memory fallback logs a prod warning
+  that global caps are per-instance until Upstash is configured.
+- **Report page additions:** AI read panel (aria-live, retry states), ShareRow (copy link +
+  LinkedIn), OG unfurl card (score card, per-IP capped, signal count computed from the catalog).
+- **`/ai-readiness/methodology/` — INDEXABLE** (in sitemap, canonical): all 42 signals +
+  weights + formula generated from `signalCatalog()` in score.mjs, changelog, cite-this block.
+- **Adversarial review** (24 agents): 3 high findings fixed (unmetered DataForSEO surfaces →
+  dfs ledger + probe caps; per-instance global cap → prod warning + Upstash guidance; unlock
+  spam → global cap + unverified marking) plus: hourly AI cap 3→6 (was stranding unlocked runs),
+  error-mapping regex widened, transient DataForSEO failures no longer cached 24h, trailing-dot
+  cache-key bypass closed, prompt metadata moved into untrusted scope, dead-end panel states got
+  retry, a11y (aria-live/invalid), signal-count drift fixed (42, computed not hardcoded).
+  Accepted residuals: cookie replay (per-IP caps backstop), DNS-rebinding TOCTOU in fetchHtml
+  (Vercel egress has no meaningful internal network), unverified-email lead injection (marked).
+- Verified: tsc/eslint clean, 26 probe tests + 8 tool tests green, full UI click-through
+  (free run → email wall → unlock → 4 runs left) both viewports, canaries re-checked (69/200 OK).
+
+**DEPLOY CHECKLIST (founder):** add to Vercel env: `ANTHROPIC_API_KEY`, `PROBE_GATE_SECRET`
+(any long random string), ideally `UPSTASH_REDIS_REST_URL/TOKEN` (free tier — makes the spend
+kill-switches fleet-wide). Remove `PROBE_AI_MOCK=1` from any prod env. Read the new copy
+(report page, AI panel, methodology). Publish llms.txt + shorten homepage title so our own
+score clears 85.

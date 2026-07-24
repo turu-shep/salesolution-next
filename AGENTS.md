@@ -75,6 +75,13 @@ A versioned, brand-agnostic content pipeline (`research → draft → humanize �
 - **Sanity gotchas** (full list in `prompts/_CONTEXT.md`): default query perspective hides drafts (`perspective: 'raw'` to see them); interlinked drafts need weak refs; new doc types must be added to `sanity/structure.ts`; import `createClient` from `next-sanity`, not `@sanity/client`.
 - **Next 16 dev is flaky under load.** `dev` is pinned to `--webpack` (not Turbopack) for this reason; you can still hit `jsx-runtime "module factory"` errors or a missing `routes-manifest.json`. Recover with `pkill -f "next dev"; rm -rf .next; pnpm dev`, then poll for stable 200s before screenshotting. Use one dev server + one browser for visual work.
 
+## Model & cost routing
+
+Artur's default is Opus everywhere (subscription-billed): main loop `opus[1m]`, and `CLAUDE_CODE_SUBAGENT_MODEL=opus` routes every subagent and workflow agent to Opus. Fable is a manual switch he makes for the hardest strategy work (pay-per-use credits) — when the session IS on Fable, delegate bulk reading/research to subagents and keep the main loop holding conclusions, not file dumps.
+
+- **Run everything at maximum effort.** `CLAUDE_CODE_EFFORT_LEVEL=max` is set in his user settings and outranks all other effort sources — do NOT pass `effort:` in Workflow `agent()` calls or agent frontmatter to economize; quality-first is the standing instruction. Same for `model:` — the env var wins anyway.
+- **Ultracode when it helps:** Artur opts into ultracode (xhigh + standing workflow orchestration) per session via the effort slider or the "ultracode" keyword. Under it, orchestrate substantive tasks with workflows; adversarial verify passes are welcome. Fan-out costs subscription rate-limit headroom, not credits — size it to the task, not to a token budget.
+
 ## Voice
 
 Operator register: terse, declarative, concrete, trade-off-aware, no hype. "X, not Y." constructions. The kill-list and owned glossary live in `.agents/product-marketing-context.md`. Per global instruction, run the **humanizer** skill on all SEO and customer-facing copy before finalizing. Translate jargon to plain stakes — the ICP language rules in `docs/strategy/icp/industrial-distribution.md` list what to never use cold (schema, GEO, CTR, ERP/PIM, faceted navigation).

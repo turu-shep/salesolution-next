@@ -8,7 +8,7 @@
 
 | File | What it is |
 |---|---|
-| [01-block-library.md](./01-block-library.md) | The component library v1 — ~30 blocks with pre-decided landings, beat lists, and source pointers. The story with real facts swapped in. |
+| [01-block-library.md](./01-block-library.md) | The component library v2 — ~30 blocks with pre-decided landings and beat lists, the rebuilt elevator-pitch ladder (A1–A3 + the assembled A7), and the swipe file: verified lines from Hormozi, Dawson, Voss, Weiss, Enns, Dunford, Ziglar and co., each translated into our voice. |
 | [02-objection-roulette.md](./02-objection-roulette.md) | The draw-blind deck for the daily 6-take roulette slot, built from [05-objection-library.md](../../strategy/sales/05-objection-library.md). |
 | [03-training-calendar.md](./03-training-calendar.md) | Weeks 3–6 mapped to the daily protocol, plus the transcript-scoring template. |
 | [04-session-runner.md](./04-session-runner.md) | **Start here to train.** The hour itself: live-with-Claude commands (`run today`, `draw`, `spar`, `cold`, `score:`) and the solo dice fallback. |

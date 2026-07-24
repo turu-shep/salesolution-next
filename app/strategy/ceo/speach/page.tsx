@@ -12,7 +12,7 @@ const material: Doc[] = [
   {
     href: '/strategy/ceo/speach/blocks',
     name: 'The block library',
-    desc: 'Roughly 30 pre-built spoken components — identity answers, client stories, explanations, sales-call openers and pitches, and opinions — each with a pre-decided landing line.',
+    desc: 'The spoken components — the rebuilt elevator pitches, client stories, explanations, cold opens and closes — each with a pre-decided landing line. Plus the swipe file: verified lines from Hormozi, Voss, Weiss, Ziglar and co., each translated into ours.',
   },
   {
     href: '/strategy/ceo/speach/roulette',

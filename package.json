@@ -10,6 +10,7 @@
     "test": "node --test lib/"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0",
     "@hookform/resolvers": "^5.2.2",
     "@next/third-parties": "^16.2.6",
     "@portabletext/react": "^6.2.0",

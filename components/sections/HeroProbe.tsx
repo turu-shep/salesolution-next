@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 
 import { cn } from '@/lib/cn'
+import { encodeProbeToken } from '@/lib/probe/token'
 
 import { AIOverviewMockup, ALL_SLIDES, type LaneKey } from './AIOverviewMockup'
 import { LogoMarquee } from './LogoMarquee'
@@ -68,13 +69,15 @@ const LANES: Lane[] = [
 type ProbeState =
   | { kind: 'idle' }
   | { kind: 'loading' }
-  | { kind: 'result'; scores: ProbeResult }
+  | { kind: 'result'; scores: ProbeResult; url: string }
   | { kind: 'error'; message: string }
 
 type ProbeResult = {
   schema: number
   readable: number
   authority: number
+  /** Off-page strength via DataForSEO; absent when the lookup fails. */
+  domain?: number
   overall: number
 }
 
@@ -115,7 +118,7 @@ export function HeroProbe() {
         return
       }
       const scores = (await res.json()) as ProbeResult
-      setState({ kind: 'result', scores })
+      setState({ kind: 'result', scores, url: fullUrl })
     } catch {
       setState({ kind: 'error', message: 'Could not reach that URL.' })
     }
@@ -336,7 +339,7 @@ function ProbeResultPanel({ state }: { state: ProbeState }) {
 
   const { scores } = state
   const tier =
-    scores.overall >= 70 ? 'clear' : scores.overall >= 40 ? 'gaps' : 'risk'
+    scores.overall >= 85 ? 'clear' : scores.overall >= 55 ? 'gaps' : 'risk'
   const tierStyle = {
     clear: { pill: 'bg-data-up/10 text-data-up ring-data-up/30', label: 'On track' },
     gaps:  { pill: 'bg-accent-50 text-accent-700 ring-accent-500/30', label: 'Gaps' },
@@ -349,6 +352,9 @@ function ProbeResultPanel({ state }: { state: ProbeState }) {
         <ScoreRow label="Schema" value={scores.schema} />
         <ScoreRow label="AI-readable" value={scores.readable} />
         <ScoreRow label="Authority" value={scores.authority} />
+        {typeof scores.domain === 'number' ? (
+          <ScoreRow label="Domain" value={scores.domain} />
+        ) : null}
       </div>
       <div className="mt-6 flex items-center justify-between border-t border-rule pt-4">
         <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
@@ -369,12 +375,20 @@ function ProbeResultPanel({ state }: { state: ProbeState }) {
         </span>
       </div>
       <Link
-        href="/unlock-growth-audit/"
-        data-cta="audit__hero_probe_result"
+        href={`/ai-readiness/${encodeProbeToken(state.url)}/`}
+        data-cta="probe_report__hero_probe_result"
         data-cta-location="hero"
         className="mt-4 inline-flex w-full items-center justify-center border border-ink-900/10 bg-mark px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-900 transition-colors duration-200 hover:bg-ink-900 hover:text-white"
       >
-        Get the full audit →
+        See the full report →
+      </Link>
+      <Link
+        href="/unlock-growth-audit/"
+        data-cta="audit__hero_probe_result"
+        data-cta-location="hero"
+        className="mt-3 inline-flex w-full items-center justify-center font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500 transition-colors duration-200 hover:text-ink-900"
+      >
+        Or skip ahead: get the full audit →
       </Link>
     </div>
   )

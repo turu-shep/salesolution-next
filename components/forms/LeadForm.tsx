@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Turnstile } from '@/components/integrations/Turnstile'
@@ -117,6 +117,7 @@ export function LeadForm({
     register,
     handleSubmit,
     trigger,
+    setValue,
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<LeadFormData>({
     resolver: zodResolver(leadSchema),
@@ -132,6 +133,20 @@ export function LeadForm({
       skuCount: '',
     },
   })
+
+  // Arrivals from the AI-Readiness report carry ?site= (+ ?probe= score).
+  // Prefill the website field and acknowledge the score so the page doesn't
+  // read as a cold, generic form. Read from location so the page stays static.
+  const [probeScore, setProbeScore] = useState<string | null>(null)
+  useEffect(() => {
+    const qs = new URLSearchParams(window.location.search)
+    const site = qs.get('site')?.trim()
+    if (site && /^[a-z0-9.-]+\.[a-z]{2,}$/i.test(site)) {
+      setValue('website', `https://${site.replace(/^https?:\/\//i, '')}`)
+    }
+    const score = qs.get('probe')?.trim()
+    if (score && /^\d{1,3}$/.test(score)) setProbeScore(score)
+  }, [setValue])
 
   const stepFields = showSkuCount ? STEP_FIELDS_WITH_SKU : STEP_FIELDS
 
@@ -322,6 +337,19 @@ export function LeadForm({
       )}
     >
       <Stepper current={step} />
+
+      {probeScore ? (
+        <p className="mt-5 border border-accent-500/30 bg-accent-50 px-4 py-3 text-sm text-ink-800">
+          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent-700">
+            From your report
+          </span>
+          <span className="mt-1 block">
+            Your page scored {probeScore}/100 on the AI-readiness probe.
+            We&rsquo;ll start the audit from that report &mdash; your site is
+            already filled in below.
+          </span>
+        </p>
+      ) : null}
 
       {step === 1 ? (
         <fieldset className="mt-6 space-y-4">

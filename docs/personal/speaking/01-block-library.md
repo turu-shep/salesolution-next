@@ -1,6 +1,10 @@
-# Block library v1
+# Block library v2
 
-**How to read a block:** the **Landing** is the pre-decided final sentence — fixed before the take starts; the route can wobble, the destination can't. **Beats** are a sequence, not a script (except blocks marked *verbatim* — those are word-for-word, always). Speak in short sentences; complexity lives in the sequence. A take counts only if it had a planned landing and obeyed forward-only.
+You will answer "what do you do?" hundreds more times in your life. Same for the origin story, the price question, and the close. Each of those is a block: built once, drilled until it costs nothing, so the live brain is free for the part that can't be rehearsed — listening, and picking what comes next.
+
+**How to read a block.** The **landing** is the final sentence, decided before you open your mouth. The route can wobble; the destination can't. **Beats** are the idea sequence, not a script — today's words are fine as long as they arrive in order and end on the landing. A take only counts if the landing was planned and forward-only held (no sentence restarted; finish it ugly, repair in the next one).
+
+The exception is anything marked **verbatim** — the guarantee, the terms, the audit offer. Those never change by a word, because a prospect who hears two versions of your guarantee decides you're making it up.
 
 **Tags:** `[we]` industrial voice · `[I]` Revenue Engine voice · `[we→I]` the firm is "we" in writing and warm storytelling, but this spoken cold-call block follows the script's first person — "it's me on your account" (guardrail 9) · `[verbatim]` never paraphrase · `[verbatim-adjacent]` structure and key phrases fixed by the script; small connective variation allowed · `[warm-only]` never on a cold call · `[VERIFY]` confirm before live use.
 
@@ -10,23 +14,56 @@ Saturation: a block is done at ~30–40 reps — it becomes warm-up/benchmark, n
 
 ## A — Identity pieces (Tue/Thu rotation)
 
+The elevator pitches. Rebuilt 2026-07-22: the old party and buyer spines ("unsexy businesses," "brochure into their best salesperson") were placeholders inherited from the handoff, and they sounded like it — every web agency since 2012 has sold the brochure line. What's here now follows one rule, stolen from the best pitch-writers in the trade: name the problem so precisely the listener assumes you own the solution. Then stop.
+
 ### A1 · Social spine — "what do you do?" (party version)
-**Landing:** "…where their competitors are usually terrible."
-**Beats:** one sentence, whole block: "I help unsexy businesses — hydraulics, HVAC, distribution — win online, where their competitors are usually terrible."
-**Note:** deliberately a hook, not a category. The follow-up question is the point.
+
+A party answer has one job: earn the follow-up question. A category ("I run a marketing agency") ends the conversation. A hook starts one. Three variants — pick by room, drill one per week, one variant per take.
+
+**V1 — the AI answer (default):**
+> "Ask ChatGPT who sells hydraulic cylinders in Ohio. It answers with one name, maybe two. I make sure that name is my client."
+
+**Landing:** "…that name is my client."
+Everyone in the room has used ChatGPT this year; nobody's thought about being its answer. The claim is testable on the spot — when someone reaches for a phone, say "try your own industry" and diagnose what comes back. That's E2's opening move, live, for free.
+
+**V2 — the confession:**
+> "I do growth for businesses marketing people ignore — hydraulics distributors, roofers, dentists. Best clients in the world. And their competitors are usually so bad online that I look better than I am."
+
+**Landing:** "…I look better than I am."
+The self-deprecating flip is the hook: confident enough to undersell. Keeps the one true thing the old line had — the terrible competition — and makes it charming instead of smug.
+
+**V3 — the leak:**
+> "Businesses pay good money to make the phone ring, then miss the call because they're up on a roof. I sell the part of marketing nobody sells: catching the money already spent."
+
+**Landing:** "…catching the money already spent."
+
+All three run as "I" — party register is always personal. If the listener turns out to be a buyer, don't upgrade mid-conversation; let them pull. The follow-up question is the point.
 
 ### A2 · Business spine — "what do you do?" (buyer version)
-**Landing:** "…from a brochure into their best salesperson."
-**Beats:** "We take companies doing five million and up and turn their website from a brochure into their best salesperson."
-**Note:** `[we]`. "Five million and up" is the real floor (cards S1/S3) — "a few million" invited the exact prospects canon disqualifies. For local-service listeners, swap voice and object — the Revenue Engine side speaks as "I" (guardrail 9): "I take busy shops and make sure the calls they've already paid for actually book." *(No "every" — canon quantifies answering with "every," never booking; card RE1.)*
+
+For the listener who could write a check. Name who it's for, what changed, and the job — then stop. No feature list survives a hallway.
+
+**Industrial `[we]`:**
+> "We work with parts distributors and manufacturers, five million and up. Their buyers ask ChatGPT who sells the part now — and it names Amazon, or the manufacturer. Not them. We make it name our client."
+
+**Landing:** "We make it name our client."
+"Five million and up" stays — the floor is canon (cards S1/S3), and "a few million" invites exactly the prospects canon disqualifies. The AI-answer frame replaced the brochure line because it's the differentiated thing we actually sell — and because the buyer can go check it, which is the trust move.
+
+**Revenue Engine `[I]`:**
+> "Roofers and dentists. They pay to make the phone ring, then miss as many as a third of the calls — and the quotes they do send go quiet. I build the system that answers in seconds, books the job, and chases what went cold."
+
+**Landing:** "…and chases what went cold."
+The hedge stays on "as many as a third" — the hedge is the claim. And no "every" near booking: canon quantifies *answering* with "every," never *booking* (card RE1).
 
 ### A3 · The three-vertical identity (30s)
+
 **Landing:** "Parts, jobs, chairs — same machine, three trades."
 **Beats:**
-1. Two kinds of clients. Industrial distributors and manufacturers — the people who sell parts.
-2. And local operators — roofers who book jobs, dentists who fill chairs.
-3. Different businesses, same problem: buyers ask AI first now, and calls they already paid for slip away.
-4. I build the system that fixes both ends.
+1. Two kinds of clients.
+2. Industrial distributors and manufacturers — people who sell parts. And local operators — roofers who book jobs, dentists who fill chairs.
+3. Different worlds, same new problem: their buyers ask AI first now, and whoever the AI names gets the call.
+4. Meanwhile the demand they already paid for leaks — the missed call, the quote nobody chased.
+5. I build the machine that fixes both ends: get named, catch everything.
 **Source:** tagline (`lib/business.ts`), operating concept.
 
 ### A4 · "How are you different from any other agency?" — the requested landing
@@ -67,12 +104,26 @@ Two versions, one per motion — T1's two branches end on different lines. Never
 3. Under that, the math doesn't come back fast enough, and I'll say so instead of taking the money.
 **Source:** cards S1/S3, ICP doc.
 
+### A7 · The assembled elevator pitch (60 seconds) `[warm-only]` `[I]`
+
+The set-piece for networking rooms, podcasts, and "so tell us about yourself." Built on Nancy Duarte's talk shape — alternate what is with what could be — and it ends on a handback, not a close.
+
+**Sequence:**
+1. **The change:** "Somewhere in the last two years, buyers stopped starting with Google. They ask ChatGPT, or the AI box on top of Google — and a lot of them go with the name it gives." *(The hedge "a lot of them" is canon — script Stage 2.)*
+2. **The cost:** "Which is brutal for good businesses, because the AI names whoever it can read. Usually that's the manufacturer, or Amazon — not the best shop in the region."
+3. **The job:** "That's what I fix. I make my clients the name the AI gives — and when the buyer shows up, the system catches him. Answered fast, quoted, followed up."
+4. **The difference:** "Everyone sells you one piece. I run the whole flow."
+5. **Proof, optional:** drop in B2 if the room is warm — B1's fact gates apply.
+6. **Landing — the handback:** "When's the last time you asked ChatGPT about your own business?"
+
+A pitch that ends declarative asks for applause. A pitch that ends on *their* business starts a conversation — and this one they can test on a phone in front of you. That's the whole move.
+
 ---
 
 ## B — Client stories (Tue/Thu rotation) — all `[warm-only]`
 
 ### B1 · The long-form Sale Solution story (~25 sentences, 5 beats)
-Trained from beats, never memorized verbatim. This replaces the handoff's placeholder version — facts corrected against the ledger.
+Trained from beats, never memorized. This replaces the handoff's placeholder version — facts corrected against the ledger.
 
 **Beat 1 — Origin.** Fourteen years building the systems — search, catalogs, content — for technical businesses. The person who builds the machine, not the person who talks about it. *(The number is the published bio: /about/ and `lib/business.ts` both say 14 — a prospect can check.)*
 **Beat 2 — The pattern.** Kept meeting great businesses that were invisible online. The work was excellent; the internet had no idea.
@@ -232,6 +283,8 @@ Format per handoff: 2 min setup → 5 min diagnosis with narrated reasoning → 
 
 ## F — Connective tissue (transitions & repairs — drill inside every take)
 
+Stock lines for the moments between blocks. Not decoration: F1 is what makes forward-only survivable, and F4 is the difference between a pitch and an ambush.
+
 - **F1 · Repairs (forward-only):** "Let me put that more simply." · "Simpler version:" · "The short version is this." · "Scratch the setup — here's the point." Never restart the sentence; repair in the next one.
 - **F2 · Floor handbacks:** "So — who fixes your Google problem?" · "When's the last time you typed your own parts into ChatGPT?" · hand the floor by name.
 - **F3 · Synthesis move (group rooms):** "So really we're all debating X versus Y." Name what's happening; that's the directing move.
@@ -242,10 +295,161 @@ Format per handoff: 2 min setup → 5 min diagnosis with narrated reasoning → 
 
 ## G — Opinions & personal (weekend rotation)
 
-Seed takes — one PREP rep each, landing first. Personal stories: source from the unsaid log, per the handoff.
+Seed takes — one PREP rep each (point → reason → example → point), landing first. Personal stories: source from the unsaid log, per the handoff.
 
 - **G1:** "Volume SEO is dead for small sites. Authority isn't." *(the DR-10 thesis: on a low-authority site the play is being cited in the AI answer, not out-publishing anyone)*
 - **G2:** "Ads are fuel. Owners keep buying fuel to fix an engine problem."
 - **G3:** "The dormant customer list is the cheapest revenue a business owns, and almost nobody works it."
 - **G4:** "Boring industries are the best clients in the world." *(the niche-with-pride case)*
 - **G5:** "A clear accent beats fast native mumbling." *(prosody over perfection — also self-referential practice)*
+
+---
+
+## H — The swipe file: the greats, translated
+
+How the best speakers in the trade say it, collected so the patterns can be studied and rebuilt in our words. Two honest uses: quote a line **with the name attached** when it fits, or take the pattern and make it ours — that's the **Ours:** line under each. Never deliver a famous line as your own; the one listener who recognizes it stops trusting everything else you say. Steal structure, not sentences.
+
+These aren't drill blocks. Read them before writing new material, and pull one out when a block feels flat. Attribution was checked line by line (2026-07-22); where wording confidence is softer, the note says so.
+
+### H1 · Talk about him, not you
+
+> "The pain is the pitch." — **Alex Hormozi**, his sales training.
+
+His fuller version: the clearer you describe a customer's pain, the more they assume you have the cure. This is why C2 and D1 work — describe his Tuesday better than he could, the ring-out while he's on the roof, the quote sent Thursday that nobody chased, and the fix needs one sentence.
+**Ours, already canon:** "You're not short on leads. You're losing the ones you've already got."
+
+> "The customer is the hero, not your brand." — **Donald Miller**, *Building a StoryBrand*.
+
+Every story must resolve into what it means for him. Even B1, the origin story, earns its slot only because it ends on his problem.
+**Ours:** the client wins the story; you're the mechanic. "The shop got eight hundred more leads a month. I just rebuilt the catalog so the AI could read it."
+
+> "If you confuse, you'll lose." — **Donald Miller**, *Building a StoryBrand*.
+
+Guardrail 6 in five words. GEO, schema, citation share — every insider word costs a listener.
+**Ours:** ChatGPT. The AI answer. A site the AI can read. Getting found for your parts.
+
+> "Logic makes people think, emotion makes them act." — **Alan Weiss's** standby (older than him, and he'd likely say so — but nobody has used it harder).
+
+Order of operations for every pitch: scene first, mechanism second. C2's rung-out call is the emotion; C5's engine-and-fuel is the logic. Never open with the diagram.
+
+> "Marketing is the generous act of helping someone solve a problem. Their problem." — **Seth Godin**, *This Is Marketing*.
+
+The two-word coda is the move: say the expected sentence, then correct it with a full stop.
+**Ours, already canon:** the C7 tail — "On me, not you."
+
+### H2 · Positioning — own a lane
+
+> "We will specialize." — **Blair Enns**, *The Win Without Pitching Manifesto*, first proclamation.
+
+The specialist names his lane in the first sentence and doesn't apologize for it. That's A1's niche pride — hydraulics, roofs, chairs.
+
+> "Good positioning makes you noninterchangeable." — **David C. Baker**, *The Business of Expertise*.
+
+What we sell makes this literal. The AI gives one answer; being that answer is noninterchangeability enforced by a machine.
+**Ours, already canon:** "The AI has one answer. The work is being it."
+
+> "How do you beat Bobby Fischer? You play him at any game but chess." — **April Dunford**, *Obviously Awesome*.
+
+The whole DR-10 strategy in one image: don't out-publish the big catalogs — change games, to being the source the AI cites. This is G1's backbone when it needs a story.
+
+> "It's always better to be a little boring than completely baffling." — **April Dunford**, *Obviously Awesome*.
+
+The permission slip for the plain register. The trades don't buy clever.
+**Ours, already canon:** "Boring industries, modern marketing. Deadly combination."
+
+> "People like us do things like this." — **Seth Godin**, *This Is Marketing*.
+
+The culture sell. When an owner hears that his peers already moved, the decision stops being brave and starts being overdue.
+**Ours:** "The distributors winning quotes right now are the ones the AI can read. That's the club. The door's open."
+
+> "People don't buy what you do; they buy why you do it." — **Simon Sinek**, TED, 2009.
+
+The why is B1 beat 2 — great businesses, invisible online, and the internet had no idea. Don't skip that beat in warm rooms; it's the only part of the story that explains *you*.
+
+### H3 · The offer
+
+> "…offers so good people feel stupid saying no." — **Alex Hormozi**, *$100M Offers* (it's on the cover).
+
+Status-flip: declining becomes the dumb move. Our stack already runs this play — free audit he keeps (C6), a falsifiable day-90 guarantee (C7), no lock-in and he keeps everything on the way out (C8). The discipline: let the offer do the selling; the call just reads it out loud, slowly.
+
+> "Value = (Dream Outcome × Perceived Likelihood of Achievement) ÷ (Time Delay × Effort & Sacrifice)." — **Alex Hormozi**, *$100M Offers*, the value equation.
+
+Four dials on every pitch: bigger outcome, more certain, sooner, less work for him. C7 turns the certainty dial. Done-for-you turns the effort dial. Day 90 turns the time dial. When a pitch feels weak, name the dial it isn't turning.
+
+> "Everyone can make the same promise, but no one can have the same proof." — **Alex Hormozi**, X, 2024.
+
+Why D4 lands on "Your numbers, not my say-so," and why the audit leads with *his* missed calls instead of our case studies. Proof he can check beats proof we brought.
+
+> "Give away the secrets, sell the implementation." — **Alex Hormozi**, *$100M Leads*.
+
+The audit gives the diagnosis away free, in writing, his to keep. Blair Enns preaches the opposite — "We will not solve problems before we are paid." We run Hormozi's side of that argument on purpose: the diagnosis costs twenty minutes and buys the trust the whole model rides on. The sale is the install.
+
+### H4 · Price, and the spine to hold it
+
+> "I love vendors who use time-based billing. They are always less expensive, and I tell them to never read my books." — **Alan Weiss**, alanweiss.com.
+
+The fee prices what the leak costs him, not our hours. F5 is the spoken edge of the same spine: never make up a number on the phone.
+
+> "We will address issues of money early." · "We will charge more." — **Blair Enns**, manifesto proclamations.
+
+Early doesn't mean cold. F5 names where the price lives — the audit, in writing, same day — without naming a number. That *is* addressing money early, honestly.
+
+> "No deal is better than a bad deal." — **Chris Voss**, *Never Split the Difference*.
+
+A6 runs this live: under five million, "I'll tell you straight it's too early." Walking away from the wrong deal is the cheapest marketing we do — the trades all talk to each other.
+
+### H5 · Objections and the close
+
+> "'That's right' is better than 'yes.' Strive for it." — **Chris Voss**, *Never Split the Difference*.
+
+Roulette discipline: don't argue the objection — label it until he says "that's right." "Sounds like the last guy sold you reports and disappeared." Only after "that's right" does the boundary block (A5) mean anything.
+
+> "How am I supposed to do that?" — **Chris Voss**, the calibrated question.
+
+Flip it outward when price pushback comes: "Fair question — what would it need to bring back for the math to work for you?" His answer prices the audit. Never defend the fee; make the fee his math.
+
+> "Have you given up on this project?" — **Chris Voss**, the no-oriented email.
+
+The RECOVER motion in one sentence. "Have you given up on the Hendersons' roof?" reopens a dead quote better than any "just following up." A check-in begs; a no-oriented question restarts.
+
+> "Timid salesmen have skinny kids." — **Zig Ziglar's** favorite. (Honesty note: it's the title of his brother Judge Ziglar's 1978 book — Zig made it famous.)
+
+D5's whole design: name two slots and go quiet. The polite trail-off — "well, if you're ever interested…" — is how quotes die.
+
+> "You can have everything in life you want, if you will just help enough other people get what they want." — **Zig Ziglar**, *See You at the Top*.
+
+The honest frame for follow-up, and for G3: chasing the cold quote is a favor. The homeowner with the dead estimate still has the leaking roof.
+
+### H6 · Delivery, and the reps
+
+> The "late-night FM DJ voice." — **Chris Voss**: slow, calm, downward inflection.
+
+Reserved for exactly one place in our material: C7. A guarantee spoken fast sounds like a scam. Spoken slow, downward, with the pause after — it sounds like a fact.
+
+> "What is / what could be." — **Nancy Duarte**, *Resonate*, her talk-structure spine.
+
+Alternate his Tuesday now (ring-outs, silence after quotes) with his Tuesday on the machine, and end on the new normal. A7 is built on this shape. So is every verbal audit. Her other rule, same talk: "You are not Luke Skywalker, you're Yoda" — the audience is the hero; you're the guide with the map.
+
+> "Volume negates luck." — **Alex Hormozi**.
+
+Thirty takes a day. Twenty conversations a week. The booth and the phone run on the same law.
+
+> "What makes things hard isn't complexity, it's consistency." — **Alex Hormozi**.
+
+Week 4's plateau notice, pre-written by someone else. Nothing in this program is complicated. All of it is daily.
+
+> "Businesses don't move people… People move businesses!" — **Brandon Dawson**, bdawson.com.
+
+Steal the *form* — the flip is why it sticks. Build ours on the same hinge:
+**Ours:** "Ads don't make the phone worth answering. Answering makes the ads worth buying."
+
+> "If you don't blow your own horn, there is no music." — **Alan Weiss**.
+
+For the operator who holds fire — problem #3 in [how-and-why](./07-how-and-why.md). Saying what you're good at, plainly, once, is a service to a buyer trying to decide. Modesty is noise on his decision.
+
+> "Don't wish it was easier, wish you were better." — **Jim Rohn**, his seminars. (The mixed tense is his — the full triplet ends "…don't wish for less challenge, wish for more wisdom.")
+
+Weekend fuel. Also the program's thesis in nine words.
+
+**One that isn't here:** Dawson's stage line "you can't 10X your business without 10X-ing your people" — his signature framing, but no word-for-word transcript pins it, so it stays off the quotable list. The verified pattern worth stealing is his credential compression: one sentence of hard numbers before any opinion — he opens with "built it from half a million to a $151 million exit, at 77 times earnings," then talks.
+**Ours (B2's numbers, B1's gates):** "Fourteen years building this for technical businesses. Last engagement: eight hundred more qualified leads a month, no new ad spend. Now — here's what I think about X."

@@ -643,6 +643,132 @@
       "status": "new",
       "source": "page:revenue-engine-dentists",
       "addedAt": "2026-06-27"
+    },
+    {
+      "term": "house account",
+      "normalized": "house account",
+      "status": "new",
+      "source": "doc:industrial-offer-spec",
+      "addedAt": "2026-07-06"
+    },
+    {
+      "term": "RFQ",
+      "normalized": "rfq",
+      "status": "new",
+      "source": "doc:industrial-offer-spec",
+      "addedAt": "2026-07-06"
+    },
+    {
+      "term": "quote-to-order rate",
+      "normalized": "quote to order rate",
+      "status": "new",
+      "source": "doc:industrial-offer-spec",
+      "addedAt": "2026-07-06"
+    },
+    {
+      "term": "take rate",
+      "normalized": "take rate",
+      "status": "new",
+      "source": "doc:industrial-offer-spec",
+      "addedAt": "2026-07-06"
+    },
+    {
+      "term": "whale curve",
+      "normalized": "whale curve",
+      "status": "new",
+      "source": "doc:industrial-offer-spec",
+      "addedAt": "2026-07-06"
+    },
+    {
+      "term": "EV/EBITDA multiple",
+      "normalized": "ev ebitda multiple",
+      "status": "new",
+      "source": "doc:industrial-offer-spec",
+      "addedAt": "2026-07-06"
+    },
+    {
+      "term": "reorder attrition",
+      "normalized": "reorder attrition",
+      "status": "new",
+      "source": "doc:industrial-offer-spec",
+      "addedAt": "2026-07-06"
+    },
+    {
+      "term": "speed to lead",
+      "normalized": "speed to lead",
+      "status": "new",
+      "source": "doc:home-services-offer-spec",
+      "addedAt": "2026-07-06"
+    },
+    {
+      "term": "missed-call text-back",
+      "normalized": "missed call text back",
+      "status": "new",
+      "source": "doc:home-services-offer-spec",
+      "addedAt": "2026-07-06"
+    },
+    {
+      "term": "system-attributed revenue",
+      "normalized": "system attributed revenue",
+      "status": "new",
+      "source": "doc:home-services-offer-spec",
+      "addedAt": "2026-07-06"
+    },
+    {
+      "term": "key-person discount",
+      "normalized": "key person discount",
+      "status": "new",
+      "source": "doc:home-services-offer-spec",
+      "addedAt": "2026-07-06"
+    },
+    {
+      "term": "join-line",
+      "normalized": "join line",
+      "status": "new",
+      "source": "doc:03-migration-build-plan",
+      "addedAt": "2026-07-07"
+    },
+    {
+      "term": "install capacity",
+      "normalized": "install capacity",
+      "status": "new",
+      "source": "doc:03-migration-build-plan",
+      "addedAt": "2026-07-07"
+    },
+    {
+      "term": "showrooming",
+      "normalized": "showrooming",
+      "status": "new",
+      "source": "page:industries/consumer-brands",
+      "addedAt": "2026-07-07"
+    },
+    {
+      "term": "win-back",
+      "normalized": "win back",
+      "status": "new",
+      "source": "page:industries/consumer-brands",
+      "addedAt": "2026-07-07"
+    },
+    {
+      "term": "owned demand",
+      "normalized": "owned demand",
+      "status": "new",
+      "source": "page:industries/consumer-brands",
+      "addedAt": "2026-07-07"
+    },
+    {
+      "term": "answer-shaped content",
+      "normalized": "answer shaped content",
+      "status": "new",
+      "source": "guest-post:02-generative-engine-optimization-services",
+      "addedAt": "2026-07-08"
+    },
+    {
+      "term": "named-in-answer rate",
+      "normalized": "named in answer rate",
+      "status": "new",
+      "source": "guest-post:03-geo-agency",
+      "addedAt": "2026-07-08"
     }
   ]
 }

@@ -49,6 +49,7 @@ Live tools today: `ai-visibility-calculator`, `catalog-readiness-scorecard`.
 |---|---|
 | `add-interactive-tool.md` | Build a NEW tool end-to-end: pure tested logic → component → register → enrichment `toolKey` option → standalone `/tools/<slug>/` page → sitemap + nav. |
 | `embed-tool-in-content.md` | Attach an EXISTING tool to glossary terms and/or career paths via the `enrichments[]` framework (the lighter task). |
+| `hero-probe-verify-and-ai-upgrade.md` | **Homepage tool, not learning-hub** — verify the hero AI-Readiness Probe end-to-end (API matrix + UI states + copy claims); on failure or founder go, build the AI-powered v2 (Claude-backed page read, per-IP rate limiting, email gate after the first free run). The no-login/no-persistence guardrail above does NOT bind it — it's a lead tool with per-run cost. |
 
 ### Suggested order
 1. `add-interactive-tool.md` — build the tool once (code + standalone page).
