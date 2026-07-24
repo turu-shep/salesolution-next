@@ -8,7 +8,7 @@ Format, severity scale, and status values: see [00-README.md](00-README.md#the-l
 
 | Status | S1 | S2 | S3 | S4 |
 |---|---|---|---|---|
-| OPEN | 0 | 0 | 0 | 0 |
+| OPEN | 0 | 5 | 5 | 0 |
 | CONFIRMED | 2 | 2 | 0 | 0 |
 | REFUTED | 0 | 0 | 0 | 0 |
 | FIXED | 0 | 0 | 0 | 0 |
@@ -108,6 +108,124 @@ Two problems in one row, and they get different treatment. The code fix — POST
 **Found by:** opus-5 (recon) · **Verified by:** — · **Fixed by:** —
 
 **Notes:** Real but narrow, and the practical impact depends on what a serverless function can reach. Verify reachability before spending effort; a full fix means pinning the resolved IP through the connection, which is awkward in the runtime. `lib/probe/fetch.ts` has no tests at all — that gap is worth more than this finding.
+
+---
+
+## Phase 0 — measurement findings, 2026-07-24
+
+Found while establishing the baseline. Nothing was fixed.
+
+---
+
+### F-007 · S3 · quality · OPEN
+
+**Where:** [package.json](../../../package.json) `lint` script, [eslint.config.mjs](../../../eslint.config.mjs)
+
+**Claim:** `pnpm lint` is effectively unusable — bare `eslint` with ignores for only `.next/`, `out/`, `build/`, so it lints the `.engine/` submodule, the legacy `seo-project/` tree, and all of `docs/`; it produced zero output in 5 minutes before being killed.
+
+**Failure scenario:** Any agent or CI step that runs the documented `pnpm lint` check hangs or times out, so the check gets skipped in practice — which is how 44 source errors accumulated (F-008). The repo's own definition of done ("lint clean on changed files") can't be executed as written.
+
+**Found by:** fable-5 (phase 0) · **Verified by:** — · **Fixed by:** —
+
+**Notes:** Scoped run (`npx eslint app components lib sanity scripts`) completes in 10.7s. Fix candidate: add ignores (or scope the script). Baseline: `baseline/toolchain.md`.
+
+---
+
+### F-008 · S3 · quality · OPEN
+
+**Where:** `app/`, `components/`, `lib/` (list in `baseline/toolchain.md`)
+
+**Claim:** The source tree has 44 eslint errors and 9 warnings: 25× `@next/next/no-html-link-for-pages` (legal pages using `<a>` for internal routes), 6× `react-hooks/set-state-in-effect`, 4× `react-hooks/purity`, 4× `react-hooks/immutability`, plus unused vars and unescaped entities. Error files include `components/forms/LeadForm.tsx` and `components/forms/FullGrowthQuoteForm.tsx`.
+
+**Failure scenario:** `<a href>` to internal pages forces full document reloads off the legal pages; the react-hooks violations (setState-in-effect, purity, immutability in the two lead forms) are the exact rule class that produces render loops and stale-state bugs under React 19 concurrency — and today no check would catch a new one (F-007).
+
+**Found by:** fable-5 (phase 0) · **Verified by:** — · **Fixed by:** —
+
+**Notes:** Fix in the quality wave after F-007 makes linting runnable.
+
+---
+
+### F-009 · S2 · quality · OPEN
+
+**Where:** [package.json](../../../package.json) `test` script (`node --test lib/`), Node v20.16.0
+
+**Claim:** The test runner cannot load TypeScript at all — Node 20.16 predates type stripping and the `--test` glob only matches `.js`-family files — so 67 of 72 `lib/` files, including every top-risk module (`probe/fetch.ts`, `sales/auth.ts`, `probe/gate-server.ts`, `rate-limit.ts`, `probe/token.ts`, `probe/ai.ts`, `lead-form/submit.ts`), are structurally untestable, not merely untested.
+
+**Failure scenario:** Wave 3 tries to write the failing-test-first fixes the program requires for the SSRF layer and the auth code and cannot; a regression in any of those modules ships with `pnpm test` green at 34/34.
+
+**Found by:** opus-5 (recon, pre-identified in the phase 0 brief) · **Verified by:** opus-5 (phase 0 tests-map agent, direct measurement) · **Fixed by:** —
+
+**Notes:** **Blocks wave 3. Decision for Artur** — options and trade-offs in `baseline/tests.md §5`; recommendation is a `tsx` loader now and a separate Node 24 LTS upgrade (Node 20 is past EOL, see `deps.md`). Related: F-013.
+
+---
+
+### F-010 · S2 · perf · OPEN
+
+**Where:** `https://salesolution.net/` (production homepage)
+
+**Claim:** Homepage LCP is 4,194ms on desktop with no CPU throttle (Lighthouse 13.4, perf score 78) — the worst vital on the site, on the funnel entry page.
+
+**Failure scenario:** FCP is 470ms and speed index 1,051ms, so paint starts fast and then the LCP element lands ~3.7s later — a late-arriving hero element. Mobile will be worse. Every funnel starts here; a 4.2s LCP is ranking and bounce drag on the exact page the ads and probes point at.
+
+**Found by:** fable-5 (phase 0, Lighthouse) · **Verified by:** — · **Fixed by:** —
+
+**Notes:** Cause not yet diagnosed (measurement only). Note production predates the local homepage rework — lens F must re-measure locally and diagnose against current code, not just the deployed build. Baseline: `baseline/vitals.md`.
+
+---
+
+### F-011 · S3 · perf · OPEN
+
+**Where:** `https://salesolution.net/book-growth-call/`
+
+**Claim:** Total page weight is 5.95MB — triple any other page — because the Calendly embed chain loads Wistia, Sentry, ZoomInfo, navattic, ctfassets, ketch and Optanon (two consent managers) alongside the site's own ~2MB stack.
+
+**Failure scenario:** The buyer clicks "Book a Growth Call" on a phone in a warehouse office and pays a 6MB download to see a calendar; Lighthouse scores stay green only because the chain loads late.
+
+**Found by:** fable-5 (phase 0, Lighthouse) · **Verified by:** — · **Fixed by:** —
+
+**Notes:** Vendor chain, so options are containment (facade/click-to-load embed), not deletion. Two consent managers on one page is also a lens B question.
+
+---
+
+### F-012 · S2 · a11y · OPEN
+
+**Where:** All 8 baseline pages (local prod build, commit `dd66f3c`)
+
+**Claim:** 122 serious axe violations, concentrated in two rules: `color-contrast` (116 nodes across every page — the first flagged node on every page is the same shared-component selector `.xl\:inline`) and `target-size` (6 homepage HeroProbe example-toggle buttons under 24px, WCAG 2.2).
+
+**Failure scenario:** Low-vision users can't read the muted text pairs anywhere on the site (WCAG 2.2 AA 1.4.3 fails on every page); the homepage probe example chips are too small to hit reliably on touch.
+
+**Found by:** fable-5 (phase 0, axe-core) · **Verified by:** — · **Fixed by:** —
+
+**Notes:** One token-level fix likely clears most of the 116 — lens E identifies the exact token/class pairs. Full node lists in session `axe-results.json`; method in `baseline/a11y.md`.
+
+---
+
+### F-013 · S3 · quality · OPEN
+
+**Where:** [lib/sitemap/registry.reconcile.test.mjs](../../../lib/sitemap/registry.reconcile.test.mjs) (header comment lines 22–25)
+
+**Claim:** The sitemap test never executes the module it guards — it regexes `registry.ts` source text for `u('…')` literals — so it stays green if the module fails to compile or its XML serializers (`toUrlsetXml`, `toIndexXml`) emit invalid output.
+
+**Failure scenario:** An escaping or `<lastmod>` regression makes Google reject the whole sitemap document while `pnpm test` shows 34/34 green — a false-confidence failure worse than having no test.
+
+**Found by:** opus-5 (phase 0, tests-map agent) · **Verified by:** — · **Fixed by:** —
+
+**Notes:** Consequence of F-009 (the workaround exists because `.ts` can't be imported). Fix properly once the runner decision lands: execute the serializers and assert on output.
+
+---
+
+### F-014 · S2 · correctness · OPEN
+
+**Where:** [lib/lead-form/submit.ts:72-86](../../../lib/lead-form/submit.ts#L72-L86), `lib/lead-form/submit-audit.ts:72-80`, `lib/lead-form/full-growth-quote-submit.ts:122-131`
+
+**Claim:** All three lead submit handlers treat "no delivery channel configured" as success — they `console.log` the lead, return `ok: true`, and the user is redirected to the thank-you page. Only the FGO handler guards one half-configuration (`RESEND_API_KEY` without `RESEND_TO_EMAIL`).
+
+**Failure scenario:** One renamed or missing env var in Vercel (`HUBSPOT_FORM_ID`, `RESEND_TO_EMAIL`, …) and every lead from all three funnels is silently dropped while every visitor sees "we received your details" — the F-004 stub failure mode reproduced at the infrastructure level, with no error, no alert, no retry, no queue.
+
+**Found by:** opus-5 (phase 0, tests-map + funnel agents independently) · **Verified by:** — · **Fixed by:** —
+
+**Notes:** The dev-ergonomics intent ("don't punish the user locally") is legitimate; the fix is to fail loudly (5xx or alert) when `NODE_ENV === 'production'` and zero channels are configured. Whether production env is currently complete needs a Vercel dashboard check — same class as F-001's deploy-env caveat.
 
 ---
 
