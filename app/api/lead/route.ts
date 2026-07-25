@@ -18,8 +18,15 @@ import { sendServerEvent } from '@/lib/analytics-server'
 import { leadSchema } from '@/lib/lead-form/schema'
 import { submitLead } from '@/lib/lead-form/submit'
 import { rateLimit } from '@/lib/rate-limit'
+import { isSameOrigin } from '@/lib/same-origin'
 
 export async function POST(req: NextRequest) {
+  // F-019: Route Handlers get no Origin check from Next, so a third-party page
+  // could drive this form from a visitor's browser and spend their IP's budget.
+  if (!isSameOrigin(req)) {
+    return NextResponse.json({ ok: false, error: 'forbidden' }, { status: 403 })
+  }
+
   const ip =
     req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
     req.headers.get('x-real-ip') ??

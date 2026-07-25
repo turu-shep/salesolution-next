@@ -20,8 +20,14 @@ import { fgoQuoteSchema } from '@/lib/lead-form/full-growth-quote-schema'
 import { submitFgoQuote } from '@/lib/lead-form/full-growth-quote-submit'
 import { fgoLeadValue } from '@/lib/lead-form/full-growth-quote-value'
 import { rateLimit } from '@/lib/rate-limit'
+import { isSameOrigin } from '@/lib/same-origin'
 
 export async function POST(req: NextRequest) {
+  // F-019: see lib/same-origin.ts — Next does not do this for Route Handlers.
+  if (!isSameOrigin(req)) {
+    return NextResponse.json({ ok: false, error: 'forbidden' }, { status: 403 })
+  }
+
   const ip =
     req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
     req.headers.get('x-real-ip') ??

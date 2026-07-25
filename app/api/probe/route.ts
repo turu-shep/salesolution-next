@@ -23,6 +23,7 @@ import { fetchHtml, fetchRobotsTxt, hasLlmsTxt, validateProbeUrl } from '@/lib/p
 import { clientIp, incrCounter } from '@/lib/probe/gate-server'
 import { consume } from '@/lib/probe/limits.mjs'
 import { computeScores } from '@/lib/probe/score.mjs'
+import { isSameOrigin } from '@/lib/same-origin'
 
 export const runtime = 'nodejs'
 
@@ -31,6 +32,11 @@ function badRequest(error: string) {
 }
 
 export async function POST(req: NextRequest) {
+  // F-019: see lib/same-origin.ts — Next does not do this for Route Handlers.
+  if (!isSameOrigin(req)) {
+    return NextResponse.json({ error: 'forbidden' }, { status: 403 })
+  }
+
   let raw: unknown
   try {
     raw = await req.json()
