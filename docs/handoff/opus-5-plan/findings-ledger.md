@@ -11,7 +11,7 @@ Format, severity scale, and status values: see [00-README.md](00-README.md#the-l
 | OPEN | 0 | 5 | 5 | 0 |
 | CONFIRMED | 2 | 26 | 36 | 5 |
 | REFUTED | 0 | 0 | 12 | 0 |
-| FIXED | 1 | 1 | 1 | 0 |
+| FIXED | 1 | 2 | 1 | 0 |
 | PROPOSED | 0 | 0 | 0 | 0 |
 | DEFERRED | 0 | 0 | 0 | 0 |
 
@@ -290,6 +290,24 @@ This row is also the single most useful entry for `model-notes.md`: eight lenses
 
 ---
 
+### F-095 · S2 · privacy · CONFIRMED
+
+**Where:** [app/api/probe/unlock/route.ts:48](../../../app/api/probe/unlock/route.ts#L48), `sendToHubSpot` at :56-72, `notifyViaResend` at :74-86
+
+**Claim:** A single unauthenticated POST carrying any regex-valid email string writes a contact into the **same HubSpot form real leads land on** and emails the founder — no captcha, no gate precondition, no verification that the address belongs to the sender.
+
+**Failure scenario:** Demonstrated empirically and by accident on 2026-07-24: two POSTs sent while verifying an unrelated fix (F-019) each created a HubSpot submission for `smoke@example.com` on `HUBSPOT_FORM_ID` and delivered a `Probe unlock: smoke@example.com` email to `RESEND_TO_EMAIL`. Validation is one regex (`EMAIL_RE`, :17) and delivery fires before anything else is checked. So a script can inject arbitrary addresses into the CRM at the unlock rate limit (5/hour, 20/day per IP — and per **F-005** that limit is IP-header-keyed, so rotate the header and it doesn't bind), poisoning lead attribution with records indistinguishable in shape from real form fills. It can also be used to mail-bomb the founder's inbox, or to enrol a third party's address without consent.
+
+**Found by:** opus-5 (phase 3, empirically — tripped it while testing F-019) · **Verified by:** opus-5 (the write happened; the evidence is two real CRM records and two real emails) · **Fixed by:** —
+
+**Notes:** **Cross-ref F-020, which phase 2 REFUTED.** The refutation was correct about F-020's *written* premises, and its own verifier noted that "same portal real leads land in" was, if anything, understated. This row keeps only what is demonstrably true and drops the parts that died. Worth reading in `model-notes.md`: a finding can be refuted on its construction while its core mechanism is real, and the thing that settled it was not another verifier but accidentally executing it.
+
+The route already labels its own output `email is UNVERIFIED — gate capture, not a confirmed form submission` (:85), so the risk was understood; what is missing is any control on the write. Candidate fixes, cheapest first: post gate captures to a **separate** HubSpot form so they can never be mistaken for form fills; require the probe gate cookie to exist before accepting an unlock; add Turnstile to match the other three CRM-writing forms.
+
+**Also fixed as a side effect of F-019:** cross-origin callers now get 403 here, which removes the drive-by-a-victim's-browser variant but not the direct-script variant.
+
+---
+
 ## Wave 1 — probe + funnel
 
 Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structured source: [wave-1-findings.json](wave-1-findings.json). Synthesis dropped nothing for a missing failure scenario or as known-deliberate — phase 2 is the real filter, and that zero-drop rate is itself worth reading in the precision number.
@@ -360,7 +378,7 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 ---
 
-### F-019 · S2 · security · CONFIRMED
+### F-019 · S2 · security · FIXED
 
 **Where:** app/api/lead/route.ts:22 (and the five sibling POST handlers)
 
@@ -368,11 +386,13 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** Next 16 applies Origin-vs-Host CSRF verification to Server Actions only (node_modules/next/dist/docs/01-app/02-guides/data-security.md:540); Route Handlers get none, and route.md documents no equivalent. /api/lead, /api/revenue-leak-audit, /api/full-growth-quote, /api/probe, /api/probe/ai and /api/probe/unlock are plain Route Handlers reading req.json(), which parses regardless of Content-Type. A hidden auto-submitting form with enctype="text/plain" (CORS-simple, no preflight, attacker never needs to read the response) posts valid JSON from any page a victim loads. Concrete: a malvertising creative or compromised blog posts {"fullName":"...","email":"burner@x.com","phone":"5550000","revenue":"5m-plus","platform":"x","frustration":"x"} to /api/lead. Every visitor becomes a forged HubSpot contact plus a Resend notification, each from a distinct real residential IP — so lib/rate-limit.ts's 5-per-10-minutes-per-IP window never triggers, and 5,000 pageviews yields 5,000 junk leads indistinguishable from real ones. Pointed at /api/probe/unlock the same trick drains the 100/day global unlock budget from thousands of unrelated IPs in minutes.
 
-**Found by:** opus-5 (phase 1, lens A) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 1 refuted) · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens A) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 1 refuted) · **Fixed by:** opus-5 (phase 3, security wave, 98323fa)
 
 **Notes:** Suggested fix: Reject requests whose Origin header is absent or does not match the site origin (allowlist the Vercel preview hosts) in a shared helper used by all six handlers, and require Content-Type: application/json so the text/plain form trick fails before parsing. Cross-ref F-005 — extends it, does not restate it.
 
 **Verification (CONFIRMED, 1/3 refuted).** Scope correction from the verifiers: One clause is too strong: "the per-IP rate limits that are the only abuse control." A second control exists on three of the six — Cloudflare Turnstile hard-fails a token-less submission on /api/lead (lib/lead-form/submit.ts:33-45), /api/revenue-leak-audit (submit-audit.ts:36-43) and /api/full-growth-quote (full-growth-quote-submit.ts:51-63), and the widget is fully wired client-side (LeadForm.tsx:447-449, RevenueLeakAuditForm.tsx:223-225, FullGrowthQuoteForm.tsx). It is env-gated on TURNSTILE_SECRET_KEY and fails open when unset; the key is not set locally (platform-notes.md line 29) and production env is not readable from this machine, so whether the "5,000 junk leads" scenario is live or l
+
+**Fix.** New lib/same-origin.ts wired into all six public POST handlers. It compares the Origin header host against X-Forwarded-Host/Host — the same semantics Next applies to Server Actions and withholds from Route Handlers — rather than a hardcoded domain, so apex, www and preview deployments pass with no allowlist to maintain. Absent Origin is deliberately allowed: browsers always send it on cross-origin POST, which is the vector, so rejecting it would break server-to-server callers for no security gain. Verified on a production build across all six routes: cross-origin and Origin: null → 403; same-origin and absent-Origin reach validation. No unit test (F-009).
 
 ---
 
