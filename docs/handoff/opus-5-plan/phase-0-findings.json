@@ -1,0 +1,144 @@
+{
+  "findings": [
+    {
+      "id": "F-005",
+      "severity": "S2",
+      "dimension": "security",
+      "where": "[lib/probe/gate-server.ts:39-43](../../../lib/probe/gate-server.ts#L39-L43), and `lib/rate-limit.ts`",
+      "claim": "`clientIp` trusts the leftmost value of the client-supplied `x-forwarded-for` header, so every IP-keyed rate limit can be evaded by sending a random value.",
+      "failureScenario": "If the leftmost XFF entry is attacker-controlled, a script rotates the header per request and the probe caps (30/h, 100/d), the AI caps (6/h, 10/d), the unlock caps, and the lead-form caps all stop binding. Only the global daily AI ceiling survives, which turns a spend cap into a spend target. Phase 2 must determine what Vercel actually guarantees here — the platform may prepend or normalize, and `x-vercel-forwarded-for` may be the trustworthy header.",
+      "foundBy": "fable-5 (recon review, 2026-07-24)",
+      "crossRef": "",
+      "touchesCopy": false,
+      "lenses": [
+        "phase-0"
+      ]
+    },
+    {
+      "id": "F-006",
+      "severity": "S3",
+      "dimension": "security",
+      "where": "[lib/probe/fetch.ts:113-115](../../../lib/probe/fetch.ts#L113-L115)",
+      "claim": "DNS rebinding window in the SSRF guard. `assertHostnameIsPublic` resolves the hostname and checks the IP, then `fetch()` resolves it again independently, so a hostname with a short TTL can answer public on the first lookup and private on the second.",
+      "failureScenario": "Attacker controls a domain with a 1-second TTL. First resolution returns a public IP and passes the check. The fetch resolves again and gets `169.254.169.254` or an internal address. The rest of the layer is solid — scheme allowlist, private-range blocks, 3-redirect cap, 5s timeout, 2MB cap — so this is the one seam.",
+      "foundBy": "opus-5 (recon)",
+      "crossRef": "",
+      "touchesCopy": false,
+      "lenses": [
+        "phase-0"
+      ]
+    },
+    {
+      "id": "F-007",
+      "severity": "S3",
+      "dimension": "quality",
+      "where": "[package.json](../../../package.json) `lint` script, [eslint.config.mjs](../../../eslint.config.mjs)",
+      "claim": "`pnpm lint` is effectively unusable — bare `eslint` with ignores for only `.next/`, `out/`, `build/`, so it lints the `.engine/` submodule, the legacy `seo-project/` tree, and all of `docs/`; it produced zero output in 5 minutes before being killed.",
+      "failureScenario": "Any agent or CI step that runs the documented `pnpm lint` check hangs or times out, so the check gets skipped in practice — which is how 44 source errors accumulated (F-008). The repo's own definition of done (\"lint clean on changed files\") can't be executed as written.",
+      "foundBy": "fable-5 (phase 0)",
+      "crossRef": "",
+      "touchesCopy": false,
+      "lenses": [
+        "phase-0"
+      ]
+    },
+    {
+      "id": "F-008",
+      "severity": "S3",
+      "dimension": "quality",
+      "where": "`app/`, `components/`, `lib/` (list in `baseline/toolchain.md`)",
+      "claim": "The source tree has 44 eslint errors and 9 warnings: 25× `@next/next/no-html-link-for-pages` (legal pages using `<a>` for internal routes), 6× `react-hooks/set-state-in-effect`, 4× `react-hooks/purity`, 4× `react-hooks/immutability`, plus unused vars and unescaped entities. Error files include `components/forms/LeadForm.tsx` and `components/forms/FullGrowthQuoteForm.tsx`.",
+      "failureScenario": "`<a href>` to internal pages forces full document reloads off the legal pages; the react-hooks violations (setState-in-effect, purity, immutability in the two lead forms) are the exact rule class that produces render loops and stale-state bugs under React 19 concurrency — and today no check would catch a new one (F-007).",
+      "foundBy": "fable-5 (phase 0)",
+      "crossRef": "",
+      "touchesCopy": false,
+      "lenses": [
+        "phase-0"
+      ]
+    },
+    {
+      "id": "F-009",
+      "severity": "S2",
+      "dimension": "quality",
+      "where": "[package.json](../../../package.json) `test` script (`node --test lib/`), Node v20.16.0",
+      "claim": "The test runner cannot load TypeScript at all — Node 20.16 predates type stripping and the `--test` glob only matches `.js`-family files — so 67 of 72 `lib/` files, including every top-risk module (`probe/fetch.ts`, `sales/auth.ts`, `probe/gate-server.ts`, `rate-limit.ts`, `probe/token.ts`, `probe/ai.ts`, `lead-form/submit.ts`), are structurally untestable, not merely untested.",
+      "failureScenario": "Wave 3 tries to write the failing-test-first fixes the program requires for the SSRF layer and the auth code and cannot; a regression in any of those modules ships with `pnpm test` green at 34/34.",
+      "foundBy": "opus-5 (recon, pre-identified in the phase 0 brief)",
+      "crossRef": "",
+      "touchesCopy": false,
+      "lenses": [
+        "phase-0"
+      ]
+    },
+    {
+      "id": "F-010",
+      "severity": "S2",
+      "dimension": "perf",
+      "where": "`https://salesolution.net/` (production homepage)",
+      "claim": "Homepage LCP is 4,194ms on desktop with no CPU throttle (Lighthouse 13.4, perf score 78) — the worst vital on the site, on the funnel entry page.",
+      "failureScenario": "FCP is 470ms and speed index 1,051ms, so paint starts fast and then the LCP element lands ~3.7s later — a late-arriving hero element. Mobile will be worse. Every funnel starts here; a 4.2s LCP is ranking and bounce drag on the exact page the ads and probes point at.",
+      "foundBy": "fable-5 (phase 0, Lighthouse)",
+      "crossRef": "",
+      "touchesCopy": false,
+      "lenses": [
+        "phase-0"
+      ]
+    },
+    {
+      "id": "F-011",
+      "severity": "S3",
+      "dimension": "perf",
+      "where": "`https://salesolution.net/book-growth-call/`",
+      "claim": "Total page weight is 5.95MB — triple any other page — because the Calendly embed chain loads Wistia, Sentry, ZoomInfo, navattic, ctfassets, ketch and Optanon (two consent managers) alongside the site's own ~2MB stack.",
+      "failureScenario": "The buyer clicks \"Book a Growth Call\" on a phone in a warehouse office and pays a 6MB download to see a calendar; Lighthouse scores stay green only because the chain loads late.",
+      "foundBy": "fable-5 (phase 0, Lighthouse)",
+      "crossRef": "",
+      "touchesCopy": false,
+      "lenses": [
+        "phase-0"
+      ]
+    },
+    {
+      "id": "F-012",
+      "severity": "S2",
+      "dimension": "a11y",
+      "where": "All 8 baseline pages (local prod build, commit `dd66f3c`)",
+      "claim": "122 serious axe violations, concentrated in two rules: `color-contrast` (116 nodes across every page — the first flagged node on every page is the same shared-component selector `.xl\\:inline`) and `target-size` (6 homepage HeroProbe example-toggle buttons under 24px, WCAG 2.2).",
+      "failureScenario": "Low-vision users can't read the muted text pairs anywhere on the site (WCAG 2.2 AA 1.4.3 fails on every page); the homepage probe example chips are too small to hit reliably on touch.",
+      "foundBy": "fable-5 (phase 0, axe-core)",
+      "crossRef": "",
+      "touchesCopy": false,
+      "lenses": [
+        "phase-0"
+      ]
+    },
+    {
+      "id": "F-013",
+      "severity": "S3",
+      "dimension": "quality",
+      "where": "[lib/sitemap/registry.reconcile.test.mjs](../../../lib/sitemap/registry.reconcile.test.mjs) (header comment lines 22–25)",
+      "claim": "The sitemap test never executes the module it guards — it regexes `registry.ts` source text for `u('…')` literals — so it stays green if the module fails to compile or its XML serializers (`toUrlsetXml`, `toIndexXml`) emit invalid output.",
+      "failureScenario": "An escaping or `<lastmod>` regression makes Google reject the whole sitemap document while `pnpm test` shows 34/34 green — a false-confidence failure worse than having no test.",
+      "foundBy": "opus-5 (phase 0, tests-map agent)",
+      "crossRef": "",
+      "touchesCopy": false,
+      "lenses": [
+        "phase-0"
+      ]
+    },
+    {
+      "id": "F-014",
+      "severity": "S2",
+      "dimension": "correctness",
+      "where": "[lib/lead-form/submit.ts:72-86](../../../lib/lead-form/submit.ts#L72-L86), `lib/lead-form/submit-audit.ts:72-80`, `lib/lead-form/full-growth-quote-submit.ts:122-131`",
+      "claim": "All three lead submit handlers treat \"no delivery channel configured\" as success — they `console.log` the lead, return `ok: true`, and the user is redirected to the thank-you page. Only the FGO handler guards one half-configuration (`RESEND_API_KEY` without `RESEND_TO_EMAIL`).",
+      "failureScenario": "One renamed or missing env var in Vercel (`HUBSPOT_FORM_ID`, `RESEND_TO_EMAIL`, …) and every lead from all three funnels is silently dropped while every visitor sees \"we received your details\" — the F-004 stub failure mode reproduced at the infrastructure level, with no error, no alert, no retry, no queue.",
+      "foundBy": "opus-5 (phase 0, tests-map + funnel agents independently)",
+      "crossRef": "",
+      "touchesCopy": false,
+      "lenses": [
+        "phase-0"
+      ]
+    }
+  ]
+}
