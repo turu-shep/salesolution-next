@@ -92,10 +92,12 @@ Every fix wave ends on its own branch. Run `/code-review ultra` before merging.
 
 ## What the ledger already knows
 
-Recon on 2026-07-24 found six things before phase 1 started. Four are confirmed by direct file read and are seeded as CONFIRMED; two need the verify pass. Two of them are live right now:
+Recon on 2026-07-24 found six things before phase 1 started. Four are confirmed by direct file read and are seeded as CONFIRMED; two need the verify pass.
 
-- **F-001** — `PROBE_GATE_SECRET` falls back to a hardcoded string that is published in this repo. Anyone can forge the gate cookie.
-- **F-004** — `LeadMagnetForm` is a stub. It's live on `/future-proof-your-seo/`, it promises a checklist in 60 seconds, and it `console.log`s the email and throws it away.
+- **F-001** — `PROBE_GATE_SECRET` falls back to a hardcoded string that is published in this repo. Anyone can forge the gate cookie. **Correction (phase 2):** this was originally written up here as live in production. It is not. `lib/probe/gate-server.ts` exists only on local `main`, which is 12 commits ahead of the `origin/main` that Vercel deploys — so F-001 is a **pre-launch** defect. Same fix, different urgency. See the "Deployment state" section at the top of the ledger.
+- **F-004** — `LeadMagnetForm` is a stub. It **is** genuinely live on `/future-proof-your-seo/` (confirmed present on `origin/main`), it promises a checklist in 60 seconds, and it `console.log`s the email and throws it away.
+
+**The deployment split matters more than any single row.** Production runs a self-contained *probe v1* (one 515-line route, no rate limiting at all — that is **F-094**, an S1 the phase-1 lenses all missed because they read the unshipped v2). The whole v2 probe system — gate, AI read, token reports, scorer, limiter — is local-only. Read the ledger's "Deployment state" section before triaging: 28 wave-1 findings target code that has never shipped.
 
 F-004 is not a code-quality nit. It's collecting personal data under a promise the system never keeps, which puts it in the compliance bucket as well as the revenue one.
 
