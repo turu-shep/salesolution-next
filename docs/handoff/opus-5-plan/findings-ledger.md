@@ -8,9 +8,9 @@ Format, severity scale, and status values: see [00-README.md](00-README.md#the-l
 
 | Status | S1 | S2 | S3 | S4 |
 |---|---|---|---|---|
-| OPEN | 0 | 5 | 5 | 0 |
-| CONFIRMED | 2 | 26 | 36 | 5 |
-| REFUTED | 0 | 0 | 12 | 0 |
+| OPEN | 0 | 0 | 0 | 0 |
+| CONFIRMED | 2 | 28 | 41 | 6 |
+| REFUTED | 0 | 2 | 14 | 0 |
 | FIXED | 1 | 2 | 1 | 0 |
 | PROPOSED | 0 | 0 | 0 | 0 |
 | DEFERRED | 0 | 0 | 0 | 0 |
@@ -87,7 +87,7 @@ Two problems in one row, and they get different treatment. The code fix — POST
 
 ---
 
-### F-005 · S2 · security · OPEN
+### F-005 · S2 · security · REFUTED
 
 **Where:** [lib/probe/gate-server.ts:39-43](../../../lib/probe/gate-server.ts#L39-L43), and `lib/rate-limit.ts`
 
@@ -95,13 +95,15 @@ Two problems in one row, and they get different treatment. The code fix — POST
 
 **Failure scenario:** If the leftmost XFF entry is attacker-controlled, a script rotates the header per request and the probe caps (30/h, 100/d), the AI caps (6/h, 10/d), the unlock caps, and the lead-form caps all stop binding. Only the global daily AI ceiling survives, which turns a spend cap into a spend target. Phase 2 must determine what Vercel actually guarantees here — the platform may prepend or normalize, and `x-vercel-forwarded-for` may be the trustworthy header.
 
-**Found by:** fable-5 (recon review, 2026-07-24) · **Verified by:** — · **Fixed by:** —
+**Found by:** fable-5 (recon review, 2026-07-24) · **Verified by:** opus-5 (phase 2, 3 verifiers, 2 refuted, UNCERTAIN) · **Fixed by:** —
 
 **Notes:** Do not fix before verifying. Reading the wrong header breaks rate limiting in the opposite direction. Read the Next 16 and Vercel docs on forwarded headers first.
 
+**Verification (REFUTED, 2/3 refuted).** REFUTED as written, on reachability. Three separate blocks: 1. The cited code does not run in production. `git cat-file -e origin/main:lib/probe/gate-server.ts` fails — the file containing `clientIp` exists only in local commits (added in `dd66f3c`, which sits in the 12 unpushed commits ahead of `origin/main`). `app/api/probe/ai/` and `app/api/probe/unlock/` are likewise absent from the production branch. Vercel deploys from the remote (no `.vercel` link, no CLI on this machine per baseline/platform-notes.md; `vercel.json` declares only a cron and no firewall config). The program already recorded this in findings-ledger.md:259-263 and used it Row kept as eval data. **Uncertain** — not settleable from code/docs here.
+
 ---
 
-### F-006 · S3 · security · OPEN
+### F-006 · S3 · security · REFUTED
 
 **Where:** [lib/probe/fetch.ts:113-115](../../../lib/probe/fetch.ts#L113-L115)
 
@@ -109,7 +111,7 @@ Two problems in one row, and they get different treatment. The code fix — POST
 
 **Failure scenario:** Attacker controls a domain with a 1-second TTL. First resolution returns a public IP and passes the check. The fetch resolves again and gets `169.254.169.254` or an internal address. The rest of the layer is solid — scheme allowlist, private-range blocks, 3-redirect cap, 5s timeout, 2MB cap — so this is the one seam.
 
-**Found by:** opus-5 (recon) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (recon) · **Verified by:** opus-5 (phase 2, 1 verifier, 1 refuted) · **Fixed by:** —
 
 **Notes:** Real but narrow, and the practical impact depends on what a serverless function can reach. Verify reachability before spending effort; a full fix means pinning the resolved IP through the connection, which is awkward in the runtime. `lib/probe/fetch.ts` has no tests at all — that gap is worth more than this finding.
 
@@ -119,9 +121,11 @@ Two problems in one row, and they get different treatment. The code fix — POST
 
 Found while establishing the baseline. Nothing was fixed.
 
+**Verification (REFUTED, 1/1 refuted).** LENS 1 finds the code mechanism real but the finding dies on the deliberate-decision test, so it does not hold up as written. CODE MECHANISM (real, and I looked hard for a guard that kills it — there is none). `fetchHtml` validates by *hostname*, then hands the *hostname* to `fetch()`: `await assertHostnameIsPublic(parsed.hostname)` does `dns.lookup(hostname, { all: true })` and screens each address, then `fetch(current, {...})` is called with no `lookup`, no pinned dispatcher, no Host-header rewrite to the vetted IP. Repo-wide grep across `app/ lib/ scripts/ next.config.ts` for `setGlobalDispatcher|undici|new Agent|https.Agent|lookup:` retur Row kept as eval data.
+
 ---
 
-### F-007 · S3 · quality · OPEN
+### F-007 · S3 · quality · REFUTED
 
 **Where:** [package.json](../../../package.json) `lint` script, [eslint.config.mjs](../../../eslint.config.mjs)
 
@@ -129,13 +133,15 @@ Found while establishing the baseline. Nothing was fixed.
 
 **Failure scenario:** Any agent or CI step that runs the documented `pnpm lint` check hangs or times out, so the check gets skipped in practice — which is how 44 source errors accumulated (F-008). The repo's own definition of done ("lint clean on changed files") can't be executed as written.
 
-**Found by:** fable-5 (phase 0) · **Verified by:** — · **Fixed by:** —
+**Found by:** fable-5 (phase 0) · **Verified by:** opus-5 (phase 2, 1 verifier, 1 refuted) · **Fixed by:** —
 
 **Notes:** Scoped run (`npx eslint app components lib sanity scripts`) completes in 10.7s. Fix candidate: add ignores (or scope the script). Baseline: `baseline/toolchain.md`.
 
+**Verification (REFUTED, 1/1 refuted).** REFUTED — the config facts are right, the diagnosis and the failure scenario are wrong, and the proposed cause accounts for 0.9 s of a 300+ s run. WHAT I CONFIRMED. `package.json` really is `"lint": "eslint"`, and bare `eslint` really does walk the whole repo: `lib/eslint/eslint.js:965-977` turns an empty pattern list into `["."]`. The only config ignores are `.next/**`, `out/**`, `build/**`, `next-env.d.ts` plus ESLint's built-in `["**/node_modules/", ".git/"]` (`lib/config/default-config.js:68`). And the 5-minute symptom reproduces: I ran the real `pnpm lint` command bounded by a 300 s alarm and it was killed at `5:00.08 total` having print Row kept as eval data.
+
 ---
 
-### F-008 · S3 · quality · OPEN
+### F-008 · S3 · quality · CONFIRMED
 
 **Where:** `app/`, `components/`, `lib/` (list in `baseline/toolchain.md`)
 
@@ -143,13 +149,15 @@ Found while establishing the baseline. Nothing was fixed.
 
 **Failure scenario:** `<a href>` to internal pages forces full document reloads off the legal pages; the react-hooks violations (setState-in-effect, purity, immutability in the two lead forms) are the exact rule class that produces render loops and stale-state bugs under React 19 concurrency — and today no check would catch a new one (F-007).
 
-**Found by:** fable-5 (phase 0) · **Verified by:** — · **Fixed by:** —
+**Found by:** fable-5 (phase 0) · **Verified by:** opus-5 (phase 2, 1 verifier, 0 refuted) · **Fixed by:** —
 
 **Notes:** Fix in the quality wave after F-007 makes linting runnable.
 
+**Verification (CONFIRMED, 0/1 refuted).** Scope: The claim survives verbatim; two precision notes for the fix wave, neither of which refutes it. (1) The parenthetical "legal pages using `<a>`" covers 18 of the 25 hits (terms 7, privacy 6, disclaimer 3, communication-preferences 1, opt-out-preferences 1). The other 7 are non-legal: app/(site)/book-growth-call/page.tsx:108, app/(site)/case-studies/page.tsx:129, components/forms/LeadForm.tsx:484, components/integrations/ConsentBanner.tsx:74, components/sections/guide-detail/GuideHero.tsx:45 (reported twice for the same anchor, since both app/(site)/guides/page.tsx and guides/[slug]/page.tsx match `/guides/`), components/sections/website-dev/Pe
+
 ---
 
-### F-009 · S2 · quality · OPEN
+### F-009 · S2 · quality · REFUTED
 
 **Where:** [package.json](../../../package.json) `test` script (`node --test lib/`), Node v20.16.0
 
@@ -159,11 +167,28 @@ Found while establishing the baseline. Nothing was fixed.
 
 **Found by:** opus-5 (recon, pre-identified in the phase 0 brief) · **Verified by:** opus-5 (phase 0 tests-map agent, direct measurement) · **Fixed by:** —
 
-**Notes:** **Blocks wave 3. Decision for Artur** — options and trade-offs in `baseline/tests.md §5`; recommendation is a `tsx` loader now and a separate Node 24 LTS upgrade (Node 20 is past EOL, see `deps.md`). Related: F-013.
+**Notes:** ~~Blocks wave 3. Decision for Artur~~ — see the correction below. Related: F-013, F-096.
+
+**CORRECTION (opus-5, phase 3, 2026-07-24) — this finding was wrong, and it was wrong in the expensive direction.** All three verifiers refuted it, and re-checking by hand confirms they were right:
+
+- **Node v23.11.1 is already installed on this machine** (`~/.nvm/versions/node/v23.11.1`, alongside v22.5.1), and **the repo pins no Node version** — no `engines` field, no `.nvmrc`, no `.node-version`, no CI. "Node 20.16" was a PATH accident, not a property of the project. Native type stripping works there.
+- `pnpm test` **gates nothing**: there is no `.github/workflows`, no `vercel.json` build override, no git hooks, and `build` is plain `next build`. The failure scenario's "a regression ships with `pnpm test` green" describes defeating a gate that does not exist. S2 was indefensible for a dev-only script.
+
+**What is actually true**, established empirically rather than asserted: bare `node --test` on Node 20.16 does not discover or load `.ts`. But on Node ≥22.6 it does, and the real obstacle for *some* modules is not TypeScript at all — it is **importing Next internals**. `lib/same-origin.ts` fails under bare node with `Cannot find package 'server-only'`; `lib/sales/auth.ts`, which imports only `node:crypto`, loads and tests fine.
+
+**So the tests got written.** [lib/sales/auth.test.mts](../../../lib/sales/auth.test.mts) — 6 tests, all passing — covers the F-003 fix (no Host value is local in production), the preserved dev path, `verifyPassword` including the empty-expectation case, and session tamper/expiry across nine mutation cases. A new `pnpm test:ts` script runs `.test.mts` files; **`pnpm test` is untouched and stays green**, because Node 20's glob does not match `.mts` (verified both ways). On Node 20 `test:ts` exits 1 loudly rather than silently passing.
+
+Writing those tests immediately found **F-096**, a latent dead-code bug in the same file. That is the argument for the runner change made better than the original finding made it.
+
+**Residual, and much smaller than the original claim:** modules importing `server-only` or `next/server` still need a shim or extraction to unit-test, and there is no pinned Node version so `test:ts` works only for whoever has ≥22.6 on PATH. An `.nvmrc` would fix the second half cheaply. Neither blocks anything.
+
+**For `model-notes.md`:** this row is the clearest self-inflicted error of the run. The finding was authored partly by opus-5 and partly by fable-5's phase-0 measurement, both of which measured the default `node -v`, concluded "structurally untestable", and never checked `~/.nvm` or whether the repo pinned anything. It then got cited three times in session summaries as a blocker justifying shipping four security fixes with no tests. The verify pass caught it; nothing else would have.
+
+**Verification (REFUTED, 3/3 refuted).** The two factual sub-claims check out, but the load-bearing characterization ("cannot load TypeScript at all", "structurally untestable", Wave 3 "cannot") is empirically false, and I disproved it on this machine without touching a repo file. WHAT IS TRUE. `package.json` really is `"test": "node --test lib/"`. On the default local Node (v20.16.0) `node --experimental-strip-types -e "…"` returns `node: bad option`, so no type stripping. I built a throwaway dir in the scratchpad with `sample.test.mjs` + `sample.test.ts` and ran `node --test .` on 20.16: only the `.mjs` file was discovered (`ok 1 - mjs picked up`, `# tests 1`). `node --test lib/`  Row kept as eval data.
 
 ---
 
-### F-010 · S2 · perf · OPEN
+### F-010 · S3 · perf · CONFIRMED
 
 **Where:** `https://salesolution.net/` (production homepage)
 
@@ -171,13 +196,15 @@ Found while establishing the baseline. Nothing was fixed.
 
 **Failure scenario:** FCP is 470ms and speed index 1,051ms, so paint starts fast and then the LCP element lands ~3.7s later — a late-arriving hero element. Mobile will be worse. Every funnel starts here; a 4.2s LCP is ranking and bounce drag on the exact page the ads and probes point at.
 
-**Found by:** fable-5 (phase 0, Lighthouse) · **Verified by:** — · **Fixed by:** —
+**Found by:** fable-5 (phase 0, Lighthouse) · **Verified by:** opus-5 (phase 2, 3 verifiers, 1 refuted) · **Fixed by:** —
 
 **Notes:** Cause not yet diagnosed (measurement only). Note production predates the local homepage rework — lens F must re-measure locally and diagnose against current code, not just the deployed build. Baseline: `baseline/vitals.md`.
 
+**Verification (CONFIRMED, 1/3 refuted).** Scope: The measurement and the severity survive; the *diagnosis* in failureScenario is imprecise and should not be inherited by the fix phase. "A late-arriving hero element" reads as a late-loading resource. There is none — the entire hero ships in the SSR HTML with zero images, video, or deferred imports, so a fix that hunts for a slow hero asset (preload, fetchpriority, image priority) will find nothing to fix. What arrives late is a *client-side repaint*: the carousel remounts its body text every 3 s and grows it on badge slides. "Bounce drag" is also overstated. FCP 470 ms and speed index 1,051 ms mean no visitor waits 4.2 s to see the hero; the **Severity → S3** on majority vote.
+
 ---
 
-### F-011 · S3 · perf · OPEN
+### F-011 · S3 · perf · CONFIRMED
 
 **Where:** `https://salesolution.net/book-growth-call/`
 
@@ -185,13 +212,15 @@ Found while establishing the baseline. Nothing was fixed.
 
 **Failure scenario:** The buyer clicks "Book a Growth Call" on a phone in a warehouse office and pays a 6MB download to see a calendar; Lighthouse scores stay green only because the chain loads late.
 
-**Found by:** fable-5 (phase 0, Lighthouse) · **Verified by:** — · **Fixed by:** —
+**Found by:** fable-5 (phase 0, Lighthouse) · **Verified by:** opus-5 (phase 2, 1 verifier, 0 refuted) · **Fixed by:** —
 
 **Notes:** Vendor chain, so options are containment (facade/click-to-load embed), not deletion. Two consent managers on one page is also a lens B question.
 
+**Verification (CONFIRMED, 0/1 refuted).** Scope: SURVIVES (established from code): the booking page mounts Calendly's widget script + stylesheet + auto-filled scheduling iframe unconditionally at afterInteractive with no facade, lazy gate or consent gate; it is the only page in the app that does; the page's own sections carry no images, video or iframes, so nothing first-party explains the ~3.9MB over the 2.05MB site floor; and Wistia, ZoomInfo, navattic, ctfassets, ketch and Optanon appear nowhere in first-party code, with the site running its own hand-rolled consent banner rather than either CMP. The 5.95MB figure and the vendor list come from the phase-0 production Lighthouse run recorde
+
 ---
 
-### F-012 · S2 · a11y · OPEN
+### F-012 · S2 · a11y · CONFIRMED
 
 **Where:** All 8 baseline pages (local prod build, commit `dd66f3c`)
 
@@ -225,9 +254,11 @@ Ratios get worse on the other surfaces in use: `#fafafa` 4.36/4.40, `#f7f7f7` 4.
 
 Belongs in the UX/a11y wave, not the security wave. The token change is a visual change on every page and needs before/after screenshots.
 
+**Verification (CONFIRMED, 0/3 refuted).** Scope: Two narrowings, neither of which refutes the defect: (1) WRONG FILE ATTRIBUTED for the target-size half. The claim says "6 homepage HeroProbe example-toggle buttons." The buttons are not in HeroProbe.tsx — they are the carousel dot rail at components/sections/AIOverviewMockup.tsx:294-309, which HeroProbe.tsx:218 merely mounts. A fixer grepping HeroProbe.tsx for the aria-label finds nothing. Consequence for scope: the same rail also ships on /industries/industrial-distribution/ (2 dots) and inside components/sections/revenue-engine/leak-concepts/Concept2Evidence.tsx, so it is homepage-only among the 8 baseline pages but NOT homepage-only in th
+
 ---
 
-### F-013 · S3 · quality · OPEN
+### F-013 · S3 · quality · CONFIRMED
 
 **Where:** [lib/sitemap/registry.reconcile.test.mjs](../../../lib/sitemap/registry.reconcile.test.mjs) (header comment lines 22–25)
 
@@ -235,13 +266,15 @@ Belongs in the UX/a11y wave, not the security wave. The token change is a visual
 
 **Failure scenario:** An escaping or `<lastmod>` regression makes Google reject the whole sitemap document while `pnpm test` shows 34/34 green — a false-confidence failure worse than having no test.
 
-**Found by:** opus-5 (phase 0, tests-map agent) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 0, tests-map agent) · **Verified by:** opus-5 (phase 2, 1 verifier, 0 refuted) · **Fixed by:** —
 
 **Notes:** Consequence of F-009 (the workaround exists because `.ts` can't be imported). Fix properly once the runner decision lands: execute the serializers and assert on output.
 
+**Verification (CONFIRMED, 0/1 refuted).** Scope: SURVIVES (the whole load-bearing core): the test never imports or executes `registry.ts`; it regexes source text at lines 30/33-35 exactly as claimed; `toUrlsetXml` and `toIndexXml` live in that module and are exercised by no test anywhere in the repo (repo-wide grep: definitions plus two route call sites only); therefore a semantic regression in `xmlEscape`, element order, or the `<lastmod>` branch ships with `pnpm test` fully green. Both cited line ranges are accurate. DOES NOT SURVIVE — narrowing 1: "stays green if the module fails to compile" is true of the test but carries no shippable risk, so it should not appear in the fix ticket as a
+
 ---
 
-### F-014 · S2 · correctness · OPEN
+### F-014 · S2 · correctness · CONFIRMED
 
 **Where:** [lib/lead-form/submit.ts:72-86](../../../lib/lead-form/submit.ts#L72-L86), `lib/lead-form/submit-audit.ts:72-80`, `lib/lead-form/full-growth-quote-submit.ts:122-131`
 
@@ -249,7 +282,7 @@ Belongs in the UX/a11y wave, not the security wave. The token change is a visual
 
 **Failure scenario:** One renamed or missing env var in Vercel (`HUBSPOT_FORM_ID`, `RESEND_TO_EMAIL`, …) and every lead from all three funnels is silently dropped while every visitor sees "we received your details" — the F-004 stub failure mode reproduced at the infrastructure level, with no error, no alert, no retry, no queue.
 
-**Found by:** opus-5 (phase 0, tests-map + funnel agents independently) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 0, tests-map + funnel agents independently) · **Verified by:** opus-5 (phase 2, 3 verifiers, 0 refuted) · **Fixed by:** —
 
 **Notes:** The dev-ergonomics intent ("don't punish the user locally") is legitimate; the fix is to fail loudly (5xx or alert) when `NODE_ENV === 'production'` and zero channels are configured. Whether production env is currently complete needs a Vercel dashboard check — same class as F-001's deploy-env caveat.
 
@@ -269,6 +302,8 @@ A phase-2 verifier tripped over this while checking F-015, and verifying it chan
 2. **F-001 is NOT "live right now."** `00-README.md` says it is. `lib/probe/gate-server.ts` is local-only, so the forgeable gate cookie is a pre-launch defect. The fix is unchanged; the urgency framing was wrong.
 3. **The audit read the wrong probe.** All eight lenses audited v2 at `lib/probe/*`. Nobody audited the 515 lines actually serving production traffic. That is a recall failure, not a precision failure, and it produced **F-094** below.
 4. **What IS live and confirmed:** F-002 (login brute force), F-003 (host header), F-004 (stub form discarding leads), F-014 + F-031 + F-034 (lead delivery reporting false success), the whole consent/pixel set (F-022–F-027), and F-012 (contrast tokens). Those deserve the front of the queue precisely because they are shipped.
+
+**Verification (CONFIRMED, 0/3 refuted).** Scope: The claim survives in full; one sentence of the failureScenario is looser than the code supports and should be tightened before it goes in the fix ledger. SURVIVES EXACTLY AS WRITTEN: all three handlers return ok:true for zero configured channels, console.log only, 200 from the route, thank-you redirect on the client, and FGO as the sole holder of a half-configuration guard. OVERSTATED: "One renamed or missing env var in Vercel (HUBSPOT_FORM_ID, RESEND_TO_EMAIL, …) and every lead from all three funnels is silently dropped." Two corrections. (1) Losing one var only silences a funnel if it removes that funnel's LAST delivering channel — with bo
 
 ---
 
@@ -305,6 +340,40 @@ This row is also the single most useful entry for `model-notes.md`: eight lenses
 The route already labels its own output `email is UNVERIFIED — gate capture, not a confirmed form submission` (:85), so the risk was understood; what is missing is any control on the write. Candidate fixes, cheapest first: post gate captures to a **separate** HubSpot form so they can never be mistaken for form fills; require the probe gate cookie to exist before accepting an unlock; add Turnstile to match the other three CRM-writing forms.
 
 **Also fixed as a side effect of F-019:** cross-origin callers now get 403 here, which removes the drive-by-a-victim's-browser variant but not the direct-script variant.
+
+---
+
+### F-096 · S4 · quality · CONFIRMED
+
+**Where:** [lib/sales/auth.ts:15](../../../lib/sales/auth.ts#L15) (`LOCAL_HOSTS`) and the port-stripping in `isLocalHost`
+
+**Claim:** The `'::1'` entry in `LOCAL_HOSTS` is unreachable dead code — port stripping is `host.split(':')[0]`, which reduces any IPv6 literal to the empty string, so the allowlist can never match it.
+
+**Failure scenario:** A developer loading `http://[::1]:3000/sales` in dev gets the password form instead of the open gate, because `isLocalHost('::1')` computes `''` and misses the set that visibly lists `'::1'`. Harmless in effect — IPv4 localhost works, and after F-003 the whole branch is unreachable in production anyway — but the code reads as though IPv6 loopback is handled and it is not.
+
+**Found by:** opus-5 (phase 3 — surfaced by writing the F-003 regression test, which failed on this assertion) · **Verified by:** opus-5 (test asserts it directly, [lib/sales/auth.test.mts](../../../lib/sales/auth.test.mts)) · **Fixed by:** —
+
+**Notes:** Deliberately **not** fixed in the security wave — it is unrelated to the vulnerability being closed and fixing it would be scope creep on a security diff. The test pins the current behaviour with a comment saying to update this row if it starts passing. Fix candidate: strip the port only when the host is not a bracketed or bare IPv6 literal.
+
+Worth noting for `model-notes.md`: no lens found this. It fell out of writing a test — the activity F-009 had wrongly declared impossible.
+
+---
+
+### F-097 · S3 · security · CONFIRMED
+
+**Where:** [lib/rate-limit.ts](../../../lib/rate-limit.ts) IP derivation, as consumed by the F-002 login fix in `app/api/sales/login/route.ts` and `app/api/strategy/login/route.ts`
+
+**Claim:** The login throttle added for F-002 keys on the leftmost `x-forwarded-for` value, which is client-supplied, so an attacker who rotates that header per request gets a fresh budget every time and the brute-force protection does not bind.
+
+**Failure scenario:** A script POSTs to `/api/sales/login/` with a new `X-Forwarded-For` value per attempt. Each request lands in its own `rl:login:<ip>` bucket, never reaches the 5-per-15-minute cap, and `SALES_PASSWORD` is guessable at request speed again — the exact condition F-002 was opened to close. One password opens both `/sales` and `/strategy`, so the whole gate is back to depending on password strength alone. Same mechanism applies to the three lead routes' 5-per-10-minute cap and to the F-094 probe ceiling.
+
+**Found by:** opus-5 (phase 2 — raised by an F-005 verifier as a consequence F-005 itself never claimed) · **Verified by:** opus-5 (the fix's own code path; the header is read unvalidated) · **Fixed by:** —
+
+**Notes:** **This is a limitation of a fix landed in this run, not a pre-existing finding, and it belongs on the record as such.** F-002's fix is still a real improvement — it stops the naive attacker and costs nothing — but it is defence in depth, not a hard bound, and the commit message should not have implied otherwise.
+
+**Exploitability turns on a platform fact this machine cannot read** (see `baseline/platform-notes.md`): if Vercel's edge overwrites inbound `x-forwarded-for` with the true client IP, this is latent; if it appends or passes through, it is live. `node_modules/next/dist/docs/` has no guidance (zero hits for `x-forwarded-for`), `@vercel/functions` is not installed, and the guardrails forbid the network probe that would settle it. **A dashboard/vendor-doc check by Artur decides the severity.**
+
+Cheap hardening that does not depend on the answer: prefer `x-vercel-forwarded-for` when present (platform-set, not client-settable) and fall back to `x-forwarded-for`; add a global ceiling to `LOGIN_POLICY` so header rotation is bounded in aggregate — sized so an attacker burning it cannot lock the owner out, which is the tension to think about before writing it. Related: **F-005** (refuted as written, this is its surviving core), **F-094**.
 
 ---
 
