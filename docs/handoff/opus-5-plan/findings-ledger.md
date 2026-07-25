@@ -9,9 +9,9 @@ Format, severity scale, and status values: see [00-README.md](00-README.md#the-l
 | Status | S1 | S2 | S3 | S4 |
 |---|---|---|---|---|
 | OPEN | 0 | 5 | 46 | 4 |
-| CONFIRMED | 3 | 27 | 7 | 0 |
+| CONFIRMED | 2 | 26 | 6 | 0 |
 | REFUTED | 0 | 0 | 2 | 0 |
-| FIXED | 0 | 0 | 0 | 0 |
+| FIXED | 1 | 1 | 1 | 0 |
 | PROPOSED | 0 | 0 | 0 | 0 |
 | DEFERRED | 0 | 0 | 0 | 0 |
 
@@ -39,7 +39,7 @@ Found by a read-only recon pass before phase 1. F-001 through F-004 were confirm
 
 ---
 
-### F-002 · S1 · security · CONFIRMED
+### F-002 · S1 · security · FIXED
 
 **Where:** [app/api/sales/login/route.ts:34](../../../app/api/sales/login/route.ts#L34), [app/api/strategy/login/route.ts](../../../app/api/strategy/login/route.ts)
 
@@ -47,13 +47,15 @@ Found by a read-only recon pass before phase 1. F-001 through F-004 were confirm
 
 **Failure scenario:** `lib/rate-limit.ts` exists and guards all three lead routes at 5 requests per 10 minutes, but the two password routes call `verifyPassword` with no limiter in front. A script can try passwords as fast as the platform answers. The password compare is correctly constant-time, which prevents a timing leak and does nothing about volume. Both areas share one password *and* one session secret (`lib/strategy/auth.ts` re-exports the sales primitives), so one guess opens `/sales` and `/strategy` together — client proposals, pricing, and niche strategy.
 
-**Found by:** opus-5 (recon) · **Verified by:** fable-5 (direct read, 2026-07-24) · **Fixed by:** —
+**Found by:** opus-5 (recon) · **Verified by:** fable-5 (direct read, 2026-07-24) · **Fixed by:** opus-5 (phase 3, security wave, branch fix/security-2026-07-24)
 
 **Notes:** Wire the existing `rateLimit` helper into both routes, tighter than the lead routes. Splitting the two areas onto separate passwords and secrets is a second, larger fix worth its own row if phase 2 agrees.
 
+**Fix.** fix(F-002) in 27e4c34. Both login routes now consume a shared LOGIN_POLICY budget (5 per 15 min) via the existing lib/rate-limit.ts — shared because one SALES_PASSWORD opens both areas, so separate buckets would double an attacker's attempts. Proven on a production build: 401 for wrong passwords, 429 once the budget is spent, /strategy 429s on the /sales budget, correct password still returns 200 with a cookie, and a second IP is unaffected. Splitting the two areas onto separate passwords and secrets remains unfixed and is a larger change — not attempted here.
+
 ---
 
-### F-003 · S2 · security · CONFIRMED
+### F-003 · S2 · security · FIXED
 
 **Where:** [lib/sales/auth.ts:18-21](../../../lib/sales/auth.ts#L18-L21), consumed by [app/sales/layout.tsx:33](../../../app/sales/layout.tsx#L33)
 
@@ -61,9 +63,11 @@ Found by a read-only recon pass before phase 1. F-001 through F-004 were confirm
 
 **Failure scenario:** `isLocalHost` accepts `localhost`, `127.0.0.1`, `0.0.0.0`, `::1`, and **anything ending in `.local`**, reading from `headers().get('host')`. If any layer between the client and the app forwards an attacker-supplied Host — a proxy, a preview alias, a misrouted custom domain — `/sales` and `/strategy` open with no password. Exploitability depends on how Vercel handles unknown Host values, which is exactly what phase 2 needs to determine.
 
-**Found by:** opus-5 (recon) · **Verified by:** fable-5 (code path confirmed; **exploitability on Vercel not yet tested**) · **Fixed by:** —
+**Found by:** opus-5 (recon) · **Verified by:** fable-5 (code path confirmed; **exploitability on Vercel not yet tested**) · **Fixed by:** opus-5 (phase 3, security wave, branch fix/security-2026-07-24)
 
 **Notes:** Regardless of the verdict, the hardening is one line and free: require `process.env.NODE_ENV !== 'production'` before the localhost branch is even considered. Dev convenience shouldn't be reachable from a production request at all. Fix it in the security wave and let phase 2 decide the severity for the scorecard.
+
+**Fix.** fix(F-003) in 84c4d95. isLocalHost now returns false whenever NODE_ENV === production, so the client-controlled Host header cannot reach the dev-convenience branch at all. Proven on a production build: /sales and /strategy refuse Host: evil.local, localhost and 127.0.0.1 (404 — gate closed). Proven on the dev server that localhost still opens with no password (200, cockpit shell, no password form), so the daily workflow is unchanged. The exploitability-on-Vercel question the row was waiting on is now moot: the branch is unreachable in production either way.
 
 ---
 
@@ -596,7 +600,7 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 ---
 
-### F-034 · S3 · quality · CONFIRMED
+### F-034 · S3 · quality · FIXED
 
 **Where:** lib/rate-limit.ts:88-92
 
@@ -604,11 +608,13 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** Upstash REST starts erroring or timing out. rl.limit(ip) propagates the error (@upstash/ratelimit rethrows anything that is not NOSCRIPT — dist/index.mjs:147-155; the built-in redis retry only adds latency first). rateLimit() rejects, and none of the three lead routes wrap the call (app/api/lead/route.ts:28, revenue-leak-audit/route.ts:28, full-growth-quote/route.ts:30 — their only try/catch is around req.json()), so every submission to /unlock-growth-audit, /book-growth-call, /constraint-sprint, /catalog-snapshot, /contact-me, /revenue-engine and /full-growth-quote returns an unhandled 500 and the visitor is told to email leads@ instead. Meanwhile /api/probe and /api/probe/ai keep serving because gate-server.ts:87-92 catches the identical failure and falls back to memory. Narrower second variant: upstashInitTried is latched true at line 36 before the dynamic import, so if the import or new Redis() throws (malformed URL, missing optional dep in the deployed bundle) exactly the first lead submission on each cold instance 500s and is lost, and every later one silently uses per-instance memory. This clears the known-deliberate 'limiting degrades to memory' entry — the deliberate policy exists on the probe side and was never applied to the money side.
 
-**Found by:** opus-5 (phase 1, lens D) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 1 refuted, UNCERTAIN) · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens D) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 1 refuted, UNCERTAIN) · **Fixed by:** opus-5 (phase 3, security wave — pulled forward out of the quality wave)
 
 **Notes:** Suggested fix: Wrap the Upstash path in try/catch and fall back to memoryLimit the way incrCounter already does, add a timeout, and move the init inside the try so a construction failure never reaches a request. Longer term collapse the two into one store adapter with one failure policy. Tests: rateLimit() with a stubbed limiter whose limit() rejects, asserting it returns {success:true} from memory; and a second asserting a throwing initializer does not surface. Both blocked by F-009 today. Cross-ref F-009 — extends it, does not restate it.
 
 **Verification (CONFIRMED, 1/3 refuted).** Scope correction from the verifiers: SURVIVES: the missing try/catch, the three unguarded call sites at the exact cited lines, the asymmetry with gate-server.ts's catch-and-degrade, the "email leads@" UX outcome, and the whole second variant (init latch → first request on each cold instance 500s, every later one silently on per-instance memory). It also correctly clears the known-deliberate entry, which only covers the env-unset case on the probe side. DOES NOT SURVIVE — two narrowings: 1. "no timeout" is factually wrong. @upstash/ratelimit defaults `this.timeout = 5e3` and the timeout branch of `applyTimeout` resolves `{ success: true, reason: "timeout" }`, i.e. it already FAILS OPEN. So the "or timing out" half of the failure **Severity lowered S2 → S3** on a majority of verifier votes (undefined). **Marked uncertain** — could not be settled from code or docs alone; prefer the cheap defensive fix.
+
+**Fix.** fix(F-034) in 27e4c34, landed with F-002 rather than in the quality wave: F-002 wires a password gate into this limiter, and shipping that on a limiter which throws on an Upstash blip would have made a Redis outage 500 the gate. Upstash failures now degrade to the in-memory window (still limiting, per instance, never failing open), and a transient init error is no longer cached for the life of the instance. Memory keys are namespaced per policy so the lead and login budgets cannot collide.
 
 ---
 
