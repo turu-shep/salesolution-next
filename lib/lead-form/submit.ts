@@ -68,16 +68,24 @@ export async function submitLead(data: LeadFormData): Promise<SubmitResult> {
     }
   }
 
-  // Dev-mode fallback when no channels are configured yet.
-  if (channels.hubspot === 'skipped' && channels.resend === 'skipped') {
-    console.log('[lead-submit] No backend channels configured — logging:', data)
-  }
-
-  // Form "succeeds" as long as at least one delivery channel sent it,
-  // OR if no channels are configured (dev mode — don't punish the user).
   const someChannelSent = channels.hubspot === 'sent' || channels.resend === 'sent'
   const noChannelsConfigured =
     channels.hubspot === 'skipped' && channels.resend === 'skipped'
+
+  // F-014: "no channels configured" is a reasonable dev convenience and a silent
+  // data-loss bug in production. One renamed env var and every lead is dropped
+  // while the visitor is shown a thank-you page. Locally, keep logging and
+  // succeeding; in production, fail loudly so the outage is visible instead of
+  // invisible.
+  if (noChannelsConfigured) {
+    if (process.env.NODE_ENV === 'production') {
+      const msg =
+        'No lead delivery channel is configured (HubSpot and Resend both absent) — refusing to report success and drop the lead.'
+      console.error('[lead-submit]', msg, { pageSource: data.pageSource ?? 'unknown' })
+      return { ok: false, channels, errors: [...errors, msg] }
+    }
+    console.log('[lead-submit] No backend channels configured — logging:', data)
+  }
 
   return {
     ok: someChannelSent || noChannelsConfigured,
@@ -146,12 +154,15 @@ async function sendResendNotification(data: LeadFormData) {
   const { Resend } = await import('resend')
   const resend = new Resend(process.env.RESEND_API_KEY!)
 
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL ?? 'leads@salesolution.net',
     to: process.env.RESEND_TO_EMAIL!,
     subject: `New lead — ${data.fullName} (${data.revenue})`,
     text: formatPlainText(data),
   })
+  // F-031: the SDK resolves with { data, error } instead of throwing, so without
+  // this the caller's catch never fires and a rejected send is recorded as 'sent'.
+  if (error) throw new Error(`${error.name}: ${error.message}`)
 }
 
 function formatPlainText(data: LeadFormData): string {

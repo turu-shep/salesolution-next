@@ -69,13 +69,20 @@ export async function submitAudit(data: RevenueLeakAuditData): Promise<SubmitRes
     }
   }
 
-  if (channels.hubspot === 'skipped' && channels.resend === 'skipped') {
-    console.log('[audit-submit] No backend channels configured — logging:', data)
-  }
-
   const someSent = channels.hubspot === 'sent' || channels.resend === 'sent'
   const noneConfigured =
     channels.hubspot === 'skipped' && channels.resend === 'skipped'
+
+  // F-014: dev convenience locally, silent lead loss in production.
+  if (noneConfigured) {
+    if (process.env.NODE_ENV === 'production') {
+      const msg =
+        'No lead delivery channel is configured (HubSpot and Resend both absent) — refusing to report success and drop the lead.'
+      console.error('[audit-submit]', msg)
+      return { ok: false, channels, errors: [...errors, msg] }
+    }
+    console.log('[audit-submit] No backend channels configured — logging:', data)
+  }
 
   return { ok: someSent || noneConfigured, channels, errors }
 }
@@ -131,7 +138,7 @@ async function postToHubSpot(data: RevenueLeakAuditData, formId: string) {
 async function sendResendNotification(data: RevenueLeakAuditData) {
   const { Resend } = await import('resend')
   const resend = new Resend(process.env.RESEND_API_KEY!)
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL ?? 'leads@salesolution.net',
     to: process.env.RESEND_TO_EMAIL!,
     subject: `Revenue Leak Audit — ${data.fullName}, ${data.company}`,
@@ -147,4 +154,6 @@ async function sendResendNotification(data: RevenueLeakAuditData) {
       `Source:  ${data.pageSource ?? 'unknown'}`,
     ].join('\n'),
   })
+  // F-031: the SDK resolves with { data, error } rather than throwing.
+  if (error) throw new Error(`${error.name}: ${error.message}`)
 }
