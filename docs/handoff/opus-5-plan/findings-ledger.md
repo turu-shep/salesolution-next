@@ -9,9 +9,9 @@ Format, severity scale, and status values: see [00-README.md](00-README.md#the-l
 | Status | S1 | S2 | S3 | S4 |
 |---|---|---|---|---|
 | OPEN | 0 | 0 | 0 | 0 |
-| CONFIRMED | 2 | 28 | 41 | 6 |
+| CONFIRMED | 1 | 26 | 41 | 6 |
 | REFUTED | 0 | 2 | 14 | 0 |
-| FIXED | 1 | 2 | 1 | 0 |
+| FIXED | 2 | 4 | 1 | 0 |
 | PROPOSED | 0 | 0 | 0 | 0 |
 | DEFERRED | 0 | 0 | 0 | 0 |
 
@@ -52,6 +52,8 @@ Found by a read-only recon pass before phase 1. F-001 through F-004 were confirm
 **Notes:** Wire the existing `rateLimit` helper into both routes, tighter than the lead routes. Splitting the two areas onto separate passwords and secrets is a second, larger fix worth its own row if phase 2 agrees.
 
 **Fix.** fix(F-002) in 27e4c34. Both login routes now consume a shared LOGIN_POLICY budget (5 per 15 min) via the existing lib/rate-limit.ts — shared because one SALES_PASSWORD opens both areas, so separate buckets would double an attacker's attempts. Proven on a production build: 401 for wrong passwords, 429 once the budget is spent, /strategy 429s on the /sales budget, correct password still returns 200 with a cookie, and a second IP is unaffected. Splitting the two areas onto separate passwords and secrets remains unfixed and is a larger change — not attempted here.
+
+**Caveat added 2026-07-26.** The smoke run that proved this ran on the **in-memory fallback**, because Upstash is unset locally. In-memory counters are per serverless instance and reset on cold start, so in production the effective budget is looser than 5-per-15-minutes unless UPSTASH_REDIS_REST_URL/TOKEN are set in Vercel. Combined with **F-097** (the key is a client-supplied header), treat this fix as raising the cost of brute force, not bounding it. Both preconditions are dashboard checks — handoff-unblock-list.md items 0 and 1.
 
 ---
 
@@ -274,7 +276,7 @@ Belongs in the UX/a11y wave, not the security wave. The token change is a visual
 
 ---
 
-### F-014 · S2 · correctness · CONFIRMED
+### F-014 · S2 · correctness · FIXED
 
 **Where:** [lib/lead-form/submit.ts:72-86](../../../lib/lead-form/submit.ts#L72-L86), `lib/lead-form/submit-audit.ts:72-80`, `lib/lead-form/full-growth-quote-submit.ts:122-131`
 
@@ -282,7 +284,7 @@ Belongs in the UX/a11y wave, not the security wave. The token change is a visual
 
 **Failure scenario:** One renamed or missing env var in Vercel (`HUBSPOT_FORM_ID`, `RESEND_TO_EMAIL`, …) and every lead from all three funnels is silently dropped while every visitor sees "we received your details" — the F-004 stub failure mode reproduced at the infrastructure level, with no error, no alert, no retry, no queue.
 
-**Found by:** opus-5 (phase 0, tests-map + funnel agents independently) · **Verified by:** opus-5 (phase 2, 3 verifiers, 0 refuted) · **Fixed by:** —
+**Found by:** opus-5 (phase 0, tests-map + funnel agents independently) · **Verified by:** opus-5 (phase 2, 3 verifiers, 0 refuted) · **Fixed by:** opus-5 (phase 3)
 
 **Notes:** The dev-ergonomics intent ("don't punish the user locally") is legitimate; the fix is to fail loudly (5xx or alert) when `NODE_ENV === 'production'` and zero channels are configured. Whether production env is currently complete needs a Vercel dashboard check — same class as F-001's deploy-env caveat.
 
@@ -305,9 +307,11 @@ A phase-2 verifier tripped over this while checking F-015, and verifying it chan
 
 **Verification (CONFIRMED, 0/3 refuted).** Scope: The claim survives in full; one sentence of the failureScenario is looser than the code supports and should be tightened before it goes in the fix ledger. SURVIVES EXACTLY AS WRITTEN: all three handlers return ok:true for zero configured channels, console.log only, 200 from the route, thank-you redirect on the client, and FGO as the sole holder of a half-configuration guard. OVERSTATED: "One renamed or missing env var in Vercel (HUBSPOT_FORM_ID, RESEND_TO_EMAIL, …) and every lead from all three funnels is silently dropped." Two corrections. (1) Losing one var only silences a funnel if it removes that funnel's LAST delivering channel — with bo
 
+**Fix.** fix(F-014) in 4dc1b2d, across all three handlers (submit.ts, submit-audit.ts, full-growth-quote-submit.ts). Dev behaviour is unchanged — still logs the lead and succeeds, so local work is not punished. Under NODE_ENV=production, zero configured delivery channels now returns ok:false with the reason in errors, so the route 500s and the visitor is not shown a thank-you page for a lead that went nowhere. The FGO handler is the most exposed of the three because HUBSPOT_FGO_FORM_ID is deliberately unset until the portal form exists, leaving Resend as its only live channel. Whether production is currently fully configured is still a dashboard check (handoff-unblock-list.md item 2).
+
 ---
 
-### F-094 · S1 · security · CONFIRMED
+### F-094 · S1 · security · FIXED
 
 **Where:** `app/api/probe/route.ts` **as deployed on `origin/main`** (not the local file of the same path)
 
@@ -315,13 +319,15 @@ A phase-2 verifier tripped over this while checking F-015, and verifying it chan
 
 **Failure scenario:** The deployed route imports exactly four modules (`node:dns`, `node:net`, `node-html-parser`, `next/server`) and its `POST` handler at line 469 goes straight from `req.json()` to URL validation to outbound fetch. A grep of the full 515 lines for `rateLimit|consume|throttle|quota|upstash|429|turnstile|captcha|cookie|gate|auth` returns nothing but coincidental matches on the word "authority". So anyone can POST `{"url":"https://target/"}` in a loop and make salesolution.net issue outbound GETs at whatever rate they can drive — an amplification and reconnaissance proxy wearing our IP and our `SalesolutionProbe/0.1` user agent, with Vercel egress and function time billed to this account. Per-request damage is bounded (5s timeout, 2MB cap, 3 redirects); **request rate is not bounded at all.** The v2 limiter that would have covered this (`lib/probe/limits.mjs`, 30/hour per IP) exists only locally and has never shipped.
 
-**Found by:** opus-5 (phase 2, incidental to verifying F-015 — **missed by all eight phase-1 lenses**) · **Verified by:** opus-5 (direct read of the `origin/main` blob, exhaustive grep for abuse controls) · **Fixed by:** —
+**Found by:** opus-5 (phase 2, incidental to verifying F-015 — **missed by all eight phase-1 lenses**) · **Verified by:** opus-5 (direct read of the `origin/main` blob, exhaustive grep for abuse controls) · **Fixed by:** opus-5 (phase 3)
 
 **Notes:** Residual uncertainty: Vercel's platform firewall may impose some ceiling, and per `baseline/platform-notes.md` the dashboard is not readable from this machine — so "completely unthrottled at the edge" is unproven, while "unthrottled in application code" is certain. Treat as S1 until the platform config is checked.
 
 Two fixes, and they differ in kind. **Shipping v2** replaces this file wholesale and brings the limiter with it — that is the real answer, but it is a launch, not a patch. **Until then**, the cheap move is wiring the existing `lib/rate-limit.ts` (already deployed, already guarding the three lead routes) into this route. Do not hand-roll a second limiter.
 
 This row is also the single most useful entry for `model-notes.md`: eight lenses at maximum effort audited the code in the working tree and none checked whether it was the code being served.
+
+**Fix.** fix(F-094) on review/security-hotfix (commit 68c9ee4 lineage). The deployed probe route now consumes PROBE_POLICY (30/hour per IP) through the existing limiter before doing any outbound work, and also rejects cross-origin callers via F-019. Verified on a production build: 429 on the 31st request from one IP, a different IP unaffected. **Caveat that materially weakens this in production:** the smoke run proved the logic on the in-memory fallback because Upstash is unset locally. In-memory counters are per serverless instance and reset on cold start, so the real ceiling is far softer than 30/hour unless UPSTASH_REDIS_REST_URL/TOKEN are set in Vercel — see handoff-unblock-list.md item 0. Shipping probe v2 replaces this route and brings its own limiter.
 
 ---
 
@@ -641,7 +647,7 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 ---
 
-### F-031 · S2 · correctness · CONFIRMED
+### F-031 · S2 · correctness · FIXED
 
 **Where:** lib/lead-form/submit.ts:149 (and submit-audit.ts:63-64/134, full-growth-quote-submit.ts:83-84/250/296)
 
@@ -649,11 +655,13 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** Verified in node_modules/resend/dist/index.mjs:1071-1124 (resend@6.12.3): fetchRequest catches every HTTP error AND every network error and returns {data:null, error:{...}}. submit.ts:62-63 awaits the call and unconditionally sets channels.resend = 'sent'. So: RESEND_FROM_EMAIL points at a domain not verified in Resend (or the key is rotated, or the free-tier daily cap is hit) → Resend returns 403/429 → channel recorded 'sent'. HubSpot simultaneously 400s because catalog_sku_count_range does not exist in the portal → channels.hubspot 'failed'. someChannelSent is true (submit.ts:78) → ok:true → /api/lead returns 200 → LeadForm redirects to /unlock-growth-audit/thank-you/ which promises "the written diagnosis within 24 hours". The lead exists nowhere and no alert fires. The route's documented "500 — all configured channels failed" branch (app/api/lead/route.ts:10) is unreachable whenever Resend is configured. Identical at all four send sites.
 
-**Found by:** opus-5 (phase 1, lens C) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 0 refuted) · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens C) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 0 refuted) · **Fixed by:** opus-5 (phase 3)
 
 **Notes:** Suggested fix: Capture the return: `const { error } = await resend.emails.send(...)`; throw (or set channels.resend='failed' and push the error) when error is non-null. Apply at all four send sites. Add a unit test that stubs the SDK returning {data:null,error:{...}} and asserts ok:false. Cross-ref F-014 — extends it, does not restate it.
 
 **Verification (CONFIRMED, 0/3 refuted).** Scope correction from the verifiers: The core claim survives fully: the try/catch cannot fire for Resend API failures, 'sent' is recorded unconditionally, and that alone produces ok:true. Three sub-claims in the failureScenario are weaker than the claim itself and should not be carried into the fix ticket as stated: 1. "The route's documented '500 — all configured channels failed' branch is unreachable whenever Resend is configured" — only true of the documented *meaning*, not the status code. HTTP 500 is still reachable: the Turnstile early-returns at submit.ts:37 and :43 produce ok:false, which route.ts:61-66 turns into a 500. Reword to "the all-channels-failed condition can no longer be expressed." 2. The specific HubSpot tr
+
+**Fix.** fix(F-031) in 4dc1b2d. All four resend.emails.send() sites now destructure the returned { error } and throw on it. The SDK resolves rather than rejects on API failure, so before this the try/catch could not fire and channels.resend was set to sent on a rejected send — which also made the documented all-channels-failed 500 branch unreachable whenever Resend was configured. No unit test: the module imports server-only, which bare node cannot resolve (see corrected F-009). Testable end to end with an invalid RESEND_API_KEY, which fails auth before any mail is sent.
 
 ---
 
