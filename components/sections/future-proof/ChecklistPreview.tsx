@@ -62,10 +62,11 @@ export function ChecklistPreview() {
               the weakest link, fix it first.
             </p>
             <p>
-              Plus the <span className="text-white">Weekly Turbulence Brief</span>:
-              a short Monday email with the algorithm and AI-engine changes
-              that landed last week, what they mean for technical
-              e&#8209;commerce, and the one thing to do this week.
+              After it lands, the{' '}
+              <span className="text-white">occasional note</span> &mdash; sent
+              when something in AI search changes what a technical
+              e&#8209;commerce team should actually do, and not on a schedule
+              we&rsquo;d have to pad. One click to unsubscribe.
             </p>
           </div>
 

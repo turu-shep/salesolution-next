@@ -368,7 +368,7 @@ export const revenueEngineRoofingTrack: Track = {
             { say: "I don't resell your leads. No shared pool. Nobody else gets the same homeowner. Every call's recorded and logged to you." },
             { say: "Keep your ads guy. I'm not replacing him. I make his leads actually book." },
             { say: "On terms — no 12-month contract. Ninety days to build it, three months minimum so it gets a fair shot, then month to month — leave anytime with 30 days' notice. When you leave, you keep your ad account, your data, and your Google profile. I don't hold any of it." },
-            { say: "And here's the guarantee, and I put it in writing. If the system doesn't bring in more money than it costs you by day 90, I work for free until it does. That's measured on your own dashboard — the calls we caught, the quotes we recovered — not my say-so. On me, not you." },
+            { say: "And here's the guarantee, and I put it in writing. If the revenue the system brings back hasn't covered everything you've paid me — install and fees — by day 120, I work free until it has. That's measured on your own dashboard — the calls we caught, the quotes we recovered — not my say-so. On me, not you." },
             { note: "Stop. Don't sell past the guarantee. Go to the close." },
           ],
         },

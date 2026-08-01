@@ -120,10 +120,10 @@ export function Footer() {
                 {business.phoneDisplay}
               </a>
               <a
-                href={`mailto:${business.emails.leads}`}
+                href={`mailto:${business.emails.general}`}
                 className="block text-white/85 transition-colors duration-200 hover:text-accent-500"
               >
-                {business.emails.leads}
+                {business.emails.general}
               </a>
             </div>
           </div>

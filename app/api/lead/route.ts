@@ -15,6 +15,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { sendServerEvent } from '@/lib/analytics-server'
+import { leadChannelFromSource } from '@/lib/lead-form/ack-copy.mjs'
 import { leadSchema } from '@/lib/lead-form/schema'
 import { submitLead } from '@/lib/lead-form/submit'
 import { rateLimit } from '@/lib/rate-limit'
@@ -63,7 +64,11 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const result = await submitLead(parsed.data)
+  // Which of the five doors this came from. One derivation feeds both the
+  // acknowledgment copy (F-02) and the GA4 lead_type below, so they can't drift.
+  const leadType = leadChannelFromSource(parsed.data.pageSource)
+
+  const result = await submitLead(parsed.data, leadType)
 
   if (!result.ok) {
     return NextResponse.json(
@@ -78,14 +83,6 @@ export async function POST(req: NextRequest) {
   // No-ops silently if env vars are missing, or if the client didn't include a
   // GA client_id (consent denied / no cookie / ad-blocker stripped it).
   if (parsed.data.gaClientId && parsed.data.submissionId) {
-    const pageSource = parsed.data.pageSource ?? ''
-    const leadType: 'audit' | 'sprint' | 'strategy_call' | 'contact' | 'catalog_snapshot' =
-      pageSource.includes('/unlock-growth-audit/') ? 'audit' :
-      pageSource.includes('/constraint-sprint/')   ? 'sprint' :
-      pageSource.includes('/book-growth-call/')    ? 'strategy_call' :
-      pageSource.includes('/catalog-snapshot/')    ? 'catalog_snapshot' :
-      'contact'
-
     const value = computeLeadValue(leadType, parsed.data.revenue)
     const baseParams = {
       value,
@@ -93,7 +90,7 @@ export async function POST(req: NextRequest) {
       transaction_id: parsed.data.submissionId,
       lead_type: leadType,
       revenue_band: parsed.data.revenue,
-      page_location: pageSource || undefined,
+      page_location: parsed.data.pageSource || undefined,
     }
 
     // Canonical conversion — always fire.

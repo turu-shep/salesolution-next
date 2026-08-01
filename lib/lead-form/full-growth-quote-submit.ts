@@ -259,7 +259,7 @@ async function sendResendNotification(data: FgoQuoteData) {
   ].join('\n')
 
   const { error } = await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL ?? 'leads@salesolution.net',
+    from: process.env.RESEND_FROM_EMAIL ?? 'connect@salesolution.net',
     to: process.env.RESEND_TO_EMAIL!,
     subject,
     text,
@@ -307,9 +307,9 @@ async function sendAutoAcknowledgment(data: FgoQuoteData) {
   ]
 
   const { error } = await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL ?? 'leads@salesolution.net',
+    from: process.env.RESEND_FROM_EMAIL ?? 'connect@salesolution.net',
     to: data.email,
-    replyTo: process.env.RESEND_TO_EMAIL ?? 'leads@salesolution.net',
+    replyTo: process.env.RESEND_TO_EMAIL ?? 'connect@salesolution.net',
     subject: 'Got your Full Growth Ownership qualifier — personal reply within 24h',
     text: lines.join('\n'),
   })

@@ -79,7 +79,7 @@ async function notifyViaResend(email: string, scoredUrl: string): Promise<void> 
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: process.env.RESEND_FROM_EMAIL ?? 'leads@salesolution.net',
+      from: process.env.RESEND_FROM_EMAIL ?? 'connect@salesolution.net',
       to,
       subject: `Probe unlock: ${email}`,
       text: `${email} unlocked the AI read${scoredUrl ? ` while scoring ${scoredUrl}` : ''}.\nSource: probe_v2 (AI-readiness report page).\nNote: email is UNVERIFIED — gate capture, not a confirmed form submission.`,

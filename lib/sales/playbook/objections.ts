@@ -445,7 +445,7 @@ export const OBJECTIONS: Objection[] = [
       },
     ],
     hold: [
-      { note: `RE → THE GUARANTEE: "Here's the guarantee. If the system doesn't bring in more money than it costs you by day 90, I work for free until it does." — then the audit link.` },
+      { note: `RE → THE GUARANTEE: "Here's the guarantee. If the revenue the system brings back hasn't covered everything you've paid me — install and fees — by day 120, I work free until it has." — then the audit link.` },
       { note: `IND → the Growth Call.` },
     ],
     sendAfter: 'RE → THE GUARANTEE, then the audit link. IND → the Growth Call.',
@@ -507,7 +507,7 @@ export const OBJECTIONS: Objection[] = [
           { say: `Then you'll hate half of what's out there, and you should. So here's what I don't do. No markup on your ads. I don't resell your leads to three other roofers.` },
           { note: `(stop — let it land, then:)` },
           { say: `No 12-month contract. Ninety days to build it, three months minimum so it gets a fair shot, then month to month — leave anytime with 30 days' notice. When you leave, you keep your ad account, your data, and your Google profile. I don't hold any of it.` },
-          { say: `Here's the guarantee. If the system doesn't bring in more money than it costs you by day 90, I work for free until it does.` },
+          { say: `Here's the guarantee. If the revenue the system brings back hasn't covered everything you've paid me — install and fees — by day 120, I work free until it has.` },
           { say: `If any of that sounds like the last guy, tell me and I'll let you go.` },
         ],
       },
@@ -703,7 +703,7 @@ export const OBJECTIONS: Objection[] = [
         lines: [
           { note: `Say (RE, roofing):` },
           { say: `Good instinct — if someone promised me guaranteed jobs I'd hang up too. So here's the boring version. I don't promise leads. The calls you already get and the quotes you already send go to the next guy when nobody answers fast enough — I fix that. The proof isn't my chart. It's your dashboard, in plain math.` },
-          { say: `Here's the guarantee. If the system doesn't bring in more money than it costs you by day 90, I work for free until it does.` },
+          { say: `Here's the guarantee. If the revenue the system brings back hasn't covered everything you've paid me — install and fees — by day 120, I work free until it has.` },
           { say: `That's the whole thing. No magic. Just a system that answers the phone faster than you can while you're on a roof.` },
         ],
       },
@@ -728,7 +728,7 @@ export const OBJECTIONS: Objection[] = [
       { note: `IND → run their name through the AI live or in follow-up.` },
     ],
     sendAfter: 'RE → the audit (proof on their numbers). IND → run their name through the AI live or in follow-up.',
-    why: `Side with the skepticism, then lower the claim until it sounds true. Boring and specific beats exciting and vague for this buyer. The day-90 guarantee makes "too good" testable.`,
+    why: `Side with the skepticism, then lower the claim until it sounds true. Boring and specific beats exciting and vague for this buyer. The day-120 guarantee makes "too good" testable, and it is testable against the whole bill, not just the monthly.`,
   },
 
   // Section 8 — Fit / size
@@ -919,8 +919,8 @@ export const OBJECTIONS: Objection[] = [
         lines: [
           { say: `Then we'll get along.` },
           { say: `No 12-month contract. Ninety days to build it, three months minimum so it gets a fair shot, then month to month — leave anytime with 30 days' notice. When you leave, you keep your ad account, your data, and your Google profile. I don't hold any of it.` },
-          { say: `Here's the guarantee. If the system doesn't bring in more money than it costs you by day 90, I work for free until it does.` },
-          { say: `The reason I don't need a long lock-in is the guarantee does that work — not a contract.` },
+          { say: `Here's the guarantee. If the revenue the system brings back hasn't covered everything you've paid me — install and fees — by day 120, I work free until it has.` },
+          { say: `The reason I don't need a long lock-in is the guarantee does that work — not a contract. It runs 120 days from the day you sign, past the three-month minimum, so I'm still on the hook after you're already free to walk.` },
         ],
       },
     ],

@@ -17,7 +17,8 @@ type Shape = {
   key: 'fractional' | 'retainer'
   badge: string
   name: string
-  price: string
+  /** Replaces the old price figure: how the fee is set, not what it is. */
+  scopeLine: string
   minimum: string
   body: React.ReactNode
   fit: React.ReactNode
@@ -29,7 +30,7 @@ const SHAPES: Shape[] = [
     key: 'fractional',
     badge: 'Shape A',
     name: 'Fractional GTM Engineer',
-    price: 'From $20K / month',
+    scopeLine: 'Flat by company size. One number, quoted after the qualifier.',
     minimum: '6-month minimum',
     body: (
       <>
@@ -52,7 +53,7 @@ const SHAPES: Shape[] = [
     key: 'retainer',
     badge: 'Shape B',
     name: '4-in-1 Coordinated Retainer',
-    price: 'From $12K / month',
+    scopeLine: 'Scales with the services you pick. Number in the written quote.',
     minimum: '3-month minimum',
     body: (
       <>
@@ -105,8 +106,8 @@ export function FullGrowthShapes({ id }: { id?: string }) {
               <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
                 {s.name}
               </h3>
-              <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-                {s.price}
+              <p className="mt-3 text-base leading-relaxed text-ink-700">
+                {s.scopeLine}
               </p>
             </div>
 

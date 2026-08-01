@@ -74,7 +74,7 @@ export function Operator() {
               </li>
               <li className="flex items-baseline gap-2">
                 <span aria-hidden className="shrink-0 text-accent-500">·</span>
-                <span><span className="font-medium text-white">Published pricing model.</span> You see it before we talk.</span>
+                <span><span className="font-medium text-white">The install floor is public.</span> Your exact number arrives in writing before you decide.</span>
               </li>
             </ul>
           </div>

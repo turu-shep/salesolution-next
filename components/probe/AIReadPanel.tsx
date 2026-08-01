@@ -220,8 +220,9 @@ export function AIReadPanel({ pageUrl, auditHref }: { pageUrl: string; auditHref
               </button>
             </div>
             {emailError ? <p className="mt-2 font-mono text-xs text-data-down">{emailError}</p> : null}
-            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-400">
-              No newsletter &middot; No call &middot; Just the runs
+            <p className="mt-3 max-w-md text-xs leading-relaxed text-ink-500">
+              Your reads land by email &mdash; plus the occasional note worth
+              reading. One click to unsubscribe.
             </p>
           </form>
         )}

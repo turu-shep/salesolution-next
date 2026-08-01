@@ -111,7 +111,7 @@ export function AnswerBookWhereItFits({ id }: { id?: string }) {
           .
         </p>
         <p className="mt-3 text-base leading-relaxed text-ink-600">
-          Run inside the Revenue Engine, it carries the day-90 guarantee.{' '}
+          Run inside the Revenue Engine, it carries the 120-day payback guarantee.{' '}
           <Link
             href="/industries/home-services/"
             data-cta="answer-book-guarantee"

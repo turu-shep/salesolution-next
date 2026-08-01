@@ -48,7 +48,7 @@ export function organizationSchema() {
       addressCountry: business.address.country,
     },
     telephone: business.phone,
-    email: business.emails.leads,
+    email: business.emails.general,
     founder: { '@id': personId },
     sameAs: [
       business.social.facebook,

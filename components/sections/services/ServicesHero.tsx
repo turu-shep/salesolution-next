@@ -129,7 +129,6 @@ function ctaIdForHref(href: string, role: string): string | undefined {
   if (href.startsWith('/industries/home-services/')) return `revenue_leak_audit__${role}`
   if (href.startsWith('/book-growth-call/')) return `book_call__${role}`
   if (href.startsWith('/unlock-growth-audit/')) return `audit__${role}`
-  if (href.startsWith('/constraint-sprint/')) return `sprint__${role}`
   if (href.startsWith('/contact-me/')) return `contact__${role}`
   if (href.startsWith('/future-proof-your-seo/')) return `checklist__${role}`
   return undefined

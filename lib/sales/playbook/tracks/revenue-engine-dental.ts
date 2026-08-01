@@ -301,13 +301,13 @@ export const revenueEngineDentalTrack: Track = {
           role: 'callout',
           label: 'The guarantee (say the core sentence verbatim — it must match the roofing script and the objection library word for word)',
           lines: [
-            { say: "And I put my fee on the line. Here's the guarantee: if the system doesn't bring in more money than it costs you by day 90, I work for free until it does." },
+            { say: "And I put the whole thing on the line, install included. Here's the guarantee: if the revenue the system brings back hasn't covered everything you've paid me — install and fees — by day 120, I work free until it has." },
           ],
         },
         {
           id: 'pitch-guarantee-math',
           role: 'branch',
-          label: 'If they push: "more money than it costs — that sounds like a number you can make say anything"',
+          label: 'If they push: "covered everything you\'ve paid me — that sounds like a number you can make say anything"',
           lines: [
             { say: "Fair, and you should push on that. So here's the math, and it's only the math. We count three things. New patients the system booked off a call your front desk missed. Treatment plans it followed up that the patient then accepted. Overdue patients it brought back in. Each one is a real appointment with a real chart and a real production number — yours, in your dashboard, not mine. If it didn't book, it doesn't count. You can open the list and check any one of them against your schedule. I'd rather show you a smaller number you trust than a big one you don't." },
           ],

@@ -7,47 +7,32 @@ import { cn } from '@/lib/cn'
 /**
  * /services/outbound-email/ § 7 — Engagement model.
  *
- * Mirrors the homepage EngagementModel shape: Outbound Pilot + Operator
- * Retainer as service-specific sibling tiers, with the third slot being the
- * standardized Full Growth Ownership card from the shared services system.
- * The featured badge and accent strips use the outbound green so this page
- * reads as a single color story top-to-bottom.
+ * Mirrors the homepage EngagementModel shape: the Operator Retainer as the
+ * service-specific tier, alongside the standardized Full Growth Ownership card
+ * from the shared services system. The featured badge and accent strips use the
+ * outbound green so this page reads as a single color story top-to-bottom.
+ *
+ * 2026-07-27 (FD2): the pilot rung is retired and no monthly figure is
+ * published — the fee is quoted in the SOW.
  */
 
 type Engagement = {
   key: string
   name: string
   cadence: string
-  price: string
+  /** Replaces the old price figure: how the fee is set, not what it is. */
+  scopeLine: string
   forWhom: string
   includes: string[]
   featured?: boolean
-  /** Pilot-fee-credits-toward-install line, shown under the price
-   * (D7 credit mechanic, sell-product surfaces only). */
-  creditLine?: string
 }
 
 const ENGAGEMENTS: Engagement[] = [
   {
-    key: 'pilot',
-    name: 'Outbound pilot',
-    cadence: '6 weeks · fixed scope',
-    price: '$9–14k',
-    creditLine:
-      'Take the engine install within 90 days and this pilot fee credits toward it, in full.',
-    forWhom: '"Show me reply rates on our ICP before we commit."',
-    includes: [
-      'Two outbound domains warmed end-to-end',
-      'Hand-built list · 200–500 verified contacts',
-      'One 5-touch sequence · two offer variants',
-      'Reply triage + week-6 outcome readout',
-    ],
-  },
-  {
     key: 'retainer',
     name: 'Operator retainer',
     cadence: 'Quarterly · ongoing',
-    price: '$6–14k / month',
+    scopeLine: 'One all-in number in the SOW, within 48 hours of the call.',
     forWhom: '"Make outbound a predictable pipeline line item."',
     featured: true,
     includes: [
@@ -67,7 +52,7 @@ export function OutboundEngagement({ id }: { id?: string }) {
           How to work with us
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Three ways in. All priced.
+          Two ways in. Both scoped in writing.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           No discovery calls before the proposal. Pick the shape that fits, we
@@ -76,7 +61,7 @@ export function OutboundEngagement({ id }: { id?: string }) {
         </p>
       </div>
 
-      <ul className="mt-14 grid gap-6 md:grid-cols-3">
+      <ul className="mt-14 grid gap-6 md:grid-cols-2">
         {ENGAGEMENTS.map((e) => (
           <li
             key={e.key}
@@ -102,14 +87,9 @@ export function OutboundEngagement({ id }: { id?: string }) {
               <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
                 {e.name}
               </h3>
-              <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-                {e.price}
+              <p className="mt-3 text-base leading-relaxed text-ink-700">
+                {e.scopeLine}
               </p>
-              {e.creditLine && (
-                <p className="mt-3 text-xs leading-relaxed text-ink-500">
-                  {e.creditLine}
-                </p>
-              )}
             </div>
 
             <div className="flex-1 px-6 py-6">
@@ -138,12 +118,8 @@ export function OutboundEngagement({ id }: { id?: string }) {
 
             <div className="border-t border-rule px-6 py-4">
               <Link
-                href={e.key === 'pilot' ? '/unlock-growth-audit/' : '/book-growth-call/'}
-                data-cta={
-                  e.key === 'pilot'
-                    ? 'audit__outbound_engagement'
-                    : 'book_call__outbound_engagement'
-                }
+                href="/book-growth-call/"
+                data-cta="book_call__outbound_engagement"
                 data-cta-location="mid_body"
                 className={cn(
                   'inline-flex w-full items-center justify-center gap-1.5 rounded-[4px] px-5 py-2.5 text-sm font-semibold transition-colors duration-200',
@@ -152,8 +128,7 @@ export function OutboundEngagement({ id }: { id?: string }) {
                     : 'border border-ink-300 bg-surface text-ink-900 hover:border-ink-900',
                 )}
               >
-                {e.key === 'pilot' && 'Scope a pilot'}
-                {e.key === 'retainer' && 'Book a strategy call'}
+                Book a strategy call
                 <span aria-hidden>→</span>
               </Link>
             </div>

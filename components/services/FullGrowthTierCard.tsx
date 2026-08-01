@@ -59,9 +59,8 @@ export function FullGrowthTierCard({
         <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
           Full Growth Ownership
         </h3>
-        <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-          From $20K
-          <span className="ml-1 text-base font-medium text-ink-500">/ month</span>
+        <p className="mt-3 text-base leading-relaxed text-ink-700">
+          One number, quoted after the qualifier.
         </p>
       </div>
 
@@ -80,11 +79,11 @@ export function FullGrowthTierCard({
         <ul className="mt-5 space-y-2 text-sm text-ink-700">
           <li className="flex items-start gap-2">
             <span aria-hidden className="mt-1 inline-block h-1 w-1 shrink-0 rounded-full bg-ink-500" />
-            <span>Fractional GTM Engineer (Shape A) from $20K/mo</span>
+            <span>Fractional GTM Engineer (Shape A) &mdash; one operator inside your leadership</span>
           </li>
           <li className="flex items-start gap-2">
             <span aria-hidden className="mt-1 inline-block h-1 w-1 shrink-0 rounded-full bg-ink-500" />
-            <span>4-in-1 Coordinated Retainer (Shape B) from $12K/mo</span>
+            <span>4-in-1 Coordinated Retainer (Shape B) &mdash; 2&ndash;5 services, one owner</span>
           </li>
           <li className="flex items-start gap-2">
             <span aria-hidden className="mt-1 inline-block h-1 w-1 shrink-0 rounded-full bg-ink-500" />

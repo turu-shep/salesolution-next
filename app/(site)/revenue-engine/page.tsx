@@ -154,7 +154,7 @@ export default function RevenueEnginePage() {
         id="how"
         groups={PRODUCT_PILLAR_GROUPS}
         prove={PRODUCT_PILLAR_PROVE}
-        intro="Three jobs, five moving parts. We install the whole thing and run it as one system, not five tools you have to wire together yourself. Installed by day 60, proving by day 90."
+        intro="Three jobs, five moving parts. We install the whole thing and run it as one system, not five tools you have to wire together yourself. Installed by day 60. Paid back by day 120 — or I work free until it is."
         proveLine="We prove it paid."
       />
 

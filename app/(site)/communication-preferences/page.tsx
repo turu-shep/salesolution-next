@@ -57,10 +57,10 @@ export default function CommunicationPreferencesPage() {
             <p className="mt-4">
               Or write to{' '}
               <a
-                href="mailto:hello@salesolution.net?subject=Communication%20preferences"
+                href="mailto:connect@salesolution.net?subject=Communication%20preferences"
                 className="font-medium text-ink-800 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600"
               >
-                hello@salesolution.net
+                connect@salesolution.net
               </a>{' '}
               with the change you&rsquo;d like and we&rsquo;ll mirror it
               within one business day.

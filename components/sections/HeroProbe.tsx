@@ -289,7 +289,7 @@ export function HeroProbe() {
               <ProbeResultPanel state={state} />
 
               <div className="border-t border-rule px-5 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">
-                Deterministic · No data stored
+                Deterministic · Same URL, same score
               </div>
             </div>
           </div>

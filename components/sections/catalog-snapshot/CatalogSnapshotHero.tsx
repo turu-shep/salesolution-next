@@ -65,7 +65,7 @@ export function CatalogSnapshotHero() {
                     Free dual-version rewrite.
                   </p>
                   <p className="mt-1.5 text-xs text-ink-500">
-                    Two steps &middot; ~3 minutes &middot; reply within 24h.
+                    Two steps &middot; ~3 minutes &middot; PDF within 2 business days.
                   </p>
                 </div>
                 <LeadForm

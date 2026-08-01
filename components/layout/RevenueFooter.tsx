@@ -56,10 +56,10 @@ export function RevenueFooter() {
                 </a>
                 <span className="px-2 text-ink-300">&middot;</span>
                 <a
-                  href={`mailto:${business.emails.leads}`}
+                  href={`mailto:${business.emails.general}`}
                   className="font-medium text-ink-900 transition-colors duration-200 hover:text-brand-600"
                 >
-                  {business.emails.leads}
+                  {business.emails.general}
                 </a>
               </p>
             </address>

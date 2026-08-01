@@ -2,6 +2,11 @@ import type { Metadata } from 'next'
 
 import { LegalPageLayout } from '@/components/sections/legal/LegalPageLayout'
 import type { LegalTOCItem } from '@/components/sections/legal/LegalTOC'
+import { business } from '@/lib/business'
+
+// Entity, address, and inbound email all come from lib/business.ts (the NAP
+// SSOT) so a legal page can never drift from the registered identity.
+const CONTACT_EMAIL = business.emails.general
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -10,7 +15,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://salesolution.net/privacy-policy/' },
 }
 
-const LAST_UPDATED = 'May 21, 2026'
+const LAST_UPDATED = 'July 27, 2026'
 
 const TOC: LegalTOCItem[] = [
   { id: 'who-we-are', label: 'Who we are' },
@@ -39,23 +44,24 @@ export default function PrivacyPolicyPage() {
     >
       <h2 id="who-we-are">Who we are</h2>
       <p>
-        This Privacy Policy is issued by <strong>IT Sale Solution LLC</strong>,
-        a Florida limited liability company doing business as{' '}
-        <strong>Sale Solution</strong> (also styled SaleSolution) (&ldquo;Sale
-        Solution&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, or
+        This Privacy Policy is issued by{' '}
+        <strong>{business.legalName}</strong>, a Florida limited liability
+        company, doing business as <strong>{business.dba}</strong>{' '}
+        (&ldquo;Sale Solution&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, or
         &ldquo;our&rdquo;). We are the controller of personal data processed in
         connection with{' '}
         <a href="https://salesolution.net">https://salesolution.net</a>{' '}
         (the &ldquo;Site&rdquo;).
       </p>
       <p>
-        <strong>Mailing address:</strong> 200 Kings Point Dr., apt. 1208, Sunny
-        Isles Beach, FL 33160, USA
+        <strong>Mailing address:</strong> {business.address.street},{' '}
+        {business.address.city}, {business.address.region}{' '}
+        {business.address.postalCode}, USA
         <br />
         <strong>Phone:</strong> +1 561 531 4339
         <br />
         <strong>Privacy contact:</strong>{' '}
-        <a href="mailto:privacy@salesolution.net">privacy@salesolution.net</a>
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
       </p>
       <p>
         The Site is an informational and lead-capture site for our B2B
@@ -179,9 +185,10 @@ export default function PrivacyPolicyPage() {
           Site and content (subject to consent).
         </li>
         <li>
-          <strong>Marketing communications.</strong> Where you have asked to
-          hear from us, send relevant articles, case studies, or service
-          updates. You can unsubscribe at any time.
+          <strong>Marketing communications.</strong> When you give us your
+          email &mdash; a form, a tool unlock, a content download &mdash; we
+          may send relevant articles, case studies, or service updates. Every
+          marketing email we send has a one-click unsubscribe.
         </li>
         <li>
           <strong>Legal and compliance.</strong> Comply with applicable laws,
@@ -333,12 +340,14 @@ export default function PrivacyPolicyPage() {
       <p>
         Depending on where you live, you have specific rights over your
         personal information. To exercise any of the rights below, email{' '}
-        <a href="mailto:privacy@salesolution.net">privacy@salesolution.net</a>{' '}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>{' '}
         or write to the mailing address in <a href="#contact">Contact</a>. We
         will verify your identity using information already on file before
-        acting on a request. We respond within <strong>45 days</strong> and
+        acting on a request. For verifiable access, correction, deletion, and
+        portability requests we respond within <strong>45 days</strong>, and
         may extend once by an additional 45 days where reasonably necessary,
-        telling you why.
+        telling you why. Opt-out-of-sale/share requests are honored within 15
+        business days.
       </p>
 
       <h3>EEA, UK, and Switzerland (GDPR / UK-GDPR)</h3>
@@ -435,7 +444,7 @@ export default function PrivacyPolicyPage() {
       <p>
         If we decline a privacy request, you may appeal by replying to our
         decision email or writing to{' '}
-        <a href="mailto:privacy@salesolution.net">privacy@salesolution.net</a>{' '}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>{' '}
         with the subject line <strong>&ldquo;Privacy Appeal.&rdquo;</strong>{' '}
         We will respond to the appeal within 45 days. If the appeal is
         denied, residents of Virginia, Colorado, and Florida may contact
@@ -504,7 +513,7 @@ export default function PrivacyPolicyPage() {
         your personal information, we cannot guarantee absolute security.
         Please use a strong, unique password for any account you have with
         our processors and notify us promptly at{' '}
-        <a href="mailto:privacy@salesolution.net">privacy@salesolution.net</a>{' '}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>{' '}
         if you suspect unauthorized access to your information.
       </p>
 
@@ -529,7 +538,7 @@ export default function PrivacyPolicyPage() {
         Framework (and its UK Extension and Swiss-US Framework), we may
         also rely on that certification. You may request a copy of the
         relevant transfer mechanism by emailing{' '}
-        <a href="mailto:privacy@salesolution.net">privacy@salesolution.net</a>.
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
       </p>
 
       <h2 id="minors">Minors</h2>
@@ -542,7 +551,7 @@ export default function PrivacyPolicyPage() {
         information from a child under 13, we will delete it as quickly as
         practicable. Parents or guardians who believe their child has
         provided personal information to us may contact{' '}
-        <a href="mailto:privacy@salesolution.net">privacy@salesolution.net</a>.
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
         We do not knowingly sell or share personal information of consumers
         under 16 as those terms are defined under CPRA.
       </p>
@@ -586,22 +595,24 @@ export default function PrivacyPolicyPage() {
         contact:
       </p>
       <p>
-        <strong>IT Sale Solution LLC</strong>
+        <strong>{business.legalName}</strong>, a Florida limited liability
+        company, doing business as {business.dba}
         <br />
         Attn: Privacy
         <br />
-        200 Kings Point Dr., apt. 1208
+        {business.address.street}
         <br />
-        Sunny Isles Beach, FL 33160, USA
+        {business.address.city}, {business.address.region}{' '}
+        {business.address.postalCode}, USA
         <br />
         Email:{' '}
-        <a href="mailto:privacy@salesolution.net">privacy@salesolution.net</a>
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         <br />
         Phone: +1 561 531 4339
       </p>
       <p>
         We aim to acknowledge privacy requests within a reasonable time and
-        to respond substantively within 45 days, as described in{' '}
+        to respond substantively on the timelines set out in{' '}
         <a href="#your-rights">Your rights</a>. If you are an EEA, UK, or
         Swiss resident, you may also lodge a complaint with your local data
         protection authority. If you are a U.S. state resident, you may

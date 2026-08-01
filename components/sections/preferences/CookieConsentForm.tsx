@@ -72,7 +72,7 @@ export function CookieConsentForm() {
           <PreferenceRow
             id="cookie-analytics"
             label="Analytics"
-            description="GA4 measurement: which pages are visited, where visitors land, how long they stay. Aggregated; no personal data leaves the site."
+            description="GA4 measurement: which pages are visited, where visitors land, how long they stay. Used to measure campaigns and follow up with people who reach out — the privacy policy lists exactly what's shared."
             checked={pref.analytics}
             onChange={(v) => setPref({ ...pref, analytics: v })}
           />

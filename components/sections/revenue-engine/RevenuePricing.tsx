@@ -23,7 +23,7 @@ const MODEL = [
 ]
 
 const TERMS = [
-  'Installed by day 60, proving by day 90',
+  'Installed by day 60. Paid back by day 120 — or I work free until it is.',
   '3-month minimum, month-to-month after',
   'Client-funded ad accounts, zero markup',
   'No annual lock-in',
@@ -46,8 +46,8 @@ export function RevenuePricing({
             Pricing
           </p>
           <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-            Published model.{' '}
-            No games on a call.
+            The floor is public.{' '}
+            The exact number lands in writing, same day.
           </h2>
           {floorLine && (
             <p className="mt-6 text-lg font-semibold text-ink-900">{floorLine}</p>

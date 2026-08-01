@@ -16,7 +16,7 @@ import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 export const metadata: Metadata = {
   title: 'Full Growth Ownership · Fractional growth lead + coordinated retainer',
   description:
-    'One operator. One accountable owner. AI search, content, catalog, dev, and outbound run as one engagement. Two shapes: Fractional GTM Engineer from $20K/mo, or 4-in-1 Coordinated Retainer from $12K/mo. Written quote within 24 hours.',
+    'One operator. One accountable owner. AI search, content, catalog, dev, and outbound run as one engagement. Two shapes: Fractional GTM Engineer, or the 4-in-1 Coordinated Retainer. One number, quoted in writing within 24 hours.',
   alternates: { canonical: 'https://salesolution.net/services/full-growth-ownership/' },
 }
 
@@ -92,10 +92,10 @@ const FULL_GROWTH_FAQ: QA[] = [
         <p>
           Shape A is priced against a full-time growth hire. A $200K base
           + benefits + equity + recruiting cost runs about $300K/year
-          all-in. We&rsquo;re priced at $20&ndash;35K/mo
-          ($240&ndash;420K/year) for a fractional version that ships
-          faster, scales down on 30 days&rsquo; notice, and doesn&rsquo;t
-          carry severance risk.
+          all-in. We come in under that, for a fractional version that
+          ships faster, scales down on 30 days&rsquo; notice, and
+          doesn&rsquo;t carry severance risk. Your exact number comes with
+          the written quote, within 24 hours of the qualifier.
         </p>
         <p className="mt-3">
           Shape B is priced against the cost of running 5 separate agency
@@ -170,8 +170,8 @@ const FULL_GROWTH_FAQ: QA[] = [
           <Link href="/services/" className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600">
             all the cylinders
           </Link>
-          , and engage on its Sprint or Retainer tier directly. We
-          won&rsquo;t try to sell you the wrong product.
+          , and engage on its retainer directly. We won&rsquo;t try to
+          sell you the wrong product.
         </p>
       </>
     ),

@@ -176,7 +176,7 @@ export function FullGrowthQuoteForm({
       }
       if (!res.ok) {
         setSubmitError(
-          'We hit a snag submitting. Please email leads@salesolution.net directly.',
+          'We hit a snag submitting. Please email connect@salesolution.net directly.',
         )
         track({
           name: 'form_error',
@@ -236,7 +236,7 @@ export function FullGrowthQuoteForm({
       window.location.href = thankYouHref
     } catch (err) {
       setSubmitError(
-        'Network error. Please email leads@salesolution.net or try again.',
+        'Network error. Please email connect@salesolution.net or try again.',
       )
       track({
         name: 'form_error',

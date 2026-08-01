@@ -11,7 +11,7 @@ import { WhyNowTimeline } from '@/components/sections/future-proof/WhyNowTimelin
 export const metadata: Metadata = {
   title: 'Future-Proof Your SEO: Survive AI Search',
   description:
-    'AI Overviews are erasing 1 in 3 clicks. Get the 10-minute survival checklist + a personalised risk score, plus the Weekly Turbulence Brief.',
+    'AI Overviews are erasing 1 in 3 clicks. Get the 60-point AI Search Survival Checklist — four sections, a scoring sheet, and an hour of your time.',
   alternates: { canonical: 'https://salesolution.net/future-proof-your-seo/' },
 }
 
@@ -35,14 +35,15 @@ const CHECKLIST_FAQ: QA[] = [
     ),
   },
   {
-    q: 'What is the Weekly Turbulence Brief?',
+    q: 'What else lands in my inbox?',
     a: (
       <>
         <p>
-          A short Monday email with the algorithm and AI-engine changes
-          that landed the previous week, what they mean for technical
-          e&#8209;commerce, and the one thing to do this week. Unsubscribe
-          any time &mdash; the unsubscribe link is in every email.
+          The checklist first, within a minute. After that, the occasional
+          note &mdash; only when something in AI search changes what you
+          should actually do about it. No fixed cadence, because a weekly
+          email we can&rsquo;t fill honestly is worse than silence.
+          Unsubscribe from any of them in one click.
         </p>
       </>
     ),
@@ -64,7 +65,7 @@ const CHECKLIST_FAQ: QA[] = [
     ),
   },
   {
-    q: 'Will it work if we&rsquo;re not in hydraulics or industrial?',
+    q: 'Will it work if we’re not in hydraulics or industrial?',
     a: (
       <>
         <p>
@@ -83,11 +84,11 @@ const CHECKLIST_FAQ: QA[] = [
     a: (
       <>
         <p>
-          No. The checklist + scoring sheet arrive the moment you submit
-          the form. The Weekly Brief lands the following Monday. We do
-          offer a 15-minute strategy call as an optional next step, but
-          there&rsquo;s no obligation and you don&rsquo;t need it to use
-          the framework.
+          No. The checklist and the scoring sheet arrive the moment you
+          submit the form &mdash; a link you can print or work through on
+          screen. We do offer a 15-minute strategy call as an optional next
+          step, but there&rsquo;s no obligation and you don&rsquo;t need it
+          to use the framework.
         </p>
       </>
     ),
@@ -97,12 +98,14 @@ const CHECKLIST_FAQ: QA[] = [
     a: (
       <>
         <p>
-          From three inputs: monthly revenue, share from organic, and
-          traffic mix (informational vs. transactional). We apply the
-          published AIO CTR-impact rates (Ahrefs, BrightEdge, Pew) and
-          surface the annualised pipeline most exposed. It&rsquo;s a
-          back-of-envelope number, not a forecast &mdash; meant to
-          calibrate where on the curve you sit, not to size a budget.
+          The calculator at the top of this page runs on three inputs:
+          monthly revenue, share from organic, and traffic mix
+          (informational vs. transactional). It applies the published AIO
+          CTR-impact rates (Ahrefs, BrightEdge, Pew) and shows the
+          annualised pipeline most exposed. It runs in your browser and
+          sends nothing anywhere. Back-of-envelope, not a forecast &mdash;
+          meant to calibrate where on the curve you sit, not to size a
+          budget.
         </p>
       </>
     ),

@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { FormSuccess } from '@/components/forms/FormSuccess'
 import { Turnstile } from '@/components/integrations/Turnstile'
 import {
   getGaClientId,
@@ -34,6 +35,34 @@ const STEP_FIELDS_WITH_SKU: Record<1 | 2, (keyof LeadFormData)[]> = {
   2: ['website', 'revenue', 'platform', 'skuCount', 'frustration'],
 }
 
+/** Confirm-in-place copy, for doors with no thank-you page of their own. */
+type InlineSuccess = {
+  heading: string
+  body: React.ReactNode
+  footnote?: React.ReactNode
+}
+
+type LeadFormProps = {
+  formId: FormId
+  formName: string
+  leadType: LeadType
+  submitLabel?: string
+  className?: string
+  /** Render the SKU-count select in step 2. Only used by the Catalog Snapshot form. */
+  showSkuCount?: boolean
+} & (
+  | {
+      /** Full-page redirect on success. Only for funnels with a thank-you page whose copy is true for them. */
+      thankYouHref: string
+      success?: never
+    }
+  | {
+      thankYouHref?: never
+      /** Swap the form for this confirmation instead of navigating away. */
+      success: InlineSuccess
+    }
+)
+
 /**
  * Reusable multi-step lead form.
  *
@@ -41,8 +70,13 @@ const STEP_FIELDS_WITH_SKU: Record<1 | 2, (keyof LeadFormData)[]> = {
  *   client → POST /api/lead → server validates → HubSpot + Resend (env-gated)
  *
  * If neither HubSpot nor Resend are configured the server returns 200 and
- * the form still redirects to the thank-you page — useful in dev. See
- * lib/lead-form/submit.ts for the channel orchestration.
+ * the form still confirms — useful in dev. See lib/lead-form/submit.ts for
+ * the channel orchestration.
+ *
+ * Two success modes, one required per call site (the props union enforces it):
+ * redirect to `thankYouHref`, or render `success` in place. Contact and the
+ * book-a-call fallback use the inline mode — F-02: both used to land on the
+ * audit thank-you page, which announced an audit nobody had requested.
  *
  * GA4 instrumentation (see [docs/strategy/ga4.md §3.2 + §5.4]):
  *   - `form_view`           — fires once when the form root enters viewport
@@ -65,19 +99,12 @@ export function LeadForm({
   leadType,
   submitLabel = 'Submit',
   thankYouHref,
+  success,
   className,
   showSkuCount = false,
-}: {
-  formId: FormId
-  formName: string
-  leadType: LeadType
-  submitLabel?: string
-  thankYouHref: string
-  className?: string
-  /** Render the SKU-count select in step 2. Only used by the Catalog Snapshot form. */
-  showSkuCount?: boolean
-}) {
+}: LeadFormProps) {
   const [step, setStep] = useState<1 | 2>(1)
+  const [confirmed, setConfirmed] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const turnstileRequired = !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
@@ -209,7 +236,7 @@ export function LeadForm({
       if (!res.ok) {
         const body = await res.json().catch(() => ({}))
         setSubmitError(
-          'We hit a snag submitting. Please email leads@salesolution.net directly.',
+          'We hit a snag submitting. Please email connect@salesolution.net directly.',
         )
         track({
           name: 'form_error',
@@ -311,10 +338,14 @@ export function LeadForm({
         })
       }
 
-      window.location.href = thankYouHref
+      if (thankYouHref) {
+        window.location.href = thankYouHref
+        return
+      }
+      setConfirmed(true)
     } catch (err) {
       setSubmitError(
-        'Network error. Please email leads@salesolution.net or try again.',
+        'Network error. Please email connect@salesolution.net or try again.',
       )
       track({
         name: 'form_error',
@@ -323,6 +354,17 @@ export function LeadForm({
       // eslint-disable-next-line no-console
       console.error('[LeadForm] network error:', err)
     }
+  }
+
+  if (confirmed && success) {
+    return (
+      <FormSuccess
+        heading={success.heading}
+        body={success.body}
+        footnote={success.footnote}
+        className={className}
+      />
+    )
   }
 
   return (

@@ -9,11 +9,11 @@ import { CompositeBar } from '@/components/services/CompositeBar'
  *
  * Two moves: a one-time install that puts the Revenue Engine in (~90 days,
  * 3-month engagement), then the cylinders you choose, billed monthly — or one
- * operator owning the whole thing (Full Growth Ownership). A single cylinder can
- * still run standalone to prove it first (the footnote), which is the job the
- * old Sprint shape did. This block diverges on purpose from the per-service
- * EngagementModel (Sprint / Retainer / Full Growth), which the cylinder pages
- * keep — the hub tells the engine-as-base story; the service pages don't.
+ * operator owning the whole thing (Full Growth Ownership).
+ *
+ * 2026-07-27 (FD2): the $30K install floor is the only figure published here.
+ * Cylinder and FGO fees are scoped in the SOW, and the standalone-sprint
+ * footnote is gone with the rest of the sprint machinery.
  */
 export function EngagementShapes({ id }: { id?: string }) {
   return (
@@ -84,9 +84,8 @@ export function EngagementShapes({ id }: { id?: string }) {
             <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
               Add cylinders
             </h3>
-            <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-              $4&ndash;15K{' '}
-              <span className="text-lg font-medium text-ink-500">/ mo each</span>
+            <p className="mt-3 text-base leading-relaxed text-ink-700">
+              Added one at a time, each scoped in writing before it starts.
             </p>
           </div>
           <div className="flex-1 px-6 py-6">
@@ -122,9 +121,8 @@ export function EngagementShapes({ id }: { id?: string }) {
             <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
               Full Growth Ownership
             </h3>
-            <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-              From $20K{' '}
-              <span className="text-lg font-medium text-ink-500">/ mo</span>
+            <p className="mt-3 text-base leading-relaxed text-ink-700">
+              One number, quoted after the qualifier.
             </p>
           </div>
           <div className="flex-1 px-6 py-6">
@@ -163,12 +161,6 @@ export function EngagementShapes({ id }: { id?: string }) {
           exactly where you are, demand leaking the whole time.
         </p>
       </div>
-
-      <p className="mt-7 max-w-2xl text-sm leading-relaxed text-ink-600">
-        Want proof before the full install? Any of the five service cylinders
-        can run first as a fixed-scope sprint at its published band. Take the
-        install within 90 days and the sprint fee credits toward it, in full.
-      </p>
     </SectionRail>
   )
 }

@@ -43,10 +43,10 @@ export function ContactMethods() {
           </div>
           <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-ink-500">Email</p>
           <a
-            href={`mailto:${business.emails.leads}`}
+            href={`mailto:${business.emails.general}`}
             className="mt-1 block break-all font-display text-base font-semibold text-ink-900 transition hover:text-brand-600"
           >
-            {business.emails.leads}
+            {business.emails.general}
           </a>
           <p className="mt-1 text-xs text-ink-500">Replies within 24 hours</p>
         </li>

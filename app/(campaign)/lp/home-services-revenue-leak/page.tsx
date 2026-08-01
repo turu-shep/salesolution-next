@@ -146,10 +146,10 @@ export default function HomeServicesRevenueLeakLP() {
             If we end up working together
           </p>
           <h2 className="mt-3 font-display text-balance text-3xl font-semibold leading-[1.1] tracking-[-0.015em] text-white sm:text-4xl">
-            If the system doesn&rsquo;t pay for itself by day 90, I work free until it does.
+            If the system hasn&rsquo;t paid for itself &mdash; install and fees &mdash; by day 120, I work free until it has.
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
-            You see the revenue it drives in your own dashboard &mdash; recovered
+            Counted from the day you sign, in your own dashboard &mdash; recovered
             calls, faster replies, estimates chased down. No annual lock-in: after
             the minimum, leave on 30 days&rsquo; notice and keep your ad account,
             your data, and your Google profile.

@@ -30,15 +30,10 @@ export function ContactDirectory() {
     },
     {
       label: 'Email',
-      value: business.emails.leads,
-      href: `mailto:${business.emails.leads}`,
-      context: 'For hiring conversations · same-day acknowledgement',
-    },
-    {
-      label: 'General inbox',
       value: business.emails.general,
       href: `mailto:${business.emails.general}`,
-      context: 'For press, partnerships, anything not a sales conversation',
+      context:
+        'Work, press, partnerships — one inbox · same-day acknowledgement',
     },
     {
       label: 'LinkedIn',
@@ -73,8 +68,8 @@ export function ContactDirectory() {
           </h2>
           <p className="mt-6 text-ink-700">
             No SDR queue, no routing form, no &ldquo;assistant to the
-            founder.&rdquo; The five channels below all land in front of
-            Artur within the same business day.
+            founder.&rdquo; Every channel below lands in front of Artur
+            within the same business day.
           </p>
         </div>
 

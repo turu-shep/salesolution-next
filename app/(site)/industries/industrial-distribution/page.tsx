@@ -33,8 +33,9 @@ import {
  * Written for the buyer: the owner/president of a $5M–$75M industrial
  * distributor or technical manufacturer (not a marketer). Voice is "we".
  * Tells the full engine story — Bring (get found) → Convert (win the quote)
- * → Retain (keep the account) — not AI-search-only. No day-90 guarantee on
- * this page; the close is a single industrial door (Book a Growth Call +
+ * → Retain (keep the account) — not AI-search-only. No outcome guarantee on
+ * this page (sell-product: long RFQ cycles + the close happens at the buyer's
+ * counter — see §7); the close is a single industrial door (Book a Growth Call +
  * written diagnostic). Copy follows the approved mock in
  * docs/strategy/multi-vertical-pivot/04-revenue-engine-rebrand.md (§3).
  *
@@ -197,15 +198,15 @@ const INDUSTRIAL_FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Why won’t you just quote a flat price for everything?',
-    a: 'The per-cylinder prices are published. The total depends on which cylinders fire and at what volume, and we won’t guess that before we’ve seen your catalog and your numbers. You’ll have the full SOW, in writing, within 48 hours of the first call. No number invented to fill a silence.',
+    a: 'The floor is public: the install starts at $30,000. The total depends on which cylinders fire and at what volume, and we won’t guess that before we’ve seen your catalog and your numbers. You’ll have the full SOW, in writing, within 48 hours of the first call. No number invented to fill a silence.',
   },
   {
     q: 'How do you price it, and where do I see the numbers?',
-    a: 'The model is published before we ever talk. The engine installs once, from $30,000, scaled to the value at stake, and your exact number arrives in the written SOW within 48 hours of the call. After that the cylinders run it, $4,000–$15,000 a month each, and each cylinder\'s page shows its own band. Any of the five service cylinders can run first as a fixed-scope sprint at its published band. Take the install within 90 days and the sprint fee credits toward it, in full. Full Growth Ownership, from $20,000 a month, is the whole engine under one operator. When Catalog AI fires, the per-SKU math is on the page too.',
+    a: 'The engine installs once, from $30,000, scaled to the value at stake, and your exact number arrives in the written SOW within 48 hours of the call. The cylinders that run it afterwards are scoped the same way — priced in writing before any of them starts, never quoted cold on a call. Full Growth Ownership, the whole engine under one operator, is quoted after the qualifier. When Catalog AI fires, the per-SKU math is on the page in full.',
   },
   {
     q: 'Why won’t you guarantee a number of quotes?',
-    a: 'A distributor’s cycle is too long and too lumpy for a count-by-a-date to mean anything, and anyone who promises it is selling you a metric, not margin. Instead we publish the prices, show the work in week four, and put both revenue lines in front of you every month. If the system-driven line doesn’t justify the fee, you’ll see it before we do, and you can leave on 90 days’ notice.',
+    a: 'Because an RFQ can take longer to land than any window we’d put on it. The window would be a guess. And winning it happens at your counter — your price, what’s on the shelf, how fast someone calls back. We don’t control that, so we won’t sell you a promise that rides on it. What you get instead: the floor in the open, your exact number in writing 48 hours after the call, work you can see by week four, and both revenue lines in front of you every month. If the system-driven line doesn’t justify the fee, you’ll see it before we do, and you can leave on 90 days’ notice.',
   },
 ]
 
@@ -733,14 +734,17 @@ export default async function IndustrialDistributionPage() {
             No guarantee on a count of quotes.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-ink-700">
-            We don&rsquo;t promise you a number of RFQs by a date. A
-            distributor&rsquo;s cycle is too long and too lumpy for that to mean
-            anything, and anyone who promises it is selling you a metric, not
-            margin.
+            We don&rsquo;t promise you a number of RFQs by a date. An RFQ can
+            take longer to land than any window we&rsquo;d put on it. The window
+            would be a guess. And winning it happens at your counter &mdash;
+            your price, what&rsquo;s on the shelf, how fast someone calls back.
+            We don&rsquo;t control that, so we won&rsquo;t sell you a promise
+            that rides on it.
           </p>
           <p className="mt-5 text-lg leading-relaxed text-ink-700">
-            What we&rsquo;ll do instead: publish the prices, show the work in week
-            four, and put both revenue lines in front of you every month. If the
+            What we&rsquo;ll do instead: publish the floor, put your exact
+            number in writing 48 hours after the call, and show the work in week
+            four. Then both revenue lines go in front of you every month. If the
             system-driven line doesn&rsquo;t justify the fee, you&rsquo;ll see it
             before we do, and you can leave on 90 days&rsquo; notice. That&rsquo;s
             the trade. No theater, no clawback fine print, no lock-in standing in
@@ -782,7 +786,7 @@ export default async function IndustrialDistributionPage() {
               ))}
             </ul>
             <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-500">
-              Published prices &middot; SOW in 48 hours &middot; Leave on 90 days&rsquo; notice
+              Catalog prices published &middot; SOW in 48 hours &middot; Leave on 90 days&rsquo; notice
             </p>
           </div>
         </div>
@@ -890,11 +894,11 @@ export default async function IndustrialDistributionPage() {
             </p>
             <Link
               href="/book-growth-call/"
-              data-cta="book_call__industrial_onramp_sprint"
+              data-cta="book_call__industrial_onramp_cylinder"
               data-cta-location="mid_body"
               className="mt-6 inline-flex items-center justify-center rounded-[4px] border border-ink-300 bg-paper px-6 py-3 text-base font-semibold text-ink-900 transition-colors duration-200 hover:border-ink-900"
             >
-              Start with a Sprint
+              Rebuild that cylinder
             </Link>
           </div>
         </div>

@@ -158,13 +158,13 @@ const CONSUMER_FAQ: QA[] = [
     q: 'How is it priced?',
     a: (
       <p>
-        One model, published. The engine installs once &mdash; from $30,000,
-        scaled to what&rsquo;s at stake &mdash; and the parts that keep running
-        are cylinders at $4&ndash;15K a month each, added as they pay for
-        themselves. Want proof before the install? Any cylinder runs standalone
-        as a fixed-scope sprint at its published band, and the fee credits
-        toward the install within 90 days. There&rsquo;s no guarantee on a
-        count of sales; the price is in the open instead.
+        The engine installs once &mdash; from $30,000, scaled to what&rsquo;s
+        at stake. The parts that keep running are cylinders, added one at a
+        time as they pay for themselves, each one scoped in writing before it
+        starts. Your exact number lands in the SOW within 48 hours of the
+        call, never quoted cold. There&rsquo;s no guarantee on a count of
+        sales. A considered purchase closes on your floor, on your timeline,
+        and that close isn&rsquo;t ours to control.
       </p>
     ),
   },
@@ -183,15 +183,23 @@ const CONSUMER_FAQ: QA[] = [
   {
     q: 'Why no guarantee?',
     a: (
-      <p>
-        Because the price is in the open instead. A guarantee is what you reach
-        for when the fee is hidden. Here you see the model, the floor, and the
-        exit terms before we ever talk; the SOW arrives in writing within 48
-        hours; the work is shown by week four; and if you leave, every asset we
-        built goes with you. Your own trade press says it plainly: nobody
-        honest promises rankings. What we promise is method, cadence, and
-        receipts.
-      </p>
+      <>
+        <p>
+          Because the close isn&rsquo;t ours. A considered purchase gets
+          compared, then slept on. It closes on your floor, on your timeline.
+          We can put more of the right people in front of it, and stop the ones
+          walking out mid-cart. We can&rsquo;t stand at the counter. So we
+          won&rsquo;t sell you a number that rides on it.
+        </p>
+        <p className="mt-4">
+          What you get instead: the floor in the open, your exact number in
+          writing within 48 hours, work you can see by week four, and a
+          dashboard you can watch the whole time. If you leave, every asset we
+          built goes with you. Your own trade press says it plainly. Nobody
+          honest promises rankings. What we promise is method, cadence, and
+          receipts.
+        </p>
+      </>
     ),
   },
   {
@@ -339,7 +347,7 @@ export default function ConsumerBrandsPillarPage() {
       {/* 7 — HOW WE REPORT IT (dark) */}
       <TwoRevenueLines id="prove" />
 
-      {/* 8 — THE PRICE (sell-product: published bands, no guarantee) */}
+      {/* 8 — THE PRICE (sell-product: published install floor, no guarantee) */}
       <EngagementShapes id="pricing" />
 
       {/* 9 — FAQ */}

@@ -12,32 +12,27 @@ import { cn } from '@/lib/cn'
  * Editorial Retainer is the featured / most-engagements-start-here tier;
  * its body contains a sub-grid of the three volume sub-tiers (Focused,
  * Standard, Aggressive) instead of a flat bullet list.
+ *
+ * 2026-07-27 (FD2): no figures published here. The volume tiers describe
+ * output, not price; every fee lands in the SOW.
  */
 
 type VolumeTier = {
   name: string
-  price: string
-  cadence: string
   detail: string
 }
 
 const RETAINER_TIERS: VolumeTier[] = [
   {
     name: 'Focused',
-    price: '$4K',
-    cadence: '/ mo',
     detail: '4 pieces/mo · single vertical / 1 category',
   },
   {
     name: 'Standard',
-    price: '$7.5K',
-    cadence: '/ mo',
     detail: '8 pieces + 1 pillar/mo · 2–3 categories',
   },
   {
     name: 'Aggressive',
-    price: '$15K',
-    cadence: '/ mo',
     detail: '16 pieces + 3 pillars/mo · category-leader push',
   },
 ]
@@ -75,12 +70,12 @@ export function EditorialPricing({ id }: { id?: string }) {
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
           Four ways in.{' '}
-          All priced.
+          All scoped in writing.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          One trial price to test the work. One fixed-scope pack to prove
-          the lift on a single category. One ongoing retainer in three
-          volume tiers. And Full Growth Ownership for when editorial alone
+          One piece to test the work. One fixed-scope pack to prove the
+          lift on a single category. One ongoing retainer in three volume
+          tiers. And Full Growth Ownership for when editorial alone
           isn&rsquo;t the whole answer.
         </p>
       </div>
@@ -100,11 +95,8 @@ export function EditorialPricing({ id }: { id?: string }) {
           </p>
         </div>
         <div className="flex flex-col items-start gap-3 sm:items-end">
-          <p className="font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-            $500
-            <span className="ml-1 font-mono text-xs font-normal text-ink-500">
-              / article · 2,500 words
-            </span>
+          <p className="max-w-xs text-base leading-relaxed text-ink-700 sm:text-right">
+            One article, 2,500 words. Quoted in writing before you commit.
           </p>
           <Link
             href="/contact-me/"
@@ -132,12 +124,8 @@ export function EditorialPricing({ id }: { id?: string }) {
             <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
               Pillar Pack
             </h3>
-            <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-              $6–14K
-            </p>
-            <p className="mt-3 text-xs leading-relaxed text-ink-500">
-              Take the engine install within 90 days and this Pillar Pack fee
-              credits toward it, in full.
+            <p className="mt-3 text-base leading-relaxed text-ink-700">
+              Fixed scope, quoted in the SOW within 48 hours.
             </p>
           </div>
           <div className="flex-1 px-6 py-6">
@@ -184,11 +172,8 @@ export function EditorialPricing({ id }: { id?: string }) {
             <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
               Editorial Retainer
             </h3>
-            <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-              $4–15K
-              <span className="ml-1 text-base font-medium text-ink-500">
-                / month
-              </span>
+            <p className="mt-3 text-base leading-relaxed text-ink-700">
+              Scoped to the cadence you pick &mdash; exact number in your SOW.
             </p>
           </div>
           <div className="flex-1 px-6 py-6">
@@ -206,16 +191,8 @@ export function EditorialPricing({ id }: { id?: string }) {
                   key={t.name}
                   className="border-l-2 border-service-editorial-500 pl-3"
                 >
-                  <p className="flex items-baseline gap-2">
-                    <span className="font-display text-sm font-semibold text-ink-900">
-                      {t.name}
-                    </span>
-                    <span className="font-display text-sm font-semibold tabular-nums text-ink-900">
-                      &mdash; {t.price}
-                      <span className="font-mono text-[11px] font-normal text-ink-500">
-                        {t.cadence}
-                      </span>
-                    </span>
+                  <p className="font-display text-sm font-semibold text-ink-900">
+                    {t.name}
                   </p>
                   <p className="mt-0.5 text-xs leading-relaxed text-ink-700">
                     {t.detail}
@@ -227,8 +204,7 @@ export function EditorialPricing({ id }: { id?: string }) {
             <p className="mt-5 border-t border-rule pt-4 text-xs leading-relaxed text-ink-500">
               Every tier includes: senior named writer, monthly topic
               research, AIO + schema engineering, 2 revisions per piece,
-              monthly outcome reporting. Volume discounts: 5% over 6
-              months, 15% over 12 months.
+              monthly outcome reporting.
             </p>
           </div>
           <div className="border-t border-rule px-6 py-4">
@@ -248,11 +224,8 @@ export function EditorialPricing({ id }: { id?: string }) {
       </ul>
 
       <p className="mt-10 max-w-2xl text-sm text-ink-500">
-        Volume discounts:{' '}
-        <span className="font-semibold text-ink-900">5%</span> over 6
-        months,{' '}
-        <span className="font-semibold text-ink-900">15%</span> over 12
-        months on the Editorial Retainer.
+        Commit to 6 or 12 months on the Editorial Retainer and the terms
+        improve. Both options sit in the SOW, side by side, before you sign.
       </p>
     </SectionRail>
   )
