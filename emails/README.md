@@ -60,3 +60,38 @@ Angle 1 only · Adaptall for targeted lookups only.
   `disposition` tag and land in `data/side-pools/` — small shops
   (single-location / sub-floor revenue) are inventory for Artur's separate
   small-shops project, not waste.
+
+## Dashboard
+
+A read-only local cockpit over this folder: list health, side pools, what blocks
+the first send, live Smartlead state, and the audit reports. It reads the CSVs
+on every request, so it stays honest while the list is still being worked on.
+
+```
+pnpm emails:dashboard          # → http://127.0.0.1:4688
+pnpm emails:dashboard -- --port 4699
+EMAILS_DASHBOARD_PORT=4699 pnpm emails:dashboard
+```
+
+Five tabs: **Overview** (stat tiles, pipeline S1→S7, blockers, lineage, the
+conservation check recomputed against the files) · **List** (browse, search and
+filter any registry list or side pool; click a row for full provenance) ·
+**Pools** (latest generation per disposition) · **Smartlead** (campaigns,
+mailbox warmup, expiries) · **Reports** (the `_*.md` audits in `data/`).
+
+What it cannot do, by construction:
+
+- **No campaign controls.** It imports read functions from
+  `scripts/lib/smartlead.mjs` and nothing else, so no code path can start,
+  pause or edit a campaign. Campaign `3750571` is a parked draft and stays one.
+- **No writes.** Nothing in the server writes a file, anywhere, ever.
+- **Loopback only.** It binds `127.0.0.1` explicitly. There is no auth, because
+  reaching it already means you can run these scripts yourself.
+- **No credentials in the browser.** The Smartlead API returns plaintext
+  SMTP/IMAP passwords; account and campaign payloads pass a field whitelist
+  first. Request URLs are never logged (the API key rides in the query string).
+
+It works fully offline — without `SMARTLEAD_API_KEY`, the Smartlead tab shows an
+offline card and every other tab is unaffected.
+
+Design + safety rails: `docs/superpowers/specs/2026-08-01-emails-dashboard-design.md`.

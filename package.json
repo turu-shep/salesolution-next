@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node --test lib/ scripts/lib/ emails/scripts/lib/",
-    "test:ts": "node --test $(find lib -name \"*.test.mts\")"
+    "test:ts": "node --test $(find lib -name \"*.test.mts\")",
+    "emails:dashboard": "node emails/scripts/dashboard.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
