@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test lib/",
+    "test": "node --test lib/ scripts/lib/ emails/scripts/lib/",
     "test:ts": "node --test $(find lib -name \"*.test.mts\")"
   },
   "dependencies": {

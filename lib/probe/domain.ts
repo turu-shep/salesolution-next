@@ -22,8 +22,10 @@ export type DomainMetrics = {
 }
 
 async function fetchSummary(target: string): Promise<DomainMetrics | null> {
-  const login = process.env.DATAFORSEO_USERNAME ?? process.env.DFS_LOGIN
-  const password = process.env.DATAFORSEO_PASSWORD ?? process.env.DFS_PASSWORD
+  // PF-6: accept both env spellings, prefer DATAFORSEO_*. `||` not `??` so a
+  // declared-but-blank DATAFORSEO_* still falls back to the legacy DFS_* name.
+  const login = process.env.DATAFORSEO_USERNAME || process.env.DFS_LOGIN
+  const password = process.env.DATAFORSEO_PASSWORD || process.env.DFS_PASSWORD
   if (!login || !password) return null
   try {
     const res = await fetch('https://api.dataforseo.com/v3/backlinks/summary/live', {
@@ -83,8 +85,10 @@ const cachedFetchSummary = unstable_cache(
 
 /** 24h-cached lookup, keyed by apex domain (www. and trailing dot stripped). */
 export async function getDomainMetrics(hostname: string): Promise<DomainMetrics | null> {
-  const login = process.env.DATAFORSEO_USERNAME ?? process.env.DFS_LOGIN
-  const password = process.env.DATAFORSEO_PASSWORD ?? process.env.DFS_PASSWORD
+  // PF-6: accept both env spellings, prefer DATAFORSEO_*. `||` not `??` so a
+  // declared-but-blank DATAFORSEO_* still falls back to the legacy DFS_* name.
+  const login = process.env.DATAFORSEO_USERNAME || process.env.DFS_LOGIN
+  const password = process.env.DATAFORSEO_PASSWORD || process.env.DFS_PASSWORD
   if (!login || !password) return null
   const target = hostname.toLowerCase().replace(/\.$/, '').replace(/^www\./, '')
   try {
