@@ -34,6 +34,8 @@ const TABLES = [
   'project_status',
   'contacts_staging',
   'verify_results_staging',
+  'accounts',
+  'export_audit',
 ]
 
 const url = process.env.SUPABASE_URL
