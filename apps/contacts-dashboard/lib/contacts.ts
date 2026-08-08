@@ -1,5 +1,6 @@
-import { DEFAULT_PAGE_SIZE, SHOW_ALL_PAGE_SIZE, selectList } from './columns.mjs'
+import { DEFAULT_PAGE_SIZE, selectList } from './columns.mjs'
 import { applyFilters, buildFilterSpec, counterArgs, pageRange } from './query.mjs'
+import { toClientCounters, toClientRow } from './rows.mjs'
 import { describeError, serverClient } from './supabase'
 
 export type SheetParams = {
@@ -10,62 +11,55 @@ export type SheetParams = {
   catMax: number | null
   q: string
   page: number
-  showAll: boolean
+  view: 'field-advisor' | 'hosebox'
   sort: string
   dir: 'asc' | 'desc'
 }
 
+/** Exactly the three location counters. No people or sendable figure exists in this type on purpose. */
 export type Counters = {
-  companies: number
-  no_domain: number
-  people: number
-  sendable: number
   locations: number
   brands: number
   states: number
 }
 
-type Row = Record<string, unknown>
+/** A row as the client is allowed to see it: opaque key, derived country, whitelist fields. */
+export type ClientRow = { key: string; country: string } & Record<string, unknown>
 
-/** An arbitrary window. Used by the sheet and by the streamed export. */
-export async function fetchPage(params: SheetParams, offset: number, size: number): Promise<Row[]> {
+/**
+ * An arbitrary window, already passed through the serialization boundary
+ * (lib/rows.mjs): opaque key on, internal fields off. Used by the sheet and by
+ * the streamed export, so neither can ever carry a field the other hides.
+ */
+export async function fetchPage(params: SheetParams, offset: number, size: number): Promise<ClientRow[]> {
   const db = serverClient()
-  let q = db.from('contacts').select(selectList(params.showAll))
+  let q = db.from('contacts').select(selectList())
   q = applyFilters(q, buildFilterSpec(params))
   const { data, error } = await q
     .order(params.sort, { ascending: params.dir === 'asc', nullsFirst: false })
     .order('id', { ascending: true })
     .range(offset, offset + size - 1)
   if (error) throw new Error(describeError(error))
-  return (data ?? []) as unknown as Row[]
+  return (data ?? []).map((row) => toClientRow(row) as ClientRow)
 }
 
 /** One page of rows. The client never receives more than this. */
-export async function fetchSheet(params: SheetParams): Promise<{ rows: Row[]; pageSize: number }> {
+export async function fetchSheet(params: SheetParams): Promise<{ rows: ClientRow[]; pageSize: number }> {
   const { from, pageSize } = pageRange(params)
   return { rows: await fetchPage(params, from, pageSize), pageSize }
 }
 
 /**
- * The counters, computed over the WHOLE filtered set rather than the page.
- * `companies` and `sendable` are roughly 64x apart and both true, which is why
- * there are several counters and not one hero number.
+ * The three location counters, computed over the WHOLE filtered set rather
+ * than the page. The RPC returns seven numbers; toClientCounters() discards
+ * companies / no_domain / people / sendable before anything is serialized.
  */
 export async function fetchCounters(params: SheetParams): Promise<Counters> {
   const db = serverClient()
   const { data, error } = await db.rpc('contacts_counters', counterArgs(params))
   if (error) throw new Error(describeError(error))
   const row = (Array.isArray(data) ? data[0] : data) as Record<string, string | number> | undefined
-  const n = (v: string | number | undefined) => Number(v ?? 0)
-  return {
-    companies: n(row?.companies),
-    no_domain: n(row?.no_domain),
-    people: n(row?.people),
-    sendable: n(row?.sendable),
-    locations: n(row?.locations),
-    brands: n(row?.brands),
-    states: n(row?.states),
-  }
+  return toClientCounters(row)
 }
 
 /** Exact row count for the current filter, no payload. */
@@ -78,7 +72,12 @@ export async function countMatching(params: SheetParams): Promise<number> {
   return count ?? 0
 }
 
-/** Which generation the table currently holds. It holds exactly one. */
+/**
+ * Which generation the table currently holds. It holds exactly one.
+ * SERVER-SIDE USE ONLY: the generation name is internal vocabulary and never
+ * renders on a client-reachable page (AMENDMENT 2 D6) — this stays for the
+ * sync check and the export audit trail, not for display.
+ */
 export async function fetchGeneration(): Promise<string | null> {
   const db = serverClient()
   const { data, error } = await db.from('contacts').select('list_generation').limit(1)
@@ -100,4 +99,4 @@ export async function fetchFacets(): Promise<{ states: string[]; sources: string
   return { states, sources }
 }
 
-export { DEFAULT_PAGE_SIZE, SHOW_ALL_PAGE_SIZE }
+export { DEFAULT_PAGE_SIZE }

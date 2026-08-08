@@ -1,11 +1,12 @@
 /**
  * columns — one place that says what the sheet selects.
  *
- * LOCATION_COLUMNS is the DEFAULT VIEW, not a whitelist and not a ceiling. The
- * audience is the founder looking at his own asset, so nothing is withheld: the
- * show-all toggle reaches every typed column plus the `raw` JSONB. The default
- * is simply the set that answers "where is this location and how do we know,"
- * which is what makes the sheet readable.
+ * LOCATION_COLUMNS is a WHITELIST, server-enforced (AMENDMENT 2 D1). The
+ * audience is a client, so the sheet renders this set, period: every select
+ * list is generated from it plus the two server-internal fields below, which
+ * are stripped again before anything is serialized (lib/rows.mjs). Nothing a
+ * request supplies — sort, show, any parameter — can widen the select. The
+ * show-all path and the per-row JSONB panel are deleted, not hidden.
  *
  * Four names a brief would reach for do not exist in the data, and the
  * corrections are load-bearing: `zip5` not `zip`, `phone_e164` not `phone`,
@@ -13,7 +14,7 @@
  * derived from pool membership — see countryOf() in query.mjs.
  */
 
-/** The 15 identifiers the sheet opens on. They render as 14 columns: company + company_display are one cell. */
+/** The 15 identifiers the sheet serves. They render as 14 columns: company + company_display are one cell. */
 export const LOCATION_COLUMNS = [
   'company',
   'company_display',
@@ -32,10 +33,14 @@ export const LOCATION_COLUMNS = [
   'location_count',
 ]
 
-/** `id` is the React key; `pool` is what the country filter is derived from. Always selected. */
+/**
+ * Server-internal fields: `id` becomes the opaque row key, `pool` becomes the
+ * derived country. Both are consumed and DROPPED by toClientRow() before the
+ * response — they never reach HTML, JSON, serialized props, or the export.
+ */
 export const ALWAYS_SELECTED = ['id', 'pool']
 
-/** Every typed column in `contacts`. The schema guard rejects anything absent from this list. */
+/** Every typed column in `contacts`. A schema mirror for server-side reference — NOT a permission. */
 export const TYPED_COLUMNS = [
   'id', 'list_generation', 'pool',
   'company', 'company_display', 'domain',
@@ -49,18 +54,40 @@ export const TYPED_COLUMNS = [
 /** Mirrors the local dashboard's `paginate` cap. The browser never receives the full set. */
 export const DEFAULT_PAGE_SIZE = 500
 
-/** `raw` is the whole CSV row per record. 500 of those is megabytes, so show-all pages are smaller. */
-export const SHOW_ALL_PAGE_SIZE = 100
-
-/** A real column, or not. Rejects a bad `sort` before it reaches PostgREST. */
-export function isRealColumn(name) {
-  return TYPED_COLUMNS.includes(String(name))
+/**
+ * In or out of the whitelist. This is the `sort` admissibility check: a
+ * client-supplied sort naming any column outside LOCATION_COLUMNS — typed or
+ * not — falls back to the default sort, and a bad URL still renders.
+ */
+export function isSheetColumn(name) {
+  return LOCATION_COLUMNS.includes(String(name))
 }
 
 /**
  * The `select()` string. One builder feeds both the page and the export, so the
- * two can never disagree about what a row contains.
+ * two can never disagree about what a row contains — and no argument reaches a
+ * wider select, because there is no wider select.
  */
-export function selectList(showAll) {
-  return showAll ? '*' : [...ALWAYS_SELECTED, ...LOCATION_COLUMNS].join(',')
+export function selectList() {
+  return [...ALWAYS_SELECTED, ...LOCATION_COLUMNS].join(',')
+}
+
+/**
+ * The in-app project switcher (AMENDMENT 2 D4). Two lenses over the same pool,
+ * chosen per request via ?view= — never a per-deployment env pin. The labels
+ * are hardcoded on purpose: the `projects` table rows carry internal
+ * `criteria`/`note` vocabulary and are never queried on a client-reachable
+ * path. The table becomes load-bearing only when per-view filter presets
+ * arrive. Route handlers (Task 7's export) must refuse a non-allowed view
+ * with 400; the page falls back to DEFAULT_VIEW instead.
+ */
+export const ALLOWED_VIEWS = ['field-advisor', 'hosebox']
+
+export const DEFAULT_VIEW = 'field-advisor'
+
+const VIEW_LABELS = { 'field-advisor': 'Field Advisor', hosebox: 'Hosebox' }
+
+/** The lens's display name — the sheet title and, later, the export filename. */
+export function viewLabel(view) {
+  return VIEW_LABELS[view] ?? String(view)
 }

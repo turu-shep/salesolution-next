@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { applyFilters, buildFilterSpec, counterArgs, countryOf, escapeLike, pageRange, parseSheetParams } from './query.mjs'
+import { applyFilters, buildFilterSpec, counterArgs, countryOf, escapeLike, pageRange, parseSheetParams, toSearchParams } from './query.mjs'
 
 /** A stand-in for a PostgrestFilterBuilder: every filter method returns `this`. */
 function recorder() {
@@ -20,7 +20,7 @@ function recorder() {
 const params = (qs) => parseSheetParams(new URLSearchParams(qs))
 
 test('parseSheetParams reads every control', () => {
-  const p = params('source=timken&source=dfs&state=IL&state=WI&country=us&catMin=2&catMax=8&q=acme&page=3&sort=city&dir=desc')
+  const p = params('source=timken&source=dfs&state=IL&state=WI&country=us&catMin=2&catMax=8&q=acme&page=3&sort=city&dir=desc&view=hosebox')
   assert.deepEqual(p.sources, ['timken', 'dfs'])
   assert.deepEqual(p.states, ['IL', 'WI'])
   assert.equal(p.country, 'us')
@@ -30,22 +30,51 @@ test('parseSheetParams reads every control', () => {
   assert.equal(p.page, 3)
   assert.equal(p.sort, 'city')
   assert.equal(p.dir, 'desc')
-  assert.equal(p.showAll, false)
+  assert.equal(p.view, 'hosebox')
 })
 
 test('parseSheetParams refuses nonsense instead of passing it to the database', () => {
-  const p = params('page=-4&sort=DROP TABLE&dir=sideways&catMin=abc&country=mars')
+  const p = params('page=-4&sort=DROP TABLE&dir=sideways&catMin=abc&country=mars&view=catalog-ai')
   assert.equal(p.page, 1)
-  assert.equal(p.sort, 'company')     // falls back to a real column
+  assert.equal(p.sort, 'company')     // falls back to a whitelist column
   assert.equal(p.dir, 'asc')
   assert.equal(p.catMin, null)        // never coerced to 0
   assert.equal(p.country, null)
+  assert.equal(p.view, 'field-advisor')  // an unknown view is the default lens; a bad URL still renders
 })
 
-test('show=all switches the toggle and shrinks the page', () => {
-  assert.equal(params('show=all').showAll, true)
-  assert.deepEqual(pageRange(params('show=all&page=2')), { from: 100, to: 199, pageSize: 100 })
+test('a sort naming a column outside the whitelist falls back — typed is not enough', () => {
+  // AMENDMENT 2 D1: nothing a request supplies can widen what the sheet touches.
+  assert.equal(params('sort=email').sort, 'company')
+  assert.equal(params('sort=tier').sort, 'company')
+  assert.equal(params('sort=rank_score').sort, 'company')
+  assert.equal(params('sort=id').sort, 'company')
+  assert.equal(params('sort=captured').sort, 'captured')  // whitelist columns still sort
+})
+
+test('show=all is dead vocabulary: ignored, and the page size never changes', () => {
+  const p = params('show=all&page=2')
+  assert.equal('showAll' in p, false)
+  assert.deepEqual(pageRange(p), { from: 500, to: 999, pageSize: 500 })
   assert.deepEqual(pageRange(params('page=2')), { from: 500, to: 999, pageSize: 500 })
+})
+
+test('toSearchParams emits the canonical state and round-trips through the parser', () => {
+  const p = params('source=timken&source=dfs&state=IL&country=us&catMin=2&catMax=8&q=acme&sort=city&dir=desc&view=hosebox&page=3&show=all&tier=junk')
+  const sp = toSearchParams(p)
+  assert.equal(sp.has('page'), false)   // page is navigation, not filter state
+  assert.equal(sp.has('show'), false)   // deleted vocabulary is never re-emitted
+  assert.equal(sp.has('tier'), false)   // junk a request carried is never reflected back out
+  const p2 = parseSheetParams(sp)
+  const { page: _a, ...rest } = p
+  const { page: _b, ...rest2 } = p2
+  assert.deepEqual(rest2, rest)
+})
+
+test('toSearchParams leaves defaults out of the URL', () => {
+  assert.equal(toSearchParams(params('')).toString(), '')
+  assert.equal(toSearchParams(params('view=hosebox')).toString(), 'view=hosebox')
+  assert.equal(toSearchParams(params('sort=city')).toString(), 'sort=city')
 })
 
 test('escapeLike neutralises the LIKE wildcards so a search for "50%" means "50%"', () => {

@@ -9,8 +9,12 @@
  *
  * The predicate here mirrors contacts_counters() in 0002_functions.sql exactly.
  * One parse, two emitters: change one, change the other.
+ *
+ * parseSheetParams and toSearchParams are inverses: nothing a request carried
+ * that the parser did not admit is ever emitted back into a URL the page
+ * renders. That is what keeps junk parameters from reflecting into hrefs.
  */
-import { DEFAULT_PAGE_SIZE, SHOW_ALL_PAGE_SIZE, isRealColumn } from './columns.mjs'
+import { ALLOWED_VIEWS, DEFAULT_PAGE_SIZE, DEFAULT_VIEW, isSheetColumn } from './columns.mjs'
 
 const COUNTRIES = ['us', 'non-us']
 
@@ -49,12 +53,18 @@ function numOrNull(v) {
   return Number.isFinite(n) ? n : null
 }
 
-/** URLSearchParams -> SheetParams. Every bound is clamped; nothing is trusted. */
+/**
+ * URLSearchParams -> SheetParams. Every bound is clamped; nothing is trusted.
+ * `sort` admits whitelist columns only (AMENDMENT 2 D1) and `view` admits the
+ * two lenses only, defaulting to the Field Advisor lens — a bad URL still
+ * renders. (Route handlers are stricter: a non-allowed view is a 400 there.)
+ */
 export function parseSheetParams(searchParams) {
   const sp = searchParams ?? new URLSearchParams()
   const sortRaw = sp.get('sort') ?? ''
   const dirRaw = (sp.get('dir') ?? '').toLowerCase()
   const country = sp.get('country')
+  const view = sp.get('view')
   return {
     sources: sp.getAll('source').filter(Boolean),
     states: sp.getAll('state').filter(Boolean),
@@ -63,10 +73,30 @@ export function parseSheetParams(searchParams) {
     catMax: numOrNull(sp.get('catMax')),
     q: (sp.get('q') ?? '').trim(),
     page: Math.max(1, Math.trunc(Number(sp.get('page')) || 1)),
-    showAll: sp.get('show') === 'all',
-    sort: isRealColumn(sortRaw) ? sortRaw : 'company',
+    view: ALLOWED_VIEWS.includes(view) ? view : DEFAULT_VIEW,
+    sort: isSheetColumn(sortRaw) ? sortRaw : 'company',
     dir: dirRaw === 'desc' ? 'desc' : 'asc',
   }
+}
+
+/**
+ * SheetParams -> the canonical query string. The ONLY way the page emits state
+ * into a URL (sort links, the switcher, the export link), so a parameter the
+ * parser rejected can never ride along. Defaults are left out; `page` is
+ * navigation, not filter state, and is never emitted.
+ */
+export function toSearchParams(params) {
+  const sp = new URLSearchParams()
+  if (params.view !== DEFAULT_VIEW) sp.set('view', params.view)
+  for (const s of params.sources) sp.append('source', s)
+  for (const s of params.states) sp.append('state', s)
+  if (params.country) sp.set('country', params.country)
+  if (params.catMin !== null) sp.set('catMin', String(params.catMin))
+  if (params.catMax !== null) sp.set('catMax', String(params.catMax))
+  if (params.q) sp.set('q', params.q)
+  if (params.sort !== 'company') sp.set('sort', params.sort)
+  if (params.dir !== 'asc') sp.set('dir', params.dir)
+  return sp
 }
 
 /** SheetParams -> a single declarative spec. Pure; no client involved. */
@@ -112,9 +142,9 @@ export function counterArgs(params) {
   }
 }
 
-/** Zero-based inclusive range for `.range(from, to)`. */
+/** Zero-based inclusive range for `.range(from, to)`. One page size; nothing shrinks or widens it. */
 export function pageRange(params) {
-  const pageSize = params.showAll ? SHOW_ALL_PAGE_SIZE : DEFAULT_PAGE_SIZE
+  const pageSize = DEFAULT_PAGE_SIZE
   const from = (params.page - 1) * pageSize
   return { from, to: from + pageSize - 1, pageSize }
 }
