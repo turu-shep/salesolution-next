@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { monthYear, newTokens, plannedTokens, provenanceLine, provenanceRows, sourceLabel, sourcePhrase } from './sources.mjs'
+import { monthYear, newTokens, plannedTokens, provenanceLine, provenanceRows, sourceDisplayParts, sourceLabel, sourcePhrase } from './sources.mjs'
 
 test('monthYear reads the month off an ISO date and refuses anything else', () => {
   assert.equal(monthYear('2026-08-01'), 'Aug 2026')
@@ -27,6 +27,21 @@ test('an unmapped token degrades to the raw token instead of being dropped', () 
   assert.equal(sourceLabel('adaptall-export'), 'adaptall-export')
   assert.equal(sourceLabel('enerpac'), 'Enerpac')
   assert.equal(provenanceLine('adaptall-export', '2026-08-01'), 'Verified from the adaptall-export source, Aug 2026')
+})
+
+test('sourceDisplayParts splits the display map into name + kind, raw-token fallback', () => {
+  // Derived from SOURCE_PHRASE, so the Sources page and the provenance lines
+  // can never disagree about what a source is called.
+  assert.deepEqual(sourceDisplayParts('enerpac'), { display: 'Enerpac', kind: 'distributor locator' })
+  assert.deepEqual(sourceDisplayParts('atlascopco'), { display: 'Atlas Copco', kind: 'distributor locator' })
+  assert.deepEqual(sourceDisplayParts('ad'), { display: 'AD', kind: 'member directory' })
+  assert.deepEqual(sourceDisplayParts('timken'), { display: 'Timken', kind: 'authorized distributor list' })
+  assert.deepEqual(sourceDisplayParts('dfs'), { display: 'DataForSEO', kind: 'business listings' })
+  assert.deepEqual(sourceDisplayParts('usaspending'), { display: 'USAspending', kind: 'federal award records' })
+  // serp has no brand-vs-kind split; the whole phrase is the name.
+  assert.deepEqual(sourceDisplayParts('serp'), { display: "company's own website", kind: null })
+  // Unmapped token: the raw token, no invented kind (same fallback rule as the chips).
+  assert.deepEqual(sourceDisplayParts('adaptall-export'), { display: 'adaptall-export', kind: null })
 })
 
 test('provenanceRows zips source to url and date when the chains agree', () => {

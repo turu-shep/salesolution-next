@@ -1,6 +1,6 @@
 import { DEFAULT_PAGE_SIZE, selectList } from './columns.mjs'
 import { applyFilters, buildFilterSpec, counterArgs, pageRange } from './query.mjs'
-import { toClientCounters, toClientRow } from './rows.mjs'
+import { toClientCounters, toClientRow, toClientSources } from './rows.mjs'
 import { describeError, serverClient } from './supabase'
 
 export type SheetParams = {
@@ -25,6 +25,15 @@ export type Counters = {
 
 /** A row as the client is allowed to see it: opaque key, derived country, whitelist fields. */
 export type ClientRow = { key: string; country: string } & Record<string, unknown>
+
+/** A source as the client is allowed to see it: name, kind, contribution, month verified. */
+export type ClientSource = {
+  token: string
+  display: string
+  kind: string | null
+  locations: number
+  lastCaptured: string | null
+}
 
 /**
  * An arbitrary window, already passed through the serialization boundary
@@ -83,6 +92,21 @@ export async function fetchGeneration(): Promise<string | null> {
   const { data, error } = await db.from('contacts').select('list_generation').limit(1)
   if (error) throw new Error(describeError(error))
   return ((data?.[0] as { list_generation?: string } | undefined)?.list_generation) ?? null
+}
+
+/**
+ * The provenance stats behind the Sources page: per token, the display parts,
+ * locations contributed and the month last verified, sorted by contribution.
+ * The source_stats RPC returns per-token analytics the client must not see;
+ * toClientSources() discards them before anything serializes. The registry
+ * table (statuses, folders, estimates — pipeline ops detail) is never read in
+ * any client path (AMENDMENT 2, Task 8 D2).
+ */
+export async function fetchSourceStats(): Promise<ClientSource[]> {
+  const db = serverClient()
+  const { data, error } = await db.rpc('source_stats')
+  if (error) throw new Error(describeError(error))
+  return toClientSources((data ?? []) as Record<string, unknown>[])
 }
 
 /** The values the state and source controls offer. Derived from the data, never hand-listed. */

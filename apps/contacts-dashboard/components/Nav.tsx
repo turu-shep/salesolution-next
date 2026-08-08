@@ -10,12 +10,15 @@ import { toSearchParams } from '@/lib/query.mjs'
  * plain links, no client state, no Supabase import, and never a row read from
  * the projects table. Switching the lens keeps the current filter.
  */
-export function Nav({ params }: { params: SheetParams }) {
+export function Nav({ params, active }: { params: SheetParams; active?: 'sources' }) {
   const homeQs = params.view === DEFAULT_VIEW ? '' : `?view=${params.view}`
+  const onSources = active === 'sources'
   return (
     <nav style={{ borderBottom: '1px solid var(--rule)', padding: '10px 24px', display: 'flex', gap: 16, alignItems: 'baseline' }}>
       <Link href={`/${homeQs}`}>Locations</Link>
-      <Link href="/sources">Sources</Link>
+      <Link href="/sources" aria-current={onSources ? 'page' : undefined} style={onSources ? { fontWeight: 600 } : undefined}>
+        Sources
+      </Link>
       <span className="muted" style={{ marginLeft: 'auto' }}>View:</span>
       {ALLOWED_VIEWS.map((view) => {
         const qs = toSearchParams({ ...params, view }).toString()

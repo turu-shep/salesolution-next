@@ -16,6 +16,7 @@ import { createHash } from 'node:crypto'
 
 import { LOCATION_COLUMNS } from './columns.mjs'
 import { countryOf } from './query.mjs'
+import { monthYear, sourceDisplayParts } from './sources.mjs'
 
 /** sha256 of the row id, first 16 hex chars. Stable, opaque, collision-safe at this scale. */
 export function opaqueKey(id) {
@@ -43,4 +44,24 @@ export function toClientCounters(row) {
   const r = row ?? {}
   const n = (v) => Number(v ?? 0)
   return { locations: n(r.locations), brands: n(r.brands), states: n(r.states) }
+}
+
+/**
+ * A source_stats() row -> the provenance card the client is allowed to see
+ * (AMENDMENT 2, Task 8 D2). The RPC also returns with_email / with_person
+ * (banned person/email vocabulary) and sole_source / domains / with_domain
+ * (internal asset analytics) — all DISCARDED here, before anything serializes.
+ * The capture date collapses to 'Mon YYYY' at this boundary too, so the exact
+ * day never ships.
+ */
+export function toClientSource(row) {
+  const r = row ?? {}
+  const token = String(r.token ?? '')
+  const { display, kind } = sourceDisplayParts(token)
+  return { token, display, kind, locations: Number(r.rows ?? 0), lastCaptured: monthYear(r.last_captured) }
+}
+
+/** Every token renders, sorted by locations contributed (desc; token breaks ties so the order is stable). */
+export function toClientSources(rows) {
+  return (rows ?? []).map(toClientSource).sort((a, b) => b.locations - a.locations || a.token.localeCompare(b.token))
 }

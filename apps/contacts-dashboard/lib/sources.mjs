@@ -68,6 +68,40 @@ export function sourcePhrase(token) {
   return SOURCE_PHRASE[token] ?? `the ${token} source`
 }
 
+/**
+ * The kind suffixes that occur in SOURCE_PHRASE, longest first so
+ * "authorized distributor list" wins over "distributor list".
+ */
+const KIND_SUFFIXES = [
+  'authorized distributor list',
+  'federal award records',
+  'distributor locator',
+  'distributor lookup',
+  'distributor list',
+  'business listings',
+  'member directory',
+  'partner locator',
+  'dealer locator',
+]
+
+/**
+ * The display map decomposed for the Sources page: what the source is called
+ * and what kind of source it is. Derived from SOURCE_PHRASE — one map, so the
+ * page and the per-row provenance lines can never disagree. An unmapped token
+ * falls back to the raw token with no kind (same rule as the chips), and a
+ * phrase with no recognized suffix (serp's "company's own website") renders
+ * whole as the name rather than being force-split.
+ */
+export function sourceDisplayParts(token) {
+  const phrase = SOURCE_PHRASE[token]
+  if (!phrase) return { display: String(token), kind: null }
+  const name = phrase.replace(/^the /, '')
+  for (const kind of KIND_SUFFIXES) {
+    if (name.endsWith(` ${kind}`)) return { display: name.slice(0, -(kind.length + 1)), kind }
+  }
+  return { display: name, kind: null }
+}
+
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 /** '2026-08-01' -> 'Aug 2026'. Anything unparseable is null, never a guess. */

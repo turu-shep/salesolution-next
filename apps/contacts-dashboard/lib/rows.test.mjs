@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto'
 import test from 'node:test'
 
 import { LOCATION_COLUMNS } from './columns.mjs'
-import { opaqueKey, toClientCounters, toClientRow } from './rows.mjs'
+import { opaqueKey, toClientCounters, toClientRow, toClientSource, toClientSources } from './rows.mjs'
 
 test('opaqueKey is stable, 16 hex chars, and distinct per id', () => {
   const id = 'seated-v9:seated:1042'
@@ -51,4 +51,45 @@ test('toClientCounters serializes exactly the three location counters', () => {
   assert.deepEqual(Object.keys(out).sort(), ['brands', 'locations', 'states'])
   // A missing RPC row is three zeros, never a leak of whatever was in scope.
   assert.deepEqual(toClientCounters(undefined), { locations: 0, brands: 0, states: 0 })
+})
+
+test('toClientSource serializes exactly the five provenance keys and nothing else', () => {
+  // The source_stats RPC returns the full per-token analytics row; the client
+  // gets the provenance story only (AMENDMENT 2, Task 8 D2).
+  const out = toClientSource({
+    token: 'enerpac', rows: '1234', domains: '900', sole_source: '120',
+    with_email: '456', with_domain: '900', with_person: '300', last_captured: '2026-08-01',
+  })
+  assert.deepEqual(out, { token: 'enerpac', display: 'Enerpac', kind: 'distributor locator', locations: 1234, lastCaptured: 'Aug 2026' })
+  assert.deepEqual(Object.keys(out).sort(), ['display', 'kind', 'lastCaptured', 'locations', 'token'])
+  for (const gone of ['with_email', 'with_person', 'sole_source', 'domains', 'with_domain', 'rows', 'last_captured']) {
+    assert.equal(gone in out, false, `${gone} must never be serialized`)
+  }
+})
+
+test('toClientSource ships Mon YYYY only — the capture day never serializes', () => {
+  assert.equal(toClientSource({ token: 'dfs', rows: 1, last_captured: '2026-08-03' }).lastCaptured, 'Aug 2026')
+  assert.equal(toClientSource({ token: 'dfs', rows: 1, last_captured: null }).lastCaptured, null)
+  assert.equal(toClientSource({ token: 'dfs', rows: 1, last_captured: 'not-a-date' }).lastCaptured, null)
+})
+
+test('toClientSource falls back to the raw token for unmapped sources', () => {
+  // Every token renders, unmapped ones as themselves — dropping a token would
+  // make the sheet's "found in N lists" story a lie.
+  const out = toClientSource({ token: 'adaptall-export', rows: 7, last_captured: '2026-08-01' })
+  assert.equal(out.display, 'adaptall-export')
+  assert.equal(out.kind, null)
+  assert.equal(out.locations, 7)
+})
+
+test('toClientSources sorts by locations contributed, descending, token as tiebreak', () => {
+  const out = toClientSources([
+    { token: 'serp', rows: '50', last_captured: null },
+    { token: 'timken', rows: '900', last_captured: '2026-08-01' },
+    { token: 'dfs', rows: '900', last_captured: '2026-08-01' },
+    { token: 'enerpac', rows: 1200, last_captured: '2026-08-01' },
+  ])
+  assert.deepEqual(out.map((s) => s.token), ['enerpac', 'dfs', 'timken', 'serp'])
+  // Empty input is an empty list, never a throw.
+  assert.deepEqual(toClientSources(undefined), [])
 })
