@@ -2,6 +2,7 @@ import { Counters } from '@/components/Counters'
 import { Filters } from '@/components/Filters'
 import { Nav } from '@/components/Nav'
 import { Sheet } from '@/components/Sheet'
+import { getAccount } from '@/lib/auth-server'
 import { viewLabel } from '@/lib/columns.mjs'
 import { countMatching, fetchCounters, fetchFacets, fetchSheet } from '@/lib/contacts'
 import type { ClientRow, Counters as CountersType, SheetParams } from '@/lib/contacts'
@@ -18,6 +19,12 @@ type PageData = {
 }
 
 export default async function Page({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  // The layout renders the login form in place for a signed-out request, but
+  // the App Router still serializes this segment into the flight payload — a
+  // layout is not a boundary for its children. So the page re-checks the gate
+  // and contributes NOTHING (no fetch, no copy) without an account.
+  if (!(await getAccount())) return null
+
   const sp = new URLSearchParams()
   for (const [k, v] of Object.entries(await searchParams)) {
     for (const one of Array.isArray(v) ? v : [v]) if (one !== undefined) sp.append(k, one)

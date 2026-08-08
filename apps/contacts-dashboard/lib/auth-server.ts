@@ -1,4 +1,5 @@
 import { cookies, headers } from 'next/headers'
+import { cache } from 'react'
 
 import { CONTACTS_COOKIE, MAX_AGE_S, isLocalHost, readSession } from './auth.mjs'
 import { describeError, serverClient } from './supabase'
@@ -23,8 +24,12 @@ const DEV_ACCOUNT: Account = { id: 'dev', email: 'dev@localhost', name: 'Dev (lo
  * The account behind this request, or null. Null unless the session verifies
  * AND the account row exists AND its status is 'active'. Any DB failure reads
  * as null — the gate fails closed, never open.
+ *
+ * Wrapped in React cache() so the layout gate and a page's segment guard share
+ * ONE accounts read per request. The memo is request-scoped — nothing persists
+ * across requests, so revocation still bites on the very next request.
  */
-export async function getAccount(): Promise<Account | null> {
+export const getAccount = cache(async (): Promise<Account | null> => {
   const host = (await headers()).get('host') ?? ''
   if (isLocalHost(host)) return DEV_ACCOUNT
 
@@ -46,7 +51,7 @@ export async function getAccount(): Promise<Account | null> {
   } catch {
     return null
   }
-}
+})
 
 /**
  * Route-handler guard: the account, or a 401 Response the caller returns
