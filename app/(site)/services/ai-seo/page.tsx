@@ -20,7 +20,7 @@ import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 export const metadata: Metadata = {
   title: 'GEO Agency for Industrial E-commerce',
   description:
-    'Looking for a GEO agency? One senior operator, not an agency layer — generative engine optimization for industrial e-commerce. Get cited in AI Overviews, ChatGPT, and Perplexity. Published prices, 24-hour proposals.',
+    'Looking for a GEO agency? One senior operator, not an agency layer — generative engine optimization for industrial e-commerce. Get cited in AI Overviews, ChatGPT, and Perplexity. Scoped in writing, 24-hour proposals.',
   alternates: { canonical: 'https://salesolution.net/services/ai-seo/' },
 }
 
@@ -33,8 +33,9 @@ const SERVICES_FAQ: QA[] = [
           One operator owns strategy, schema, content, and reporting &mdash;
           not four sub-agencies stitched together. Specialisation in
           considered-purchase verticals (industrial distribution, technical
-          B2B, local service businesses), not generalist. Published prices,
-          24-hour SOWs, 90-day exit.
+          B2B, local service businesses), not generalist. The install floor
+          is public, the rest is scoped in writing, 24-hour SOWs, 90-day
+          exit.
         </p>
       </>
     ),
@@ -102,9 +103,11 @@ const SERVICES_FAQ: QA[] = [
     a: (
       <>
         <p>
-          Yes &mdash; the Sprint engagement ($12&ndash;24k, 4 weeks) is
-          purpose-built for a single category overhaul. Smaller than that
-          we don&rsquo;t offer; the setup cost doesn&rsquo;t amortise.
+          Not any more. The engine installs once, then the cylinders run on
+          a cadence. Detached one-off projects kept dying at the handoff,
+          which is where the win actually lives. Bring the category
+          overhaul to the call anyway &mdash; if the install is the wrong
+          move for you right now, we&rsquo;ll say so.
         </p>
       </>
     ),

@@ -30,7 +30,7 @@ const ROWS: Row[] = [
   },
   {
     label: 'Monthly cost',
-    ownership: { value: '$20–35k all-in', tone: 'mid' },
+    ownership: { value: 'One number, quoted after the qualifier', tone: 'mid' },
     agencies:  { value: '$18–30k across vendors + your time', tone: 'mid' },
     inhouse:   { value: '$18–25k + benefits + equity', tone: 'mid' },
   },

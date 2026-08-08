@@ -15,8 +15,8 @@ import { cn } from '@/lib/cn'
 /**
  * /ai-readiness/[token]/ — the probe's full report.
  *
- * The token encodes the scored URL (lib/probe/token.ts); nothing is stored.
- * Every view re-runs the deterministic scan, so a shared link never expires
+ * The token encodes the scored URL (lib/probe/token.ts) — no report record is
+ * persisted. Every view re-runs the deterministic scan, so a shared link never expires
  * and always shows the page as AI crawlers see it right now. Personal,
  * shareable, and noindex — it must never enter the sitemap or nav.
  */
@@ -284,7 +284,7 @@ export default async function AiReadinessReportPage({ params }: { params: Promis
           ))}
 
           <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-400">
-            This link re-runs the scan on every open &middot; always current &middot; your scan isn&rsquo;t stored
+            This link re-runs the scan on every open &middot; always current
             &middot;{' '}
             <Link href="/ai-readiness/methodology/" className="underline decoration-ink-300 underline-offset-2 transition-colors hover:text-ink-700">
               How the scoring works

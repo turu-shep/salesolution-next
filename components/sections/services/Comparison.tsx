@@ -43,7 +43,7 @@ const ROWS: Row[] = [
   },
   {
     label: 'Fixed cost / month',
-    sale:    { value: '$8–14k retainer', tone: 'mid' },
+    sale:    { value: 'Quoted in the SOW', tone: 'mid' },
     agency:  { value: '$5–25k retainer', tone: 'mid' },
     inhouse: { value: '$15–25k all-in / FTE', tone: 'bad' },
   },

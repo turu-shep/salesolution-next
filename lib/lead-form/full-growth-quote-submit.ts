@@ -118,16 +118,27 @@ export async function submitFgoQuote(data: FgoQuoteData): Promise<SubmitResult> 
     }
   }
 
-  if (channels.hubspot === 'skipped' && channels.resend === 'skipped') {
-    console.log('[fgo-quote-submit] No backend channels configured — logging:', data)
-  }
-
   // The form succeeds if at least one delivery channel sent the lead, OR if
   // no delivery channels are configured at all (dev mode — don't punish the
   // user). A half-configured channel marked 'failed' above is NOT "skipped",
   // so it correctly fails the submission instead of passing as dev mode.
   const noChannelsConfigured =
     channels.hubspot === 'skipped' && channels.resend === 'skipped'
+
+  // F-014: in production that dev-mode branch is silent lead loss. Note this
+  // handler is the most exposed of the three — HUBSPOT_FGO_FORM_ID is
+  // deliberately unset until the portal form exists, so Resend is often the
+  // only live channel here.
+  if (noChannelsConfigured) {
+    if (process.env.NODE_ENV === 'production') {
+      const msg =
+        'No lead delivery channel is configured (HubSpot and Resend both absent) — refusing to report success and drop the lead.'
+      console.error('[fgo-quote-submit]', msg)
+      return { ok: false, channels, errors: [...errors, msg] }
+    }
+    console.log('[fgo-quote-submit] No backend channels configured — logging:', data)
+  }
+
   return { ok: someChannelSent || noChannelsConfigured, channels, errors }
 }
 
@@ -247,12 +258,14 @@ async function sendResendNotification(data: FgoQuoteData) {
     `Source:   ${data.pageSource ?? 'unknown'}`,
   ].join('\n')
 
-  await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL ?? 'leads@salesolution.net',
+  const { error } = await resend.emails.send({
+    from: process.env.RESEND_FROM_EMAIL ?? 'connect@salesolution.net',
     to: process.env.RESEND_TO_EMAIL!,
     subject,
     text,
   })
+  // F-031: the SDK resolves with { data, error } rather than throwing.
+  if (error) throw new Error(`${error.name}: ${error.message}`)
 }
 
 /**
@@ -293,11 +306,13 @@ async function sendAutoAcknowledgment(data: FgoQuoteData) {
     'salesolution.net/services/full-growth-ownership/',
   ]
 
-  await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL ?? 'leads@salesolution.net',
+  const { error } = await resend.emails.send({
+    from: process.env.RESEND_FROM_EMAIL ?? 'connect@salesolution.net',
     to: data.email,
-    replyTo: process.env.RESEND_TO_EMAIL ?? 'leads@salesolution.net',
+    replyTo: process.env.RESEND_TO_EMAIL ?? 'connect@salesolution.net',
     subject: 'Got your Full Growth Ownership qualifier — personal reply within 24h',
     text: lines.join('\n'),
   })
+  // F-031: the SDK resolves with { data, error } rather than throwing.
+  if (error) throw new Error(`${error.name}: ${error.message}`)
 }

@@ -30,6 +30,8 @@ type LeadType =
   | 'contact'
   | 'catalog_snapshot'
   | 'full_growth'
+  /** AI Search Survival Checklist — matches the `lead_magnet` ack channel. */
+  | 'lead_magnet'
 type FormId =
   | 'audit_lead_form'
   | 'sprint_lead_form'
@@ -38,6 +40,7 @@ type FormId =
   | 'catalog_snapshot_form'
   | 'full_growth_quote_form'
   | 'revenue_leak_audit_form'
+  | 'lead_magnet_form'
 type ErrorType = 'validation' | 'rate_limit' | 'server' | 'network' | 'turnstile'
 type ServiceCategory = 'seo' | 'content' | 'web' | 'email' | 'catalog'
 

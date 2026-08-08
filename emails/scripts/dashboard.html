@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>emails · operator dashboard</title>
+<style>
+/* Palette: the dataviz reference tokens on the dark surface (#1a1a19).
+   Status colors are fixed and never themed; the single data hue is the dark
+   categorical slot 1. Text always wears ink, never a series color. */
+:root {
+  color-scheme: dark;
+  --plane: #0d0d0d;
+  --surface: #1a1a19;
+  --raised: #201f1e;
+  --ink: #ffffff;
+  --ink-2: #c3c2b7;
+  --muted: #898781;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --border: rgba(255, 255, 255, 0.10);
+  --series-1: #3987e5;
+  --good: #0ca30c;
+  --warning: #fab219;
+  --serious: #ec835a;
+  --critical: #d03b3b;
+  --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { max-width: 100%; overflow-x: hidden; }
+body {
+  margin: 0;
+  background: var(--plane);
+  color: var(--ink);
+  font: 14px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--series-1); }
+
+/* ── chrome ──────────────────────────────────────────────────────────────── */
+header {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--plane);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px 0;
+}
+.brand { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.brand h1 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .01em; }
+.tag {
+  font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted); border: 1px solid var(--border);
+  border-radius: 999px; padding: 2px 8px;
+}
+.brand .spacer { flex: 1; }
+.stamp { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+nav { display: flex; gap: 2px; margin-top: 12px; overflow-x: auto; }
+nav button {
+  appearance: none; background: none; border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--muted); font: inherit; font-size: 13px;
+  padding: 8px 12px; cursor: pointer; white-space: nowrap;
+}
+nav button:hover { color: var(--ink-2); }
+nav button[aria-current="page"] { color: var(--ink); border-bottom-color: var(--series-1); }
+
+main { padding: 22px 20px 64px; max-width: 1360px; }
+section[hidden] { display: none; }
+h2 {
+  margin: 30px 0 12px; font-size: 12px; font-weight: 600;
+  letter-spacing: .07em; text-transform: uppercase; color: var(--muted);
+}
+h2:first-child { margin-top: 0; }
+
+/* ── cards, tiles ────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.tiles {
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+.tile .label { color: var(--muted); font-size: 12px; }
+.tile .value {
+  margin: 6px 0 2px; font-size: 30px; font-weight: 600;
+  line-height: 1.05; color: var(--ink);
+}
+.tile.hero .value { font-size: 48px; }
+.tile .context { color: var(--ink-2); font-size: 12px; }
+
+/* ── status chips: icon + word, never color alone ────────────────────────── */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 500; white-space: nowrap;
+}
+.chip .glyph {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 15px; height: 15px; border-radius: 4px;
+  font-size: 10px; line-height: 1; color: #0d0d0d; font-weight: 700;
+}
+.chip.good   .glyph { background: var(--good); }
+.chip.ok     .glyph { background: var(--good); }
+.chip.done   .glyph { background: var(--good); }
+.chip.warning .glyph { background: var(--warning); }
+.chip.serious .glyph { background: var(--serious); }
+.chip.blocked .glyph { background: var(--critical); }
+.chip.critical .glyph { background: var(--critical); }
+.chip.pending .glyph { background: var(--axis); color: var(--ink-2); }
+.chip.gated  .glyph { background: var(--warning); }
+.chip.good, .chip.ok, .chip.done { color: var(--good); }
+.chip.warning { color: var(--warning); }
+.chip.serious { color: var(--serious); }
+.chip.blocked, .chip.critical { color: var(--critical); }
+.chip.pending { color: var(--muted); }
+.chip.gated { color: var(--warning); border: 1px solid var(--warning); border-radius: 999px; padding: 1px 7px 1px 4px; }
+
+/* ── rows (pipeline, blockers) ───────────────────────────────────────────── */
+.rows { display: flex; flex-direction: column; }
+.row {
+  display: grid; grid-template-columns: 62px 190px 118px 1fr;
+  gap: 12px; align-items: baseline;
+  padding: 9px 0; border-top: 1px solid var(--grid);
+}
+.row:first-child { border-top: 0; }
+.row .id { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.row .title { font-weight: 500; }
+.row .detail { color: var(--ink-2); font-size: 13px; }
+.blocker-row { grid-template-columns: 260px 118px 1fr; }
+
+/* ── tables ──────────────────────────────────────────────────────────────── */
+.tablewrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 8px 12px; white-space: nowrap; }
+thead th {
+  position: sticky; top: 0; background: var(--surface);
+  color: var(--muted); font-weight: 500; font-size: 11px;
+  letter-spacing: .05em; text-transform: uppercase;
+  border-bottom: 1px solid var(--axis);
+}
+tbody tr { border-top: 1px solid var(--grid); }
+tbody tr:first-child { border-top: 0; }
+tbody tr.clickable { cursor: pointer; }
+tbody tr.clickable:hover { background: var(--raised); }
+tbody tr.current { background: rgba(57, 135, 229, 0.10); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.dim { color: var(--ink-2); }
+/* Chips in a cell are inline-flex and would otherwise butt together, reading as
+   one run-on label ("mailbox expiredwarmup inactive"). */
+td.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.trunc { display: inline-block; max-width: 320px; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; }
+
+/* ── pool bars: one measure, one hue, no legend ──────────────────────────── */
+.bars { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
+.bar-row {
+  display: grid; grid-template-columns: 190px 1fr 72px;
+  gap: 12px; align-items: center; cursor: pointer;
+  padding: 3px 0;
+}
+.bar-row:hover .bar-label { color: var(--ink); }
+.bar-label { color: var(--ink-2); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Both are `display:block`: `width` does not apply to a non-replaced INLINE
+   element, so an inline fill silently collapses and every bar reads full and
+   empty. The track is the 100% baseline; the fill is the datum. */
+.bar-track { display: block; height: 10px; background: var(--grid); border-radius: 2px; }
+.bar-fill { display: block; height: 10px; background: var(--series-1); border-radius: 2px 4px 4px 2px; min-width: 2px; }
+.bar-value { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); font-size: 13px; }
+
+/* ── controls ────────────────────────────────────────────────────────────── */
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+select, input[type="search"], button.btn {
+  appearance: none; font: inherit; font-size: 13px;
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--axis); border-radius: 7px;
+  padding: 6px 10px;
+}
+input[type="search"] { min-width: 220px; }
+select:focus-visible, input:focus-visible, button:focus-visible {
+  outline: 2px solid var(--series-1); outline-offset: 1px;
+}
+button.btn { cursor: pointer; }
+button.btn:hover { border-color: var(--muted); }
+button.btn[disabled] { opacity: .4; cursor: default; }
+.count { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+/* ── banner / states ─────────────────────────────────────────────────────── */
+.banner {
+  display: flex; align-items: center; gap: 8px;
+  border: 1px solid var(--border); border-left: 3px solid var(--series-1);
+  background: var(--surface); border-radius: 8px;
+  padding: 10px 14px; margin-bottom: 16px;
+  color: var(--ink-2); font-size: 13px;
+}
+.state { color: var(--muted); padding: 22px 2px; font-size: 13px; }
+.state.error { color: var(--serious); }
+
+/* ── drawer ──────────────────────────────────────────────────────────────── */
+.scrim { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 30; }
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 31;
+  width: min(620px, 100%); overflow-y: auto;
+  background: var(--surface); border-left: 1px solid var(--border);
+  padding: 18px 20px 60px;
+}
+.drawer-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
+.drawer-head h3 { margin: 0; font-size: 17px; font-weight: 600; overflow-wrap: anywhere; }
+.drawer h4 {
+  margin: 20px 0 6px; font-size: 11px; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--muted);
+  border-bottom: 1px solid var(--grid); padding-bottom: 5px;
+}
+.field { display: grid; grid-template-columns: 176px 1fr; gap: 10px; padding: 4px 0; font-size: 13px; }
+.field .k { color: var(--muted); font-family: var(--mono); font-size: 11.5px; padding-top: 2px; overflow-wrap: anywhere; }
+.field .v { color: var(--ink-2); overflow-wrap: anywhere; }
+pre.verbatim {
+  margin: 4px 0 0; padding: 10px 12px;
+  background: var(--plane); border: 1px solid var(--grid); border-radius: 7px;
+  font: 12.5px/1.6 var(--mono); color: var(--ink-2);
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+
+/* ── reports ─────────────────────────────────────────────────────────────── */
+.reports { display: grid; grid-template-columns: minmax(230px, 300px) 1fr; gap: 16px; align-items: start; }
+.report-list { display: flex; flex-direction: column; max-height: 74vh; overflow-y: auto; }
+.report-item {
+  text-align: left; background: none; border: 0; border-top: 1px solid var(--grid);
+  color: var(--ink-2); font: inherit; padding: 9px 10px; cursor: pointer; border-radius: 6px;
+}
+.report-item:first-child { border-top: 0; }
+.report-item:hover { background: var(--raised); color: var(--ink); }
+.report-item[aria-current="true"] { background: var(--raised); color: var(--ink); }
+.report-item .n { display: block; font-size: 12.5px; overflow-wrap: anywhere; }
+.report-item .m { display: block; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.report-body { max-height: 74vh; overflow: auto; }
+.report-body :is(h1,h2,h3,h4) { color: var(--ink); text-transform: none; letter-spacing: 0; }
+.report-body h1 { font-size: 20px; margin: 0 0 12px; }
+.report-body h2 { font-size: 16px; margin: 22px 0 8px; }
+.report-body h3 { font-size: 14px; margin: 18px 0 6px; }
+.report-body { color: var(--ink-2); font-size: 13.5px; }
+.report-body table { display: block; overflow-x: auto; white-space: nowrap; margin: 10px 0; }
+.report-body th, .report-body td { border-bottom: 1px solid var(--grid); }
+.report-body pre { background: var(--plane); padding: 10px 12px; border-radius: 7px; overflow-x: auto; }
+.report-body code { font-family: var(--mono); font-size: 12px; }
+.report-body :is(pre, table, img) { max-width: 100%; }
+.report-body blockquote { margin: 10px 0; padding-left: 12px; border-left: 2px solid var(--axis); color: var(--muted); }
+
+@media (max-width: 900px) {
+  .row, .blocker-row { grid-template-columns: 1fr; gap: 3px; }
+  .reports { grid-template-columns: 1fr; }
+  .field { grid-template-columns: 1fr; gap: 0; }
+  .bar-row { grid-template-columns: 130px 1fr 60px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>emails · operator dashboard</h1>
+    <span class="tag">read-only</span>
+    <span class="spacer"></span>
+    <span class="stamp" id="stamp"></span>
+  </div>
+  <nav id="tabs"></nav>
+</header>
+
+<main>
+  <section id="view-overview"></section>
+  <section id="view-list" hidden></section>
+  <section id="view-pools" hidden></section>
+  <section id="view-smartlead" hidden></section>
+  <section id="view-reports" hidden></section>
+</main>
+
+<script>
+'use strict'
+/* Every workspace string reaches the DOM as a text node. `el()` sets text with
+   textContent and appends children through createTextNode, so scraped values —
+   self_declaration is verbatim page copy from the open web — cannot become
+   markup. The single innerHTML sink is the report pane, which renders
+   marked() output for audit files this repo generated itself. */
+
+const TABS = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'list', label: 'List' },
+  { id: 'pools', label: 'Pools' },
+  { id: 'smartlead', label: 'Smartlead' },
+  { id: 'reports', label: 'Reports' },
+]
+
+// ── tiny DOM builder ────────────────────────────────────────────────────────
+function el(tag, props, ...children) {
+  const node = document.createElement(tag)
+  for (const [key, value] of Object.entries(props || {})) {
+    if (value === null || value === undefined || value === false) continue
+    if (key === 'class') node.className = value
+    else if (key === 'text') node.textContent = String(value)
+    else if (key.startsWith('on') && typeof value === 'function') node.addEventListener(key.slice(2), value)
+    else node.setAttribute(key, String(value))
+  }
+  for (const child of children.flat(3)) {
+    if (child === null || child === undefined || child === false) continue
+    node.append(child instanceof Node ? child : document.createTextNode(String(child)))
+  }
+  return node
+}
+
+const clear = (node) => { while (node.firstChild) node.removeChild(node.firstChild) }
+const num = (v) => (typeof v === 'number' && isFinite(v) ? v.toLocaleString('en-US') : '—')
+const text = (v) => (v === null || v === undefined || v === '' ? '—' : String(v))
+
+const GLYPH = { done: '✓', ok: '✓', good: '✓', pending: '·', blocked: '✕', serious: '✕', critical: '✕', warning: '!' }
+function chip(status, label) {
+  const key = String(status || 'pending')
+  return el('span', { class: 'chip ' + key },
+    el('span', { class: 'glyph', 'aria-hidden': 'true', text: GLYPH[key] || '·' }),
+    el('span', { text: label === undefined ? key : String(label) }),
+  )
+}
+
+async function api(path) {
+  const res = await fetch(path, { headers: { accept: 'application/json' } })
+  if (!res.ok) throw new Error('HTTP ' + res.status)
+  return res.json()
+}
+
+function loading(node, what) {
+  clear(node)
+  node.append(el('div', { class: 'state', text: 'Loading ' + what + '…' }))
+}
+function failed(node, err) {
+  clear(node)
+  node.append(el('div', { class: 'state error', text: 'Failed to load — is the server running? (' + err.message + ')' }))
+}
+
+// ── routing ─────────────────────────────────────────────────────────────────
+const views = {}
+for (const tab of TABS) views[tab.id] = document.getElementById('view-' + tab.id)
+
+const nav = document.getElementById('tabs')
+for (const tab of TABS) {
+  nav.append(el('button', { type: 'button', id: 'tab-' + tab.id, text: tab.label, onclick: () => { location.hash = tab.id } }))
+}
+
+const LOADERS = { overview: renderOverview, list: renderList, pools: renderPools, smartlead: renderSmartlead, reports: renderReports }
+const loaded = {}
+
+function route() {
+  const wanted = location.hash.replace('#', '')
+  const active = TABS.some((t) => t.id === wanted) ? wanted : 'overview'
+  for (const tab of TABS) {
+    views[tab.id].hidden = tab.id !== active
+    const button = document.getElementById('tab-' + tab.id)
+    if (tab.id === active) button.setAttribute('aria-current', 'page')
+    else button.removeAttribute('aria-current')
+  }
+  if (!loaded[active]) { loaded[active] = true; LOADERS[active]() }
+}
+window.addEventListener('hashchange', route)
+
+// ── Overview ────────────────────────────────────────────────────────────────
+async function renderOverview() {
+  const root = views.overview
+  loading(root, 'overview')
+  let data
+  try { data = await api('/api/overview') } catch (err) { return failed(root, err) }
+
+  document.getElementById('stamp').textContent = 'read ' + new Date(data.generated_at).toLocaleTimeString()
+  clear(root)
+
+  const totals = data.totals || {}
+  const pools = (data.lists || []).length
+  root.append(el('div', { class: 'tiles' },
+    tile('Sendable list', num(totals.seated),
+      (data.current_list ? data.current_list.file : 'no seated list on disk') + ' · the current main list', true),
+    tile('First send, effective', num(totals.first_send_effective),
+      totals.first_send_backfilled
+        ? num(totals.first_send_routed) + ' routed out, backfilled to full'
+        : 'first-send-200.csv'),
+    tile('Side-pooled', num(totals.side_pooled), 'latest generation of every disposition'),
+    tile('Sourced', num(totals.sourced), 'S1 sourced (static figure)'),
+  ))
+
+  root.append(el('h2', { text: 'Pipeline' }))
+  const pipe = el('div', { class: 'rows card' })
+  for (const stage of data.pipeline || []) {
+    pipe.append(el('div', { class: 'row' },
+      el('span', { class: 'id', text: stage.id }),
+      el('span', { class: 'title', text: stage.title }),
+      chip(stage.status),
+      el('span', { class: 'detail', text: stage.detail || '' }),
+    ))
+  }
+  root.append(pipe)
+
+  root.append(el('h2', { text: 'Blockers' }))
+  const blockers = el('div', { class: 'rows card' })
+  for (const blocker of data.blockers || []) {
+    blockers.append(el('div', { class: 'row blocker-row' },
+      el('span', { class: 'title', text: blocker.label }),
+      chip(blocker.status),
+      el('span', { class: 'detail', text: blocker.detail || '' }),
+    ))
+  }
+  root.append(blockers)
+
+  const cons = data.conservation || {}
+  const rec = cons.recomputed || {}
+  root.append(el('h2', { text: cons.label || 'Conservation' }))
+  root.append(el('div', { class: 'card' },
+    el('div', { style: 'display:flex;gap:12px;align-items:center;flex-wrap:wrap' },
+      chip(rec.pass ? 'good' : 'critical', rec.pass ? 'PASS' : 'FAIL'),
+      el('span', { style: 'font-family:var(--mono);font-size:12.5px', text: rec.formula || '' }),
+      el('span', { class: 'count', text: num(rec.lhs) + ' == ' + num(rec.rhs) }),
+    ),
+    cons.scope && el('div', { class: 'count', style: 'margin-top:8px', text: cons.scope }),
+    data.sendfix && el('div', { class: 'count', style: 'margin-top:8px',
+      text: 'reported by ' + data.sendfix.file + ' · in ' + num(data.sendfix.input && data.sendfix.input.seated_v2) +
+        ' · seated ' + num(data.sendfix.output && data.sendfix.output.seated_v3) + ' · routed ' + num(data.sendfix.routed) }),
+  ))
+
+  root.append(el('h2', { text: 'Lineage · ' + pools + ' generations' }))
+  const body = el('tbody')
+  for (const list of data.lists || []) {
+    body.append(el('tr', { class: list.current ? 'current' : null },
+      el('td', {}, el('strong', { text: list.name })),
+      el('td', { class: 'dim', text: list.stage }),
+      el('td', { class: 'dim', text: list.role }),
+      el('td', { class: 'num', text: num(list.rows) }),
+      el('td', { class: 'dim', text: text(list.file) }),
+    ))
+  }
+  root.append(el('div', { class: 'tablewrap' }, el('table', {},
+    el('thead', {}, el('tr', {},
+      el('th', { text: 'List' }), el('th', { text: 'Stage' }), el('th', { text: 'Role' }),
+      el('th', { class: 'num', text: 'Rows' }), el('th', { text: 'File' }),
+    )),
+    body,
+  )))
+}
+
+function tile(label, value, context, hero) {
+  return el('div', { class: 'card tile' + (hero ? ' hero' : '') },
+    el('div', { class: 'label', text: label }),
+    el('div', { class: 'value', text: value }),
+    el('div', { class: 'context', text: context }),
+  )
+}
+
+// ── List ────────────────────────────────────────────────────────────────────
+const LIST_COLUMNS = [
+  { key: 'company_display', label: 'Company', wide: true },
+  { key: 'domain', label: 'Domain' },
+  { key: 'email', label: 'Email' },
+  { key: 'city', label: 'City' },
+  { key: 'state', label: 'State' },
+  { key: 'segment', label: 'Segment' },
+  { key: 'tier', label: 'Tier' },
+  { key: 'cohort', label: 'Cohort' },
+  { key: 'rank_score', label: 'Rank', num: true },
+]
+
+const FIELD_GROUPS = [
+  ['Identity', ['company_display', 'company', 'domain', 'email', 'email_source', 'address_1', 'city', 'state', 'zip5', 'phone_e164', 'lat', 'lng', 'location_count']],
+  // S5 (Apollo) contact-finding output — landed in seated-v5. Grouped rather
+  // than left to the "Other" catch-all because this is the data that decides
+  // whether a row can be sent at all.
+  ['Contact (S5)', ['contact_first_name', 'contact_last_name', 'contact_title', 'contact_email', 'contact_email_status', 'contact_linkedin', 'contact_source']],
+  ['Provenance', ['source', 'source_url', 'captured']],
+  ['Declaration', ['self_declaration', 'self_declaration_verbatim', 'self_declaration_url']],
+  ['Classification', ['disposition', 'segment', 'evidence_depth', 'brand_authorized', 'line_card', 'distributor_type', 'tier_raw', 'needs_identity_resolution', 'identity_status', 'identity_found', 'icp_class', 'icp_uncertain', 'vertical_axis', 'category_core', 'category_contam']],
+  ['Enrichment', ['ecommerce_class', 'sku_estimate', 'brand_count', 'review_count', 'size_score', 'size_band']],
+  ['Rank / seat', ['rank_score', 'rank_components', 'shortlist', 'segment_scores', 'tier', 'cohort', 'dup_of']],
+]
+
+// `name: null` until the first load — the default selection is whichever list
+// the server reports as current, never a hardcoded generation.
+const listState = { name: null, q: '', segment: '', tier: '', cohort: '', state: '', offset: 0, limit: 50, options: null }
+let currentListName = null
+let searchTimer = null
+
+async function renderList() {
+  const root = views.list
+  loading(root, 'list')
+
+  let overview, pools
+  try {
+    ;[overview, pools] = await Promise.all([api('/api/overview'), api('/api/pools')])
+  } catch (err) { return failed(root, err) }
+
+  const live = (overview.lists || []).find((l) => l.current) || null
+  currentListName = live ? live.name : null
+
+  const choices = (overview.lists || []).filter((l) => l.browsable && l.rows !== null)
+    .map((l) => ({ value: l.name, label: l.name + (l.current ? ' · current' : '') + ' (' + num(l.rows) + ')' }))
+  for (const pool of pools.pools || []) {
+    choices.push({ value: pool.name, label: 'pool: ' + pool.disposition + ' (' + num(pool.rows) + ')' })
+  }
+  // Default to the current list; fall back to whatever is offered first.
+  if (!choices.some((c) => c.value === listState.name)) {
+    listState.name = currentListName && choices.some((c) => c.value === currentListName)
+      ? currentListName
+      : (choices.length ? choices[0].value : null)
+  }
+
+  clear(root)
+
+  const picker = el('select', { 'aria-label': 'List', onchange: (e) => {
+    listState.name = e.target.value; listState.offset = 0
+    listState.segment = listState.tier = listState.cohort = listState.state = ''
+    syncFilterVisibility(); loadRows()
+  } })
+  for (const choice of choices) picker.append(el('option', { value: choice.value, text: choice.label }))
+  picker.value = listState.name
+
+  const search = el('input', { type: 'search', placeholder: 'Search company, domain, email, city…', value: listState.q,
+    oninput: (e) => {
+      const value = e.target.value
+      clearTimeout(searchTimer)
+      searchTimer = setTimeout(() => { listState.q = value; listState.offset = 0; loadRows() }, 300)
+    } })
+
+  const filters = ['segment', 'tier', 'cohort', 'state'].map((field) =>
+    el('select', { id: 'filter-' + field, 'aria-label': field, onchange: (e) => {
+      listState[field] = e.target.value; listState.offset = 0; loadRows()
+    } }))
+
+  const prev = el('button', { class: 'btn', type: 'button', text: '← prev', onclick: () => {
+    listState.offset = Math.max(0, listState.offset - listState.limit); loadRows()
+  } })
+  const next = el('button', { class: 'btn', type: 'button', text: 'next →', onclick: () => {
+    listState.offset = listState.offset + listState.limit; loadRows()
+  } })
+  const counter = el('span', { class: 'count' })
+
+  root.append(el('div', { class: 'controls' }, picker, search, filters, prev, next, counter))
+  const host = el('div')
+  root.append(host)
+
+  syncFilterVisibility()
+  if (!listState.options) loadFilterOptions()
+  else fillFilters()
+  loadRows()
+
+  function syncFilterVisibility() {
+    // The four aggregates are computed over the CURRENT seated list; showing
+    // them on another list would offer options that cannot match a single row.
+    const on = currentListName !== null && listState.name === currentListName
+    for (const select of filters) select.style.display = on ? '' : 'none'
+  }
+
+  async function loadFilterOptions() {
+    try {
+      listState.options = await api('/api/segments')
+      fillFilters()
+    } catch { /* filters stay empty; search and paging still work */ }
+  }
+
+  function fillFilters() {
+    const map = { segment: 'by_segment', tier: 'by_tier', cohort: 'by_cohort', state: 'by_state' }
+    filters.forEach((select, i) => {
+      const field = ['segment', 'tier', 'cohort', 'state'][i]
+      clear(select)
+      select.append(el('option', { value: '', text: 'all ' + field + 's' }))
+      for (const row of (listState.options && listState.options[map[field]]) || []) {
+        if (row.value === '(none)') continue
+        select.append(el('option', { value: row.value, text: row.value + ' · ' + num(row.count) }))
+      }
+      select.value = listState[field]
+    })
+  }
+
+  async function loadRows() {
+    loading(host, 'rows')
+    const query = new URLSearchParams({ offset: String(listState.offset), limit: String(listState.limit) })
+    for (const field of ['q', 'segment', 'tier', 'cohort', 'state']) {
+      if (listState[field]) query.set(field, listState[field])
+    }
+    let page
+    try { page = await api('/api/list/' + encodeURIComponent(listState.name) + '?' + query.toString()) }
+    catch (err) { return failed(host, err) }
+
+    const shown = page.rows.length
+    counter.textContent = shown
+      ? num(page.offset + 1) + '–' + num(page.offset + shown) + ' of ' + num(page.filtered) +
+        (page.filtered === page.total ? '' : ' filtered') + ' · ' + num(page.total) + ' in file'
+      : '0 of ' + num(page.filtered) + ' · ' + num(page.total) + ' in file'
+    prev.disabled = page.offset === 0
+    next.disabled = page.offset + shown >= page.filtered
+
+    clear(host)
+    if (!shown) {
+      host.append(el('div', { class: 'state', text: 'No rows match. Clear the search or the filters.' }))
+      return
+    }
+    const body = el('tbody')
+    for (const row of page.rows) {
+      const tr = el('tr', { class: 'clickable', tabindex: '0', onclick: () => openDrawer(row, page.fields) })
+      tr.addEventListener('keydown', (e) => { if (e.key === 'Enter') openDrawer(row, page.fields) })
+      for (const column of LIST_COLUMNS) {
+        const value = row[column.key]
+        tr.append(el('td', { class: column.num ? 'num' : (column.key === 'company_display' ? '' : 'dim') },
+          column.wide ? el('span', { class: 'trunc', title: text(value), text: text(value) }) : text(value)))
+      }
+      body.append(tr)
+    }
+    host.append(el('div', { class: 'tablewrap' }, el('table', {},
+      el('thead', {}, el('tr', {}, LIST_COLUMNS.map((c) => el('th', { class: c.num ? 'num' : null, text: c.label })))),
+      body,
+    )))
+  }
+}
+
+function openDrawer(row, fields) {
+  closeDrawer()
+  const scrim = el('div', { class: 'scrim', id: 'scrim', onclick: closeDrawer })
+  const drawer = el('aside', { class: 'drawer', id: 'drawer', role: 'dialog', 'aria-label': 'Record detail' })
+
+  drawer.append(el('div', { class: 'drawer-head' },
+    el('h3', { text: text(row.company_display || row.company) }),
+    el('button', { class: 'btn', type: 'button', text: 'close', onclick: closeDrawer }),
+  ))
+  if (row.domain) drawer.append(el('div', { class: 'count', text: String(row.domain) }))
+
+  const seen = new Set()
+  for (const [heading, keys] of FIELD_GROUPS) {
+    const present = keys.filter((k) => row[k] !== null && row[k] !== undefined && row[k] !== '')
+    keys.forEach((k) => seen.add(k))
+    if (!present.length) continue
+    drawer.append(el('h4', { text: heading }))
+    for (const key of present) {
+      drawer.append(key === 'self_declaration'
+        ? el('div', {}, el('div', { class: 'field' }, el('span', { class: 'k', text: key }), el('span', {})),
+            el('pre', { class: 'verbatim', text: String(row[key]) }))
+        : el('div', { class: 'field' },
+            el('span', { class: 'k', text: key }),
+            el('span', { class: 'v', text: String(row[key]) })))
+    }
+  }
+
+  const rest = (fields || Object.keys(row)).filter((k) => !seen.has(k) && row[k] !== null && row[k] !== undefined && row[k] !== '')
+  if (rest.length) {
+    drawer.append(el('h4', { text: 'Other' }))
+    for (const key of rest) {
+      drawer.append(el('div', { class: 'field' }, el('span', { class: 'k', text: key }), el('span', { class: 'v', text: String(row[key]) })))
+    }
+  }
+
+  document.body.append(scrim, drawer)
+  document.addEventListener('keydown', escClose)
+}
+function escClose(e) { if (e.key === 'Escape') closeDrawer() }
+function closeDrawer() {
+  for (const id of ['scrim', 'drawer']) { const n = document.getElementById(id); if (n) n.remove() }
+  document.removeEventListener('keydown', escClose)
+}
+
+// ── Pools ───────────────────────────────────────────────────────────────────
+async function renderPools() {
+  const root = views.pools
+  loading(root, 'pools')
+  let data
+  try { data = await api('/api/pools') } catch (err) { return failed(root, err) }
+
+  const pools = (data.pools || []).slice().sort((a, b) => (b.rows || 0) - (a.rows || 0))
+  const max = Math.max(1, ...pools.map((p) => p.rows || 0))
+  const total = pools.reduce((sum, p) => sum + (p.rows || 0), 0)
+
+  clear(root)
+  root.append(el('h2', { text: 'Side pools · ' + num(total) + ' records across ' + pools.length + ' dispositions' }))
+
+  const bars = el('div', { class: 'card bars' })
+  for (const pool of pools) {
+    bars.append(el('div', { class: 'bar-row', role: 'button', tabindex: '0',
+      title: 'Browse ' + pool.disposition,
+      onclick: () => browsePool(pool.name),
+      onkeydown: (e) => { if (e.key === 'Enter') browsePool(pool.name) } },
+      el('span', { class: 'bar-label', text: pool.disposition }),
+      el('span', { class: 'bar-track' }, el('span', { class: 'bar-fill', style: 'width:' + ((pool.rows || 0) / max * 100).toFixed(2) + '%' })),
+      el('span', { class: 'bar-value', text: num(pool.rows) }),
+    ))
+  }
+  root.append(bars)
+
+  root.append(el('h2', { text: 'Files' }))
+  const body = el('tbody')
+  for (const pool of pools) {
+    body.append(el('tr', { class: 'clickable', onclick: () => browsePool(pool.name) },
+      el('td', {}, el('strong', { text: pool.disposition })),
+      el('td', { class: 'dim', text: pool.version ? 'v' + pool.version : 'unversioned' }),
+      el('td', { class: 'num', text: num(pool.rows) }),
+      el('td', { class: 'dim', text: pool.file }),
+    ))
+  }
+  root.append(el('div', { class: 'tablewrap' }, el('table', {},
+    el('thead', {}, el('tr', {},
+      el('th', { text: 'Disposition' }), el('th', { text: 'Generation' }),
+      el('th', { class: 'num', text: 'Rows' }), el('th', { text: 'File' }),
+    )),
+    body,
+  )))
+}
+
+function browsePool(name) {
+  listState.name = name
+  listState.offset = 0
+  listState.q = ''
+  listState.segment = listState.tier = listState.cohort = listState.state = ''
+  loaded.list = true
+  renderList()
+  location.hash = 'list'
+}
+
+// ── Smartlead ───────────────────────────────────────────────────────────────
+async function renderSmartlead(refresh) {
+  const root = views.smartlead
+  loading(root, 'Smartlead')
+  let data
+  try { data = await api('/api/smartlead' + (refresh ? '?refresh=1' : '')) } catch (err) { return failed(root, err) }
+
+  clear(root)
+  root.append(el('div', { class: 'banner' },
+    el('strong', { text: 'Read-only' }),
+    el('span', { text: '— this tool cannot start, pause or edit campaigns. It only reads.' }),
+  ))
+
+  if (!data.ok) {
+    root.append(el('div', { class: 'card' },
+      el('div', { style: 'display:flex;gap:10px;align-items:center;margin-bottom:6px' },
+        chip('warning', 'offline'),
+        el('strong', { text: 'Smartlead offline — ' + text(data.reason) }),
+      ),
+      el('div', { class: 'count', text: text(data.detail) }),
+      el('div', { class: 'count', style: 'margin-top:10px', text: 'Everything else on this dashboard works without it.' }),
+    ))
+    return
+  }
+
+  root.append(el('div', { class: 'controls' },
+    el('button', { class: 'btn', type: 'button', text: 'Refresh', onclick: () => renderSmartlead(true) }),
+    el('span', { class: 'count', text: 'fetched ' + new Date(data.fetched_at).toLocaleTimeString() + ' · cached 120s' }),
+    (data.warnings || []).map((w) => chip(w.status, w.label + ' ×' + w.count)),
+  ))
+
+  root.append(el('h2', { text: 'Campaigns' }))
+  const campaigns = el('tbody')
+  for (const campaign of data.campaigns || []) {
+    const a = campaign.analytics || {}
+    campaigns.append(el('tr', {},
+      el('td', { class: 'num dim', text: text(campaign.id) }),
+      el('td', {}, el('span', { class: 'trunc', title: text(campaign.name), text: text(campaign.name) })),
+      el('td', { class: 'dim', text: text(campaign.status) }),
+      el('td', {}, campaign.gated ? chip('gated', 'GATED') : el('span', { class: 'count', text: '—' })),
+      el('td', { class: 'num', text: num(a.sent_count) }),
+      el('td', { class: 'num', text: num(a.open_count) }),
+      el('td', { class: 'num', text: num(a.reply_count) }),
+      el('td', { class: 'num', text: num(a.bounce_count) }),
+    ))
+  }
+  root.append(el('div', { class: 'tablewrap' }, el('table', {},
+    el('thead', {}, el('tr', {},
+      el('th', { class: 'num', text: 'ID' }), el('th', { text: 'Name' }), el('th', { text: 'Status' }), el('th', { text: 'Gate' }),
+      el('th', { class: 'num', text: 'Sent' }), el('th', { class: 'num', text: 'Opens' }),
+      el('th', { class: 'num', text: 'Replies' }), el('th', { class: 'num', text: 'Bounces' }),
+    )),
+    campaigns,
+  )))
+
+  root.append(el('h2', { text: 'Sending accounts' }))
+  const accounts = el('tbody')
+  for (const account of data.accounts || []) {
+    const warm = String(account.warmup_status || '').toUpperCase()
+    accounts.append(el('tr', {},
+      el('td', { text: text(account.from_email) }),
+      el('td', { class: 'dim', text: text(account.type) }),
+      el('td', {}, chip(warm === 'ACTIVE' ? 'good' : 'warning', text(account.warmup_status))),
+      el('td', { class: 'num dim', text: text(account.warmup_reputation) }),
+      el('td', { class: 'num dim', text: num(account.message_per_day) }),
+      el('td', { class: 'num dim', text: num(account.daily_sent_count) }),
+      el('td', { class: 'dim', text: account.expires_at ? String(account.expires_at).slice(0, 10) : '—' }),
+      el('td', { class: 'chips' }, (account.warnings || []).map((w) => chip(w.status, w.label))),
+    ))
+  }
+  root.append(el('div', { class: 'tablewrap' }, el('table', {},
+    el('thead', {}, el('tr', {},
+      el('th', { text: 'Mailbox' }), el('th', { text: 'Type' }), el('th', { text: 'Warmup' }),
+      el('th', { class: 'num', text: 'Reputation' }), el('th', { class: 'num', text: 'Daily cap' }),
+      el('th', { class: 'num', text: 'Sent today' }), el('th', { text: 'Expires' }), el('th', { text: 'Flags' }),
+    )),
+    accounts,
+  )))
+}
+
+// ── Reports ─────────────────────────────────────────────────────────────────
+async function renderReports() {
+  const root = views.reports
+  loading(root, 'reports')
+  let data
+  try { data = await api('/api/reports') } catch (err) { return failed(root, err) }
+
+  clear(root)
+  const list = el('div', { class: 'card report-list' })
+  const pane = el('div', { class: 'card report-body' },
+    el('div', { class: 'state', text: 'Pick a report on the left.' }))
+  root.append(el('div', { class: 'reports' }, list, pane))
+
+  const buttons = []
+  for (const report of data.reports || []) {
+    const button = el('button', { class: 'report-item', type: 'button', onclick: () => open(report, button) },
+      el('span', { class: 'n', text: report.name }),
+      el('span', { class: 'm', text: new Date(report.mtime).toLocaleString() + ' · ' + Math.round(report.size / 1024) + ' KB' }),
+    )
+    buttons.push(button)
+    list.append(button)
+  }
+  if (!buttons.length) list.append(el('div', { class: 'state', text: 'No audit reports in emails/data/.' }))
+  else buttons[0].click()
+
+  async function open(report, button) {
+    for (const other of buttons) other.removeAttribute('aria-current')
+    button.setAttribute('aria-current', 'true')
+    loading(pane, report.name)
+    let doc
+    try { doc = await api('/api/report/' + encodeURIComponent(report.name)) } catch (err) { return failed(pane, err) }
+    clear(pane)
+    // The ONLY innerHTML in this file: marked() output for a repo-generated
+    // audit file, whitelisted by name against a readdir listing server-side.
+    const article = el('article')
+    article.innerHTML = doc.html
+    pane.append(article)
+  }
+}
+
+route()
+</script>
+</body>
+</html>

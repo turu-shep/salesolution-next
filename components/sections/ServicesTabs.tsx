@@ -416,9 +416,10 @@ export function ServicesTabs({ id }: { id?: string }) {
             </h3>
             <p className="mt-3 max-w-2xl text-ink-300">
               Full Growth Ownership runs AI search, catalog, editorial,
-              dev, and outbound as a single accountable engagement.
-              Fractional GTM Engineer (Shape A) from $20K/mo, or 4-in-1
-              Coordinated Retainer (Shape B) from $12K/mo.
+              dev, and outbound as a single accountable engagement. Two
+              shapes: Fractional GTM Engineer (Shape A), or the 4-in-1
+              Coordinated Retainer (Shape B). One number, quoted after the
+              qualifier.
             </p>
           </div>
           <div className="md:col-span-4 md:text-right">

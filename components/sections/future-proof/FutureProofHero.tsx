@@ -95,7 +95,7 @@ export function FutureProofHero() {
     <section data-section-tone="light" className="relative bg-paper">
       <div className="mx-auto max-w-6xl px-4 pb-16 pt-16 sm:px-6 md:pb-24 md:pt-24 lg:px-8">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
-          AI Search Survival · Checklist + risk score
+          AI Search Survival · Checklist + risk calculator
         </p>
 
         {/* Big two-tone H1 — homepage rhythm */}
@@ -287,7 +287,7 @@ export function FutureProofHero() {
               </div>
 
               <div className="border-t border-rule px-5 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-400">
-                Deterministic · No data stored · Industry rates from Ahrefs / Pew
+                Deterministic · Runs in your browser · Industry rates from Ahrefs / Pew
               </div>
             </div>
           </div>

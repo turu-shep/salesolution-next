@@ -64,8 +64,8 @@ const HUB_FAQ: QA[] = [
           About 70% of engagements pair AI Search with either Editorial
           Authority or Catalog AI (or both) within 90 days. About 30% layer
           outbound after the first quarter. Website development is usually a
-          separate sprint or project, sometimes with AI Search engineering
-          baked into the build.
+          separate build project, sometimes with AI Search engineering
+          baked in.
         </p>
         <p className="mt-3">
           For multi-service engagements coordinated under one operator, see{' '}

@@ -3,9 +3,9 @@ import { SectionRail } from '@/components/layout/SectionRail'
 /**
  * Editorial Authority § 06 — what every retainer includes.
  *
- * Answers the implicit "what differs between Focused at $4K and Standard
- * at $7.5K?" question. Same baseline on every tier; volume scales by
- * tier. 4×2 grid on lg, 2×4 on md.
+ * Answers the implicit "what differs between Focused and Standard?"
+ * question. Same baseline on every tier; volume scales by tier. 4×2 grid
+ * on lg, 2×4 on md.
  */
 
 type Inclusion = { title: string; body: string }
@@ -40,8 +40,8 @@ const INCLUSIONS: Inclusion[] = [
     body: 'Citation coverage, query mix, organic + AIO traffic, written commentary. Not a Looker dashboard you&rsquo;ll never open.',
   },
   {
-    title: 'Volume discounts (5% / 15%)',
-    body: '5% off for a 6-month commitment, 15% off for 12 months. Stacks on the listed tier prices for the term.',
+    title: 'Better terms on a longer commitment',
+    body: 'A 6- or 12-month term earns a better rate. Both options sit side by side in the SOW before you sign.',
   },
 ]
 
@@ -74,9 +74,9 @@ export function EditorialIncluded({ id }: { id?: string }) {
           &mdash; without asking.
         </h2>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
-          Answers the implicit objection: &ldquo;what does Focused at $4K
-          include vs. Standard at $7.5K?&rdquo; Same baseline. Just
-          different volume.
+          Answers the implicit objection: &ldquo;what does Focused include
+          that Standard doesn&rsquo;t?&rdquo; Same baseline. Just different
+          volume.
         </p>
       </div>
 

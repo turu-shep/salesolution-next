@@ -1,0 +1,5 @@
+# Contact data stays out of git history. Lists live on disk and in the
+# sending tool; only strategy, research, and scripts get committed.
+data/
+lists/
+exports/

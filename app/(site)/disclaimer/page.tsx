@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://salesolution.net/disclaimer/' },
 }
 
-const LAST_UPDATED = 'May 21, 2026'
+const LAST_UPDATED = 'July 27, 2026'
 
 const TOC: LegalTOCItem[] = [
   { id: 'editorial-position', label: 'Editorial position' },
@@ -92,8 +92,10 @@ export default function DisclaimerPage() {
       <p>
         Readers should independently verify any fact, figure, or claim before
         relying on it. If you notice an inaccuracy, please notify us at{' '}
-        <a href="mailto:leads@salesolution.net">leads@salesolution.net</a> so we
-        can review and, where appropriate, correct it.
+        <a href={`mailto:${business.emails.general}`}>
+          {business.emails.general}
+        </a>{' '}
+        so we can review and, where appropriate, correct it.
       </p>
 
       <h2 id="third-party-content-and-links">
@@ -245,15 +247,17 @@ export default function DisclaimerPage() {
         issues, or any other questions about this disclaimer, contact:
       </p>
       <p>
-        <strong>IT Sale Solution LLC</strong> (d/b/a Sale Solution /
-        SaleSolution)
+        <strong>{business.legalName}</strong>, a Florida limited liability
+        company, doing business as {business.dba}
         <br />
         {business.address.street}
         <br />
         {business.address.city}, {business.address.region}{' '}
         {business.address.postalCode}, USA
         <br />
-        <a href={`mailto:${business.emails.leads}`}>{business.emails.leads}</a>
+        <a href={`mailto:${business.emails.general}`}>
+          {business.emails.general}
+        </a>
       </p>
     </LegalPageLayout>
   )

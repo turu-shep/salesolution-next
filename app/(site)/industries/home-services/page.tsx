@@ -34,7 +34,8 @@ const HS_FAQ: QA[] = [
         missed-call app, call tracking, and a CRM run $850 to $1,900 a month
         &mdash; $10K to $23K a year &mdash; with you as the unpaid integrator.
         Nobody in that stack records and sorts every call. Nobody splits system
-        revenue from ad revenue. Nobody&rsquo;s name is on a day-90 guarantee.
+        revenue from ad revenue. Nobody&rsquo;s name is on a 120-day payback
+        guarantee.
         $500 a month rents you a tool. The install builds you an asset a buyer
         can see working when they look at your books.
       </p>
@@ -103,8 +104,8 @@ const HS_FAQ: QA[] = [
         Fast. Call answering and missed-call text-back go live in the first
         couple of weeks, before the next storm. The full install runs against a
         written punch-list we walk together on day 60, so every piece has a date
-        on it. Your dashboard goes live around day 30, and day 90 is when the
-        report settles the guarantee.
+        on it. Your dashboard goes live around day 30. Day 120, counted from the
+        day you sign, is when the report settles the guarantee.
       </p>
     ),
   },

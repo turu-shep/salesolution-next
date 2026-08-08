@@ -8,46 +8,43 @@ import { cn } from '@/lib/cn'
  * /services/website-development-design-services/ § Engagement — build-specific tiers.
  *
  * Replaces the shared <EngagementModel /> on this page because the AI-search
- * pricing shape ($12–24K Sprint, $8–14K/mo Retainer) doesn't map to website
- * builds. Three tiers here:
- *   1. Build Sprint — single-template proof-of-approach ($15–35K)
- *   2. Full Build — replatform or net-new ($40–150K), FEATURED
+ * engagement shape doesn't map to website builds. Three tiers here:
+ *   1. Scoped build — single-template proof-of-approach
+ *   2. Full Build — replatform or net-new, FEATURED
  *   3. Full Growth Ownership — multi-service coordination (FGO shared card)
  *
  * Visual structure mirrors EngagementModel.tsx and catalog-ai/CatalogTiers.tsx:
- * slate accent strip on top, header (cadence + name + price), italic for-whom
- * blurb, checked includes list, CTA footer. Featured card gets the ink-900
- * border + drop shadow + floating slate "Most engagements start here" badge.
+ * slate accent strip on top, header (cadence + name + scope line), italic
+ * for-whom blurb, checked includes list, CTA footer. Featured card gets the
+ * ink-900 border + drop shadow + floating slate badge.
  *
- * Full Build also renders a small price-by-stack sub-grid below its includes
- * list so the buyer can map their stack to a budget without leaving the card.
+ * 2026-07-27 (FD2): build bands are no longer published — every figure lands
+ * in the SOW. The by-stack sub-grid now describes what each stack means
+ * instead of what it costs, and the "sprint" naming is retired with the rest
+ * of the sprint machinery.
  */
 
-type StackPrice = { label: string; price: string }
+type StackNote = { label: string; note: string }
 
 type Tier = {
-  key: 'sprint' | 'full' | 'fgo'
+  key: 'scoped' | 'full' | 'fgo'
   name: string
   cadence: string
-  price: string
+  /** Replaces the old price figure: how the fee is set, not what it is. */
+  scopeLine: string
   forWhom: string
   includes: string[]
-  stackPrices?: StackPrice[]
+  stackNotes?: StackNote[]
   cta: { label: string; href: string }
   featured?: boolean
-  /** Sprint-fee-credits-toward-install line, shown under the price
-   * (D7 credit mechanic, sell-product surfaces only). */
-  creditLine?: string
 }
 
 const TIERS: Tier[] = [
   {
-    key: 'sprint',
-    name: 'Build Sprint',
+    key: 'scoped',
+    name: 'Scoped build',
     cadence: '4–6 weeks · fixed scope',
-    price: '$15–35K',
-    creditLine:
-      'Take the engine install within 90 days and this Build Sprint fee credits toward it, in full.',
+    scopeLine: 'Fixed scope, quoted in the SOW within 48 hours.',
     forWhom:
       '"Show me the build approach works before we commit to a full replatform."',
     includes: [
@@ -58,13 +55,13 @@ const TIERS: Tier[] = [
       'Mobile-first build, WCAG 2.2 AA pre-checked',
       'One executive readout',
     ],
-    cta: { label: 'Scope a build sprint', href: '/book-growth-call/' },
+    cta: { label: 'Scope the build', href: '/book-growth-call/' },
   },
   {
     key: 'full',
     name: 'Full Build',
     cadence: '10–16 weeks · scoped to catalog',
-    price: '$40–150K',
+    scopeLine: 'Scoped to your catalog and stack — number in the SOW.',
     forWhom: '"Replatform or net-new build. Most engagements start here."',
     featured: true,
     includes: [
@@ -75,10 +72,10 @@ const TIERS: Tier[] = [
       'Core Web Vitals SLA + 30-day stabilization window included',
       'You own the code at midnight on launch day',
     ],
-    stackPrices: [
-      { label: 'Shopify Plus B2B (1–20K SKUs)', price: '$40–80K' },
-      { label: 'WooCommerce overhaul', price: '$35–70K' },
-      { label: 'Headless Next.js + Hydrogen/Saleor', price: '$90–150K' },
+    stackNotes: [
+      { label: 'Shopify Plus B2B (1–20K SKUs)', note: 'Standard B2B flows on a managed platform' },
+      { label: 'WooCommerce overhaul', note: 'Rebuilt in place — catalog, templates, checkout' },
+      { label: 'Headless Next.js + Hydrogen/Saleor', note: 'Custom front end, the deepest build' },
     ],
     cta: { label: 'Request a build quote', href: '/book-growth-call/' },
   },
@@ -86,7 +83,7 @@ const TIERS: Tier[] = [
     key: 'fgo',
     name: 'Full Growth Ownership',
     cadence: 'Multi-service · 3–6 month minimum',
-    price: '',
+    scopeLine: '',
     forWhom: '',
     includes: [],
     cta: { label: 'See Full Growth Ownership', href: '/services/full-growth-ownership/' },
@@ -101,12 +98,12 @@ export function WebDevPricing({ id }: { id?: string }) {
           How to engage
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Three ways to build. All priced.
+          Three ways to build. All scoped in writing.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
-          Fixed-scope sprint to prove the approach, full build for the
-          replatform, or coordinated multi-service ownership when the build
-          is one piece of a bigger growth program.
+          A fixed-scope build to prove the approach, the full replatform, or
+          coordinated multi-service ownership when the build is one piece of
+          a bigger growth program.
         </p>
       </div>
 
@@ -123,7 +120,7 @@ export function WebDevPricing({ id }: { id?: string }) {
                       search, content, outbound, and catalog work alongside
                       ongoing dev as a single growth function &mdash; one
                       operator accountable. Does NOT cover full new builds,
-                      which remain separate Build Sprint or Full Build
+                      which remain separate scoped-build or Full Build
                       projects.
                     </>
                   }
@@ -158,14 +155,9 @@ export function WebDevPricing({ id }: { id?: string }) {
                 <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
                   {t.name}
                 </h3>
-                <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-                  {t.price}
+                <p className="mt-3 text-base leading-relaxed text-ink-700">
+                  {t.scopeLine}
                 </p>
-                {t.creditLine && (
-                  <p className="mt-3 text-xs leading-relaxed text-ink-500">
-                    {t.creditLine}
-                  </p>
-                )}
               </div>
 
               <div className="flex-1 px-6 py-6">
@@ -194,20 +186,19 @@ export function WebDevPricing({ id }: { id?: string }) {
                   ))}
                 </ul>
 
-                {t.stackPrices && (
+                {t.stackNotes && (
                   <div className="mt-6 border-t border-rule pt-5">
                     <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500">
-                      Price by stack
+                      What each stack means
                     </p>
-                    <ul className="mt-3 space-y-2">
-                      {t.stackPrices.map((sp) => (
-                        <li
-                          key={sp.label}
-                          className="flex items-baseline justify-between gap-3 text-xs text-ink-700"
-                        >
-                          <span>{sp.label}</span>
-                          <span className="font-semibold tabular-nums text-ink-900">
-                            {sp.price}
+                    <ul className="mt-3 space-y-2.5">
+                      {t.stackNotes.map((sn) => (
+                        <li key={sn.label} className="text-xs text-ink-700">
+                          <span className="font-semibold text-ink-900">
+                            {sn.label}
+                          </span>
+                          <span className="mt-0.5 block leading-relaxed">
+                            {sn.note}
                           </span>
                         </li>
                       ))}

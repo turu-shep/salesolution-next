@@ -8,25 +8,32 @@
  * `siteSettings` singleton. The Sanity values win at runtime; these stay
  * in code for build-time SSG and for the `lib/schema.ts` JSON-LD builder.
  *
- * ⚠ The canonical address is BLOCKED on locked-decision D5 (see
- *   docs/strategy/12-execution-roadmap.md). Three different addresses appear
- *   on the live site today. Update the `address` block + Google Business
- *   Profile when the decision is made.
+ * Legal identity, address, and inbound email were confirmed by the founder
+ * on 2026-07-26 (closes F-04 / D-26). The values below are the only ones
+ * that may appear on a rendered surface.
  */
 
 export const business = {
+  // Display brand (wordmark, titles, schema `name`). The "Sale Solution" vs
+  // "Salesolution" spelling call is still open — F-17. Don't change it here
+  // without that decision.
   name: 'Sale Solution',
-  legalName: 'Sale Solution',
+  // Registered entity. Founder-confirmed 2026-07-26. Renders in the footer
+  // copyright and anchors every legal page. Legal pages compose the full
+  // sentence from these two: `{legalName}, a Florida limited liability
+  // company, doing business as {dba}`.
+  legalName: 'IT Sale Solution LLC',
+  dba: 'Salesolution',
   // Multi-vertical positioning (set 2026-06-18). Canonical value only — not yet
   //   rendered: wire into Organization JSON-LD (lib/schema.ts `slogan`) / metadata to surface it.
   tagline: 'Revenue systems for businesses that sell parts, book jobs, and fill chairs.',
   url: 'https://salesolution.net',
 
-  // D5 locked 2026-05-19. The other two addresses on the live site
-  // (200 Kings Point Dr · Sunny Isles Beach + Suite 1107 variant) are wrong
-  // and need to be swept from the WP site + Google Business Profile at cutover.
+  // The only address. Founder-confirmed 2026-07-26, unit included.
+  // Historical variants that still exist off-repo (Google Business Profile,
+  // the old WP site, directory listings) must be corrected to match this.
   address: {
-    street: '17071 W Dixie Hwy',
+    street: '17071 W Dixie Hwy, PH42',
     city: 'North Miami Beach',
     region: 'FL',
     postalCode: '33160',
@@ -36,8 +43,11 @@ export const business = {
   phone: '+1-561-531-4339',
   phoneDisplay: '561-531-4339',
 
+  // Single public inbound address. Founder-confirmed 2026-07-26: connect@ is
+  // the only address that may appear on a rendered surface. The former
+  // leads@ alias is retired from the site — if the mailbox still exists it
+  // should forward here.
   emails: {
-    leads: 'leads@salesolution.net',
     general: 'connect@salesolution.net',
   },
 

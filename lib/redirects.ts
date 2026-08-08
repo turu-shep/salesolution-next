@@ -82,4 +82,11 @@ export const redirects: Redirect[] = [
   { source: '/revenue-engine/home-services/', destination: '/industries/home-services/', permanent: true },
   { source: '/revenue-engine/medical/', destination: '/industries/medical-aesthetics/', permanent: true },
   { source: '/revenue-engine/local-retail/', destination: '/industries/consumer-brands/', permanent: true },
+
+  // ── 2026-07-27: sprint rung retired (install-first ladder). The
+  // /constraint-sprint/ route and its thank-you are deleted; send both to the
+  // door that replaced them. Longest source first so the thank-you doesn't get
+  // swallowed by the parent rule.
+  { source: '/constraint-sprint/thank-you/', destination: '/book-growth-call/', permanent: true },
+  { source: '/constraint-sprint/', destination: '/book-growth-call/', permanent: true },
 ]

@@ -769,6 +769,83 @@
       "status": "new",
       "source": "guest-post:03-geo-agency",
       "addedAt": "2026-07-08"
+    },
+    {
+      "term": "practice management system",
+      "normalized": "practice management system",
+      "status": "new",
+      "source": "doc:dentist-partner-brief",
+      "addedAt": "2026-07-26"
+    },
+    {
+      "term": "Business Associate Agreement",
+      "normalized": "business associate agreement",
+      "status": "new",
+      "source": "doc:dentist-partner-brief",
+      "addedAt": "2026-07-26"
+    },
+    {
+      "term": "A2P 10DLC",
+      "normalized": "a2p 10dlc",
+      "status": "new",
+      "source": "doc:dentist-partner-brief",
+      "addedAt": "2026-07-26"
+    },
+    {
+      "term": "all-party consent",
+      "normalized": "all party consent",
+      "status": "new",
+      "source": "doc:dentist-partner-brief",
+      "addedAt": "2026-07-26"
+    },
+    {
+      "term": "case acceptance",
+      "normalized": "case acceptance",
+      "status": "new",
+      "source": "doc:dentist-partner-brief",
+      "addedAt": "2026-07-26"
+    },
+    {
+      "term": "recall reactivation",
+      "normalized": "recall reactivation",
+      "status": "new",
+      "source": "doc:dentist-partner-brief",
+      "addedAt": "2026-07-26"
+    },
+    {
+      "term": "calendar write-back",
+      "normalized": "calendar write back",
+      "status": "new",
+      "source": "doc:dentist-partner-brief",
+      "addedAt": "2026-07-26"
+    },
+    {
+      "term": "review velocity",
+      "normalized": "review velocity",
+      "status": "new",
+      "source": "doc:dentist-partner-brief",
+      "addedAt": "2026-07-26"
+    },
+    {
+      "term": "front-desk score",
+      "normalized": "front desk score",
+      "status": "new",
+      "source": "doc:dentist-partner-brief",
+      "addedAt": "2026-07-26"
+    },
+    {
+      "term": "line card",
+      "normalized": "line card",
+      "status": "new",
+      "source": "campaign:industrial-email-campaign",
+      "addedAt": "2026-07-28"
+    },
+    {
+      "term": "cross-reference",
+      "normalized": "cross reference",
+      "status": "new",
+      "source": "campaign:industrial-email-campaign",
+      "addedAt": "2026-07-28"
     }
   ]
 }

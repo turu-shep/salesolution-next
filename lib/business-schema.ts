@@ -30,7 +30,7 @@ export function localBusinessSchema() {
     url: business.url,
     image: `${SITE}/logo.png`,
     telephone: business.phone,
-    email: business.emails.leads,
+    email: business.emails.general,
     address: {
       '@type': 'PostalAddress',
       streetAddress: business.address.street,

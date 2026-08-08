@@ -15,7 +15,8 @@
  *
  * Secrets (.env.local — auto-loaded; or run with node --env-file=.env.local):
  *   NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, SANITY_API_WRITE_TOKEN  (already set)
- *   DFS_LOGIN, DFS_PASSWORD   — DataForSEO REST basic-auth  → required for --scan / --seed-search
+ *   DATAFORSEO_USERNAME, DATAFORSEO_PASSWORD  — DataForSEO REST basic-auth → required for --scan / --seed-search
+ *                             (legacy DFS_LOGIN / DFS_PASSWORD still accepted)
  *   APOLLO_API_KEY            — optional → adds the owner's direct cell + email
  *
  * NOTE: the scan calls live DataForSEO + Apollo REST endpoints. It has not been
@@ -27,6 +28,7 @@
  */
 import { readFileSync, existsSync } from 'node:fs'
 import { writeFileSync } from 'node:fs'
+import { parseCsv } from './lib/csv.mjs'
 
 // ── env ──────────────────────────────────────────────────────────────────────
 function loadEnv() {
@@ -39,9 +41,15 @@ function loadEnv() {
 loadEnv()
 
 const env = process.env
+// DataForSEO REST basic-auth (PF-6). `.env.local` carries DATAFORSEO_USERNAME /
+// DATAFORSEO_PASSWORD; this script and .env.local.example originally used
+// DFS_LOGIN / DFS_PASSWORD, so every DFS call here failed. Accept both names,
+// prefer DATAFORSEO_*. `||` not `??` — a declared-but-blank var must fall back.
+const DFS_LOGIN = env.DATAFORSEO_USERNAME || env.DFS_LOGIN || ''
+const DFS_PASSWORD = env.DATAFORSEO_PASSWORD || env.DFS_PASSWORD || ''
 const DFS_AUTH =
-  env.DFS_LOGIN && env.DFS_PASSWORD
-    ? 'Basic ' + Buffer.from(`${env.DFS_LOGIN}:${env.DFS_PASSWORD}`).toString('base64')
+  DFS_LOGIN && DFS_PASSWORD
+    ? 'Basic ' + Buffer.from(`${DFS_LOGIN}:${DFS_PASSWORD}`).toString('base64')
     : null
 const APOLLO_KEY = env.APOLLO_API_KEY || null
 // Confirm against DataForSEO docs on first live run; best-effort either way.
@@ -88,7 +96,10 @@ async function sanityClient() {
 
 const DFS_BASE = 'https://api.dataforseo.com/v3'
 async function dfs(path, task) {
-  if (!DFS_AUTH) throw new Error('Missing DFS_LOGIN / DFS_PASSWORD in .env.local')
+  if (!DFS_AUTH)
+    throw new Error(
+      'Missing DataForSEO credentials — set DATAFORSEO_USERNAME / DATAFORSEO_PASSWORD (or legacy DFS_LOGIN / DFS_PASSWORD) in .env.local',
+    )
   const res = await fetch(`${DFS_BASE}/${path}`, {
     method: 'POST',
     headers: { Authorization: DFS_AUTH, 'Content-Type': 'application/json' },
@@ -170,16 +181,9 @@ async function seedSearch(configPath) {
 }
 
 // ── seed: from a CSV ─────────────────────────────────────────────────────────
-function parseCsv(text) {
-  const lines = text.trim().split(/\r?\n/)
-  const headers = lines[0].split(',').map((h) => h.trim().toLowerCase())
-  return lines.slice(1).map((line) => {
-    const cells = line.split(',')
-    const row = {}
-    headers.forEach((h, i) => (row[h] = (cells[i] || '').trim()))
-    return row
-  })
-}
+// parseCsv now lives in scripts/lib/csv.mjs — RFC 4180, quote-aware (PF-7).
+// The old inline split(',') shifted every column right of a comma inside a
+// field, and company names are full of commas.
 async function seedCsv(path, { vertical }) {
   const client = await sanityClient()
   const rows = parseCsv(readFileSync(path, 'utf8'))

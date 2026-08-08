@@ -11,7 +11,7 @@ import { TOOL_PAGES } from '@/lib/tools/pages'
 export const metadata: Metadata = {
   title: 'Free AI-search tools',
   description:
-    'Free, in-browser tools for AI search: an AI visibility calculator and a catalog AI-readiness scorecard for industrial e-commerce. No sign-up, nothing saved.',
+    'Tools for AI search: an AI visibility calculator and a catalog AI-readiness scorecard for industrial e-commerce. Free, in your browser — no sign-up needed.',
   alternates: { canonical: `${business.url}/tools/` },
 }
 
@@ -44,7 +44,7 @@ export default function ToolsIndexPage() {
             free and in your browser.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-700">
-            No sign-up, nothing saved. Calculators and scorecards for getting an industrial catalog
+            No sign-up needed. Calculators and scorecards for getting an industrial catalog
             found and cited in AI answers &mdash; the same tools we use in engagements.
           </p>
         </div>

@@ -60,7 +60,7 @@ const OUTBOUND_FAQ: QA[] = [
           <em className="not-italic font-semibold text-ink-900">8–15% positive reply rate</em>{' '}
           is the band we target by week six. Under 5% means the offer or the
           list needs work &mdash; we&rsquo;ll say so in the diagnostic instead
-          of running a second pilot.
+          of burning another six weeks on the same list.
         </p>
       </>
     ),
@@ -216,7 +216,7 @@ export default function OutboundEmailServicePage() {
           </>
         }
         primaryCta={{ label: 'Book a strategy call', href: '/book-growth-call/' }}
-        secondaryCta={{ label: 'Skip to pilot pricing', href: '#engagement' }}
+        secondaryCta={{ label: 'Skip to how we engage', href: '#engagement' }}
         anchors={[
           { label: 'Why most fail', href: '#reality' },
           { label: 'Approach', href: '#approach' },

@@ -21,7 +21,7 @@ type Row = {
 const ROWS: Row[] = [
   {
     label: 'Per-piece cost',
-    sale:    { value: '$500–1,800 / article', tone: 'mid' },
+    sale:    { value: 'Quoted per piece in the SOW', tone: 'mid' },
     mill:    { value: '$50–250 / article', tone: 'good' },
     inhouse: { value: '$2,500–4,000 fully loaded', tone: 'bad' },
   },

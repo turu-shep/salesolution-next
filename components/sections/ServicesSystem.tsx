@@ -149,17 +149,15 @@ export function ServicesSystem({ id }: { id?: string }) {
             <ul className="mt-4 space-y-2 text-[15px] text-ink-200">
               <li className="flex items-baseline gap-2">
                 <span aria-hidden className="text-brand-400">·</span>
-                One operator owns your growth, priced flat by company size &mdash;
-                from <span className="font-semibold text-white">$20K/mo</span>.
+                One operator owns your growth, priced flat by company size.
               </li>
               <li className="flex items-baseline gap-2">
                 <span aria-hidden className="text-brand-400">·</span>
-                Turn on the parts you want, priced by how many &mdash; from{' '}
-                <span className="font-semibold text-white">$12K/mo</span>.
+                Turn on the parts you want, priced by how many.
               </li>
             </ul>
             <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-400">
-              Published prices · SOW in 48 hours · Leave on 90 days’ notice
+              Quoted after the qualifier · SOW in 48 hours · Leave on 90 days’ notice
             </p>
           </div>
           <div className="flex flex-col gap-3 md:col-span-5 md:items-end">

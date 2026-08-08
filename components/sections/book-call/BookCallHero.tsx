@@ -1,5 +1,6 @@
 import { LeadForm } from '@/components/forms/LeadForm'
 import { CalendlyEmbed } from '@/components/integrations/CalendlyEmbed'
+import { business } from '@/lib/business'
 
 /**
  * /book-growth-call/ hero.
@@ -11,7 +12,9 @@ import { CalendlyEmbed } from '@/components/integrations/CalendlyEmbed'
  *   1. If NEXT_PUBLIC_CALENDLY_URL is set, embed the Calendly inline widget
  *      (matches live site behavior).
  *   2. Otherwise, fall back to the LeadForm so the page is still functional
- *      (form submits to /api/lead and redirects to the thank-you page).
+ *      (form submits to /api/lead, then confirms in place). F-02: it used to
+ *      redirect to the audit thank-you page, which told call requesters their
+ *      audit was being prepared. It wasn't — nobody had asked for one.
  */
 export function BookCallHero() {
   const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL
@@ -92,7 +95,27 @@ export function BookCallHero() {
                     formName="Book call lead form"
                     leadType="strategy_call"
                     submitLabel="Book my call"
-                    thankYouHref="/unlock-growth-audit/thank-you/"
+                    success={{
+                      heading: 'Call request received.',
+                      body: (
+                        <>
+                          You&rsquo;ll get proposed times by email within a few
+                          hours &mdash; same business day.
+                        </>
+                      ),
+                      footnote: (
+                        <>
+                          If it&rsquo;s urgent, call or text{' '}
+                          <a
+                            href={`tel:${business.phone}`}
+                            className="font-medium text-brand-600 underline underline-offset-4"
+                          >
+                            {business.phoneDisplay}
+                          </a>
+                          .
+                        </>
+                      ),
+                    }}
                     className="rounded-[14px] border-0 bg-surface p-6 shadow-none ring-0 sm:p-7"
                   />
                 )}
@@ -100,10 +123,10 @@ export function BookCallHero() {
               <p className="mt-5 text-xs leading-relaxed text-ink-500">
                 Prefer email? Write to{' '}
                 <a
-                  href="mailto:leads@salesolution.net"
+                  href="mailto:connect@salesolution.net"
                   className="font-semibold text-ink-900 underline decoration-rule-strong underline-offset-[5px] transition-colors duration-200 hover:text-brand-600 hover:decoration-brand-600"
                 >
-                  leads@salesolution.net
+                  connect@salesolution.net
                 </a>{' '}
                 with your store URL &mdash; we reply within 24h.
               </p>

@@ -171,8 +171,9 @@ const DENTAL_FAQ: QA[] = [
     a: (
       <p>
         I don’t report impressions or rankings. I report booked appointments
-        and the revenue the follow-up brought back, in your own numbers. If it
-        doesn’t clear the fee by day 90, I work free until it does.
+        and the revenue the follow-up brought back, in your own numbers. If that
+        hasn’t covered everything you’ve paid me — install and fees — by day
+        120, I work free until it has.
       </p>
     ),
   },
@@ -203,9 +204,10 @@ const DENTAL_FAQ: QA[] = [
     q: 'What does it cost, and am I locked into a contract?',
     a: (
       <p>
-        Published model. The number comes in writing the same day — no cold
-        games on a call. After the minimum it’s month-to-month. Cancel and you
-        keep your data, your Google profile, and your patient records.
+        The floor is public: installs start at $30,000. Your exact number
+        comes in writing the same day — no cold games on a call. After the
+        minimum it’s month-to-month. Cancel and you keep your data, your
+        Google profile, and your patient records.
       </p>
     ),
   },
@@ -370,7 +372,8 @@ export default function DentistsRevenueEnginePage() {
             <p className="mt-4 text-lg leading-relaxed text-ink-200">
               You work with me — not a pod, not a junior handoff. I install the
               system, I run it, and I’m the one on the hook if the
-              recovered-revenue line doesn’t clear my fee.
+              recovered-revenue line hasn’t covered what you’ve paid me by day
+              120.
             </p>
             <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-400">
               Artur Shepel · Founder, Sale Solution

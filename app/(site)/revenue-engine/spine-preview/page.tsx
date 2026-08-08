@@ -172,8 +172,8 @@ export default function SpinePreviewPage() {
             <p className="mt-4 text-lg leading-relaxed text-ink-200">
               You work with me &mdash; not a pod, not a junior handoff. I install the system,
               I run it, and I&rsquo;m the one on the hook if the recovered-revenue line
-              doesn&rsquo;t clear my fee. Fourteen years doing this for contractors,
-              practices, and shops.
+              hasn&rsquo;t covered what you&rsquo;ve paid me by day 120. Fourteen years doing
+              this for contractors, practices, and shops.
             </p>
             <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-400">
               Artur Shepel · Founder, Sale Solution

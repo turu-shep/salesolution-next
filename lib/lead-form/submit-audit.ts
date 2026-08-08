@@ -1,13 +1,16 @@
 import 'server-only'
 
 import { ALL_LEAKS, type RevenueLeakAuditData, VERTICAL_TRADES } from './revenue-leak-audit-schema'
+import { sendAck } from './send-ack'
 
 /**
  * Server-side submission for the Revenue Leak Audit (local-service funnel).
  * Same env-gated, fail-soft pattern as lib/lead-form/submit.ts:
  *   1. Cloudflare Turnstile — verify the bot token if a secret is set
  *   2. HubSpot Forms API    — CRM destination (its own form id)
- *   3. Resend                — email notification to leads@
+ *   3. Resend                — email notification to connect@
+ *   4. Resend (ack)          — "got your numbers, one business day" to the
+ *                              submitter, when they left an email
  *
  * Missing env for a channel = that channel is skipped, not failed. With no
  * channels configured the form still "succeeds" (dev mode) so it never blocks a
@@ -17,7 +20,12 @@ import { ALL_LEAKS, type RevenueLeakAuditData, VERTICAL_TRADES } from './revenue
 type ChannelState = 'sent' | 'skipped' | 'failed'
 type SubmitResult = {
   ok: boolean
-  channels: { turnstile: ChannelState; hubspot: ChannelState; resend: ChannelState }
+  channels: {
+    turnstile: ChannelState
+    hubspot: ChannelState
+    resend: ChannelState
+    ack: ChannelState
+  }
   errors: string[]
 }
 
@@ -30,6 +38,7 @@ export async function submitAudit(data: RevenueLeakAuditData): Promise<SubmitRes
     turnstile: 'skipped',
     hubspot: 'skipped',
     resend: 'skipped',
+    ack: 'skipped',
   }
 
   // ── 1. Turnstile ──
@@ -69,13 +78,41 @@ export async function submitAudit(data: RevenueLeakAuditData): Promise<SubmitRes
     }
   }
 
-  if (channels.hubspot === 'skipped' && channels.resend === 'skipped') {
-    console.log('[audit-submit] No backend channels configured — logging:', data)
+  const someSent = channels.hubspot === 'sent' || channels.resend === 'sent'
+
+  // ── 4. Prospect acknowledgment (F-02) ──
+  // Email is optional on this form (phone-first buyers), so this only fires
+  // when there's an address to answer. Gated on the lead being captured, and
+  // never gates the submission.
+  if (process.env.RESEND_API_KEY && someSent && data.email) {
+    try {
+      await sendAck('revenue_leak_audit', data.email, { fullName: data.fullName })
+      channels.ack = 'sent'
+    } catch (err) {
+      channels.ack = 'failed'
+      errors.push(`Ack: ${(err as Error).message}`)
+      console.error('[audit-submit] Prospect ack failed:', err)
+    }
+  } else if (!process.env.RESEND_API_KEY && someSent && data.email) {
+    console.error(
+      '[audit-submit] RESEND_API_KEY missing — lead captured but the submitter got no acknowledgment:',
+      data.email,
+    )
   }
 
-  const someSent = channels.hubspot === 'sent' || channels.resend === 'sent'
   const noneConfigured =
     channels.hubspot === 'skipped' && channels.resend === 'skipped'
+
+  // F-014: dev convenience locally, silent lead loss in production.
+  if (noneConfigured) {
+    if (process.env.NODE_ENV === 'production') {
+      const msg =
+        'No lead delivery channel is configured (HubSpot and Resend both absent) — refusing to report success and drop the lead.'
+      console.error('[audit-submit]', msg)
+      return { ok: false, channels, errors: [...errors, msg] }
+    }
+    console.log('[audit-submit] No backend channels configured — logging:', data)
+  }
 
   return { ok: someSent || noneConfigured, channels, errors }
 }
@@ -131,8 +168,8 @@ async function postToHubSpot(data: RevenueLeakAuditData, formId: string) {
 async function sendResendNotification(data: RevenueLeakAuditData) {
   const { Resend } = await import('resend')
   const resend = new Resend(process.env.RESEND_API_KEY!)
-  await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL ?? 'leads@salesolution.net',
+  const { error } = await resend.emails.send({
+    from: process.env.RESEND_FROM_EMAIL ?? 'connect@salesolution.net',
     to: process.env.RESEND_TO_EMAIL!,
     subject: `Revenue Leak Audit — ${data.fullName}, ${data.company}`,
     text: [
@@ -147,4 +184,6 @@ async function sendResendNotification(data: RevenueLeakAuditData) {
       `Source:  ${data.pageSource ?? 'unknown'}`,
     ].join('\n'),
   })
+  // F-031: the SDK resolves with { data, error } rather than throwing.
+  if (error) throw new Error(`${error.name}: ${error.message}`)
 }

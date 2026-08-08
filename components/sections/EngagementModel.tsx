@@ -8,54 +8,39 @@ import { cn } from '@/lib/cn'
 /**
  * Home § 4.5 — Engagement model.
  *
- * Founder/manager language. Three concrete options with "starts at"
- * ranges, what's included, and a one-line "for whom." Sits between
- * Services (what we do) and Evidence (proof it works) so the buying
- * decision feels supported in the natural flow.
+ * Founder/manager language. Two concrete shapes with what's included and a
+ * one-line "for whom." Sits between Services (what we do) and Evidence
+ * (proof it works) so the buying decision feels supported in the natural
+ * flow.
  *
- * The middle option is emphasized — it's the most common entry point
- * for new engagements and the operator wants the eye to land there.
- *
- * The third tier is the standardized Full Growth Ownership card from the
+ * The second card is the standardized Full Growth Ownership card from the
  * shared services system (replaces the legacy "Embedded" copy). When the
- * caller passes `serviceColorKey`, the Sprint + Retainer cards pick up a
- * thin accent strip and the featured badge recolors to match.
+ * caller passes `serviceColorKey`, the retainer card picks up a thin accent
+ * strip and the featured badge recolors to match.
+ *
+ * 2026-07-27 (FD2): the Sprint rung is retired and no monthly figure is
+ * published here — the $30K install floor is the only public number, and the
+ * retainer fee is quoted in the SOW.
  */
 
 type Engagement = {
   key: string
   name: string
   cadence: string
-  price: string
+  /** Replaces the old price figure: how the fee is set, not what it is. */
+  scopeLine: string
   forWhom: string
   includes: string[]
   featured?: boolean
-  /** Sprint-fee-credits-toward-install line, shown under the price on
-   * service-page mounts (D7 credit mechanic, sell-product surfaces only). */
-  creditLine?: string
 }
 
 const ENGAGEMENTS: Engagement[] = [
   {
-    key: 'sprint',
-    name: 'Sprint',
-    cadence: '4 weeks · fixed scope',
-    price: '$12–24k',
-    creditLine:
-      'Take the engine install within 90 days and this sprint fee credits toward it, in full.',
-    forWhom: '"Show me this works before we commit."',
-    includes: [
-      'Single-category schema rewrite',
-      '20–40 page content restructure',
-      '90-day AIO citation tracker',
-      'One executive readout',
-    ],
-  },
-  {
     key: 'retainer',
     name: 'Operator Retainer',
     cadence: 'Quarterly · ongoing',
-    price: '$8–14k / month',
+    scopeLine:
+      'Scoped to the system — exact number in your SOW within 48 hours.',
     forWhom: '"We know we have the structural problem. Fix it."',
     featured: true,
     includes: [
@@ -70,10 +55,9 @@ const ENGAGEMENTS: Engagement[] = [
 type Props = {
   id?: string
   /**
-   * Optional service color key. When set, the Sprint + Retainer cards get
-   * a thin top accent strip in the matching color and the featured badge
-   * recolors to match. Leave undefined on the homepage to preserve the
-   * default treatment.
+   * Optional service color key. When set, the retainer card gets a thin top
+   * accent strip in the matching color and the featured badge recolors to
+   * match. Leave undefined on the homepage to preserve the default treatment.
    */
   serviceColorKey?: Exclude<ServiceKey, 'composite'>
 }
@@ -93,7 +77,7 @@ export function EngagementModel({ id, serviceColorKey }: Props) {
           How to work with us
         </p>
         <h2 className="mt-3 font-display text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-ink-900 sm:text-5xl">
-          Three ways in. All priced.
+          Two ways in. Both scoped in writing.
         </h2>
         <p className="mt-6 text-lg leading-relaxed text-ink-700">
           No discovery calls before the proposal. Pick the shape that fits,
@@ -102,7 +86,7 @@ export function EngagementModel({ id, serviceColorKey }: Props) {
         </p>
       </div>
 
-      <ul className="mt-14 grid gap-6 md:grid-cols-3">
+      <ul className="mt-14 grid gap-6 md:grid-cols-2">
         {ENGAGEMENTS.map((e) => (
           <li
             key={e.key}
@@ -136,14 +120,9 @@ export function EngagementModel({ id, serviceColorKey }: Props) {
               <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.01em] text-ink-900">
                 {e.name}
               </h3>
-              <p className="mt-3 font-display text-3xl font-semibold tabular-nums leading-none text-ink-900">
-                {e.price}
+              <p className="mt-3 text-base leading-relaxed text-ink-700">
+                {e.scopeLine}
               </p>
-              {serviceColorKey && e.creditLine && (
-                <p className="mt-3 text-xs leading-relaxed text-ink-500">
-                  {e.creditLine}
-                </p>
-              )}
             </div>
 
             <div className="flex-1 px-6 py-6">
@@ -172,12 +151,8 @@ export function EngagementModel({ id, serviceColorKey }: Props) {
 
             <div className="border-t border-rule px-6 py-4">
               <Link
-                href={e.key === 'sprint' ? '/constraint-sprint/' : '/book-growth-call/'}
-                data-cta={
-                  e.key === 'sprint'
-                    ? 'sprint__engagement_card'
-                    : 'book_call__engagement_card'
-                }
+                href="/book-growth-call/"
+                data-cta="book_call__engagement_card"
                 data-cta-location="mid_body"
                 className={cn(
                   'inline-flex w-full items-center justify-center gap-1.5 rounded-[4px] px-5 py-2.5 text-sm font-semibold transition-colors duration-200',
@@ -186,8 +161,7 @@ export function EngagementModel({ id, serviceColorKey }: Props) {
                     : 'border border-ink-300 bg-surface text-ink-900 hover:border-ink-900',
                 )}
               >
-                {e.key === 'sprint' && 'Scope a sprint'}
-                {e.key === 'retainer' && 'Book a strategy call'}
+                Book a strategy call
                 <span aria-hidden>→</span>
               </Link>
             </div>

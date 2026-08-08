@@ -37,6 +37,34 @@ Each entry has an escape hatch. The rule isn't "never mention this" — it's "cl
 
 ---
 
+---
+
+## Added by wave 1 triage (2026-07-24)
+
+Seven of the ten wave-1 refutations died because the behaviour was already a recorded decision. Each one below cost a verify cycle; writing them down is what stops wave 2 paying again.
+
+**CTA routing is per *motion*, not per page theme.** Three separate findings (F-081, F-083, F-086) all reported the same shape: a CTA whose label implies one destination and whose href goes somewhere else. In every case the routing is signed.
+- `/industries/consumer-brands/` is a **sell-product** motion, and the sell-product door is `/book-growth-call/` — not the Revenue Leak Audit. The rebrand doc explicitly instructs scrubbing "Revenue Leak Audit" and the Guarantee from that page (`docs/strategy/multi-vertical-pivot/04-revenue-engine-rebrand.md`, "sell-product → Book a Growth Call").
+- "Start with a Sprint" on the industrial pillar routes to `/book-growth-call/` by approved mock (§11 of the same doc ships the block verbatim, bridge line included), even though `/constraint-sprint/` exists and is sitemap-registered.
+- The `?tier=standard|pro` links from `CatalogTiers` are specified verbatim in `docs/superpowers/specs/2026-05-24-catalog-ai-services-page-design.md:71-72`; the same spec's lead-form section deliberately asks for nothing but `showSkuCount`, so the unread param is spec-conformant.
+*Report only if* you can point to a shipped positioning decision the routing now contradicts — never on the basis that the label and the href "feel" mismatched.
+
+**`/industries/medical-aesthetics/` mounts the dental form on purpose.** `vertical="dental"` there is the shipped *fix* for a logged bug, not the bug: `medical-dental-offer-spec.md:301` records the real defect as the page rendering `<AuditCTA />` with no vertical at all (contractor wording, home-services submission) and prescribes the dental mount as the remedy.
+*Report only if* the med-spa lead record is provably unusable downstream — not because the two verticals share a form.
+
+**BAA / HIPAA language on `/revenue-engine/dentists/` is deliberate.** `docs/handoff/2026-06/23/revenue-engine-elevation.md:115` — "BAA/HIPAA language is intentionally KEPT here — that buyer expects it (per the claims library)" — and the pillar-elevation strategy strips it everywhere else on purpose.
+*Report only if* a specific claim on the page is one the business cannot actually honour; the presence of the language is not itself the finding.
+
+**The probe gate cookie is a UX nudge, not a security boundary.** `lib/probe/gate.mjs:7-8` says so in the code: "incognito evades it, which is fine because the per-IP limits in limits.mjs are the backstop." So read-then-write races on the run counter (F-061) are out of scope by design — same posture as the unsigned-token entry above.
+*Report only if* you can turn the race into unbounded **spend**, i.e. past the per-IP and global caps, not merely into extra free runs.
+
+**AI crawlers are allowed site-wide on purpose, including the report space.** `app/robots.ts` opens the site to the named AI crawlers, and `/ai-readiness/[token]/` re-scores on every open so a shared link never expires (`page.tsx:16-22`). Crawlers wandering that token space is the cost of the growth mechanic (F-080).
+*Report only if* you can show it converts into unbounded spend or an indexing problem that outweighs the citation upside — note that **F-094** is the row where unbounded probe spend actually landed, and it cleared this bar.
+
+---
+
 ## Adding to this list
 
 When phase 2 refutes a finding because the behavior turned out to be intentional, add it here with the reason and the escape hatch. The list gets more valuable every wave, and it's the main lever for improving precision — a model can't avoid reporting a deliberate decision it was never told about.
+
+**Pattern worth naming after wave 1:** the recurring refutation shape was *"CTA label disagrees with its destination."* Four of ten refutations were that. The lenses had `baseline/funnels.md` (which lists those mismatches as flags) but not the signed decisions behind them. If a future wave audits funnel routing, give it `docs/strategy/multi-vertical-pivot/04-revenue-engine-rebrand.md` up front.

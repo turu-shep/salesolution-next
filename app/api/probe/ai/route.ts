@@ -22,10 +22,17 @@ import { UNLOCKED_RUNS, gateVerdict } from '@/lib/probe/gate.mjs'
 import { clientIp, incrCounter, readGate, writeGate } from '@/lib/probe/gate-server'
 import { consume } from '@/lib/probe/limits.mjs'
 import { computeScores } from '@/lib/probe/score.mjs'
+import { isSameOrigin } from '@/lib/same-origin'
 
 export const runtime = 'nodejs'
 
 export async function POST(req: NextRequest) {
+  // F-019: see lib/same-origin.ts — Next does not do this for Route Handlers.
+  // Matters most here: this route spends money on every call.
+  if (!isSameOrigin(req)) {
+    return NextResponse.json({ error: 'forbidden' }, { status: 403 })
+  }
+
   let raw: unknown
   try {
     raw = await req.json()

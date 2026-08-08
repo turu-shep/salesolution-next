@@ -1,12 +1,15 @@
 import 'server-only'
 
 import type { LeadFormData } from './schema'
+import { type AckChannel, sendAck } from './send-ack'
 
 /**
- * Server-side submission orchestrator. Three channels, env-gated:
+ * Server-side submission orchestrator. Four channels, env-gated:
  *   1. Cloudflare Turnstile — verifies the bot-check token if a secret is set
  *   2. HubSpot Forms API    — primary CRM destination
  *   3. Resend                — transactional email fallback / notification
+ *   4. Resend (ack)          — the submitter's "got it, here's the window"
+ *                              confirmation; gated on the lead being captured
  *
  * If a channel's env vars are missing, the channel is skipped without failing.
  * Result: forms keep working from day one; switching on credentials lights
@@ -15,18 +18,35 @@ import type { LeadFormData } from './schema'
 
 type SubmitResult = {
   ok: boolean
-  channels: { turnstile: ChannelState; hubspot: ChannelState; resend: ChannelState }
+  channels: {
+    turnstile: ChannelState
+    hubspot: ChannelState
+    resend: ChannelState
+    ack: ChannelState
+  }
   errors: string[]
 }
 
 type ChannelState = 'sent' | 'skipped' | 'failed'
 
-export async function submitLead(data: LeadFormData): Promise<SubmitResult> {
+/**
+ * @param channel which door this came from — decides which acknowledgment the
+ *   submitter gets. Derived from the page in the route (leadChannelFromSource)
+ *   because five funnels share this one schema.
+ */
+export async function submitLead(
+  data: LeadFormData,
+  channel: Extract<
+    AckChannel,
+    'audit' | 'sprint' | 'strategy_call' | 'catalog_snapshot' | 'contact'
+  > = 'contact',
+): Promise<SubmitResult> {
   const errors: string[] = []
   const channels: SubmitResult['channels'] = {
     turnstile: 'skipped',
     hubspot: 'skipped',
     resend: 'skipped',
+    ack: 'skipped',
   }
 
   // ── 1. Turnstile verification (only if configured) ──
@@ -68,16 +88,46 @@ export async function submitLead(data: LeadFormData): Promise<SubmitResult> {
     }
   }
 
-  // Dev-mode fallback when no channels are configured yet.
-  if (channels.hubspot === 'skipped' && channels.resend === 'skipped') {
-    console.log('[lead-submit] No backend channels configured — logging:', data)
+  const someChannelSent = channels.hubspot === 'sent' || channels.resend === 'sent'
+
+  // ── 4. Prospect acknowledgment (F-02) ──
+  // Every one of these doors promises something on its thank-you page and then
+  // went quiet. The ack states the honest window instead. Gated on the lead
+  // actually being captured — acknowledging a lead nobody received is worse
+  // than silence. Never gates the submission: the lead is already safe.
+  if (process.env.RESEND_API_KEY && someChannelSent) {
+    try {
+      await sendAck(channel, data.email, { fullName: data.fullName })
+      channels.ack = 'sent'
+    } catch (err) {
+      channels.ack = 'failed'
+      errors.push(`Ack: ${(err as Error).message}`)
+      console.error('[lead-submit] Prospect ack failed:', err)
+    }
+  } else if (!process.env.RESEND_API_KEY && someChannelSent) {
+    console.error(
+      '[lead-submit] RESEND_API_KEY missing — lead captured but the submitter got no acknowledgment:',
+      { channel, email: data.email },
+    )
   }
 
-  // Form "succeeds" as long as at least one delivery channel sent it,
-  // OR if no channels are configured (dev mode — don't punish the user).
-  const someChannelSent = channels.hubspot === 'sent' || channels.resend === 'sent'
   const noChannelsConfigured =
     channels.hubspot === 'skipped' && channels.resend === 'skipped'
+
+  // F-014: "no channels configured" is a reasonable dev convenience and a silent
+  // data-loss bug in production. One renamed env var and every lead is dropped
+  // while the visitor is shown a thank-you page. Locally, keep logging and
+  // succeeding; in production, fail loudly so the outage is visible instead of
+  // invisible.
+  if (noChannelsConfigured) {
+    if (process.env.NODE_ENV === 'production') {
+      const msg =
+        'No lead delivery channel is configured (HubSpot and Resend both absent) — refusing to report success and drop the lead.'
+      console.error('[lead-submit]', msg, { pageSource: data.pageSource ?? 'unknown' })
+      return { ok: false, channels, errors: [...errors, msg] }
+    }
+    console.log('[lead-submit] No backend channels configured — logging:', data)
+  }
 
   return {
     ok: someChannelSent || noChannelsConfigured,
@@ -146,12 +196,15 @@ async function sendResendNotification(data: LeadFormData) {
   const { Resend } = await import('resend')
   const resend = new Resend(process.env.RESEND_API_KEY!)
 
-  await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL ?? 'leads@salesolution.net',
+  const { error } = await resend.emails.send({
+    from: process.env.RESEND_FROM_EMAIL ?? 'connect@salesolution.net',
     to: process.env.RESEND_TO_EMAIL!,
     subject: `New lead — ${data.fullName} (${data.revenue})`,
     text: formatPlainText(data),
   })
+  // F-031: the SDK resolves with { data, error } instead of throwing, so without
+  // this the caller's catch never fires and a rejected send is recorded as 'sent'.
+  if (error) throw new Error(`${error.name}: ${error.message}`)
 }
 
 function formatPlainText(data: LeadFormData): string {

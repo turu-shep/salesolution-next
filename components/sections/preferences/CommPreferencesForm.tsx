@@ -110,10 +110,10 @@ export function CommPreferencesForm() {
         unsubscribe path is the <span className="font-medium text-ink-700">Manage preferences</span> link
         in any email footer, or an email to{' '}
         <a
-          href="mailto:unsubscribe@salesolution.net"
+          href="mailto:connect@salesolution.net?subject=Unsubscribe"
           className="font-medium text-ink-800 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600"
         >
-          unsubscribe@salesolution.net
+          connect@salesolution.net
         </a>
         . We&rsquo;ll mirror your selection from this page within one business day.
       </p>

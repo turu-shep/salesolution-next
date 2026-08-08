@@ -14,8 +14,15 @@ export const MAX_AGE_S = 60 * 60 * 24 * 30 // 30 days
 
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '0.0.0.0', '::1'])
 
-/** True when the request host is a local dev host (the gate is open there). */
+/**
+ * True when the request host is a local dev host (the gate is open there).
+ *
+ * The Host header is client-supplied, so this must never be reachable from a
+ * production request — otherwise `Host: anything.local` opens /sales and
+ * /strategy with no password (F-003). Dev convenience, dev only.
+ */
 export function isLocalHost(host: string): boolean {
+  if (process.env.NODE_ENV === 'production') return false
   const h = host.toLowerCase().split(':')[0].trim()
   return LOCAL_HOSTS.has(h) || h.endsWith('.local')
 }

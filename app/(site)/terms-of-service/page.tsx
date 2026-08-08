@@ -2,6 +2,11 @@ import type { Metadata } from 'next'
 
 import { LegalPageLayout } from '@/components/sections/legal/LegalPageLayout'
 import type { LegalTOCItem } from '@/components/sections/legal/LegalTOC'
+import { business } from '@/lib/business'
+
+// Entity, address, and inbound email all come from lib/business.ts (the NAP
+// SSOT) so a legal page can never drift from the registered identity.
+const CONTACT_EMAIL = business.emails.general
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
@@ -10,7 +15,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://salesolution.net/terms-of-service/' },
 }
 
-const LAST_UPDATED = 'May 21, 2026'
+const LAST_UPDATED = 'July 27, 2026'
 
 const TOC: LegalTOCItem[] = [
   { id: 'acceptance', label: '1. Acceptance of terms' },
@@ -43,15 +48,16 @@ export default function TermsOfServicePage() {
     <LegalPageLayout
       title="Terms of Service"
       lastUpdated={LAST_UPDATED}
-      summary="These terms govern your use of salesolution.net. Paid work — audits, sprints, retainers, consulting, content production — is governed by a separate engagement letter signed by both parties."
+      summary="These terms govern your use of salesolution.net. Paid work — audits, installs, retainers, consulting, content production — is governed by a separate engagement letter signed by both parties."
       tocItems={TOC}
     >
       <p>
         These Terms of Service (the &ldquo;<strong>Terms</strong>&rdquo;) form a
         binding agreement between you (&ldquo;<strong>you</strong>&rdquo; or
-        &ldquo;<strong>your</strong>&rdquo;) and <strong>IT Sale Solution LLC</strong>,
-        a Florida limited liability company doing business as Sale Solution and
-        SaleSolution (&ldquo;<strong>Sale Solution</strong>,&rdquo; &ldquo;
+        &ldquo;<strong>your</strong>&rdquo;) and{' '}
+        <strong>{business.legalName}</strong>, a Florida limited liability
+        company, doing business as <strong>{business.dba}</strong>{' '}
+        (&ldquo;<strong>Sale Solution</strong>,&rdquo; &ldquo;
         <strong>we</strong>,&rdquo; &ldquo;<strong>us</strong>,&rdquo; or
         &ldquo;<strong>our</strong>&rdquo;), regarding your access to and use of
         the website located at{' '}
@@ -203,7 +209,7 @@ export default function TermsOfServicePage() {
       <h2 id="engagement-work">6. Engagement work governed separately</h2>
       <p>
         These Terms govern only your use of the Site. <strong>All paid work</strong>{' '}
-        provided by Sale Solution &mdash; including audits, constraint sprints,
+        provided by Sale Solution &mdash; including audits, engine installs,
         retainers, consulting, content production, and any other professional
         services &mdash; is governed exclusively by a separate written
         engagement letter (or master services agreement and statement of work)
@@ -395,7 +401,7 @@ export default function TermsOfServicePage() {
         parties will then have <strong>thirty (30) days</strong> from receipt
         of that notice to attempt to resolve the dispute. Notices to Sale
         Solution must be sent to{' '}
-        <a href="mailto:legal@salesolution.net">legal@salesolution.net</a> or
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> or
         the mailing address in Section 23.
       </p>
 
@@ -516,9 +522,14 @@ export default function TermsOfServicePage() {
       <h2 id="notices">22. Notices</h2>
       <p>
         Notices to Sale Solution must be sent to{' '}
-        <a href="mailto:legal@salesolution.net">legal@salesolution.net</a> or
-        by mail to <strong>IT Sale Solution LLC, 200 Kings Point Dr., apt.
-        1208, Sunny Isles Beach, FL 33160, USA</strong>. We may provide
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> or
+        by mail to{' '}
+        <strong>
+          {business.legalName}, {business.address.street},{' '}
+          {business.address.city}, {business.address.region}{' '}
+          {business.address.postalCode}, USA
+        </strong>
+        . We may provide
         notices to you by email at the address you most recently provided to
         us, by posting on the Site, or by any other means reasonably designed
         to reach you. Notices are effective when delivered (for email and
@@ -531,21 +542,19 @@ export default function TermsOfServicePage() {
         or via our <a href="/contact-me/">contact page</a>.
       </p>
       <p>
-        <strong>IT Sale Solution LLC</strong>
+        <strong>{business.legalName}</strong>
         <br />
-        d/b/a Sale Solution / SaleSolution
+        a Florida limited liability company, doing business as {business.dba}
         <br />
-        200 Kings Point Dr., apt. 1208
+        {business.address.street}
         <br />
-        Sunny Isles Beach, FL 33160, USA
+        {business.address.city}, {business.address.region}{' '}
+        {business.address.postalCode}, USA
         <br />
         Phone: <a href="tel:+15615314339">+1 561 531 4339</a>
         <br />
-        Legal &amp; notices:{' '}
-        <a href="mailto:legal@salesolution.net">legal@salesolution.net</a>
-        <br />
-        General inquiries:{' '}
-        <a href="mailto:leads@salesolution.net">leads@salesolution.net</a>
+        Legal, notices, and general inquiries:{' '}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         <br />
         Web: <a href="https://salesolution.net/">https://salesolution.net</a>
       </p>

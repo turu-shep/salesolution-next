@@ -53,15 +53,17 @@ export default function OptOutPreferencesPage() {
           <>
             <p>
               California residents can ask us not to sell or share personal
-              information. We respond within 15 business days.
+              information. We honor opt-out requests within 15 business days.
+              Access and deletion requests run on the 45-day clock described
+              in our privacy policy.
             </p>
             <p className="mt-4">
               Email{' '}
               <a
-                href="mailto:privacy@salesolution.net?subject=CCPA%20opt-out"
+                href="mailto:connect@salesolution.net?subject=CCPA%20opt-out"
                 className="font-medium text-ink-800 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600"
               >
-                privacy@salesolution.net
+                connect@salesolution.net
               </a>{' '}
               with the subject line &ldquo;CCPA opt-out&rdquo;, or use the
               contact form and we&rsquo;ll route it from there.
@@ -81,10 +83,10 @@ export default function OptOutPreferencesPage() {
               To stop receiving marketing emails, use the unsubscribe link at
               the bottom of any of our emails or email{' '}
               <a
-                href="mailto:unsubscribe@salesolution.net"
+                href="mailto:connect@salesolution.net?subject=Unsubscribe"
                 className="font-medium text-ink-800 underline decoration-rule-strong underline-offset-[3px] hover:text-brand-600 hover:decoration-brand-600"
               >
-                unsubscribe@salesolution.net
+                connect@salesolution.net
               </a>
               . Transactional messages tied to active engagements continue
               regardless.

@@ -195,7 +195,8 @@ export default function MedicalAestheticsPillarPage() {
             plan nobody reopened, or recall running months behind. I don&rsquo;t
             guess which is yours &mdash; the audit counts it, in your numbers.
             The system covers the whole path: answered, booked, chased, proven.
-            Installed by day 60, proving by day 90, and the price is published.
+            Installed by day 60. Paid back by day 120 &mdash; or I work free
+            until it is. And the floor is public.
           </>
         }
         primaryCta={{ label: 'Book a Revenue Leak Audit', href: '#audit' }}

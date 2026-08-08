@@ -11,12 +11,19 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { clientIp, incrCounter, readGate, writeGate } from '@/lib/probe/gate-server'
 import { consume } from '@/lib/probe/limits.mjs'
+import { isSameOrigin } from '@/lib/same-origin'
 
 export const runtime = 'nodejs'
 
 const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,255}\.[a-z]{2,24}$/i
 
 export async function POST(req: NextRequest) {
+  // F-019: see lib/same-origin.ts — Next does not do this for Route Handlers.
+  // Matters here because this route writes a contact into the CRM.
+  if (!isSameOrigin(req)) {
+    return NextResponse.json({ error: 'forbidden' }, { status: 403 })
+  }
+
   let raw: unknown
   try {
     raw = await req.json()
@@ -72,7 +79,7 @@ async function notifyViaResend(email: string, scoredUrl: string): Promise<void> 
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: process.env.RESEND_FROM_EMAIL ?? 'leads@salesolution.net',
+      from: process.env.RESEND_FROM_EMAIL ?? 'connect@salesolution.net',
       to,
       subject: `Probe unlock: ${email}`,
       text: `${email} unlocked the AI read${scoredUrl ? ` while scoring ${scoredUrl}` : ''}.\nSource: probe_v2 (AI-readiness report page).\nNote: email is UNVERIFIED — gate capture, not a confirmed form submission.`,

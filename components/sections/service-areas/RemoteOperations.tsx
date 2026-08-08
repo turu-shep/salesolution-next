@@ -38,7 +38,7 @@ const PRINCIPLES: Principle[] = [
     code: '04',
     title: 'Compliance and contracts are US-domiciled.',
     body:
-      'Delaware C-corp, Florida office, US tax residency. EU/UK/CA clients sign a standard SOW with W-9 attached — no offshore entity routing.',
+      'A Florida LLC with US tax residency, run out of one Florida office. EU/UK/CA clients sign a standard SOW with a W-9 attached, and nothing routes through an offshore entity.',
   },
 ]
 

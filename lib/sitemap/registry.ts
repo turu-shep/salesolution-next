@@ -101,7 +101,8 @@ export const LANDING_PAGES: SitemapUrl[] = [
   u('/unlock-growth-audit/', 'monthly', 0.8),
   u('/future-proof-your-seo/', 'monthly', 0.8),
   u('/book-growth-call/', 'monthly', 0.8),
-  u('/constraint-sprint/', 'monthly', 0.8),
+  // /constraint-sprint/ retired 2026-07-27 (install-first ladder) — route
+  // deleted, 308 to /book-growth-call/ in lib/redirects.ts.
   u('/catalog-snapshot/', 'monthly', 0.8),
 ]
 

@@ -1,5 +1,6 @@
 import { LeadForm } from '@/components/forms/LeadForm'
 import { SectionRail } from '@/components/layout/SectionRail'
+import { business } from '@/lib/business'
 
 /**
  * Form section — light tone to keep the L-D rhythm (paper → surface →
@@ -64,7 +65,27 @@ export function ContactFormSection() {
             formName="Contact page lead form"
             leadType="contact"
             submitLabel="Send my details"
-            thankYouHref="/unlock-growth-audit/thank-you/"
+            success={{
+              heading: 'Got it.',
+              body: (
+                <>
+                  Your message lands with Artur directly &mdash; reply within
+                  one business day.
+                </>
+              ),
+              footnote: (
+                <>
+                  If it&rsquo;s urgent, call or text{' '}
+                  <a
+                    href={`tel:${business.phone}`}
+                    className="font-medium text-brand-600 underline underline-offset-4"
+                  >
+                    {business.phoneDisplay}
+                  </a>
+                  .
+                </>
+              ),
+            }}
           />
         </div>
       </div>

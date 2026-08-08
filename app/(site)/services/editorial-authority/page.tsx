@@ -19,7 +19,7 @@ import { breadcrumbListSchema, serviceSchema } from '@/lib/schema'
 export const metadata: Metadata = {
   title: 'Editorial Authority · Senior-writer content for technical B2B',
   description:
-    'Pillar pages, cluster posts, category content, and engineering Q&A hubs. Senior subject-matter writers. No LLM ghostwriting. No offshoring. Editorial Retainer from $4K/mo, Pillar Pack from $6K fixed, $500 single-piece trial. Three volume tiers.',
+    'Pillar pages, cluster posts, category content, and engineering Q&A hubs. Senior subject-matter writers. No LLM ghostwriting. No offshoring. Single piece, fixed-scope Pillar Pack, or an ongoing retainer in three volume tiers — every one scoped in writing.',
   alternates: {
     canonical: 'https://salesolution.net/services/editorial-authority/',
   },
@@ -143,11 +143,11 @@ const EDITORIAL_FAQ: QA[] = [
     q: 'Can we trial before committing to a retainer?',
     a: (
       <p>
-        Two ways: a $500 Single Piece is a one-off article on your topic
-        with the full schema and SEO layer. The Pillar Pack ($6&ndash;14K,
-        6 weeks) ships one pillar plus six clusters and 90 days of
-        citation tracking &mdash; by week 4 you have enough data to
-        decide whether to retain or walk.
+        Two ways: a Single Piece is a one-off article on your topic with
+        the full schema and SEO layer. The Pillar Pack (6 weeks, fixed
+        scope) ships one pillar plus six clusters and 90 days of citation
+        tracking &mdash; by week 4 you have enough data to decide whether
+        to retain or walk. Both are quoted in writing before you commit.
       </p>
     ),
   },
@@ -192,7 +192,7 @@ export default function EditorialAuthorityServicePage() {
           name: 'Editorial Authority',
           slug: 'editorial-authority',
           description:
-            'Senior-writer editorial content for considered-purchase businesses — industrial distribution, technical B2B, and local service brands: pillar pages, cluster posts, Q&A hubs, category-level content, and trade-press editorial, all built for AI-search citation. Editorial Retainer from $4K/mo, Pillar Pack from $6K fixed, $500 single-piece trial.',
+            'Senior-writer editorial content for considered-purchase businesses — industrial distribution, technical B2B, and local service brands: pillar pages, cluster posts, Q&A hubs, category-level content, and trade-press editorial, all built for AI-search citation. Single piece, fixed-scope Pillar Pack, or an ongoing Editorial Retainer in three volume tiers.',
           category: 'Content Marketing',
         })}
       />

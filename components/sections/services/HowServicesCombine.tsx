@@ -14,7 +14,6 @@ type Combination = {
   services: ServiceKey[]
   label: string
   fit: string
-  spend: string
 }
 
 const COMBINATIONS: Combination[] = [
@@ -22,37 +21,31 @@ const COMBINATIONS: Combination[] = [
     services: ['search', 'editorial'],
     label: 'AI Search + Editorial Authority',
     fit: 'You want to win Google rankings and AI-answer mentions',
-    spend: '$13–22K / mo',
   },
   {
     services: ['search', 'catalog'],
     label: 'AI Search + Catalog AI',
     fit: 'Distributor with 5K+ SKUs needs both layers fixed',
-    spend: '$11–22K / mo (catalog initial as project + ongoing)',
   },
   {
     services: ['editorial', 'catalog'],
     label: 'Editorial Authority + Catalog AI',
     fit: 'Content at both levels: category pages and every product',
-    spend: '$11–22K / mo',
   },
   {
     services: ['dev', 'search'],
     label: 'Website Dev + AI Search (post-launch)',
     fit: 'Replatform with ongoing optimization',
-    spend: 'Build project + $8–14K / mo',
   },
   {
     services: ['outbound', 'search', 'editorial'],
     label: 'Outbound + AI Search + Editorial',
     fit: 'Outreach that lands because buyers can already find you',
-    spend: '$20–32K / mo',
   },
   {
     services: ['composite'],
     label: 'The whole engine',
     fit: 'Full growth function with one operator',
-    spend: 'Full Growth Ownership pricing',
   },
 ]
 
@@ -85,7 +78,7 @@ export function HowServicesCombine({ id }: { id?: string }) {
       </div>
 
       <div className="mt-12 overflow-x-auto border border-rule bg-surface">
-        <table className="w-full min-w-[720px] border-collapse text-left">
+        <table className="w-full min-w-[560px] border-collapse text-left">
           <thead>
             <tr className="border-b border-rule bg-paper">
               <th
@@ -99,12 +92,6 @@ export function HowServicesCombine({ id }: { id?: string }) {
                 className="px-5 py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500"
               >
                 When this fits
-              </th>
-              <th
-                scope="col"
-                className="px-5 py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-500"
-              >
-                Typical monthly spend
               </th>
             </tr>
           </thead>
@@ -127,9 +114,6 @@ export function HowServicesCombine({ id }: { id?: string }) {
                   </div>
                 </td>
                 <td className="px-5 py-5 text-sm text-ink-700">{c.fit}</td>
-                <td className="px-5 py-5 text-sm font-medium tabular-nums text-ink-900">
-                  {c.spend}
-                </td>
               </tr>
             ))}
           </tbody>

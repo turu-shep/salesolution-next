@@ -75,13 +75,13 @@ const CALL_FAQ: QA[] = [
     a: (
       <>
         <p>
-          We&rsquo;ll tell you on the call. Below $200k/month, the
-          retainer math typically doesn&rsquo;t hold &mdash; the 4-week
-          Sprint engagement ($12&ndash;24k, fixed scope) is purpose-built
-          for the category-overhaul use-case. Take the engine install within
-          90 days and the sprint fee credits toward it, in full. Below that
-          still, you&rsquo;re better with a generalist agency, and
-          we&rsquo;ll usually point you at one.
+          We&rsquo;ll tell you on the call, straight. Below $200k/month
+          the retainer math usually doesn&rsquo;t hold, and we&rsquo;d
+          rather say so than take the engagement. Either way the call ends
+          the same: a written SOW for the install &mdash; scope, sequence,
+          and your number &mdash; inside 48 hours. If you&rsquo;re under
+          the line, a generalist agency serves you better and we&rsquo;ll
+          usually point you at one.
         </p>
       </>
     ),

@@ -14,9 +14,19 @@ const docs: Doc[] = [
     desc: '15 niches + 14 discovery candidates, source-cited. Which verticals to build next, the per-niche economics, and the calculator presets. High-ticket / high-margin / recurring filter.',
   },
   {
+    href: '/strategy/offers',
+    name: 'Offer Mirror',
+    desc: 'What the site actually sells, evidence-first: blind scan → grades → drift → outside-in.',
+  },
+  {
     href: '/strategy/ceo/speach',
     name: 'CEO — speaking program',
     desc: 'Personal, not customer-facing: a 12-week speaking & performance program — the block library, objection-roulette deck, training calendar, and pronunciation work.',
+  },
+  {
+    href: '/strategy/offers/dentist/',
+    name: 'Dentist offer',
+    desc: 'The dentist Revenue Engine offer sheet: deliverables by category with the value of each. Outreach manual linked inside.',
   },
 ]
 

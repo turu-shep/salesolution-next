@@ -325,8 +325,9 @@ export function WholeFlowLeak({
                   {unitsToInstall === 1 ? '' : 's'}.
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-ink-100">
-                  After that, the fee is monthly and it has one test: the recovered line on your
-                  report beats it &mdash; the guarantee below.
+                  After that the fee is monthly, and the test runs on the total. By day 120, the
+                  recovered line on your report has to cover everything you&rsquo;ve paid. That&rsquo;s
+                  the guarantee below.
                 </p>
               </div>
             )}

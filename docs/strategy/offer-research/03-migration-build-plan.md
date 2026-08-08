@@ -470,3 +470,71 @@ The SEARCH-row verification sweep (R7 / D14-f) **ran 2026-07-07.** Every SEARCH-
 - **Reconciliation:** industrial ledger flag mismatch (punch-list #5 "two SEARCH rows" vs one visible) resolved by opening Editorial **plus** the site/catalog corroborator before buyer use.
 
 **No new stats were introduced beyond these URL-opening corrections.** Every buyer-facing ledger still prints ranges only; vendor names stay in the internal source column.
+
+
+---
+
+## Task 11 — Offer Mirror run — 2026-07-25 (filed 2026-07-26)
+
+Source: the Offer Mirror full ladder (docs/handoff/offers/), all five stages complete. Evidence: `lib/strategy/offers/{mirror,drift,perception}.generated.ts`, dashboard at `/strategy/offers`. IDs: U-xx claims · F-xx findings · D-xx drift rows · DD-xx deploy divergences · P-xx perception records. Founder decisions FD1–FD9 (2026-07-25, chat, recorded verbatim in drift grades) supersede both copy and older canon where they conflict. This block is append-only; it enters the Task 10 build sequence as **batch 6** (no edits made to Task 10's table per the append-only rule).
+
+### 11.0 — Ratify the founder decisions (GATE:HUMAN, blocks 11.2)
+
+FD1–FD9 collide with signed fences (D1–D12 + §16, the verbatim guarantee, R1–R9). Do not silently edit signed docs. One dated amendment: **§17 on `00-offer-architecture.md`** recording FD1 (no published-pricing claim), FD2 (all pricing unpublished except Catalog AI per-SKU; sprints/pilots retired; install-first), FD3 (no outcome guarantees; enablement + KPI-tracking posture), FD4 ($2M/yr industrial floor, $200k+/mo e-com as aspiration), FD5 (industrial promise = installed future-proof system; citations = mechanism; reopens IND-2), FD6 (12 cylinders), FD7 (no duped-buyer framing), FD8 (machine layer regenerated from registry), FD9 (no absolute privacy claims; capture-copy-first sequencing) — plus a rider on `04-signoff-sheet.md`.
+
+### 11.1 — P0 execution batch (no fence conflict; mostly already-signed work never executed)
+
+1. **D-23 / F-01** Proof integrity: execute the fact-ledger resolution (rename the noindex v2-1 composite); collapse each headline metric to ONE attributed engagement; reconcile date windows. Blocks all outreach scaling (perception fix #8).
+2. **F-02** Wire or remove `/future-proof-your-seo/` (form is a stub); send real confirmations on the four silent funnels or rewrite thank-you copy; per-funnel thank-yous (D-19).
+3. **F-10 + DD-02** Gate or delete the four preview routes (two carry live forms + the $30K anchor); stop rendering GATE:HUMAN-unsigned calculator presets as crawl-visible text.
+4. **D-17** Execute signed ARCH-3 removals + three new strays: "8–15% positive reply rate by week six", "zero-lock-in clause in every SOW since 2021", the 87%-vs-parker.com artifact naming a real client.
+5. **Voice breach**: remove the **LSEO** citation + link from `sanity:glossaryTerm/answer-engine-optimization` (banned competitor named in published, indexed copy).
+6. **D-18** Commit + deploy the uncommitted medical-options fix; add a `medical` union member.
+7. **D-20 / F-21** Delete the orphaned components (extend Task 6 B list: GEOPPCBoost, RealResults, ServicesSystem, ServicesByLeak, BuildOptimizeAmplify, PhaseDetailedFramework, CTABand, ServicesIndex, ContactJourney, TheLeak, VerticalFork, unused concept files).
+8. **F-20** Hygiene sweep: kill the demo post (example.com link, phantom glossary slug), set authors on all 20 posts, publish `industry` docs or drop the dead query, strip `(Source: docs/strategy/…)` internal paths from six career-path pages.
+9. **DD-01** Deploy the current homepage title; GSC recrawl requests for `/` and `/book-growth-call/`.
+10. **F-22 / D-19** FooterSwitch route-awareness (pillars get the right footer); register or remove `/bots` + `/ai-readiness/` dead refs.
+11. **F-25** Add one vertical self-ID field across forms → thank-yous → CRM (every industrial lead currently buckets to "other").
+
+### 11.2 — FD-driven copy program (blocked on 11.0)
+
+1. **Pricing removal sweep (FD1+FD2)**: hub combo table + "$4–15K/mo" bands + FGO floors + sprint/pilot tiers and anchors (`/constraint-sprint/` retires with redirect; EngagementModel sprint tier; book-growth-call "$12–24k" anchor; outbound pilot card) — Catalog AI per-SKU survives. "Published pricing model" claim struck everywhere (SSOT patch). **$30K install floor = open decision 11.3.2 — untouched until decided.**
+2. **Guarantee replacement (FD3)**: retire the day-90 sentence everywhere it renders (dentists, medical, home-services, LP, previews) and the anti-guarantee taunt on consumer ("A guarantee is what you reach for when the fee is hidden" — indicts nothing once no one guarantees). Direction drafts (GATE:HUMAN before shipping), one per vertical, same skeleton — *we run the system; the close is yours; we install, train, and track*:
+   - Trades: "We build and run the system that answers, books, and chases. Whether the job closes still comes down to your crew — the estimate, the price, how you show up. So we don't promise your outcomes. We install the best system we know, train your people on it, and sit on the numbers with you every month until the KPIs move."
+   - Dental: "The system reopens quiet treatment plans and catches the calls your desk can't. Case acceptance still happens chairside — how the plan is presented, how financing is offered. That's yours. We install, train the front desk, and track recall, reopened plans, and booked chairs with you."
+   - Consumer: "We put your store in the answers and chase every quote and cart. Whether the piece sells is still your floor — merchandising, pricing, the conversation at the counter. No outcome guarantee: the best-known system, your team trained on it, the sales line reviewed monthly."
+   - Industrial: "We install the system that gets you found, quoted, and re-ordered. Winning the RFQ is still your counter — pricing, stock, response speed. We don't guarantee quote counts. We install, train inside sales on it, and review the numbers with you every month."
+3. **Wedge reframe (FD7)**: replace "You've been sold pieces" family (ProblemShift, ProductWedge, FlowBlock, medical hero E candidates) with complete-system gain framing; re-check the homepage FLOW-1 arc.
+4. **Industrial promise re-cut (FD5)**: hero + `/services/ai-seo/` lead with the installed future-proof system; citations as mechanism ("named by AI" stays as evidence, not headline). Reopen IND-2. Humanize U-12's line in the same pass (keep the insight, kill the robotic cadence).
+5. **Floor change (FD4)**: `/book-growth-call/` + `/unlock-growth-audit/` fit copy → $2M/yr floor, $200k+/mo e-com as "where we do our best work"; ICP + SSOT patch.
+6. **Taxonomy sweep (FD6 + D-09/D-14/D-31)**: 12 everywhere; Sell→Convert in previews (if previews survive 11.1.3); Prove phrased as the measurement layer.
+7. **Machine layer (FD8/D-11)**: build-step generation of llms.txt + Organization JSON-LD from `lib/revenue-engine.ts`; four verticals, 12 cylinders, canonical tagline; wire `business.tagline` into schema slogan (D-15).
+8. **Instrument claims (FD9/D-12)**: replace "No sign-up, nothing saved" / "No newsletter · No call · Just the runs" with honest-light capture copy; **sequencing rule: no warming of any email captured under the old copy**; align privacy claims with actual flows (CCPA one SLA; banner claim vs GA4 user_id — D-26-adjacent compliance pass).
+9. **Voice debt (drift voicePass)**: metadata-first de-jargon pass on the industrial book (ai-seo title leads with "GEO Agency"; hub description acronym stack); em-dash density on RE vertical pages; adjudicate the three list conflicts (dashboard vs words-to-use; GEO/SEO as product names; PIM-in-glossary exempt ruling).
+
+### 11.3 — Founder calls needed (each one line, decide in any order)
+
+1. **G5 / D-25**: canonical Revenue Leak Audit URL — `/revenue-engine/` router vs `/industries/home-services/#audit` (canon disagrees with itself; every audit CTA waits on this).
+2. **D-04**: does the $30K install floor stay published on vertical pages, or does FD2 silence it too? (If it goes, the calculator join-line re-specs.)
+3. **D-26 / F-04**: which entity string is legally true — "IT Sale Solution LLC (FL)", "Sale Solution" (SSOT), or the Delaware C-corp line? One address. Then one sweep.
+4. **D-24**: sign C-07/C-08 (sourced) or make the live "1 in 3 calls" line qualitative.
+5. **D-27 / F-13**: ToS §5 ML-training ban vs llms.txt invitation — counsel carve-out for retrieval/citation, or accept knowingly.
+6. **D-28**: confirm the hub-lede umbrella re-scope (content stays industrial-weighted; recommendation already adopted in the blog pack).
+
+### 11.4 — External-impact fixes (perception.fixList, ranked; full rationale in perception.generated.ts)
+
+Third-party profile refresh (Clutch price bands, Crunchbase, ZoomInfo, LinkedIn) → deploy+recrawl freshness (DD-01/DD-04) → machine-layer regen (11.2.7) → category-answer inventory (blog relaunch pack + roundup/directory placement; consumer-DTC is the open lane) → entity hardening for name collisions → attested wins into diligence surfaces as they land → tomba.io removal request → proof-integrity fix first (11.1.1).
+
+### 11.5 — Content program
+
+The educate-lane rebuild runs as its own gated program: **`docs/handoff/new-blog/01-prompt-blog-relaunch.md`** (triage ledger for the 29 legacy docs → founder gate → engine-pipeline rewrites, FD-compliant by construction). The ~950 voice violations in legacy Sanity content resolve there, not by patching 2023 posts in place.
+
+**11.3.3 — ANSWERED (2026-07-26).** Entity: IT Sale Solution LLC, a Florida limited liability company, d/b/a Salesolution. Address: 17071 W Dixie Hwy, PH42, North Miami Beach, FL 33160. Canonical inbound: connect@salesolution.net. Identity sweep executed in working tree (F-04/D-26); display-brand spelling (Sale Solution vs Salesolution) remains the open F-17 wordmark call.
+
+**11.2.8 — EXECUTED (2026-07-27).** F-06/FD9 privacy batch: false storage/leave-site absolutes removed; CCPA SLAs scoped per request type (45 days access/deletion, 15 business days opt-out); probe capture copy now honest-light (future marketing allowed, one-click unsubscribe); tools claim scoped to the in-browser calculators; legal Last-updated bumped to July 27, 2026. Founder decision: pre-existing unlock captures go into campaigns — flagged FTC-deception/CCPA purpose-consistency risk + unverified-address deliverability; mitigation offered (first email doubles as notice). Ops item, off-repo.
+
+**11.1.2 — EXECUTED (2026-07-27).** F-02: checklist funnel wired (asset created at /checklists/ai-search-survival/, GATE:HUMAN QA before deploy; instant delivery email); prospect acknowledgments added to audit, catalog-snapshot, sprint, contact, call-fallback, and revenue-leak-audit funnels — instant ack, honest delivery window, gated on successful capture. Contact/call shared thank-you page routing stays F-22 scope.
+
+**11.2.1 — EXECUTED (2026-07-27) + 11.3.2 — ANSWERED.** F-03/FD1/FD2: founder confirmed the $30K install floor stays published; Catalog AI per-SKU remains the one fully-priced page. All other price figures removed from rendered surfaces (hub combo table, cylinder bands, retainer/sprint/pilot/build bands, FGO floors, ServicesTabs shapes); published-pricing claim replaced with floor-honest framing; /constraint-sprint retired (deleted + 308 → /book-growth-call/, sitemap updated); catalog-snapshot turnaround aligned to 2 business days. Guarantee-adjacent copy untouched pending the F-07 decision.
+
+**11.2.2 — EXECUTED (2026-07-28) + F-07 DECIDED.** Guarantee replaced sitewide: 120-day cost-recovery (system-attributed revenue ≥ install + fees paid, clock from signing, install by day 60, remedy = work free until covered), book-jobs verticals only. Sell-product (industrial, consumer) keeps no-guarantee with the cycle-length + counter-control rationale; the fee-hidden taunt and the published-prices trade are retired. Canonical sentence lives in Guarantee.tsx. SSOT patch suggestions: 00 §6/§11 settlement math, 03 §2.9 protected string, home-services §3/§9, medical-dental §3, product-marketing-context §Guarantee.

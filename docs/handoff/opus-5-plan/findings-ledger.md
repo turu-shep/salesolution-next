@@ -8,10 +8,10 @@ Format, severity scale, and status values: see [00-README.md](00-README.md#the-l
 
 | Status | S1 | S2 | S3 | S4 |
 |---|---|---|---|---|
-| OPEN | 0 | 5 | 46 | 4 |
-| CONFIRMED | 3 | 27 | 7 | 0 |
-| REFUTED | 0 | 0 | 2 | 0 |
-| FIXED | 0 | 0 | 0 | 0 |
+| OPEN | 0 | 0 | 0 | 0 |
+| CONFIRMED | 1 | 26 | 41 | 6 |
+| REFUTED | 0 | 2 | 14 | 0 |
+| FIXED | 2 | 4 | 1 | 0 |
 | PROPOSED | 0 | 0 | 0 | 0 |
 | DEFERRED | 0 | 0 | 0 | 0 |
 
@@ -39,7 +39,7 @@ Found by a read-only recon pass before phase 1. F-001 through F-004 were confirm
 
 ---
 
-### F-002 · S1 · security · CONFIRMED
+### F-002 · S1 · security · FIXED
 
 **Where:** [app/api/sales/login/route.ts:34](../../../app/api/sales/login/route.ts#L34), [app/api/strategy/login/route.ts](../../../app/api/strategy/login/route.ts)
 
@@ -47,13 +47,17 @@ Found by a read-only recon pass before phase 1. F-001 through F-004 were confirm
 
 **Failure scenario:** `lib/rate-limit.ts` exists and guards all three lead routes at 5 requests per 10 minutes, but the two password routes call `verifyPassword` with no limiter in front. A script can try passwords as fast as the platform answers. The password compare is correctly constant-time, which prevents a timing leak and does nothing about volume. Both areas share one password *and* one session secret (`lib/strategy/auth.ts` re-exports the sales primitives), so one guess opens `/sales` and `/strategy` together — client proposals, pricing, and niche strategy.
 
-**Found by:** opus-5 (recon) · **Verified by:** fable-5 (direct read, 2026-07-24) · **Fixed by:** —
+**Found by:** opus-5 (recon) · **Verified by:** fable-5 (direct read, 2026-07-24) · **Fixed by:** opus-5 (phase 3, security wave, branch fix/security-2026-07-24)
 
 **Notes:** Wire the existing `rateLimit` helper into both routes, tighter than the lead routes. Splitting the two areas onto separate passwords and secrets is a second, larger fix worth its own row if phase 2 agrees.
 
+**Fix.** fix(F-002) in 27e4c34. Both login routes now consume a shared LOGIN_POLICY budget (5 per 15 min) via the existing lib/rate-limit.ts — shared because one SALES_PASSWORD opens both areas, so separate buckets would double an attacker's attempts. Proven on a production build: 401 for wrong passwords, 429 once the budget is spent, /strategy 429s on the /sales budget, correct password still returns 200 with a cookie, and a second IP is unaffected. Splitting the two areas onto separate passwords and secrets remains unfixed and is a larger change — not attempted here.
+
+**Caveat added 2026-07-26.** The smoke run that proved this ran on the **in-memory fallback**, because Upstash is unset locally. In-memory counters are per serverless instance and reset on cold start, so in production the effective budget is looser than 5-per-15-minutes unless UPSTASH_REDIS_REST_URL/TOKEN are set in Vercel. Combined with **F-097** (the key is a client-supplied header), treat this fix as raising the cost of brute force, not bounding it. Both preconditions are dashboard checks — handoff-unblock-list.md items 0 and 1.
+
 ---
 
-### F-003 · S2 · security · CONFIRMED
+### F-003 · S2 · security · FIXED
 
 **Where:** [lib/sales/auth.ts:18-21](../../../lib/sales/auth.ts#L18-L21), consumed by [app/sales/layout.tsx:33](../../../app/sales/layout.tsx#L33)
 
@@ -61,9 +65,11 @@ Found by a read-only recon pass before phase 1. F-001 through F-004 were confirm
 
 **Failure scenario:** `isLocalHost` accepts `localhost`, `127.0.0.1`, `0.0.0.0`, `::1`, and **anything ending in `.local`**, reading from `headers().get('host')`. If any layer between the client and the app forwards an attacker-supplied Host — a proxy, a preview alias, a misrouted custom domain — `/sales` and `/strategy` open with no password. Exploitability depends on how Vercel handles unknown Host values, which is exactly what phase 2 needs to determine.
 
-**Found by:** opus-5 (recon) · **Verified by:** fable-5 (code path confirmed; **exploitability on Vercel not yet tested**) · **Fixed by:** —
+**Found by:** opus-5 (recon) · **Verified by:** fable-5 (code path confirmed; **exploitability on Vercel not yet tested**) · **Fixed by:** opus-5 (phase 3, security wave, branch fix/security-2026-07-24)
 
 **Notes:** Regardless of the verdict, the hardening is one line and free: require `process.env.NODE_ENV !== 'production'` before the localhost branch is even considered. Dev convenience shouldn't be reachable from a production request at all. Fix it in the security wave and let phase 2 decide the severity for the scorecard.
+
+**Fix.** fix(F-003) in 84c4d95. isLocalHost now returns false whenever NODE_ENV === production, so the client-controlled Host header cannot reach the dev-convenience branch at all. Proven on a production build: /sales and /strategy refuse Host: evil.local, localhost and 127.0.0.1 (404 — gate closed). Proven on the dev server that localhost still opens with no password (200, cockpit shell, no password form), so the daily workflow is unchanged. The exploitability-on-Vercel question the row was waiting on is now moot: the branch is unreachable in production either way.
 
 ---
 
@@ -83,7 +89,7 @@ Two problems in one row, and they get different treatment. The code fix — POST
 
 ---
 
-### F-005 · S2 · security · OPEN
+### F-005 · S2 · security · REFUTED
 
 **Where:** [lib/probe/gate-server.ts:39-43](../../../lib/probe/gate-server.ts#L39-L43), and `lib/rate-limit.ts`
 
@@ -91,13 +97,15 @@ Two problems in one row, and they get different treatment. The code fix — POST
 
 **Failure scenario:** If the leftmost XFF entry is attacker-controlled, a script rotates the header per request and the probe caps (30/h, 100/d), the AI caps (6/h, 10/d), the unlock caps, and the lead-form caps all stop binding. Only the global daily AI ceiling survives, which turns a spend cap into a spend target. Phase 2 must determine what Vercel actually guarantees here — the platform may prepend or normalize, and `x-vercel-forwarded-for` may be the trustworthy header.
 
-**Found by:** fable-5 (recon review, 2026-07-24) · **Verified by:** — · **Fixed by:** —
+**Found by:** fable-5 (recon review, 2026-07-24) · **Verified by:** opus-5 (phase 2, 3 verifiers, 2 refuted, UNCERTAIN) · **Fixed by:** —
 
 **Notes:** Do not fix before verifying. Reading the wrong header breaks rate limiting in the opposite direction. Read the Next 16 and Vercel docs on forwarded headers first.
 
+**Verification (REFUTED, 2/3 refuted).** REFUTED as written, on reachability. Three separate blocks: 1. The cited code does not run in production. `git cat-file -e origin/main:lib/probe/gate-server.ts` fails — the file containing `clientIp` exists only in local commits (added in `dd66f3c`, which sits in the 12 unpushed commits ahead of `origin/main`). `app/api/probe/ai/` and `app/api/probe/unlock/` are likewise absent from the production branch. Vercel deploys from the remote (no `.vercel` link, no CLI on this machine per baseline/platform-notes.md; `vercel.json` declares only a cron and no firewall config). The program already recorded this in findings-ledger.md:259-263 and used it Row kept as eval data. **Uncertain** — not settleable from code/docs here.
+
 ---
 
-### F-006 · S3 · security · OPEN
+### F-006 · S3 · security · REFUTED
 
 **Where:** [lib/probe/fetch.ts:113-115](../../../lib/probe/fetch.ts#L113-L115)
 
@@ -105,7 +113,7 @@ Two problems in one row, and they get different treatment. The code fix — POST
 
 **Failure scenario:** Attacker controls a domain with a 1-second TTL. First resolution returns a public IP and passes the check. The fetch resolves again and gets `169.254.169.254` or an internal address. The rest of the layer is solid — scheme allowlist, private-range blocks, 3-redirect cap, 5s timeout, 2MB cap — so this is the one seam.
 
-**Found by:** opus-5 (recon) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (recon) · **Verified by:** opus-5 (phase 2, 1 verifier, 1 refuted) · **Fixed by:** —
 
 **Notes:** Real but narrow, and the practical impact depends on what a serverless function can reach. Verify reachability before spending effort; a full fix means pinning the resolved IP through the connection, which is awkward in the runtime. `lib/probe/fetch.ts` has no tests at all — that gap is worth more than this finding.
 
@@ -115,9 +123,11 @@ Two problems in one row, and they get different treatment. The code fix — POST
 
 Found while establishing the baseline. Nothing was fixed.
 
+**Verification (REFUTED, 1/1 refuted).** LENS 1 finds the code mechanism real but the finding dies on the deliberate-decision test, so it does not hold up as written. CODE MECHANISM (real, and I looked hard for a guard that kills it — there is none). `fetchHtml` validates by *hostname*, then hands the *hostname* to `fetch()`: `await assertHostnameIsPublic(parsed.hostname)` does `dns.lookup(hostname, { all: true })` and screens each address, then `fetch(current, {...})` is called with no `lookup`, no pinned dispatcher, no Host-header rewrite to the vetted IP. Repo-wide grep across `app/ lib/ scripts/ next.config.ts` for `setGlobalDispatcher|undici|new Agent|https.Agent|lookup:` retur Row kept as eval data.
+
 ---
 
-### F-007 · S3 · quality · OPEN
+### F-007 · S3 · quality · REFUTED
 
 **Where:** [package.json](../../../package.json) `lint` script, [eslint.config.mjs](../../../eslint.config.mjs)
 
@@ -125,13 +135,15 @@ Found while establishing the baseline. Nothing was fixed.
 
 **Failure scenario:** Any agent or CI step that runs the documented `pnpm lint` check hangs or times out, so the check gets skipped in practice — which is how 44 source errors accumulated (F-008). The repo's own definition of done ("lint clean on changed files") can't be executed as written.
 
-**Found by:** fable-5 (phase 0) · **Verified by:** — · **Fixed by:** —
+**Found by:** fable-5 (phase 0) · **Verified by:** opus-5 (phase 2, 1 verifier, 1 refuted) · **Fixed by:** —
 
 **Notes:** Scoped run (`npx eslint app components lib sanity scripts`) completes in 10.7s. Fix candidate: add ignores (or scope the script). Baseline: `baseline/toolchain.md`.
 
+**Verification (REFUTED, 1/1 refuted).** REFUTED — the config facts are right, the diagnosis and the failure scenario are wrong, and the proposed cause accounts for 0.9 s of a 300+ s run. WHAT I CONFIRMED. `package.json` really is `"lint": "eslint"`, and bare `eslint` really does walk the whole repo: `lib/eslint/eslint.js:965-977` turns an empty pattern list into `["."]`. The only config ignores are `.next/**`, `out/**`, `build/**`, `next-env.d.ts` plus ESLint's built-in `["**/node_modules/", ".git/"]` (`lib/config/default-config.js:68`). And the 5-minute symptom reproduces: I ran the real `pnpm lint` command bounded by a 300 s alarm and it was killed at `5:00.08 total` having print Row kept as eval data.
+
 ---
 
-### F-008 · S3 · quality · OPEN
+### F-008 · S3 · quality · CONFIRMED
 
 **Where:** `app/`, `components/`, `lib/` (list in `baseline/toolchain.md`)
 
@@ -139,13 +151,15 @@ Found while establishing the baseline. Nothing was fixed.
 
 **Failure scenario:** `<a href>` to internal pages forces full document reloads off the legal pages; the react-hooks violations (setState-in-effect, purity, immutability in the two lead forms) are the exact rule class that produces render loops and stale-state bugs under React 19 concurrency — and today no check would catch a new one (F-007).
 
-**Found by:** fable-5 (phase 0) · **Verified by:** — · **Fixed by:** —
+**Found by:** fable-5 (phase 0) · **Verified by:** opus-5 (phase 2, 1 verifier, 0 refuted) · **Fixed by:** —
 
 **Notes:** Fix in the quality wave after F-007 makes linting runnable.
 
+**Verification (CONFIRMED, 0/1 refuted).** Scope: The claim survives verbatim; two precision notes for the fix wave, neither of which refutes it. (1) The parenthetical "legal pages using `<a>`" covers 18 of the 25 hits (terms 7, privacy 6, disclaimer 3, communication-preferences 1, opt-out-preferences 1). The other 7 are non-legal: app/(site)/book-growth-call/page.tsx:108, app/(site)/case-studies/page.tsx:129, components/forms/LeadForm.tsx:484, components/integrations/ConsentBanner.tsx:74, components/sections/guide-detail/GuideHero.tsx:45 (reported twice for the same anchor, since both app/(site)/guides/page.tsx and guides/[slug]/page.tsx match `/guides/`), components/sections/website-dev/Pe
+
 ---
 
-### F-009 · S2 · quality · OPEN
+### F-009 · S2 · quality · REFUTED
 
 **Where:** [package.json](../../../package.json) `test` script (`node --test lib/`), Node v20.16.0
 
@@ -155,11 +169,28 @@ Found while establishing the baseline. Nothing was fixed.
 
 **Found by:** opus-5 (recon, pre-identified in the phase 0 brief) · **Verified by:** opus-5 (phase 0 tests-map agent, direct measurement) · **Fixed by:** —
 
-**Notes:** **Blocks wave 3. Decision for Artur** — options and trade-offs in `baseline/tests.md §5`; recommendation is a `tsx` loader now and a separate Node 24 LTS upgrade (Node 20 is past EOL, see `deps.md`). Related: F-013.
+**Notes:** ~~Blocks wave 3. Decision for Artur~~ — see the correction below. Related: F-013, F-096.
+
+**CORRECTION (opus-5, phase 3, 2026-07-24) — this finding was wrong, and it was wrong in the expensive direction.** All three verifiers refuted it, and re-checking by hand confirms they were right:
+
+- **Node v23.11.1 is already installed on this machine** (`~/.nvm/versions/node/v23.11.1`, alongside v22.5.1), and **the repo pins no Node version** — no `engines` field, no `.nvmrc`, no `.node-version`, no CI. "Node 20.16" was a PATH accident, not a property of the project. Native type stripping works there.
+- `pnpm test` **gates nothing**: there is no `.github/workflows`, no `vercel.json` build override, no git hooks, and `build` is plain `next build`. The failure scenario's "a regression ships with `pnpm test` green" describes defeating a gate that does not exist. S2 was indefensible for a dev-only script.
+
+**What is actually true**, established empirically rather than asserted: bare `node --test` on Node 20.16 does not discover or load `.ts`. But on Node ≥22.6 it does, and the real obstacle for *some* modules is not TypeScript at all — it is **importing Next internals**. `lib/same-origin.ts` fails under bare node with `Cannot find package 'server-only'`; `lib/sales/auth.ts`, which imports only `node:crypto`, loads and tests fine.
+
+**So the tests got written.** [lib/sales/auth.test.mts](../../../lib/sales/auth.test.mts) — 6 tests, all passing — covers the F-003 fix (no Host value is local in production), the preserved dev path, `verifyPassword` including the empty-expectation case, and session tamper/expiry across nine mutation cases. A new `pnpm test:ts` script runs `.test.mts` files; **`pnpm test` is untouched and stays green**, because Node 20's glob does not match `.mts` (verified both ways). On Node 20 `test:ts` exits 1 loudly rather than silently passing.
+
+Writing those tests immediately found **F-096**, a latent dead-code bug in the same file. That is the argument for the runner change made better than the original finding made it.
+
+**Residual, and much smaller than the original claim:** modules importing `server-only` or `next/server` still need a shim or extraction to unit-test, and there is no pinned Node version so `test:ts` works only for whoever has ≥22.6 on PATH. An `.nvmrc` would fix the second half cheaply. Neither blocks anything.
+
+**For `model-notes.md`:** this row is the clearest self-inflicted error of the run. The finding was authored partly by opus-5 and partly by fable-5's phase-0 measurement, both of which measured the default `node -v`, concluded "structurally untestable", and never checked `~/.nvm` or whether the repo pinned anything. It then got cited three times in session summaries as a blocker justifying shipping four security fixes with no tests. The verify pass caught it; nothing else would have.
+
+**Verification (REFUTED, 3/3 refuted).** The two factual sub-claims check out, but the load-bearing characterization ("cannot load TypeScript at all", "structurally untestable", Wave 3 "cannot") is empirically false, and I disproved it on this machine without touching a repo file. WHAT IS TRUE. `package.json` really is `"test": "node --test lib/"`. On the default local Node (v20.16.0) `node --experimental-strip-types -e "…"` returns `node: bad option`, so no type stripping. I built a throwaway dir in the scratchpad with `sample.test.mjs` + `sample.test.ts` and ran `node --test .` on 20.16: only the `.mjs` file was discovered (`ok 1 - mjs picked up`, `# tests 1`). `node --test lib/`  Row kept as eval data.
 
 ---
 
-### F-010 · S2 · perf · OPEN
+### F-010 · S3 · perf · CONFIRMED
 
 **Where:** `https://salesolution.net/` (production homepage)
 
@@ -167,13 +198,15 @@ Found while establishing the baseline. Nothing was fixed.
 
 **Failure scenario:** FCP is 470ms and speed index 1,051ms, so paint starts fast and then the LCP element lands ~3.7s later — a late-arriving hero element. Mobile will be worse. Every funnel starts here; a 4.2s LCP is ranking and bounce drag on the exact page the ads and probes point at.
 
-**Found by:** fable-5 (phase 0, Lighthouse) · **Verified by:** — · **Fixed by:** —
+**Found by:** fable-5 (phase 0, Lighthouse) · **Verified by:** opus-5 (phase 2, 3 verifiers, 1 refuted) · **Fixed by:** —
 
 **Notes:** Cause not yet diagnosed (measurement only). Note production predates the local homepage rework — lens F must re-measure locally and diagnose against current code, not just the deployed build. Baseline: `baseline/vitals.md`.
 
+**Verification (CONFIRMED, 1/3 refuted).** Scope: The measurement and the severity survive; the *diagnosis* in failureScenario is imprecise and should not be inherited by the fix phase. "A late-arriving hero element" reads as a late-loading resource. There is none — the entire hero ships in the SSR HTML with zero images, video, or deferred imports, so a fix that hunts for a slow hero asset (preload, fetchpriority, image priority) will find nothing to fix. What arrives late is a *client-side repaint*: the carousel remounts its body text every 3 s and grows it on badge slides. "Bounce drag" is also overstated. FCP 470 ms and speed index 1,051 ms mean no visitor waits 4.2 s to see the hero; the **Severity → S3** on majority vote.
+
 ---
 
-### F-011 · S3 · perf · OPEN
+### F-011 · S3 · perf · CONFIRMED
 
 **Where:** `https://salesolution.net/book-growth-call/`
 
@@ -181,13 +214,15 @@ Found while establishing the baseline. Nothing was fixed.
 
 **Failure scenario:** The buyer clicks "Book a Growth Call" on a phone in a warehouse office and pays a 6MB download to see a calendar; Lighthouse scores stay green only because the chain loads late.
 
-**Found by:** fable-5 (phase 0, Lighthouse) · **Verified by:** — · **Fixed by:** —
+**Found by:** fable-5 (phase 0, Lighthouse) · **Verified by:** opus-5 (phase 2, 1 verifier, 0 refuted) · **Fixed by:** —
 
 **Notes:** Vendor chain, so options are containment (facade/click-to-load embed), not deletion. Two consent managers on one page is also a lens B question.
 
+**Verification (CONFIRMED, 0/1 refuted).** Scope: SURVIVES (established from code): the booking page mounts Calendly's widget script + stylesheet + auto-filled scheduling iframe unconditionally at afterInteractive with no facade, lazy gate or consent gate; it is the only page in the app that does; the page's own sections carry no images, video or iframes, so nothing first-party explains the ~3.9MB over the 2.05MB site floor; and Wistia, ZoomInfo, navattic, ctfassets, ketch and Optanon appear nowhere in first-party code, with the site running its own hand-rolled consent banner rather than either CMP. The 5.95MB figure and the vendor list come from the phase-0 production Lighthouse run recorde
+
 ---
 
-### F-012 · S2 · a11y · OPEN
+### F-012 · S2 · a11y · CONFIRMED
 
 **Where:** All 8 baseline pages (local prod build, commit `dd66f3c`)
 
@@ -221,9 +256,11 @@ Ratios get worse on the other surfaces in use: `#fafafa` 4.36/4.40, `#f7f7f7` 4.
 
 Belongs in the UX/a11y wave, not the security wave. The token change is a visual change on every page and needs before/after screenshots.
 
+**Verification (CONFIRMED, 0/3 refuted).** Scope: Two narrowings, neither of which refutes the defect: (1) WRONG FILE ATTRIBUTED for the target-size half. The claim says "6 homepage HeroProbe example-toggle buttons." The buttons are not in HeroProbe.tsx — they are the carousel dot rail at components/sections/AIOverviewMockup.tsx:294-309, which HeroProbe.tsx:218 merely mounts. A fixer grepping HeroProbe.tsx for the aria-label finds nothing. Consequence for scope: the same rail also ships on /industries/industrial-distribution/ (2 dots) and inside components/sections/revenue-engine/leak-concepts/Concept2Evidence.tsx, so it is homepage-only among the 8 baseline pages but NOT homepage-only in th
+
 ---
 
-### F-013 · S3 · quality · OPEN
+### F-013 · S3 · quality · CONFIRMED
 
 **Where:** [lib/sitemap/registry.reconcile.test.mjs](../../../lib/sitemap/registry.reconcile.test.mjs) (header comment lines 22–25)
 
@@ -231,13 +268,15 @@ Belongs in the UX/a11y wave, not the security wave. The token change is a visual
 
 **Failure scenario:** An escaping or `<lastmod>` regression makes Google reject the whole sitemap document while `pnpm test` shows 34/34 green — a false-confidence failure worse than having no test.
 
-**Found by:** opus-5 (phase 0, tests-map agent) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 0, tests-map agent) · **Verified by:** opus-5 (phase 2, 1 verifier, 0 refuted) · **Fixed by:** —
 
 **Notes:** Consequence of F-009 (the workaround exists because `.ts` can't be imported). Fix properly once the runner decision lands: execute the serializers and assert on output.
 
+**Verification (CONFIRMED, 0/1 refuted).** Scope: SURVIVES (the whole load-bearing core): the test never imports or executes `registry.ts`; it regexes source text at lines 30/33-35 exactly as claimed; `toUrlsetXml` and `toIndexXml` live in that module and are exercised by no test anywhere in the repo (repo-wide grep: definitions plus two route call sites only); therefore a semantic regression in `xmlEscape`, element order, or the `<lastmod>` branch ships with `pnpm test` fully green. Both cited line ranges are accurate. DOES NOT SURVIVE — narrowing 1: "stays green if the module fails to compile" is true of the test but carries no shippable risk, so it should not appear in the fix ticket as a
+
 ---
 
-### F-014 · S2 · correctness · OPEN
+### F-014 · S2 · correctness · FIXED
 
 **Where:** [lib/lead-form/submit.ts:72-86](../../../lib/lead-form/submit.ts#L72-L86), `lib/lead-form/submit-audit.ts:72-80`, `lib/lead-form/full-growth-quote-submit.ts:122-131`
 
@@ -245,7 +284,7 @@ Belongs in the UX/a11y wave, not the security wave. The token change is a visual
 
 **Failure scenario:** One renamed or missing env var in Vercel (`HUBSPOT_FORM_ID`, `RESEND_TO_EMAIL`, …) and every lead from all three funnels is silently dropped while every visitor sees "we received your details" — the F-004 stub failure mode reproduced at the infrastructure level, with no error, no alert, no retry, no queue.
 
-**Found by:** opus-5 (phase 0, tests-map + funnel agents independently) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 0, tests-map + funnel agents independently) · **Verified by:** opus-5 (phase 2, 3 verifiers, 0 refuted) · **Fixed by:** opus-5 (phase 3)
 
 **Notes:** The dev-ergonomics intent ("don't punish the user locally") is legitimate; the fix is to fail loudly (5xx or alert) when `NODE_ENV === 'production'` and zero channels are configured. Whether production env is currently complete needs a Vercel dashboard check — same class as F-001's deploy-env caveat.
 
@@ -266,9 +305,13 @@ A phase-2 verifier tripped over this while checking F-015, and verifying it chan
 3. **The audit read the wrong probe.** All eight lenses audited v2 at `lib/probe/*`. Nobody audited the 515 lines actually serving production traffic. That is a recall failure, not a precision failure, and it produced **F-094** below.
 4. **What IS live and confirmed:** F-002 (login brute force), F-003 (host header), F-004 (stub form discarding leads), F-014 + F-031 + F-034 (lead delivery reporting false success), the whole consent/pixel set (F-022–F-027), and F-012 (contrast tokens). Those deserve the front of the queue precisely because they are shipped.
 
+**Verification (CONFIRMED, 0/3 refuted).** Scope: The claim survives in full; one sentence of the failureScenario is looser than the code supports and should be tightened before it goes in the fix ledger. SURVIVES EXACTLY AS WRITTEN: all three handlers return ok:true for zero configured channels, console.log only, 200 from the route, thank-you redirect on the client, and FGO as the sole holder of a half-configuration guard. OVERSTATED: "One renamed or missing env var in Vercel (HUBSPOT_FORM_ID, RESEND_TO_EMAIL, …) and every lead from all three funnels is silently dropped." Two corrections. (1) Losing one var only silences a funnel if it removes that funnel's LAST delivering channel — with bo
+
+**Fix.** fix(F-014) in 4dc1b2d, across all three handlers (submit.ts, submit-audit.ts, full-growth-quote-submit.ts). Dev behaviour is unchanged — still logs the lead and succeeds, so local work is not punished. Under NODE_ENV=production, zero configured delivery channels now returns ok:false with the reason in errors, so the route 500s and the visitor is not shown a thank-you page for a lead that went nowhere. The FGO handler is the most exposed of the three because HUBSPOT_FGO_FORM_ID is deliberately unset until the portal form exists, leaving Resend as its only live channel. Whether production is currently fully configured is still a dashboard check (handoff-unblock-list.md item 2).
+
 ---
 
-### F-094 · S1 · security · CONFIRMED
+### F-094 · S1 · security · FIXED
 
 **Where:** `app/api/probe/route.ts` **as deployed on `origin/main`** (not the local file of the same path)
 
@@ -276,13 +319,67 @@ A phase-2 verifier tripped over this while checking F-015, and verifying it chan
 
 **Failure scenario:** The deployed route imports exactly four modules (`node:dns`, `node:net`, `node-html-parser`, `next/server`) and its `POST` handler at line 469 goes straight from `req.json()` to URL validation to outbound fetch. A grep of the full 515 lines for `rateLimit|consume|throttle|quota|upstash|429|turnstile|captcha|cookie|gate|auth` returns nothing but coincidental matches on the word "authority". So anyone can POST `{"url":"https://target/"}` in a loop and make salesolution.net issue outbound GETs at whatever rate they can drive — an amplification and reconnaissance proxy wearing our IP and our `SalesolutionProbe/0.1` user agent, with Vercel egress and function time billed to this account. Per-request damage is bounded (5s timeout, 2MB cap, 3 redirects); **request rate is not bounded at all.** The v2 limiter that would have covered this (`lib/probe/limits.mjs`, 30/hour per IP) exists only locally and has never shipped.
 
-**Found by:** opus-5 (phase 2, incidental to verifying F-015 — **missed by all eight phase-1 lenses**) · **Verified by:** opus-5 (direct read of the `origin/main` blob, exhaustive grep for abuse controls) · **Fixed by:** —
+**Found by:** opus-5 (phase 2, incidental to verifying F-015 — **missed by all eight phase-1 lenses**) · **Verified by:** opus-5 (direct read of the `origin/main` blob, exhaustive grep for abuse controls) · **Fixed by:** opus-5 (phase 3)
 
 **Notes:** Residual uncertainty: Vercel's platform firewall may impose some ceiling, and per `baseline/platform-notes.md` the dashboard is not readable from this machine — so "completely unthrottled at the edge" is unproven, while "unthrottled in application code" is certain. Treat as S1 until the platform config is checked.
 
 Two fixes, and they differ in kind. **Shipping v2** replaces this file wholesale and brings the limiter with it — that is the real answer, but it is a launch, not a patch. **Until then**, the cheap move is wiring the existing `lib/rate-limit.ts` (already deployed, already guarding the three lead routes) into this route. Do not hand-roll a second limiter.
 
 This row is also the single most useful entry for `model-notes.md`: eight lenses at maximum effort audited the code in the working tree and none checked whether it was the code being served.
+
+**Fix.** fix(F-094) on review/security-hotfix (commit 68c9ee4 lineage). The deployed probe route now consumes PROBE_POLICY (30/hour per IP) through the existing limiter before doing any outbound work, and also rejects cross-origin callers via F-019. Verified on a production build: 429 on the 31st request from one IP, a different IP unaffected. **Caveat that materially weakens this in production:** the smoke run proved the logic on the in-memory fallback because Upstash is unset locally. In-memory counters are per serverless instance and reset on cold start, so the real ceiling is far softer than 30/hour unless UPSTASH_REDIS_REST_URL/TOKEN are set in Vercel — see handoff-unblock-list.md item 0. Shipping probe v2 replaces this route and brings its own limiter.
+
+---
+
+### F-095 · S2 · privacy · CONFIRMED
+
+**Where:** [app/api/probe/unlock/route.ts:48](../../../app/api/probe/unlock/route.ts#L48), `sendToHubSpot` at :56-72, `notifyViaResend` at :74-86
+
+**Claim:** A single unauthenticated POST carrying any regex-valid email string writes a contact into the **same HubSpot form real leads land on** and emails the founder — no captcha, no gate precondition, no verification that the address belongs to the sender.
+
+**Failure scenario:** Demonstrated empirically and by accident on 2026-07-24: two POSTs sent while verifying an unrelated fix (F-019) each created a HubSpot submission for `smoke@example.com` on `HUBSPOT_FORM_ID` and delivered a `Probe unlock: smoke@example.com` email to `RESEND_TO_EMAIL`. Validation is one regex (`EMAIL_RE`, :17) and delivery fires before anything else is checked. So a script can inject arbitrary addresses into the CRM at the unlock rate limit (5/hour, 20/day per IP — and per **F-005** that limit is IP-header-keyed, so rotate the header and it doesn't bind), poisoning lead attribution with records indistinguishable in shape from real form fills. It can also be used to mail-bomb the founder's inbox, or to enrol a third party's address without consent.
+
+**Found by:** opus-5 (phase 3, empirically — tripped it while testing F-019) · **Verified by:** opus-5 (the write happened; the evidence is two real CRM records and two real emails) · **Fixed by:** —
+
+**Notes:** **Cross-ref F-020, which phase 2 REFUTED.** The refutation was correct about F-020's *written* premises, and its own verifier noted that "same portal real leads land in" was, if anything, understated. This row keeps only what is demonstrably true and drops the parts that died. Worth reading in `model-notes.md`: a finding can be refuted on its construction while its core mechanism is real, and the thing that settled it was not another verifier but accidentally executing it.
+
+The route already labels its own output `email is UNVERIFIED — gate capture, not a confirmed form submission` (:85), so the risk was understood; what is missing is any control on the write. Candidate fixes, cheapest first: post gate captures to a **separate** HubSpot form so they can never be mistaken for form fills; require the probe gate cookie to exist before accepting an unlock; add Turnstile to match the other three CRM-writing forms.
+
+**Also fixed as a side effect of F-019:** cross-origin callers now get 403 here, which removes the drive-by-a-victim's-browser variant but not the direct-script variant.
+
+---
+
+### F-096 · S4 · quality · CONFIRMED
+
+**Where:** [lib/sales/auth.ts:15](../../../lib/sales/auth.ts#L15) (`LOCAL_HOSTS`) and the port-stripping in `isLocalHost`
+
+**Claim:** The `'::1'` entry in `LOCAL_HOSTS` is unreachable dead code — port stripping is `host.split(':')[0]`, which reduces any IPv6 literal to the empty string, so the allowlist can never match it.
+
+**Failure scenario:** A developer loading `http://[::1]:3000/sales` in dev gets the password form instead of the open gate, because `isLocalHost('::1')` computes `''` and misses the set that visibly lists `'::1'`. Harmless in effect — IPv4 localhost works, and after F-003 the whole branch is unreachable in production anyway — but the code reads as though IPv6 loopback is handled and it is not.
+
+**Found by:** opus-5 (phase 3 — surfaced by writing the F-003 regression test, which failed on this assertion) · **Verified by:** opus-5 (test asserts it directly, [lib/sales/auth.test.mts](../../../lib/sales/auth.test.mts)) · **Fixed by:** —
+
+**Notes:** Deliberately **not** fixed in the security wave — it is unrelated to the vulnerability being closed and fixing it would be scope creep on a security diff. The test pins the current behaviour with a comment saying to update this row if it starts passing. Fix candidate: strip the port only when the host is not a bracketed or bare IPv6 literal.
+
+Worth noting for `model-notes.md`: no lens found this. It fell out of writing a test — the activity F-009 had wrongly declared impossible.
+
+---
+
+### F-097 · S3 · security · CONFIRMED
+
+**Where:** [lib/rate-limit.ts](../../../lib/rate-limit.ts) IP derivation, as consumed by the F-002 login fix in `app/api/sales/login/route.ts` and `app/api/strategy/login/route.ts`
+
+**Claim:** The login throttle added for F-002 keys on the leftmost `x-forwarded-for` value, which is client-supplied, so an attacker who rotates that header per request gets a fresh budget every time and the brute-force protection does not bind.
+
+**Failure scenario:** A script POSTs to `/api/sales/login/` with a new `X-Forwarded-For` value per attempt. Each request lands in its own `rl:login:<ip>` bucket, never reaches the 5-per-15-minute cap, and `SALES_PASSWORD` is guessable at request speed again — the exact condition F-002 was opened to close. One password opens both `/sales` and `/strategy`, so the whole gate is back to depending on password strength alone. Same mechanism applies to the three lead routes' 5-per-10-minute cap and to the F-094 probe ceiling.
+
+**Found by:** opus-5 (phase 2 — raised by an F-005 verifier as a consequence F-005 itself never claimed) · **Verified by:** opus-5 (the fix's own code path; the header is read unvalidated) · **Fixed by:** —
+
+**Notes:** **This is a limitation of a fix landed in this run, not a pre-existing finding, and it belongs on the record as such.** F-002's fix is still a real improvement — it stops the naive attacker and costs nothing — but it is defence in depth, not a hard bound, and the commit message should not have implied otherwise.
+
+**Exploitability turns on a platform fact this machine cannot read** (see `baseline/platform-notes.md`): if Vercel's edge overwrites inbound `x-forwarded-for` with the true client IP, this is latent; if it appends or passes through, it is live. `node_modules/next/dist/docs/` has no guidance (zero hits for `x-forwarded-for`), `@vercel/functions` is not installed, and the guardrails forbid the network probe that would settle it. **A dashboard/vendor-doc check by Artur decides the severity.**
+
+Cheap hardening that does not depend on the answer: prefer `x-vercel-forwarded-for` when present (platform-set, not client-settable) and fall back to `x-forwarded-for`; add a global ceiling to `LOGIN_POLICY` so header rotation is bounded in aggregate — sized so an attacker burning it cannot lock the owner out, which is the tension to think about before writing it. Related: **F-005** (refuted as written, this is its surviving core), **F-094**.
 
 ---
 
@@ -356,7 +453,7 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 ---
 
-### F-019 · S2 · security · CONFIRMED
+### F-019 · S2 · security · FIXED
 
 **Where:** app/api/lead/route.ts:22 (and the five sibling POST handlers)
 
@@ -364,11 +461,13 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** Next 16 applies Origin-vs-Host CSRF verification to Server Actions only (node_modules/next/dist/docs/01-app/02-guides/data-security.md:540); Route Handlers get none, and route.md documents no equivalent. /api/lead, /api/revenue-leak-audit, /api/full-growth-quote, /api/probe, /api/probe/ai and /api/probe/unlock are plain Route Handlers reading req.json(), which parses regardless of Content-Type. A hidden auto-submitting form with enctype="text/plain" (CORS-simple, no preflight, attacker never needs to read the response) posts valid JSON from any page a victim loads. Concrete: a malvertising creative or compromised blog posts {"fullName":"...","email":"burner@x.com","phone":"5550000","revenue":"5m-plus","platform":"x","frustration":"x"} to /api/lead. Every visitor becomes a forged HubSpot contact plus a Resend notification, each from a distinct real residential IP — so lib/rate-limit.ts's 5-per-10-minutes-per-IP window never triggers, and 5,000 pageviews yields 5,000 junk leads indistinguishable from real ones. Pointed at /api/probe/unlock the same trick drains the 100/day global unlock budget from thousands of unrelated IPs in minutes.
 
-**Found by:** opus-5 (phase 1, lens A) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 1 refuted) · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens A) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 1 refuted) · **Fixed by:** opus-5 (phase 3, security wave, 98323fa)
 
 **Notes:** Suggested fix: Reject requests whose Origin header is absent or does not match the site origin (allowlist the Vercel preview hosts) in a shared helper used by all six handlers, and require Content-Type: application/json so the text/plain form trick fails before parsing. Cross-ref F-005 — extends it, does not restate it.
 
 **Verification (CONFIRMED, 1/3 refuted).** Scope correction from the verifiers: One clause is too strong: "the per-IP rate limits that are the only abuse control." A second control exists on three of the six — Cloudflare Turnstile hard-fails a token-less submission on /api/lead (lib/lead-form/submit.ts:33-45), /api/revenue-leak-audit (submit-audit.ts:36-43) and /api/full-growth-quote (full-growth-quote-submit.ts:51-63), and the widget is fully wired client-side (LeadForm.tsx:447-449, RevenueLeakAuditForm.tsx:223-225, FullGrowthQuoteForm.tsx). It is env-gated on TURNSTILE_SECRET_KEY and fails open when unset; the key is not set locally (platform-notes.md line 29) and production env is not readable from this machine, so whether the "5,000 junk leads" scenario is live or l
+
+**Fix.** New lib/same-origin.ts wired into all six public POST handlers. It compares the Origin header host against X-Forwarded-Host/Host — the same semantics Next applies to Server Actions and withholds from Route Handlers — rather than a hardcoded domain, so apex, www and preview deployments pass with no allowlist to maintain. Absent Origin is deliberately allowed: browsers always send it on cross-origin POST, which is the vector, so rejecting it would break server-to-server callers for no security gain. Verified on a production build across all six routes: cross-origin and Origin: null → 403; same-origin and absent-Origin reach validation. No unit test (F-009).
 
 ---
 
@@ -548,7 +647,7 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 ---
 
-### F-031 · S2 · correctness · CONFIRMED
+### F-031 · S2 · correctness · FIXED
 
 **Where:** lib/lead-form/submit.ts:149 (and submit-audit.ts:63-64/134, full-growth-quote-submit.ts:83-84/250/296)
 
@@ -556,11 +655,13 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** Verified in node_modules/resend/dist/index.mjs:1071-1124 (resend@6.12.3): fetchRequest catches every HTTP error AND every network error and returns {data:null, error:{...}}. submit.ts:62-63 awaits the call and unconditionally sets channels.resend = 'sent'. So: RESEND_FROM_EMAIL points at a domain not verified in Resend (or the key is rotated, or the free-tier daily cap is hit) → Resend returns 403/429 → channel recorded 'sent'. HubSpot simultaneously 400s because catalog_sku_count_range does not exist in the portal → channels.hubspot 'failed'. someChannelSent is true (submit.ts:78) → ok:true → /api/lead returns 200 → LeadForm redirects to /unlock-growth-audit/thank-you/ which promises "the written diagnosis within 24 hours". The lead exists nowhere and no alert fires. The route's documented "500 — all configured channels failed" branch (app/api/lead/route.ts:10) is unreachable whenever Resend is configured. Identical at all four send sites.
 
-**Found by:** opus-5 (phase 1, lens C) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 0 refuted) · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens C) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 0 refuted) · **Fixed by:** opus-5 (phase 3)
 
 **Notes:** Suggested fix: Capture the return: `const { error } = await resend.emails.send(...)`; throw (or set channels.resend='failed' and push the error) when error is non-null. Apply at all four send sites. Add a unit test that stubs the SDK returning {data:null,error:{...}} and asserts ok:false. Cross-ref F-014 — extends it, does not restate it.
 
 **Verification (CONFIRMED, 0/3 refuted).** Scope correction from the verifiers: The core claim survives fully: the try/catch cannot fire for Resend API failures, 'sent' is recorded unconditionally, and that alone produces ok:true. Three sub-claims in the failureScenario are weaker than the claim itself and should not be carried into the fix ticket as stated: 1. "The route's documented '500 — all configured channels failed' branch is unreachable whenever Resend is configured" — only true of the documented *meaning*, not the status code. HTTP 500 is still reachable: the Turnstile early-returns at submit.ts:37 and :43 produce ok:false, which route.ts:61-66 turns into a 500. Reword to "the all-channels-failed condition can no longer be expressed." 2. The specific HubSpot tr
+
+**Fix.** fix(F-031) in 4dc1b2d. All four resend.emails.send() sites now destructure the returned { error } and throw on it. The SDK resolves rather than rejects on API failure, so before this the try/catch could not fire and channels.resend was set to sent on a rejected send — which also made the documented all-channels-failed 500 branch unreachable whenever Resend was configured. No unit test: the module imports server-only, which bare node cannot resolve (see corrected F-009). Testable end to end with an invalid RESEND_API_KEY, which fails auth before any mail is sent.
 
 ---
 
@@ -596,7 +697,7 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 ---
 
-### F-034 · S3 · quality · CONFIRMED
+### F-034 · S3 · quality · FIXED
 
 **Where:** lib/rate-limit.ts:88-92
 
@@ -604,11 +705,13 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** Upstash REST starts erroring or timing out. rl.limit(ip) propagates the error (@upstash/ratelimit rethrows anything that is not NOSCRIPT — dist/index.mjs:147-155; the built-in redis retry only adds latency first). rateLimit() rejects, and none of the three lead routes wrap the call (app/api/lead/route.ts:28, revenue-leak-audit/route.ts:28, full-growth-quote/route.ts:30 — their only try/catch is around req.json()), so every submission to /unlock-growth-audit, /book-growth-call, /constraint-sprint, /catalog-snapshot, /contact-me, /revenue-engine and /full-growth-quote returns an unhandled 500 and the visitor is told to email leads@ instead. Meanwhile /api/probe and /api/probe/ai keep serving because gate-server.ts:87-92 catches the identical failure and falls back to memory. Narrower second variant: upstashInitTried is latched true at line 36 before the dynamic import, so if the import or new Redis() throws (malformed URL, missing optional dep in the deployed bundle) exactly the first lead submission on each cold instance 500s and is lost, and every later one silently uses per-instance memory. This clears the known-deliberate 'limiting degrades to memory' entry — the deliberate policy exists on the probe side and was never applied to the money side.
 
-**Found by:** opus-5 (phase 1, lens D) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 1 refuted, UNCERTAIN) · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens D) · **Verified by:** opus-5 (phase 2, 3 adversarial verifiers, 1 refuted, UNCERTAIN) · **Fixed by:** opus-5 (phase 3, security wave — pulled forward out of the quality wave)
 
 **Notes:** Suggested fix: Wrap the Upstash path in try/catch and fall back to memoryLimit the way incrCounter already does, add a timeout, and move the init inside the try so a construction failure never reaches a request. Longer term collapse the two into one store adapter with one failure policy. Tests: rateLimit() with a stubbed limiter whose limit() rejects, asserting it returns {success:true} from memory; and a second asserting a throwing initializer does not surface. Both blocked by F-009 today. Cross-ref F-009 — extends it, does not restate it.
 
 **Verification (CONFIRMED, 1/3 refuted).** Scope correction from the verifiers: SURVIVES: the missing try/catch, the three unguarded call sites at the exact cited lines, the asymmetry with gate-server.ts's catch-and-degrade, the "email leads@" UX outcome, and the whole second variant (init latch → first request on each cold instance 500s, every later one silently on per-instance memory). It also correctly clears the known-deliberate entry, which only covers the env-unset case on the probe side. DOES NOT SURVIVE — two narrowings: 1. "no timeout" is factually wrong. @upstash/ratelimit defaults `this.timeout = 5e3` and the timeout branch of `applyTimeout` resolves `{ success: true, reason: "timeout" }`, i.e. it already FAILS OPEN. So the "or timing out" half of the failure **Severity lowered S2 → S3** on a majority of verifier votes (undefined). **Marked uncertain** — could not be settled from code or docs alone; prefer the cheap defensive fix.
+
+**Fix.** fix(F-034) in 27e4c34, landed with F-002 rather than in the quality wave: F-002 wires a password gate into this limiter, and shipping that on a limiter which throws on an Upstash blip would have made a Redis outage 500 the gate. Upstash failures now degrade to the in-memory window (still limiting, per instance, never failing open), and a transient init error is no longer cached for the life of the instance. Memory keys are namespaced per policy so the lead and login budgets cannot collide.
 
 ---
 
@@ -836,7 +939,7 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 ---
 
-### F-049 · S3 · security · OPEN
+### F-049 · S3 · security · CONFIRMED
 
 **Where:** lib/lead-form/submit.ts:33 (and submit-audit.ts:36, full-growth-quote-submit.ts:51)
 
@@ -844,13 +947,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** The client renders the widget when NEXT_PUBLIC_TURNSTILE_SITE_KEY is set (LeadForm.tsx:83, RevenueLeakAuditForm.tsx:59, FullGrowthQuoteForm.tsx:77) but the server only verifies when the separate TURNSTILE_SECRET_KEY is set. If the secret is unset in a Vercel environment, or is rotated/expired/removed later, all three forms silently accept any submission with no token: nothing logs, nothing alerts, and the widget still renders so the gap is invisible in the UI. An attacker does not have to guess — the 200 response returns channels.turnstile (app/api/lead/route.ts:115, revenue-leak-audit/route.ts:88, full-growth-quote/route.ts:106), so one submitted lead reveals 'skipped' (no bot check) versus 'sent' (enforced). Read 'skipped' once, then script the form. Phase 0 records that Vercel env state is not readable from the repo, so whether this is live or latent needs a dashboard check — same caveat as F-001 and F-014.
 
-**Found by:** opus-5 (phase 1, lens A) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens A) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Fail closed: if NEXT_PUBLIC_TURNSTILE_SITE_KEY is set but TURNSTILE_SECRET_KEY is not, reject the submission and log a MISCONFIG error — the same asymmetry full-growth-quote-submit.ts:88-97 already handles correctly for the RESEND_API_KEY/RESEND_TO_EMAIL pair. Stop returning the channels object to unauthenticated callers; the form UI only reads res.ok and res.status. Cross-ref F-014 — extends it, does not restate it.
 
+**Verification (CONFIRMED).** Scope correction: Two qualifications, neither fatal. 1) The oracle is real but REDUNDANT, so the second half of the suggested fix does not close it. An attacker does not need to read `channels` at all: POST a valid body with no `turnstileToken` and the HTTP status alone answers the question — enforced gives 500 (submit.ts:34-37 returns `ok:false`, route 61-65), unenforced gives 200. So "stop returning the channels object" narrows the disclosure to a hygiene fix; it does not remove the ability to fingerprint enforcement. The fail-closed half of the fix (assert the site-key/secret-key pair) is the part that actua
+
 ---
 
-### F-050 · S3 · security · OPEN
+### F-050 · S3 · security · CONFIRMED
 
 **Where:** lib/lead-form/schema.ts:18-20, :30
 
@@ -858,13 +963,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** (a) Size: revenue, platform and frustration carry no .max() and pageSource is a bare optional string, while fullName is capped at 120 and phone at 40. POST /api/lead with platform set to 4MB of text (under Vercel's 4.5MB body limit): Zod passes, postToHubSpot fails on HubSpot's own property limit (logged and swallowed), then sendResendNotification still fires and formatPlainText embeds the whole 4MB string in the email body (submit.ts:167-169). The operator receives a 4MB message; five per ten minutes per IP, and with no Origin check that ceiling is per-visitor rather than per-attacker. (b) Values: a script POSTs revenue:'x', platform:'x', frustration:'x' with a valid name/email/phone. Zod passes, postToHubSpot writes monthly_revenue:'x' and platform:'x' onto a real contact record, and computeLeadValue falls through its chain to the 80 default (app/api/lead/route.ts:147) so GA4 and Google Ads record an $80 conversion. ~720 junk contacts a day from one address, each a fake conversion training value-based bidding, with nothing in the response, the logs, or the CRM marking the values invalid. revenueLeakAuditSchema.trade and .leak have the same hole with `labelFor(...) ?? v` writing the raw value through at submit-audit.ts:113-114.
 
-**Found by:** opus-5 (phase 1, lens A+D) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens A+D) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Derive z.enum from the existing const arrays (REVENUE_RANGES, PLATFORMS, FRUSTRATIONS, SKU_COUNT_RANGES, VERTICAL_TRADES, ALL_LEAKS) exactly as fgoQuoteSchema does — the arrays are already `as const`, so this is a type-level derivation, not a second list. Add .max() to pageSource. Tests: leadSchema.safeParse rejects an unknown revenue, and a computeLeadValue table test asserting every value in REVENUE_RANGES maps to a non-default tier. Cross-ref F-005 — extends it, does not restate it.
 
+**Verification (CONFIRMED).** Scope correction: The claim survives in full; three narrowings on the failure scenario, none fatal. 1. Env-gated legs (UNKNOWABLE per baseline/platform-notes.md, do not treat as refuted or confirmed). The junk-CRM-write leg needs HUBSPOT_PORTAL_ID + HUBSPOT_FORM_ID set (submit.ts:48); the 4MB-email leg needs RESEND_API_KEY + RESEND_TO_EMAIL (submit.ts:60); the fake-$80-conversion leg needs GA4_MEASUREMENT_ID + GA4_API_SECRET, since sendServerEvent hard-returns without them ("if (!measurementId || !apiSecret) return", analytics-server.ts:32-34). Separately, if TURNSTILE_SECRET_KEY is set in production then a nai
+
 ---
 
-### F-051 · S3 · security · OPEN
+### F-051 · S3 · security · CONFIRMED
 
 **Where:** app/api/probe/route.ts:49
 
@@ -872,13 +979,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** In /api/probe the order is validateProbeUrl (line 49, which calls dns.lookup at fetch.ts:64) then consume (line 54); the report page has the same inversion (page.tsx:83 then :99) and so does /api/probe/ai (route.ts:45 then :57). An attacker POSTs {"url":"https://<random-uuid>.zone-they-control.net/"} in a loop: request 31 onward returns 429, but every one of those denied requests still resolved a fresh unique subdomain first. The limiter therefore caps nothing about the DNS work — the app becomes an unbounded, unauthenticated query source pointed at whichever authoritative nameserver the attacker names, and each lookup holds a slot in the function's resolver queue while returning an error to the caller.
 
-**Found by:** opus-5 (phase 1, lens A) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens A) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Split validateProbeUrl into a cheap syntactic pass (scheme allowlist, literal-IP and localhost blocks — all local) and the DNS-resolving pass. Run the cheap pass, then consume(), then resolve. Nothing that touches the network should sit ahead of the limiter. Cross-ref F-005 — extends it, does not restate it.
 
+**Verification (CONFIRMED).** Scope correction: The mechanism and all three line-number claims survive intact. Three qualifications on the impact prose, none of which change the fix: 1. "pointed at whichever authoritative nameserver the attacker names" is one hop off. `dns.lookup` is getaddrinfo, so the query goes to the platform's configured recursive resolver, which then queries the attacker's authoritative NS. The unauthenticated, unmetered DNS-generation primitive is real, but the app is not a direct client of the attacker's nameserver, and the platform resolver's own limits sit in between. 2. "unbounded" is bounded in practice by Verce
+
 ---
 
-### F-052 · S3 · privacy · OPEN
+### F-052 · S3 · privacy · CONFIRMED
 
 **Where:** lib/lead-form/submit.ts:73 (and submit-audit.ts:73, full-growth-quote-submit.ts:122)
 
@@ -886,13 +995,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** With HUBSPOT_* and RESEND_* unset (the state F-014 documents), a visitor submits /full-growth-quote/ including the free-text notes field. full-growth-quote-submit.ts:122 executes `console.log('[fgo-quote-submit] No backend channels configured — logging:', data)`, putting the submitter's name, email, phone, website, revenue and their written notes into Vercel's runtime logs. Same at submit.ts:73 for /api/lead and submit-audit.ts:73 for /api/revenue-leak-audit. The privacy policy describes server logs as "IP address, browser type, referring URL, timestamp" retained 30–90 days (lines 104-115, 462-465) and names HubSpot and Resend as where form submissions live (lines 258-261, 451-457). A subject-access or deletion request answered from HubSpot and Resend alone would miss the log copy entirely, and log retention is not tied to the stated 7-year CRM policy.
 
-**Found by:** opus-5 (phase 1, lens B) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens B) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier, UNCERTAIN) · **Fixed by:** —
 
 **Notes:** Suggested fix: Log a redacted record (submission id, page source, channel states) instead of `data`; if the raw payload is genuinely needed in dev, gate the full log on NODE_ENV !== 'production'. Cross-ref F-014 — extends it, does not restate it.
 
+**Verification (CONFIRMED).** Scope correction: SURVIVES (confirmed from code): the three `console.log(..., data)` sites exist exactly as quoted at submit.ts:73, submit-audit.ts:73 and full-growth-quote-submit.ts:122; they are gated only on "no channel configured", never on NODE_ENV; no route-level, type-level or logger-level guard prevents them; the code is deployed on origin/main; and the privacy policy genuinely does not disclose logs as a store of lead content while placing lead submissions in HubSpot (7y) and Resend (2y). The suggested fix (redact, or gate the raw log on NODE_ENV !== 'production') is correct and needs no external infor **Uncertain** — not settleable from code or docs alone; prefer the cheap defensive fix.
+
 ---
 
-### F-053 · S3 · compliance · OPEN
+### F-053 · S3 · compliance · CONFIRMED
 
 **Where:** app/(site)/services/outbound-email-marketing-services/page.tsx:32-37
 
@@ -900,13 +1011,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A prospect reads "Is cold email legal in 2026? Yes — under CAN-SPAM in the US …, and under GDPR / PECR in the EU and UK via the legitimate-interest basis with documented suppression. Compliance setup is part of the engagement, not an upsell.", buys the pilot on that basis, and campaigns go out to prospects in Germany, Austria, Italy or Spain. German UWG §7(2) requires prior express consent for email advertising including business-to-business; GDPR legitimate interest does not cure it. The client receives an Abmahnung with costs and points at the page that told them the engagement covered compliance. The UK half is also over-broad: PECR's corporate-subscriber allowance does not extend to sole traders and partnerships, who are treated as individual subscribers.
 
-**Found by:** opus-5 (phase 1, lens B) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens B) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Qualify the answer by jurisdiction: name the countries where prior consent is required for B2B email and say those markets are handled by consent-based or non-email channels; keep the CAN-SPAM and UK corporate-subscriber statements, which are accurate as far as they go. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (CONFIRMED).** Scope correction: The accuracy half fully survives: the page ships an unqualified "cold email is legal … under GDPR / PECR in the EU and UK via the legitimate-interest basis" as visible copy *and* as FAQPage structured data, with no member-state carve-out and no sole-trader/partnership carve-out for PECR. The reliance/legal-exposure half of the failure scenario is weaker than written, for two reasons the finding does not account for: (a) app/(site)/disclaimer/page.tsx:54-68 is a footer-linked, sitewide "No professional advice" section that expressly disclaims legal advice "tailored to your specific situation, b
+
 ---
 
-### F-054 · S3 · privacy · OPEN
+### F-054 · S3 · privacy · CONFIRMED
 
 **Where:** components/sections/HeroProbe.tsx:292
 
@@ -914,13 +1027,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A visitor reads "Deterministic · No data stored" in the probe panel footer, runs a scan, opens the report and clicks "Run the AI read". /api/probe/ai writes the ss_probe_gate cookie via writeGate (gate-server.ts:29-37) with maxAge = 60*60*24*180 (gate.mjs:18) — a 180-day httpOnly identifier tracking how many runs they have used and whether they handed over an email. In the same request incrCounter persists `probe:ai:<their-ip>:d<bucket>` for 87,000s, and getDomainMetrics stores their probed domain's backlink profile in unstable_cache for 86,400s. The report page repeats "your scan isn't stored" (ai-readiness/[token]/page.tsx:287). The privacy policy's cookie section (lines 305-321) lists three categories and names GA4, Google Ads and Meta Pixel — ss_probe_gate appears nowhere, so neither the banner nor /opt-out-preferences/ offers any way to see or clear it.
 
-**Found by:** opus-5 (phase 1, lens B) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens B) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Change the microcopy to what is true ("the scan itself isn't saved — a cookie remembers how many AI reads you've used"), shorten the gate cookie to something proportionate to a six-run allotment, and add it to the strictly-necessary cookie disclosure. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (CONFIRMED).** Scope correction: Three trims, none fatal to the finding: 1. "180-day identifier cookie" overstates the payload. `encodeGate` produces `v1.<runs>.<unlocked 0|1>.<hmac>` (gate.mjs:31-35) — a signed counter plus a boolean, with no random or per-user value, so two visitors in the same state get byte-identical cookies and the cookie cannot single anyone out. The accurate description is "a 180-day device-side usage-metering cookie," which still needs disclosure under ePrivacy but is not an identifier/tracker. 2. Two of the three storage legs are env-conditional and therefore not fully settleable here (platform-notes
+
 ---
 
-### F-055 · S3 · compliance · OPEN
+### F-055 · S3 · compliance · CONFIRMED
 
 **Where:** lib/consent.ts:91
 
@@ -928,13 +1043,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** An EEA visitor clicks "Accept all"; writeConsent stores {"analytics":true,"marketing":true,"decided":true} under ss_consent in localStorage (lines 91-94). No timestamp, no policy version, no server-side copy — grep shows no consent write path other than this one. Eleven months later they complain to a supervisory authority that they never agreed to advertising cookies. GDPR Art. 7(1) requires the controller to demonstrate consent was given; the only artifact sits on the complainant's device, is trivially editable by them, and carries no date or scope. The policy nevertheless states at lines 476-479 that cookie-consent records are kept at least 12 months for exactly that purpose. Second-order effect: the stored object never expires and nothing re-prompts, so a 2026 "accept all" is treated as valid indefinitely.
 
-**Found by:** opus-5 (phase 1, lens B) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens B) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Store a timestamp and a policy/banner version inside the consent object, and record a minimal server-side consent event (hashed visitor id, timestamp, categories, version) on each decision — or amend the retention claim to describe device-local storage honestly. Add a re-prompt after 12 months. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (CONFIRMED).** Scope correction: One clause is imprecise, and it does not change the verdict. Read hyper-literally, "kept for at least 12 months" is technically satisfied — a localStorage entry never expires on its own, so the artifact usually does persist past 12 months (subject to browser eviction, private mode, or the visitor clearing site data). What fails is the rest of the sentence: "to demonstrate consent" only makes sense for a controller-held record, and there is none, plus the record is undated and unversioned so it cannot show WHEN consent was given or against WHICH banner text. Also, the finding's phrase "no serve
+
 ---
 
-### F-056 · S3 · privacy · OPEN
+### F-056 · S3 · privacy · REFUTED
 
 **Where:** components/forms/RevenueLeakAuditForm.tsx:175
 
@@ -942,13 +1059,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A roofer fills the audit form at /industries/home-services/#audit. "Mobile" is required by the schema and "Email (optional)" is not (lines 175, 214). The only notice is "No pitch, no obligation. Your numbers are yours to keep. By submitting you agree to our privacy policy" (lines 244-247) — nothing says the number will be used to call or text, no message frequency, no STOP/HELP language, no separate consent for marketing contact. The policy they are pointed at states "Phone number (optional on some forms)" (privacy-policy/page.tsx:86), which is untrue here, and its collection-point list (lines 74-102) does not include the Revenue-Engine forms at all. The confirmation page then commits to following up and offers "call or text" (revenue-engine/audit-booked/page.tsx:41-48). The submitter gave a mobile number under a notice describing it as optional that never mentioned outbound calls or texts — and it is the one field the record depends on, since email may be blank.
 
-**Found by:** opus-5 (phase 1, lens B) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens B) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Put an explicit line under the Mobile field naming how the number is used ("I'll call or text you about this audit only — no marketing texts"), and correct the policy's collection section to list the Revenue-Engine forms and note where phone is required. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (REFUTED).** Refuted: Two of the finding's three pillars are factually false against the code; only a minor copy nit survives. (1) "the privacy policy the form links to tells the visitor phone numbers are optional… which is untrue here" — FALSE. The policy line is inside a list explicitly prefaced "Depending on the form, this typically includes:" and reads "Phone number (optional on some forms)". That is an accurate statement about the site, not a representation about this form: phone IS optional on some forms — `FullGrowthQuoteForm.tsx:415` labels it "Phone (optional)" and `full-growth-quote-schema.ts:77-79` wraps Row kept as eval data.
+
 ---
 
-### F-057 · S3 · compliance · OPEN
+### F-057 · S3 · compliance · REFUTED
 
 **Where:** app/(site)/revenue-engine/dentists/page.tsx:128
 
@@ -956,13 +1075,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A practice's compliance officer diligences the vendor from public pages before signing. /revenue-engine/dentists/ states "Call answering, texting, recordings, and records all run under a signed Business Associate Agreement (BAA) … A recorded patient call is protected health information once the patient consents, so it lives under HIPAA storage and access rules … You get it in writing before go-live". They then read /privacy-policy/, whose processor list (lines 240-279) names Vercel, Cloudflare, Sanity, Resend, HubSpot, Google, Meta and Calendly with no BAA or covered-entity language, and whose "Sensitive personal information" section states "We do not knowingly collect sensitive personal information … health data … Please do not submit such information through our forms" (lines 146-154). The two public documents cannot both be true, and the practice's own HIPAA vendor assessment stalls on the contradiction.
 
-**Found by:** opus-5 (phase 1, lens B) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens B) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Decide which is accurate and reconcile: if BAAs exist, publish a HIPAA/BAA statement naming the covered sub-processors and carve dental engagements out of the "we do not collect health data" sentence; if they do not yet exist, soften the dentists copy to what is committed rather than what is in place. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (REFUTED).** Refuted as INTENTIONAL: Secondary to the scope refutation, not the primary basis. Placing BAA/HIPAA language on the dental page specifically is a recorded decision: docs/handoff/2026-06/23/revenue-engine-elevation.md:115 — "BAA/HIPAA language is intentionally KEPT here — that buyer expects it (per the claims library)" — and docs/strategy/multi-vertical-pivot/03-pillar-elevation-strategy.md:42 deliberately strips "(a BAA)" from the pillar page so the acronym lives only where the dental buyer expects it. The keep-it decision is documented; the un-verified present-tense phrasing of it is not, which is the residual noted Appended to 08-known-deliberate.md. Row kept as eval data.
+
 ---
 
-### F-058 · S3 · compliance · OPEN
+### F-058 · S3 · compliance · CONFIRMED
 
 **Where:** components/sections/Evidence.tsx:186
 
@@ -970,13 +1091,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A prospect (or anyone applying the substantiation standard the site invokes on /disclaimer/, which cites 16 CFR Part 255 and promises "Each case study states its disclosure mode") asks for the artifact behind "1,840 to 2,640 qualified leads / mo. No new ad spend." (Evidence.tsx:44) and the chart caption "Source: client's CRM, anonymized · monthly aggregate" (line 186). docs/strategy/case-studies/fact-ledger.md §1 marks the baseline (1,840), the endpoint (2,640), the monthly path and the "no new ad spend" claim all ⚠ — "value traces to a prior on-site component but no source-of-truth artifact has been attached yet" — with "CRM: Aug-2024 qualified-inbound count" still in the Confirm-against column. The ledger also records that all five studies are seeded `anonymized` and that this is "a safe default, not a verified decision" (line 19), with the disclosure column unticked for this study. No CRM export exists to produce.
 
-**Found by:** opus-5 (phase 1, lens B) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens B) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Either attach the CRM export and tick the ledger row before the caption keeps naming the CRM as source, or drop the source attribution to what is defensible until it is confirmed. Do not edit the ledger to match the page — guardrails put the fact ledger off limits. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (CONFIRMED).** Scope correction: One clause of the claim is loose and should be trimmed when the finding is written up. "asserts an anonymized disclosure mode" overstates the caption's grammar: `disclosure` is a separate Sanity field (`sanity/schemas/case-study.ts:450-464`, "Disclosure mode … Drives the on-page disclosure copy"), while this caption maps to the `source` "Source note" field whose schema description literally uses this exact string as its example. So the homepage line is a provenance note in the house idiom, not a formal disclosure-mode declaration, and the disclaimer's "Each case study states its disclosure mod
+
 ---
 
-### F-059 · S3 · correctness · OPEN
+### F-059 · S3 · correctness · CONFIRMED
 
 **Where:** lib/probe/score.mjs:248
 
@@ -984,13 +1107,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A page whose first recognized entity is FAQPage (a support/FAQ page with {'@type':'FAQPage', mainEntity:[…]} in the first script tag, plus a complete Organization block second) scores schema 76; the identical markup with the Organization block first scores 90. RECOMMENDED_PROPS['FAQPage'] is undefined → rec.length === 0 → return 0 (line 249), so the 15 points cannot be earned by any markup the owner could add. Worse, the report's "Fix these first" list ([token]/page.tsx:150-157, sorted by points lost) surfaces it near the top as "Citation-grade properties beyond the minimum (brand, ratings, contact, search)" — advice that means nothing for an FAQPage and cannot be acted on. This directly contradicts the methodology page's published claim "A page is never penalized for signals that don't belong on it" (methodology/page.tsx:49).
 
-**Found by:** opus-5 (phase 1, lens C) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens C) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Either add RECOMMENDED_PROPS entries for FAQPage/HowTo/ItemList/CollectionPage, or make the signal not apply (a `when` guard) when the primary type has no recommended set, so its points leave the `possible` denominator instead of being scored as a miss.
 
+**Verification (CONFIRMED).** Scope correction: The core claim survives fully: 4 of 12 recognized types (FAQPage, HowTo, ItemList, CollectionPage) have no RECOMMENDED_PROPS entry, score.mjs:249 returns 0, the 15 points stay in the denominator, and schema 76-vs-90 on block order reproduces exactly. Two sub-claims need trimming. Does NOT survive as written: "the 15 points cannot be earned by any markup the owner could add." They can — adding or moving a supported entity (Organization/WebSite/Product) ahead of the FAQPage block in document order flips `primary` and earns up to 15/15, which is exactly what the finding's own 90-point variant dem
+
 ---
 
-### F-060 · S3 · correctness · OPEN
+### F-060 · S3 · correctness · CONFIRMED
 
 **Where:** lib/probe/score.mjs:175
 
@@ -998,13 +1123,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** ldTypes is built from all flattened entities (score.mjs:651), including `item` objects nested inside ListItem inside ItemList — the shape every "latest from the blog" section emits. Measured on a homepage fixture with Organization + Person(jobTitle) + WebSite + aggregateRating: without a blog-teaser ItemList → pageType 'home', authority 88, overall 78, earning freshness 6/6 + people 10/10 + reviews 10/10. Adding one {'@type':'ListItem', item:{'@type':'BlogPosting', headline:'Post one'}} → pageType 'article', authority 74, overall 75, and the page is now judged on `author` (0/14, a homepage has no byline). The report header then reads "Scored as: Article" for the customer's homepage ([token]/page.tsx:173) and "Fix these first" tells them to add an author credit.
 
-**Found by:** opus-5 (phase 1, lens C) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens C) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Restrict the schema-based type vote to top-level / @graph-root entities (or to the selected primary entity) rather than every nested node, and let path detection win for '/' regardless of nested article entities.
 
+**Verification (CONFIRMED).** Scope correction: The claim in "claim" survives in full. One characterization inside failureScenario is overstated: "the shape every 'latest from the blog' section emits". Not every blog-teaser ItemList nests a typed entity — many (including this repo's own, lib/schema.ts:145-150 and :184-189) emit ListItems carrying only name/url/position/description with no inner `item` node, and those do NOT trigger the reclassification. So the trigger is "any nested Article/BlogPosting/NewsArticle node anywhere in the graph" (blog-teaser ItemLists, a `Blog` node with `blogPost: [...]`, a `mainEntity` article, an `isPartOf`/
+
 ---
 
-### F-061 · S3 · correctness · OPEN
+### F-061 · S3 · correctness · REFUTED
 
 **Where:** app/api/probe/ai/route.ts:51
 
@@ -1012,13 +1139,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** readGate runs at line 51 and writeGate(res, {runs: gate.runs + 1}) at line 90, with validateProbeUrl + fetch + score + the Claude call between them. A visitor opens the same /ai-readiness/<token>/ report in six tabs and clicks "Run the AI read" in each within the same second. All six requests carry the same cookie state (absent → runs 0), all six get verdict 'run' from gateVerdict (gate.mjs:60), all six bill a Claude call, and the last Set-Cookie wins with runs=1. The visitor gets six AI reads instead of one, is never shown the email form, and the site captures no email — the whole growth mechanic of the gated layer. Only the per-IP ai cap (6/h, 10/d) bounds it, so ten free reads per day per IP, indefinitely, versus one. This is not the incognito evasion the gate.mjs header comment anticipates: that costs one run per identity; this costs zero. It is also a different mechanism from F-001's forged cookie — this needs no secret.
 
-**Found by:** opus-5 (phase 1, lens C) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens C) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Reserve before spending: consume a per-gate-identity counter (a random id minted into the cookie, incremented through incrCounter) BEFORE calling runAiRead, and roll it back only on a hard upstream failure. The IP limiter is already atomic — reuse it keyed on the gate id rather than trusting the cookie value read at request start. Cross-ref F-001 — extends it, does not restate it.
 
+**Verification (REFUTED).** Refuted as INTENTIONAL: The gate cookie being non-authoritative is a documented decision in the code the finding cites — lib/probe/gate.mjs:7-8: "The cookie is the UX nudge, not the security boundary — incognito evades it, which is fine because the per-IP limits in limits.mjs are the backstop." It matches the 08-known-deliberate.md pattern for the probe layer ("The controls are the IP and global caps, not the token"), whose escape hatch is a path to unbounded spend. This finding does not clear that hatch: consume() runs before every billed call, so the spend bound is unchanged, and the cookie-clearing evasion the com Appended to 08-known-deliberate.md. Row kept as eval data.
+
 ---
 
-### F-062 · S3 · correctness · OPEN
+### F-062 · S3 · correctness · CONFIRMED
 
 **Where:** lib/probe/token.ts:46
 
@@ -1026,13 +1155,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** validateProbeUrl (fetch.ts:78-101) applies no length limit, so POST /api/probe happily scores a 2100-character faceted-navigation URL and HeroProbe renders "See the full report →" pointing at /ai-readiness/<token>/ (HeroProbe.tsx:378). decodeProbeToken round-trips the bytes correctly but then rejects on url.length > MAX_URL_LENGTH (token.ts:46) — verified: 2048 chars round-trips, 2049 returns null. The report page falls into the first ErrorShell ([token]/page.tsx:73-80): "This report link doesn't decode. The address was probably truncated when it was copied. Run the score again and grab a fresh link." Re-running the score produces the identical dead link, so the user loops. (The codec itself is sound — 20,000 random-Unicode round-trips plus emoji/IDN/2048-char cases all passed.)
 
-**Found by:** opus-5 (phase 1, lens C) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens C) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Reject over-length URLs at validateProbeUrl so the homepage band shows a real reason, or make HeroProbe check decodeProbeToken(encodeProbeToken(url)) before rendering the report CTA and fall back to the audit link. Either way the "truncated when it was copied" copy should not be the message for a URL that was simply too long.
 
+**Verification (CONFIRMED).** Scope correction: Two narrowings, neither fatal. (1) The line anchor is off by one: the decisive check is lib/probe/token.ts:45 (`return url.length > MAX_URL_LENGTH ? null : url`); line 46 is `} catch {`. Both `where` and the failure scenario say :46. (2) The claim "URLs over 2048 characters score normally" is true of OUR code but has a target-side precondition the finding does not state: the report CTA renders only in `state.kind === 'result'`, which needs POST /api/probe to return 200, which needs the remote server to serve a >2048-char request line as HTML. Common server defaults allow it (nginx large_client
+
 ---
 
-### F-063 · S3 · quality · OPEN
+### F-063 · S3 · quality · CONFIRMED
 
 **Where:** lib/lead-form/submit.ts:91-142
 
@@ -1040,13 +1171,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** Two divergences are live. (1) The FGO route deliberately withholds result.errors from the response because they can carry raw HubSpot response bodies (app/api/full-growth-quote/route.ts:63-74); /api/lead:62-65 and /api/revenue-leak-audit:57-61 still return them. Rotate the HubSpot key and every submission answers 500 with {"errors":["HubSpot 401: {...}"]} — upstream error text plus the portal/form ids in the URL — to any unauthenticated caller who POSTs a valid payload. (2) The half-configuration guard (RESEND_API_KEY set, RESEND_TO_EMAIL missing → treat as failed, not skipped) exists only in full-growth-quote-submit.ts:90-100; the same state on /api/lead and /api/revenue-leak-audit still reports ok:true and drops the lead.
 
-**Found by:** opus-5 (phase 1, lens D) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens D) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Extract one lib/lead-form/channels.ts with verifyTurnstile, postToHubSpot(formId, fields, context) and notify(...), and have all four call sites (including app/api/probe/unlock/route.ts:49-82) use it, so a guard is written once. Test: a channel-orchestration table over (turnstile set/unset × hubspot set/unset × resend key-only) asserting ok and channels for each combination, run against all three submitters. Cross-ref F-014 — extends it, does not restate it.
 
+**Verification (CONFIRMED).** Scope correction: The claim and both named divergences survive intact at the cited line numbers. Three details inside the illustrative failure scenario are overstated and should not be carried into the fix ticket verbatim: 1. "Rotate the HubSpot key and every submission answers 500 with HubSpot 401" — the Forms API call sends no credential (`headers: { 'Content-Type': 'application/json' }`, submit.ts:131), so no key rotation can produce a 401 there. The leak is real but its trigger is any HubSpot non-2xx (wrong/deleted form id → 404 body, malformed payload → 400 body). 2. "every submission answers 500" also req
+
 ---
 
-### F-064 · S3 · correctness · OPEN
+### F-064 · S3 · correctness · CONFIRMED
 
 **Where:** lib/lead-form/submit.ts:103 (and submit-audit.ts:97, full-growth-quote-submit.ts:209)
 
@@ -1054,13 +1187,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** TURNSTILE_SECRET_KEY is set and challenges.cloudflare.com returns a 502 HTML error page during an incident. `await res.json()` throws SyntaxError at submit.ts:103. Nothing catches it — line 39 calls verifyTurnstile outside any try, and the routes have no try/catch around submitLead — so the handler rejects and Next returns a framework 500 whose body is not the documented {ok:false,errors} shape. A real human who passed the widget sees "We hit a snag submitting. Please email leads@salesolution.net directly." (LeadForm.tsx:211-213) and their lead is discarded with no channel state recorded, for the entire duration of a third-party outage the site never had to care about.
 
-**Found by:** opus-5 (phase 1, lens D) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens D) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Check res.ok first and treat a non-2xx or unparseable body as a typed channel failure the orchestrator can record — then decide policy explicitly (fail the submission, or accept the lead and mark turnstile 'failed'), rather than inheriting whichever one an exception produces. Test: verifyTurnstile with a stubbed fetch returning 502 + text/html, asserting it resolves to a decision instead of throwing.
 
+**Verification (CONFIRMED).** Scope correction: Fully survives as a code defect at all three cited lines. Two precision notes that narrow the write-up without touching the substance. (1) Reachability is env-gated: `TURNSTILE_SECRET_KEY` is not set locally (baseline/platform-notes.md line 29 — "Captcha cannot be exercised locally at all"), and Vercel production env is not readable from this machine, so live-vs-latent is a dashboard check only Artur can do. Per that same doc's precedent for F-001/F-014 ("stay CONFIRMED-as-code-defects regardless"), the defect stands; the blast radius is zero if the secret is unset in production. (2) The respo
+
 ---
 
-### F-065 · S3 · correctness · OPEN
+### F-065 · S3 · correctness · CONFIRMED
 
 **Where:** lib/lead-form/submit.ts:92-136
 
@@ -1068,13 +1203,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** HubSpot's Forms API degrades and holds connections. postToHubSpot (submit.ts:129) waits with no AbortSignal, then sendResendNotification runs, then /api/lead awaits two sequential sendServerEvent calls to google-analytics.com that also have no timeout (lib/analytics-server.ts:43). The function is killed by the platform's execution limit; the browser's fetch in LeadForm has no timeout either, so the visitor watches a spinner, gets an error, and submits again — and when HubSpot drains its queue both requests land, producing duplicate contacts for a lead the user was told had failed. Contrast lib/probe/fetch.ts:118,193,220, lib/probe/domain.ts:38, lib/probe/gate-server.ts:80 and app/api/probe/unlock/route.ts:63,80, all of which bound their calls; the money-critical path is the only one that does not.
 
-**Found by:** opus-5 (phase 1, lens D) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens D) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Add AbortSignal.timeout(5000) to Turnstile/HubSpot/Resend and 2000ms to the GA4 hits (or fire the GA4 hits after the response), and treat a timeout as a channel failure so the result is recorded rather than inferred. Test: a submit test with a stubbed fetch that never resolves, asserting submitLead settles within the budget with channels.hubspot === 'failed'.
 
+**Verification (CONFIRMED).** Scope correction: The claim's code-level core survives intact and unmodified: all four lead-pipeline calls lack a signal, at the exact cited lines, and the probe-side contrast is real. Three narrowings on the failure scenario's narration, none of which touch the defect: 1. "producing duplicate contacts" is the wrong consequence. HubSpot's Forms API keys contacts on email, so a retry with the same address updates the existing contact and logs a second form submission — you get duplicate submissions and duplicate Resend notifications, not duplicate contact records. Related: submissionIdRef is a useRef initializer
+
 ---
 
-### F-066 · S3 · quality · OPEN
+### F-066 · S3 · quality · CONFIRMED
 
 **Where:** lib/lead-form/schema.ts:22-24
 
@@ -1082,13 +1219,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** The sole check is `if (showSkuCount && !data.skuCount)` at components/forms/LeadForm.tsx:166. Any submission that does not run it — a direct POST to /api/lead, or a future mount of the catalog-snapshot form that forgets the showSkuCount prop — passes Zod, and submit.ts:124 drops the field entirely when it is empty, so the operator receives a Catalog Snapshot request with no catalog size, no way to scope the work, and a $300 conversion recorded for it. The comment makes the invariant look enforced during review, which is how it stays unenforced.
 
-**Found by:** opus-5 (phase 1, lens D) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens D) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Either add the promised .superRefine keyed on a leadType/formId field carried in the payload, or delete the comment and state plainly that SKU count is optional at the API boundary. Test: leadSchema.safeParse of a catalog-snapshot payload without skuCount asserting the intended outcome.
 
+**Verification (CONFIRMED).** Scope correction: The core claim (false comment, no refine, client-only enforcement, silent drop, $300 recorded) is fully confirmed. Two calibrations on the failure scenario: (1) the "future mount that forgets showSkuCount" branch is hypothetical — both live mounts, CatalogSnapshotHero.tsx:78 and CatalogSnapshotFormSection.tsx:79, do pass `showSkuCount`, so today only a crafted/tampered POST reaches the bad state; (2) the server-side $300 GA hit additionally requires the payload to carry `gaClientId` and `submissionId` (route.ts:73), which a crafted POST can supply, and the client-side $300 fires unconditionall
+
 ---
 
-### F-067 · S3 · a11y · OPEN
+### F-067 · S3 · a11y · REFUTED
 
 **Where:** components/sections/AIOverviewMockup.tsx:188
 
@@ -1096,13 +1235,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** The container is a plain <div> whose implicit role is generic; ARIA 1.2 prohibits naming generic elements, so aria-label="Example AI answers across the verticals we serve" is dropped, and aria-roledescription="carousel" is invalid without a semantic role (axe-core flags both: aria-prohibited-attr and aria-roledescription, impact serious). A VoiceOver user swiping through the homepage hero therefore reaches loose text — "google.com/search?q=best+custom+hydraulic+hose+assemblies", then a sentence naming a client — with nothing marking it as an illustrative example rather than a real search result, and no group to skip. React re-keys the body on every rotation (key={current}, line 232), so the node the virtual cursor is anchored to is destroyed every 3 seconds with no announcement.
 
-**Found by:** opus-5 (phase 1, lens E) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens E) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Add role="group" (or role="region") to the container so aria-roledescription and aria-label take effect, and wrap each slide's changing content in a single region rather than three separately-keyed blocks.
 
+**Verification (REFUTED).** Refuted: The code fact is real, but the claim as written and its entire evidentiary basis are false, and I proved it three independent ways.\n\n1) CODE FACT (survives): components/sections/AIOverviewMockup.tsx:179-190 is a plain <div> carrying aria-roledescription=\"carousel\" + aria-label with no role. `grep -n \"role=\" components/sections/AIOverviewMockup.tsx` returns nothing — the only role-ish attrs in the file are aria-hidden on two SVGs. So there genuinely is no group boundary.\n\n2) \"ARIA discards both\" is HALF FALSE. I drove local headless Chromium (repo's own node_modules/playwright, no net Row kept as eval data.
+
 ---
 
-### F-068 · S3 · a11y · OPEN
+### F-068 · S3 · a11y · CONFIRMED
 
 **Where:** components/forms/FullGrowthQuoteForm.tsx:541
 
@@ -1110,13 +1251,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** On /full-growth-quote/ step 2 a user leaves "Annual revenue range" on the placeholder option and presses "Continue" (StepNav, line 485). next() (lines 135-143) calls trigger, gets false, and returns — no announcement, no focus move, no scroll. The error renders in a plain <p className="mt-1 text-xs text-danger-500"> with no role="alert" and no aria-describedby/aria-invalid on the select, so a screen-reader user hears nothing and the qualifier appears frozen; on a phone the erroring select is often above the fold line so a sighted user sees nothing either. Step 1's radio and checkbox errors (lines 285-287, 309-311) have the same gap. Every sibling form sets role="alert" on exactly this element — LeadForm.tsx:539, RevenueLeakAuditForm.tsx:270, LeadMagnetForm.tsx:174 — so this is an omission, not a policy. WCAG 3.3.1 (A).
 
-**Found by:** opus-5 (phase 1, lens E) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens E) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Match the other Field implementations: role="alert" on the error <p>, give it an id, and wire aria-describedby + aria-invalid on the control; focus the first errored field when next() fails.
 
+**Verification (CONFIRMED).** Scope correction: Two clauses in the finding are overstated and should not survive into the fix ticket as written. 1. "no aria association" is framed as unique to this form. It is not. All four `Field` implementations lack `aria-describedby` and `aria-invalid` — LeadForm, RevenueLeakAuditForm, and LeadMagnetForm associate nothing either. Repo-wide, `aria-invalid` appears exactly once (components/probe/AIReadPanel.tsx:210) and `aria-describedby` only in GlossaryHovercard.tsx:129 and DemandSystem.tsx:69. What is genuinely unique to FullGrowthQuoteForm is the missing `role="alert"`. So the "match the other Field i
+
 ---
 
-### F-069 · S3 · a11y · OPEN
+### F-069 · S3 · a11y · CONFIRMED
 
 **Where:** components/sections/revenue-engine/WholeFlowLeak.tsx:394
 
@@ -1124,13 +1267,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** Slider renders <label className="text-sm font-medium text-ink-800">{label}</label> with no htmlFor and without wrapping the input (lines 394-408), so the visible label is bound to nothing — clicking "Your average job" with a mouse does not focus or activate the range input. The input is named only by aria-label and has no aria-valuetext, so a screen-reader user dragging the usd slider hears "4500", not "$4,500". Worse, the result column (lines 257-281) — the animated total, the three per-pillar amounts, and the "what the engine puts back" figure — has no aria-live anywhere. A screen-reader user on /revenue-engine/ who moves "Calls / forms missed a week" from 5 to 12 hears "12" and nothing else; the leak total, the pillar breakdown and the recovered number all change silently, which is the whole point of the section the file's own header calls "the page's conversion engine". WCAG 1.3.1 / 4.1.2 / 4.1.3.
 
-**Found by:** opus-5 (phase 1, lens E) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens E) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Give Slider a useId and wire htmlFor/id (or wrap the input in the label), add aria-valuetext={fmtVal(value, fmt)}, and wrap the total + recovered figures in a debounced role="status" region that announces the settled value once the tween finishes rather than every frame.
 
+**Verification (CONFIRMED).** Scope correction: Two parts of the claim text do not survive as written, though the defect does. 1) The one-line claim "the section's entire payload is invisible to screen-reader users" is FALSE. Every number is real text in the accessible DOM and readable in browse/virtual-cursor mode; the per-pillar amounts are in fact rendered TWICE — once beside each pillar heading in the input column (`{usd(amounts[pk])}`, lines 234-236) and again in the result list (271-281). The accurate statement is the one in failureScenario: the values update SILENTLY (no announcement on slider change), not that they are unreachable. 
+
 ---
 
-### F-070 · S3 · ux · OPEN
+### F-070 · S3 · ux · CONFIRMED
 
 **Where:** components/probe/ShareRow.tsx:13
 
@@ -1138,13 +1283,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** copyLink() flips the button's own text from "Copy link" to "Copied" (line 45). Changing the accessible name of the element that currently holds focus is not reliably re-announced by NVDA, JAWS or VoiceOver, so a screen-reader user who activates the button hears nothing and has no way to know the report URL is on the clipboard. If navigator.clipboard.writeText rejects — Firefox without clipboard permission, any non-secure-context or embedded view — the empty catch at lines 18-20 discards the error, setCopied is never called, and the label stays "Copy link": the button visibly does nothing for every user, with no fallback offered. This is the mechanic the file's own comment calls the growth loop ("send it to whoever owns the fix").
 
-**Found by:** opus-5 (phase 1, lens E) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens E) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Announce the result from a separate role="status" element rather than the button label, and give the catch a real failure state (e.g. reveal a selectable input holding the URL) instead of relying on the address bar.
 
+**Verification (CONFIRMED).** Scope correction: Core claim survives in full; one cited trigger is wrong. What holds: (1) the "Copied" confirmation exists only as the focused button's own accessible name, with no live region anywhere in the component, the page, or either layout; (2) the catch at lines 18-20 is genuinely empty, so a rejection produces no state change, no error surface, and no fallback path to the URL. What does NOT hold as written: "Firefox without clipboard permission" is an inaccurate example — `navigator.clipboard.writeText()` in Firefox is allowed in a secure context from a user-initiated handler (which this click is) and
+
 ---
 
-### F-071 · S3 · perf · OPEN
+### F-071 · S3 · perf · CONFIRMED
 
 **Where:** components/forms/LeadForm.tsx:3
 
@@ -1152,13 +1299,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** `import { z } from 'zod'` resolves to node_modules/zod/v4/classic/external.js, whose line 14 is `export * as locales from '../locales/index.js'` — a namespace re-export Turbopack cannot tree-shake, so all 53 locale modules (265,164 bytes of source) plus the JSON-Schema generator ride along. Grepping the built chunk .next/static/chunks/0h.m3c0p692fu.js confirms it: Danish, Finnish, Croatian, Lithuanian, Esperanto, Icelandic, Uzbek and Dutch error strings, JSONSchemaGenerator, BIGINT_FORMAT_RANGES, alongside HookFormControlContext. The site is English-only. That chunk is referenced in the prerendered HTML of exactly the conversion surfaces (catalog-snapshot, future-proof-your-seo, book-growth-call, contact-me, constraint-sprint, unlock-growth-audit, full-growth-quote, lp/home-services-revenue-leak, industries/home-services, industries/medical-aesthetics, revenue-engine/dentists and two preview pages) and Playwright shows it downloaded and executed on the HOMEPAGE at 337ms (decodedBodySize 311,857, initiatorType 'script') because the always-visible header CTA prefetches /book-growth-call/. An owner opening /unlock-growth-audit/ on a mid-range Android over LTE parses and compiles ~312KB of dead validation library — roughly a quarter of the page's 1,303KB first-party JS — to validate seven fields whose rules are min(2), email(), min(7), url() and four min(1)s. All four forms do it (LeadForm.tsx:123, RevenueLeakAuditForm.tsx:94, FullGrowthQuoteForm.tsx:116, LeadMagnetForm.tsx:42).
 
-**Found by:** opus-5 (phase 1, lens F) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens F) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Keep lib/lead-form/schema.ts as the server-side source of truth but stop importing it into client components. Either replace zodResolver with react-hook-form's native rules / a ~20-line custom resolver, or import from zod/mini (present in this version's export map) so the locale namespace is never reachable. Verify with a rebuild that no chunk in the lead-page HTML still contains JSONSchemaGenerator.
 
+**Verification (CONFIRMED).** Scope correction: Three details in the write-up are loose; none of them saves the finding. (1) Attribution: `@hookform/resolvers/zod/dist/zod.mjs` imports only `import*as n from "zod/v4/core"`, so zodResolver itself does not reach the locale barrel — the locales arrive via the app's own `import { z } from 'zod'` in lib/lead-form/schema.ts, revenue-leak-audit-schema.ts, full-growth-quote-schema.ts and directly at LeadMagnetForm.tsx:5. The claim's headline says "using zodResolver … ships"; its failureScenario names the real mechanism, so the substance stands but the one-line claim mis-attributes. (2) "always-visi
+
 ---
 
-### F-072 · S3 · perf · OPEN
+### F-072 · S3 · perf · CONFIRMED
 
 **Where:** instrumentation-client.ts:9
 
@@ -1166,13 +1315,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** The file's own header comment says 'Keep it small — anything imported here lands in every page's JS bundle', then line 9 does `import * as Sentry from '@sentry/nextjs'` and line 27 does `export const onRouterTransitionStart = Sentry.captureRouterTransitionStart` unconditionally, pinning the namespace at module scope so no bundler can drop it. In the local prod build, .next/build-manifest.json lists static/chunks/0yob8odmwx10j.js (244,653 bytes, 76,471 gzip) in rootMainFiles — the set every route loads. Splitting that chunk on Turbopack module boundaries shows one module, id 182525, of 144,753 bytes containing 218 sentry occurrences (__SENTRY__, browserTracingIntegration, sentry.sample_rate, sentry.idle_span_finish_reason). Production Lighthouse detected Sentry only on /book-growth-call/, and there it came from Calendly's vendor chain — i.e. our own DSN is not producing traffic, yet every visitor still downloads, parses and compiles ~145KB of a telemetry SDK that never initializes: ~11% of the 1,303KB first-party JS on every marketing page.
 
-**Found by:** opus-5 (phase 1, lens F) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens F) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Make the import conditional on the DSN at build time: guard the body behind `if (process.env.NEXT_PUBLIC_SENTRY_DSN)` with a dynamic `await import('@sentry/nextjs')`, and export onRouterTransitionStart as a thin wrapper that lazily forwards so the static reference on line 27 no longer pins the module. Re-measure rootMainFiles afterwards.
 
+**Verification (CONFIRMED).** Scope correction: The byte claim is fully CONFIRMED: ~145KB of Sentry lands in the rootMainFiles chunk on every page, and the DSN guard cannot remove it because Turbopack's build-default tree shaking is reexports-only, so line 27 pins the whole appRouterRoutingInstrumentation module plus its @sentry/core and @sentry/react tracing imports. Two narrower parts need trimming. First, the clause "a telemetry SDK that never initializes" and the framing that the bytes are pure waste depend on NEXT_PUBLIC_SENTRY_DSN being unset in Vercel production, which baseline/platform-notes.md declares unknowable from this machine;
+
 ---
 
-### F-073 · S3 · perf · OPEN
+### F-073 · S3 · perf · CONFIRMED
 
 **Where:** next.config.ts:9
 
@@ -1180,13 +1331,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** Reproduced on the deployed site: https://salesolution.net/revenue-engine/ advertises og:image = https://salesolution.net/revenue-engine/opengraph-image-14ltk3?2491337b1cbbb549; fetching that exact URL returns 308 with content-type: text/plain, not an image. Same locally for the root card (/opengraph-image?... → 308) and for the probe report card (/ai-readiness/<token>/opengraph-image-rff2yu?... → 308, whose Location also mangles the cache-busting query from ?805c2aa27163a143 to ?805c2aa27163a143=). Only the trailing-slash form serves the PNG (200, image/png, 55,227 bytes). Every social crawler that unfurls any page — LinkedIn, Slack, X, Facebook, iMessage — pays an extra round trip before it can start downloading the card, and any fetcher that checks content-type before following, or that does not follow redirects for image subresources, records text/plain and drops the preview. On the probe report this is the share mechanic the growth loop depends on.
 
-**Found by:** opus-5 (phase 1, lens F) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens F) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Add an explicit openGraph.images / twitter.images entry with the trailing-slash URL where the file-convention route is used, or add a rewrite so /**/opengraph-image* and /**/twitter-image* are served directly instead of being caught by the trailing-slash redirect. Confirm by curling the advertised og:image URL on a deployed page and asserting 200 + image/png with zero redirects.
 
+**Verification (CONFIRMED).** Scope correction: The defect itself is fully confirmed from code: the advertised og:image/twitter:image URL 308s instead of returning the PNG, and the Location mangles the cache-bust query. Two secondary parts are weaker than written. (a) "verified against live production" I could not re-check — no network calls allowed — but the hash suffixes and the query mangling both reproduce exactly from Next's source, so the reproduction is credible rather than assumed. (b) "any fetcher that checks content-type before following, or that does not follow redirects for image subresources, records text/plain and drops the pr
+
 ---
 
-### F-074 · S3 · seo · OPEN
+### F-074 · S3 · seo · CONFIRMED
 
 **Where:** app/(site)/industries/industrial-distribution/page.tsx:299
 
@@ -1194,13 +1347,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** components/sections/FAQ.tsx:172 renders <JsonLd data={faqPageSchema(faqEntries)} /> for whatever items it receives. Seven pages ALSO call faqPageSchema(...) themselves and then render <FAQ items={...}> with the same array: industries/industrial-distribution/page.tsx:299 + :964 (the code comment at :963 even says "also the FAQ schema above", showing the author did not know the component self-emits), services/paid-acquisition:66+:97, services/recover-reactivate:62+:93, services/reviews-reputation:62+:93, services/conversion-cro:62+:93, services/local-seo-maps:66+:97, services/answer-and-book:66+:98. Crawl /services/answer-and-book/ and the HTML carries two <script type="application/ld+json"> blocks each declaring @type: FAQPage with identical mainEntity arrays and no @id to disambiguate. Google's Rich Results Test flags multiple FAQPage entities on one URL as ambiguous and picks one arbitrarily; an LLM crawler ingesting the page counts every question twice. On a site whose product is structured-data quality, this is the first thing a prospect's own audit tool will surface.
 
-**Found by:** opus-5 (phase 1, lens G) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens G) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Delete the page-level faqPageSchema(...) JsonLd calls on all seven pages and let <FAQ> be the single emitter, or add an emitSchema={false} prop for pages that want to control it themselves.
 
+**Verification (CONFIRMED).** Scope correction: Two small imprecisions, neither load-bearing. (1) The self-emit line in components/sections/FAQ.tsx is 169, not 172 — the claim's other eleven line references are exact. (2) The consequence clause ("Google's Rich Results Test flags multiple FAQPage entities on one URL as ambiguous and picks one arbitrarily") is an assertion about Google's behavior that cannot be verified from this repo; what the code proves is only that two identical, @id-less FAQPage blocks ship in the HTML of seven indexable pages. The duplication and the missing @id are CONFIRMED; the precise crawler/Rich-Results consequenc
+
 ---
 
-### F-075 · S3 · seo · OPEN
+### F-075 · S3 · seo · CONFIRMED
 
 **Where:** app/sitemap.xml/route.ts:28
 
@@ -1208,13 +1363,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** CORE_PAGES and LANDING_PAGES in lib/sitemap/registry.ts:63-106 set no lastmod, so stamps.length === 0 and line 28 falls through to new Date(). Verified in production: https://salesolution.net/sitemap.xml returns <lastmod>2026-07-22T16:14:33.933Z</lastmod> for pages.xml, landing-pages.xml AND tools.xml — identical to the millisecond across three unrelated sections, which proves it is the route's render clock and not any content date. app/api/cron/revalidate-sitemap/route.ts:28-31 re-renders that route daily at 06:00 UTC, so the value advances every 24h for 33 marketing URLs unchanged since deploy. Meanwhile /sitemaps/pages.xml emits <loc>, <changefreq> and <priority> but no <lastmod> on any URL — and Google ignores changefreq and priority entirely. The only freshness signal Google reads is always wrong in the same direction, which is the documented trigger for Search Console distrusting lastmod for the whole property; the homepage and the five lead-gen landing pages get no usable freshness signal at all.
 
-**Found by:** opus-5 (phase 1, lens G) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens G) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Omit lastmod from an index child when none of its URLs has one (`lastmod: stamps.length ? new Date(Math.max(...stamps)) : undefined`), and give CORE_PAGES/LANDING_PAGES a real per-URL date — a hand-maintained lastmod bumped when the copy changes, or the deploy timestamp of the last commit touching that route file. Cross-ref F-013 — extends it, does not restate it.
 
+**Verification (CONFIRMED).** Scope correction: The mechanism and every number survive intact. Two soft spots that do not change the verdict but should be trimmed before the fix lands: 1. `crossRef: "F-013"` is dangling. wave-1-findings.json holds 79 ids and F-013 is not among them (lowest in that range is F-015). The real neighbor is the ledger entry at findings-ledger.md:232 about lib/sitemap/registry.reconcile.test.mjs regexing source text instead of executing the serializers — that finding is why this one could ship unnoticed, and it is a different defect. Repoint or drop the crossRef. 2. "Fabricates" is the right verdict for the effect
+
 ---
 
-### F-076 · S3 · seo · OPEN
+### F-076 · S3 · seo · CONFIRMED
 
 **Where:** public/llms.txt:7
 
@@ -1222,13 +1379,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** llms.txt lists exactly six services (lines 9-14). Twelve exist and all twelve are in the sitemap at priority 0.8 (lib/sitemap/registry.ts:66-77): answer-and-book, local-seo-maps, paid-acquisition, conversion-cro, recover-reactivate and reviews-reputation appear nowhere. Also absent: the /services/ hub, the /industries/ hub, /industries/industrial-distribution/, /catalog-snapshot/ (a registered indexable lead-gen landing page), /tools/ and /ai-readiness/methodology/. Separately, line 20 says of /revenue-engine/: "Book a Revenue Leak Audit here" — that page imports no form component (app/(site)/revenue-engine/page.tsx:4-16) and its own CTA sends visitors to /industries/home-services/#audit. Concrete failure: a dental-practice owner asks ChatGPT "who can answer my missed calls and book patients"; the retrieval bot reads llms.txt, finds no /services/answer-and-book/ entry, and cites nothing. A second user asks "where do I book Sale Solution's revenue leak audit", is pointed at /revenue-engine/, lands there and finds no form. The header section title (line 7) still scopes services to "industrial & technical-distribution e-commerce" even though six of the twelve are local-service offerings.
 
-**Found by:** opus-5 (phase 1, lens G) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens G) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Regenerate llms.txt from lib/sitemap/registry.ts + lib/revenue-engine.ts (CYLINDER_GROUPS already holds all 12 slugs with one-line descriptions) so the file cannot drift again; retitle the services section to cover both motions; and change the /revenue-engine/ line to describe it as the explainer, pointing the audit line at the vertical page that actually hosts the form. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (CONFIRMED).** Scope correction: Two parts need trimming before this becomes a fix ticket. SURVIVES INTACT: llms.txt lists 6 of 12 shipped, sitemap-registered service pages; the /services/ hub, /industries/ hub, /industries/industrial-distribution/, /catalog-snapshot/, /tools/ and /ai-readiness/methodology/ are all absent; nothing generates or validates the file; and line 7's industrial-only section title now mislabels a list that should contain six local-service offerings. The 2026-06-30 last edit was a 3-line URL remap, one day after the cylinder library shipped, so "stale" is datable, not rhetorical. DOES NOT SURVIVE AS WR
+
 ---
 
-### F-077 · S3 · seo · OPEN
+### F-077 · S3 · seo · CONFIRMED
 
 **Where:** app/(site)/page.tsx:16
 
@@ -1236,13 +1395,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** lib/probe/score.mjs:392-400 awards full marks only for a title of 15-60 characters and drops to 0.3x otherwise; :380-390 wants a meta description of 70-160 characters. With the layout template '%s · Sale Solution' (app/layout.tsx:41) applied, 21 of the 29 in-scope funnel pages render a title over 60 chars and 16 render a description over 160. Worst: homepage 90 chars ("Revenue systems for businesses that sell parts, book jobs, and fill chairs · Sale Solution"), /industries/consumer-brands/ 96, /services/answer-and-book/ 90 with a 260-char description, /industries/medical-aesthetics/ 90 / 247, /revenue-engine/ description 263. Google truncates the SERP title at roughly 600px, so the homepage result reads "Revenue systems for businesses that sell parts, book jobs, and…" — the brand name cut off entirely — and /services/answer-and-book/'s snippet stops mid-sentence before "books qualified leads straight onto your calendar", which is the buying trigger. Running the site's own probe against salesolution.net scores its own homepage 7 of the 20 available title+description points.
 
-**Found by:** opus-5 (phase 1, lens G) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens G) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Rewrite the offending metadata.title values to ≤42 characters (so the ' · Sale Solution' suffix keeps the total under 60) and trim descriptions to 150-160 characters, front-loading the outcome. Add a unit test over the metadata exports asserting both bounds so new pages cannot regress. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (CONFIRMED).** Scope correction: CONFIRMED with three corrections. SURVIVES: the mechanism and every length number I could check. The root-layout template does append ' · Sale Solution' (16 chars) to page titles under `app/(site)`, the homepage renders a 90-char title against the scorer's own 15–60 rule, and the breadth is real — 24 of 52 static-metadata pages under `app/(site)` render a title over 60 chars, 26 carry a description over 160. All four named worst offenders reproduce exactly (consumer-brands 96, answer-and-book 90/260, medical-aesthetics 90/247, revenue-engine desc 263). DOES NOT SURVIVE #1 — the headline self-s
+
 ---
 
-### F-078 · S3 · seo · OPEN
+### F-078 · S3 · seo · CONFIRMED
 
 **Where:** app/(site)/revenue-engine/page.tsx:99
 
@@ -1250,13 +1411,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** The comment at :99-101 says "Home-services + dentists are built; the /industries/{...} pillar dirs are not, so they stay off this list until Phase 5 to avoid structured data pointing at 404s" — but /industries/home-services/ is already in the list, and app/(site)/industries/medical-aesthetics/page.tsx and app/(site)/industries/consumer-brands/page.tsx both exist, both set self-canonicals, neither is noindex, and both are registered in the sitemap at priority 0.8 (lib/sitemap/registry.ts:83-84). The NicheRouter at :212-221 repeats the same two-item list. A med-spa owner lands on /revenue-engine/ from the homepage "See it for medical & aesthetics" chip flow or from an AI answer, and the pillar offers only "Home services" and "Dental practices" cards plus a generic "See all industries" link — the page built for them is never named. An answer engine parsing the pillar's CollectionPage/ItemList sees the firm covering two verticals when it covers four, so a query like "does Sale Solution work with med spas" retrieves nothing from the hub.
 
-**Found by:** opus-5 (phase 1, lens G) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens G) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Add /industries/medical-aesthetics/ and /industries/consumer-brands/ to both the itemListSchema items array and the NICHES constant, and delete the stale comment. Better: derive both from a single exported vertical registry so the schema and the router cannot diverge again. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (CONFIRMED).** Scope correction: The defect is CONFIRMED. Three secondary details in the failureScenario need correcting; none changes the verdict. 1. Wrong arrival path. "A med-spa owner lands on /revenue-engine/ from the homepage 'See it for medical & aesthetics' chip flow" is false — HeroProbe.tsx:47-52 routes that chip DIRECTLY to /industries/medical-aesthetics/, so a chip-clicker never sees the pillar. Real arrival paths that do exist: the nav item (lib/navigation.ts:34 `{ label: 'The Revenue Engine', href: '/revenue-engine/' }`) and public/llms.txt:20, which points AI answers at /revenue-engine/ for the Revenue Leak Aud
+
 ---
 
-### F-079 · S3 · seo · OPEN
+### F-079 · S4 · seo · CONFIRMED
 
 **Where:** lib/business-schema.ts:28
 
@@ -1264,13 +1427,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** app/(site)/layout.tsx:18 emits globalGraph() on every page, including Organization at @id https://salesolution.net/#organization carrying name, telephone +1-561-531-4339, email leads@salesolution.net and the full PostalAddress (lib/schema.ts:24-58). app/(site)/contact-me/page.tsx:26 then emits localBusinessSchema(), which declares @id https://salesolution.net/#localbusiness with the identical name, telephone, email and address (business-schema.ts:28-42) and no sameAs, no @id cross-reference and no parentOrganization. A crawler parsing /contact-me/ extracts two distinct business entities at one NAP on one URL. Google's entity reconciliation has to guess which node the reviews, citations and Google Business Profile map to, and the ContactPage node on the same page (about: {'@id': .../#organization}, business-schema.ts:20) points at only one of them — so the LocalBusiness node is orphaned from the page it describes. This is the exact entity-consolidation failure the org-identity and publisher signals in lib/probe/score.mjs:272-283 and :446-458 penalize on client sites.
 
-**Found by:** opus-5 (phase 1, lens G) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens G) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Give the LocalBusiness node the same @id as the Organization so the two merge into one entity with @type: ['Organization','LocalBusiness'], or keep the separate node and add parentOrganization/sameAs plus isPartOf back to the ContactPage.
 
+**Verification (CONFIRMED).** Scope correction: SURVIVES: the entire mechanical claim — two Organization/LocalBusiness nodes at different @ids (#organization from the sitewide graph, #localbusiness from the page) with identical name/phone/email/address, zero cross-reference (no sameAs, parentOrganization, or isPartOf), and a ContactPage whose `about` points only at #organization, on an indexable sitemapped page. Also survives: the suggested fix is correct and cheap. DOES NOT SURVIVE: the claim that "the org-identity and publisher signals in lib/probe/score.mjs:272-283 and :446-458 penalize" this. Those two signals are existence checks (Math **Severity lowered to S4** on the verifier vote.
+
 ---
 
-### F-080 · S3 · seo · OPEN
+### F-080 · S3 · seo · REFUTED
 
 **Where:** app/robots.ts:19
 
@@ -1278,13 +1443,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** standardDisallow covers only /api/, /studio/, /dev/, /sales/, /strategy/, and lines 32-48 grant Allow: / to GPTBot, ClaudeBot, PerplexityBot, CCBot, Bytespider, Amazonbot and eleven more. /ai-readiness/[token]/ accepts any string: an undecodable token returns a rendered ErrorShell, not notFound() (page.tsx:73-81), so the response is HTTP 200 with an error page — a textbook soft 404, and the URL space is infinite. Report links are designed to be posted publicly (ShareRow / LinkedIn share at page.tsx:201), so crawlers will discover them. For every decodable token the page is force-dynamic and re-runs fetchHtml + fetchRobotsTxt + hasLlmsTxt + getDomainMetrics against the third-party host on each request, where getDomainMetrics draws from the shared 500-per-day DataForSEO ledger. Concrete: five client report links get shared on LinkedIn; ClaudeBot, GPTBot, CCBot, Bytespider and Amazonbot each crawl them from separate IP ranges (the per-IP probe cap of 30/h never binds), each new apex domain consumes a slot from the 500/day ledger, and every fetch makes salesolution.net's server hammer a client's site — all for pages marked noindex, nofollow that can never return a single indexed URL. This also applies to the OG card route, which is a plain public GET.
 
-**Found by:** opus-5 (phase 1, lens G+A) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens G+A) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Add /ai-readiness/ to standardDisallow with an explicit Allow: /ai-readiness/methodology/ (that page is indexable and in the sitemap at registry.ts:88), so shareable report links stay reachable by humans and unfurl bots while crawlers stop spending budget and DataForSEO credits. Return notFound() for an undecodable token so the infinite URL space 404s instead of 200s. Cross-ref F-006 — extends it, does not restate it.
 
+**Verification (REFUTED).** Refuted as INTENTIONAL: The shareable unsigned-token report that re-scores on every open is a documented decision (08-known-deliberate: "Probe tokens are unsigned … That's what makes reports shareable, which is the growth mechanic. The controls are the IP and global caps, not the token"), reiterated in page.tsx:16-22 ("Every view re-runs the deterministic scan, so a shared link never expires"). Its escape hatch is a demonstrated route to unbounded spend; F-080 aims at that and misses, because domain.ts:72-82 caches the only billed lookup for 24h per apex domain and CAPS.dfs.globalDay = 500 caps it globally regardless Appended to 08-known-deliberate.md. Row kept as eval data.
+
 ---
 
-### F-081 · S3 · flow · OPEN
+### F-081 · S3 · flow · REFUTED
 
 **Where:** app/(site)/industries/industrial-distribution/page.tsx:897, lib/sitemap/registry.ts:104
 
@@ -1292,13 +1459,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A distributor reads the on-ramp card "Engine runs, but a cylinder's dead" — the self-selection for a fixed-scope Sprint — and clicks "Start with a Sprint". They land on the generic 15-minute growth-call page, which mentions the Sprint only in the seventh FAQ answer and offers no sprint scope, timeline, deliverables or the $12–24k price. A repo-wide grep for '/constraint-sprint/' outside the page's own directory returns four hits: the sitemap registry (:104), two data-cta string-matching helpers that never render an href, an analytics branch in app/api/lead/route.ts:77, and one real <Link> at components/sections/EngagementModel.tsx:175 — mounted on exactly one route, /services/ai-seo/. It is not in lib/navigation.ts, not in the footer, not in FinalCTARail, and barely in llms.txt. So on a DR-10 domain a $12–24K offer page receives one internal link from a sub-fold pricing band on a single page, accrues almost no internal PageRank, and Googlebot reaches it mainly via the sitemap — the classic "submitted, currently not indexed" pattern. The visitor who named the offer is the one visitor guaranteed not to see the page for it.
 
-**Found by:** opus-5 (phase 1, lens G+H) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens G+H) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Point the second on-ramp card at /constraint-sprint/ — an href change on a button whose label already names the destination — and add the sprint to the EngagementShapes band (which renders on /services/, /industries/industrial-distribution/ and /industries/consumer-brands/) so the page picks up descriptive inbound anchors from the hubs that sell it. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (REFUTED).** Refuted as INTENTIONAL: Routing "Start with a Sprint" to /book-growth-call/ is a documented decision, in three independent places. (1) The page's own docblock: "the close is a single industrial door (Book a Growth Call + written diagnostic). Copy follows the approved mock in docs/strategy/multi-vertical-pivot/04-revenue-engine-rebrand.md (§3)." (2) That mock's §11 ships this block verbatim with the bridge line "Either way, the first call tightens the scope and the SOW lands in 48 hours" — "either way" only parses if both cards go to the call; git log -L confirms the card was created with this href in 30a1271, never r Appended to 08-known-deliberate.md. Row kept as eval data.
+
 ---
 
-### F-082 · S3 · correctness · OPEN
+### F-082 · S3 · correctness · CONFIRMED
 
 **Where:** app/api/probe/ai/route.ts:57
 
@@ -1306,13 +1475,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** consume('ai', …) runs at line 57, before the try block that fetches and scores. When the target site times out, fetchHtml throws, the route returns 502, and writeGate is never reached — gate.runs stays 0. The panel shows the 'unreachable' state with a "Try again →" button (AIReadPanel.tsx:265-273). A visitor on a slow or flaky target clicks it five times: six attempts, six increments of probe:ai:<ip>:h<bucket>, cap 6 (limits.mjs:21). The seventh attempt returns 429 and drops them into the 'limited' state — which has no retry and no CTA. They have consumed zero of their six gate runs, received zero reads, and are locked out for up to an hour by a button the UI told them to press.
 
-**Found by:** opus-5 (phase 1, lens H) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens H) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Consume the rate-limit unit on success only (or refund on the 502/503 branches), and cap client-side retries. The gate cookie already bounds legitimate use; the limiter should count spend, and a failed read spends nothing on Anthropic.
 
+**Verification (CONFIRMED).** Scope correction: The claim survives; two details in the failureScenario are wrong or loose, neither load-bearing. 1. "When the target site times out … the route returns 502" is incorrect. `fetchHtml` uses `signal: AbortSignal.timeout(FETCH_TIMEOUT_MS)` (fetch.ts:118) and does not wrap the rejection, so a pure timeout surfaces as a DOMException whose message ("The operation was aborted due to timeout") does not match the 502 regex at route.ts:94 — it falls through to `503 ai_unavailable` → panel state `unavailable` (AIReadPanel.tsx:255-263), which carries the SAME `RetryButton`. So the outcome is identical; onl
+
 ---
 
-### F-083 · S3 · flow · OPEN
+### F-083 · S3 · flow · REFUTED
 
 **Where:** app/(site)/industries/consumer-brands/page.tsx:259
 
@@ -1320,13 +1491,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A hot-tub-and-spa dealer arrives from the homepage "Consumer brands" chip (HeroProbe.tsx:60-66 — whose file comment states "industrial → the services book; the other three → the Revenue Engine. Do not merge the funnels"). The page is titled "Revenue Engine for Consumer & DTC Brands", carries the Revenue Engine spec strip ("Install: 90 days, one-time fee · Lock-in: none") and the WholeFlowLeak calculator with showroom presets. They model a six-figure leak and click "Book a Growth Call" (hero line 259, calculator line 306, close line 384 — all three go to /book-growth-call/). That page tells them to prepare "3–5 of your highest-revenue category or product URLs" and their "rough monthly e-commerce revenue band", and with Calendly unset the form requires them to pick an e-commerce platform. A showroom dealer has none of those, and the Revenue Leak Audit they were being sold is never offered. This clears the 'industrial-only copy on some pages' escape hatch: it contradicts a shipped positioning decision recorded in the component's own comment.
 
-**Found by:** opus-5 (phase 1, lens H) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens H) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Decide which funnel this vertical belongs to and make the page consistent end to end. If it is Revenue Engine, give it an AuditCTA band with a consumer leak set; if it is the services book, drop the Revenue Engine spec strip and calculator framing from the hero. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (REFUTED).** Refuted as INTENTIONAL: Consumer & DTC is a deliberate motion flip to the sell-product motion, and the sell-product door IS /book-growth-call/. Recorded in three places: the 2026-06-28 rebrand doc (line 135 "CTA is per-motion"; line 176 the consumer flip with an explicit instruction to scrub "Revenue Leak Audit" and the Guarantee from the page; line 203 "sell-product -> Book a Growth Call"), the offer architecture SIGNED 2026-07-05 (§9.1 files consumer-brands as Industry (sell-product) with calculator "optional" and guarantee "never (motion rule)"; §4.2 makes the 48h SOW after the Growth Call this motion's artifact), Appended to 08-known-deliberate.md. Row kept as eval data.
+
 ---
 
-### F-084 · S3 · flow · OPEN
+### F-084 · S3 · flow · REFUTED
 
 **Where:** app/(site)/industries/medical-aesthetics/page.tsx:298
 
@@ -1334,13 +1507,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A med-spa owner on /industries/medical-aesthetics/ clicks "Book a Revenue Leak Audit" (line 201) and scrolls to <AuditCTA id="audit" vertical="dental" />. The Trade select is hidden and trade is hard-set to 'dental' (RevenueLeakAuditForm.tsx:96), so their lead arrives in HubSpot and the Resend notification labeled "Dental practice". "Where it hurts most" offers only DENTAL_LEAKS — "Calls get missed during chair time", "Treatment plans get presented, then go cold", "Overdue recall and past patients never come back" (revenue-leak-audit-schema.ts:31-37) — with no option matching an aesthetics practice. They then land on /revenue-engine/audit-booked/, the fixed thankYouHref for every vertical (RevenueLeakAuditForm.tsx:42), which promises "the follow-up gap on your estimates" (audit-booked/page.tsx:58) — home-services wording matching neither dental nor medical. The operator preps the wrong audit from wrong-vertical data.
 
-**Found by:** opus-5 (phase 1, lens H) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens H) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Add a 'medical' vertical to AuditCTA/RevenueLeakAuditForm with its own leak set and trade value, and make the confirmation page's step-1 line vertical-aware (quotes / treatment plans / consults) via a thankYouHref or a query flag. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (REFUTED).** Refuted as INTENTIONAL: The dental mount on /industries/medical-aesthetics/ is the documented, shipped resolution of a logged bug, not the bug. medical-dental-offer-spec.md:301 records the real defect as the page rendering `<AuditCTA />` with no vertical (contractor wording + home-services submission) and prescribes `vertical="dental"` as the fix; §370 of the same doc rules "fix it now, separately from the copy pass"; 03-migration-build-plan.md:324 says the fix is applied and orders "Commit it. Do not re-implement." Both docs name F-084's proposed alternative — adding a `'medical'` union member — and defer it explici Appended to 08-known-deliberate.md. Row kept as eval data.
+
 ---
 
-### F-085 · S3 · flow · OPEN
+### F-085 · S3 · flow · CONFIRMED
 
 **Where:** components/probe/AIReadPanel.tsx:138
 
@@ -1348,13 +1523,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** The share mechanic is explicitly "enough to check your money pages and a competitor's" (line 199). A visitor scores page A, opens report A, runs the free read, and is shown the email wall. They close it, score page B, open report B. The panel mounts at { kind: 'intro' } (line 50) because AIReadPanel receives only pageUrl and auditHref (page.tsx:235) and the ss_probe_gate cookie is httpOnly. They read "First run is free", click "Run the AI read →", and are bounced straight to the email form. The same happens in reverse for an already-unlocked visitor: they are told the first run is free instead of being shown the four or five runs they still have, and the runs-left counter renders only after a successful read (line 119).
 
-**Found by:** opus-5 (phase 1, lens H) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens H) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Have the server page call readGate/gateVerdict and pass an initialState into AIReadPanel, so an already-gated visitor opens on the email form or on an intro that states runs remaining. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (CONFIRMED).** Scope correction: The claim survives in full; two precisions on the write-up rather than the defect. (1) The suggested fix as worded won't compile: `readGate(req: NextRequest)` (gate-server.ts:25) can't be called from a Server Component. The page must use `await cookies()` (per node_modules/next/dist/docs/01-app/03-api-reference/04-functions/cookies.md) plus `decodeGate` from lib/probe/gate.mjs — or gate-server needs a cookie-store-based reader. (2) The specific "bounced straight to the email form" outcome presumes the AI read is live: `app/api/probe/ai/route.ts:41-43` returns `ai_unavailable` (503 → panel 'una
+
 ---
 
-### F-086 · S3 · flow · OPEN
+### F-086 · S3 · flow · REFUTED
 
 **Where:** components/sections/catalog-ai/CatalogTiers.tsx:50, :70
 
@@ -1362,13 +1539,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A distributor on /services/catalog-ai/ reads the pricing table, decides on Pro at $7.00/SKU, and clicks "Scope a Pro project" → /catalog-snapshot/?tier=pro (line 70; Standard is line 50). No component on that route parses a query string — LeadForm.tsx:142 reads only site and probe, and skuCount is the only extra field the snapshot form collects. The buyer lands on "Get the free snapshot", is told they will receive "three-tier pricing applied to your SKU count" — i.e. re-pitched all three tiers including the one they already rejected — and submits a lead in which nothing records that they had chosen Pro. The operator replies to a tier-committed buyer as if they were undecided.
 
-**Found by:** opus-5 (phase 1, lens H) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens H) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Read ?tier= in the snapshot form, acknowledge it above the fields, and forward it on the lead payload so HubSpot and the Resend notification carry the chosen tier.
 
+**Verification (REFUTED).** Refuted as INTENTIONAL: The `?tier=` destinations are a documented spec decision, not an unwired feature. `docs/superpowers/specs/2026-05-24-catalog-ai-services-page-design.md:71-72` specifies verbatim "Standard → `/catalog-snapshot/?tier=standard`" and "Pro → `/catalog-snapshot/?tier=pro`", and the same spec's exhaustive "Lead form changes" section (lines 170-178) asks LeadForm for one thing only — the `showSkuCount` prop — and never assigns any reading behavior to `tier`. The param was spec'd as an attribution marker, and the analytics + lead pipeline does consume it (via `pageSource` and `cta_click.destination`).  Appended to 08-known-deliberate.md. Row kept as eval data.
+
 ---
 
-### F-087 · S3 · flow · OPEN
+### F-087 · S3 · flow · CONFIRMED
 
 **Where:** components/sections/FinalCTARail.tsx:36
 
@@ -1376,13 +1555,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A visitor reads /unlock-growth-audit/ end to end — hero form, deliverables, preview, social proof, fit, the second form, seven FAQs — and reaches the closing dark band. Its only two actions are "Book a Growth Call" (line 36) and "Revenue Leak Audit" (line 58). The audit form they were being sold is three screens back up with no link to it, so the page's last word sends its warmest reader to a different offer. On /book-growth-call/ (which renders FinalCTARail last) the first door links to /book-growth-call/ — the current URL — and on /revenue-engine/ the second door links to /revenue-engine/; in both cases the close offers the reader the page they are standing on as the next step.
 
-**Found by:** opus-5 (phase 1, lens H) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens H) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Give FinalCTARail an optional own-conversion slot (anchor to the page's form) and suppress or swap the door that self-links on /book-growth-call/ and /revenue-engine/. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (CONFIRMED).** Scope correction: Two imprecisions, neither fatal. (a) "closes eight pages": the eight matches the audit-scoped funnel list in baseline/funnels.md (/services/, /industries/, /book-growth-call/, /unlock-growth-audit/, /future-proof-your-seo/, /constraint-sprint/, /catalog-snapshot/, /revenue-engine/, plus the homepage), but `<FinalCTARail />` is actually rendered by 34 route files including /glossary/*, /career-paths/*, /guides/*, /tools/*, /about/, /case-studies/ and every /services/* leaf — the hardcoded-doors blast radius is wider than stated. The learning-hub routes are exempt per 08-known-deliberate.md, so 
+
 ---
 
-### F-088 · S3 · flow · OPEN
+### F-088 · S3 · flow · CONFIRMED
 
 **Where:** app/api/probe/unlock/route.ts:59
 
@@ -1390,13 +1571,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** A visitor unlocks the AI read; sendToHubSpot posts a form submission whose context.pageUri is the hardcoded https://salesolution.net/ai-readiness/. There is no route at that path — app/(site)/ai-readiness/ contains only [token]/ and methodology/, and lib/redirects.ts has no entry for it — so HubSpot's page-level attribution for these contacts resolves to a 404. The real scored URL survives only inside a free-text pageName string (line 60), which HubSpot cannot group or report on. When someone later asks which surface produced the probe leads, the CRM answers with a dead URL.
 
-**Found by:** opus-5 (phase 1, lens H) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens H) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Send the actual report URL (origin + /ai-readiness/<token>/, or the referer) as pageUri, and put the scored target in a real property rather than the page name.
 
+**Verification (CONFIRMED).** Scope correction: The load-bearing claim survives intact: the hardcoded `pageUri` points at a path that has no page.tsx/route.ts, no redirect entry, and no middleware/proxy, and the scored URL exists only inside the free-text `pageName`. Three sub-clauses are weaker than the headline and should be tightened before the fix ships: 1. "There is no route at that path" is imprecise about the mechanism. The single segment IS captured by the sibling blog route `app/(site)/[slug]/page.tsx`, which then calls `notFound()` because no Sanity post has that slug. Same observable result (HTTP 404 + branded `app/not-found.tsx`
+
 ---
 
-### F-089 · S3 · flow · OPEN
+### F-089 · S3 · flow · REFUTED
 
 **Where:** app/(site)/constraint-sprint/thank-you/page.tsx:43
 
@@ -1404,13 +1587,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** An owner applies for a $12–24k Constraint Sprint, is told "Within 24 hours you'll get one of two emails", and the page's only action is "Read recent insights while you wait" → /category/blog/. There is no case study, no services link, no way to add scope or context, and no phone or email fallback — compare /revenue-engine/audit-booked/, which at least gives a tel: link and a product page. The applicant with the most buying intent on the site is handed the least commercial next step, during the exact 24-hour window when they are most likely to keep evaluating vendors.
 
-**Found by:** opus-5 (phase 1, lens H) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens H) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Add the case studies index and the relevant service page (or a direct reply-to address) alongside the blog link, matching the treatment /catalog-snapshot/thank-you/ already gets. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (REFUTED).** Refuted: REFUTED on the facts, via failure mode (a): the "missing" affordances are already supplied upstream by the route-group layout, and the comparison the finding rests on is backwards. 1) The page is not a bare page. It lives at app/(site)/constraint-sprint/thank-you/page.tsx, inside the (site) route group, and there is NO nested layout.tsx or template.tsx under constraint-sprint/ to override it (verified by find). Per this version's own docs (layout.md:24, route-groups.md:26), app/(site)/layout.tsx wraps it. That shell renders Header + Footer. So the finding's enumerated absences are false as ren Row kept as eval data.
+
 ---
 
-### F-090 · S4 · correctness · OPEN
+### F-090 · S4 · correctness · CONFIRMED
 
 **Where:** lib/probe/fetch.ts:244
 
@@ -1418,13 +1603,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** The regex is /^upstream-(401|403|406|429|503)$/. A prospect's site is in a maintenance window and returns 503 (or a staging host returns 401 Basic-Auth). fetchHtml throws upstream-503, the report page takes the bot-wall branch ([token]/page.tsx:120-128) and renders the headline "Your site turned our scanner away." with the body "Its bot protection served a block page instead of content… That's finding number one, and it's fixable." — then attaches the audit CTA to a diagnosis that is factually wrong. 401 and 503 carry no bot-wall signal; 403/406/429 do.
 
-**Found by:** opus-5 (phase 1, lens C) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens C) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Narrow the regex to 403|406|429, and give 5xx its own error state ("the site returned a server error") separate from the generic timeout copy. **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
+**Verification (CONFIRMED).** Scope correction: The mechanism and the wrong-diagnosis outcome survive fully. What does NOT survive as written is the absolute assertion "401 and 503 carry no bot-wall signal." 503 does carry some: WAF challenge and rate-limit interstitials have historically been served as 503 (Cloudflare's legacy JS-challenge / under-attack interstitial being the common one), which is the likeliest reason it was included alongside 429. Consequently the first half of the suggested fix ("narrow the regex to 403|406|429") would silently drop genuine bot walls; the second half (give 5xx its own "the site returned a server error" 
+
 ---
 
-### F-091 · S4 · quality · OPEN
+### F-091 · S4 · quality · CONFIRMED
 
 **Where:** app/api/lead/route.ts:128
 
@@ -1432,13 +1619,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** Both copies carry comments inviting edits ("Tunable", "Mirrored server-side in app/api/lead/route.ts"). Change catalog_snapshot from 300 to 400 in components/forms/LeadForm.tsx:591 and the server still sends 300 from route.ts:137: for one submissionId, the client gtag hit and the server Measurement-Protocol hit carry different `value` under the same transaction_id, so the number GA4 keeps depends on arrival order and dedup behaviour, and Google Ads trains on a value nobody set. The numbers agree today, which is precisely why the divergence would ship unnoticed.
 
-**Found by:** opus-5 (phase 1, lens D) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens D) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Move the model to lib/lead-form/lead-value.ts and import it from both sides, mirroring full-growth-quote-value.ts; also pass the client's declared leadType in the payload instead of re-deriving it server-side from a pageSource substring (route.ts:75-80). Test: a shared-module table pinning every (leadType, revenueBand) pair to its value.
 
+**Verification (CONFIRMED).** Scope correction: The defect and both of its cited remedies survive fully. One mechanism detail in the failureScenario is narrower than stated: "the number GA4 keeps depends on arrival order and dedup behaviour" rests on the repo's own assertion that GA4 auto-dedups `generate_lead` on a matching transaction_id (docs/strategy/ga4.md:739 and the comment at lib/analytics.ts:89). GA4's documented transaction_id dedup is for `purchase`, not arbitrary events, so if that assumption is wrong the consequence is different — two `generate_lead` conversions both counted at two different values rather than one order-depende
+
 ---
 
-### F-092 · S4 · quality · OPEN
+### F-092 · S4 · quality · CONFIRMED
 
 **Where:** app/api/probe/ai/route.ts:88
 
@@ -1446,13 +1635,15 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** FREE_RUNS exists in lib/probe/gate.mjs:16 to be tuned, and gateVerdict reads it. Set it to 2: the server correctly allows a second anonymous run, but runsLeft still evaluates 1 - runs and returns 0 after the first, so AIReadPanel hides the counter entirely (it renders only when runsLeft > 0, AIReadPanel.tsx:119) and the visitor is never told they have a free run left — the panel and the gate disagree, with no error to trace.
 
-**Found by:** opus-5 (phase 1, lens D) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens D) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Import FREE_RUNS and use (unlocked ? UNLOCKED_RUNS : FREE_RUNS) - runs. Test: extend gate-limits.test.mjs with a runsLeft helper table over (runs 0..7 × unlocked true/false) asserting it never contradicts gateVerdict — the existing suite already pins CAPS.ai.hour >= UNLOCKED_RUNS, so this is the same invariant style.
 
+**Verification (CONFIRMED).** Scope correction: Fully survives as written: the hardcoded `1` at route.ts:88, the FREE_RUNS/gateVerdict coupling, the AIReadPanel.tsx:119 suppression mechanism, and all three cited line numbers are accurate. I confirmed the existing test suite would NOT catch the drift, which supports the claim's "no error to trace." Two qualifications for the fixer, neither of which refutes the claim: 1. The finding frames FREE_RUNS as the single knob, but the "1 free run / 6 total" policy is ALSO hardcoded in user-facing copy in the same component: "First run is free." (AIReadPanel.tsx:137), "That was the free run" and "you 
+
 ---
 
-### F-093 · S4 · ux · OPEN
+### F-093 · S4 · ux · CONFIRMED
 
 **Where:** components/sections/HeroProbe.tsx:264
 
@@ -1460,7 +1651,7 @@ Eight lenses, one agent each, 2026-07-24. 87 raw findings merged to 79. Structur
 
 **Failure scenario:** The section copy at lines 234-238 says "Paste a product or category URL." The input is preceded by a static <span> reading "https://" (lines 264-266) that is decorative — onSubmit only prepends the scheme when one is absent (lines 98-99). A visitor who does exactly what the copy asks and pastes https://acme.com/hydraulic-hoses from their address bar sees the row read "https://" "https://acme.com/hydraulic-hoses". Nothing validates or normalises the display, so the field looks like it is in an error state at the moment of action; the common recovery is to delete part of the pasted string. Screen-reader users get the opposite problem: the chip is not part of the input's accessible name, so "Your product or category URL" gives no hint that a scheme is added for them.
 
-**Found by:** opus-5 (phase 1, lens E) · **Verified by:** — · **Fixed by:** —
+**Found by:** opus-5 (phase 1, lens E) · **Verified by:** opus-5 (phase 2, 1 adversarial verifier) · **Fixed by:** —
 
 **Notes:** Suggested fix: Either strip a pasted scheme on change so the chip stays true, or drop the chip and let the placeholder carry the format (the submit handler already normalises both shapes). **touchesCopy — the fix edits customer-facing copy, so this lands as PROPOSED needing sign-off, not an autonomous fix.**
 
