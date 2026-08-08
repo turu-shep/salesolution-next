@@ -1,5 +1,6 @@
 import { Nav } from '@/components/Nav'
-import { getAccount } from '@/lib/auth-server'
+import { isOwner } from '@/lib/admin.mjs'
+import { getAccount, logActivity } from '@/lib/auth-server'
 import { fetchSourceStats } from '@/lib/contacts'
 import type { ClientSource, SheetParams } from '@/lib/contacts'
 import { parseSheetParams } from '@/lib/query.mjs'
@@ -20,7 +21,8 @@ export default async function SourcesPage({ searchParams }: { searchParams: Prom
   // the App Router still serializes this segment into the flight payload — a
   // layout is not a boundary for its children. So the page re-checks the gate
   // and contributes NOTHING (no fetch, no copy) without an account.
-  if (!(await getAccount())) return null
+  const account = await getAccount()
+  if (!account) return null
 
   const sp = new URLSearchParams()
   for (const [k, v] of Object.entries(await searchParams)) {
@@ -28,6 +30,10 @@ export default async function SourcesPage({ searchParams }: { searchParams: Prom
   }
   // Parsed only so the Nav keeps the current lens; this page reads none of it.
   const params = parseSheetParams(sp) as SheetParams
+
+  // The gate passed — that is a visit. The lens changes nothing on this page,
+  // so the detail is the bare path. Post-response insert; never blocks.
+  logActivity(account, 'page', '/sources')
 
   // Same shape as the sheet's error state: the page still renders — chrome and
   // a plain line — and the operator detail goes to the server log, never to
@@ -41,7 +47,7 @@ export default async function SourcesPage({ searchParams }: { searchParams: Prom
 
   return (
     <>
-      <Nav params={params} active="sources" />
+      <Nav params={params} active="sources" admin={Boolean(isOwner(account))} />
       <main>
         <h1>Sources</h1>
         <p className="muted" style={{ maxWidth: 640 }}>

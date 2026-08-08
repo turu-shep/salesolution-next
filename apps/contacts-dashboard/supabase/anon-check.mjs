@@ -36,6 +36,7 @@ const TABLES = [
   'verify_results_staging',
   'accounts',
   'export_audit',
+  'activity_log',
 ]
 
 const url = process.env.SUPABASE_URL

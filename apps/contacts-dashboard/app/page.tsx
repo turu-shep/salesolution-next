@@ -2,7 +2,8 @@ import { Counters } from '@/components/Counters'
 import { Filters } from '@/components/Filters'
 import { Nav } from '@/components/Nav'
 import { Sheet } from '@/components/Sheet'
-import { getAccount } from '@/lib/auth-server'
+import { isOwner, pageDetail } from '@/lib/admin.mjs'
+import { getAccount, logActivity } from '@/lib/auth-server'
 import { viewLabel } from '@/lib/columns.mjs'
 import { countMatching, fetchCounters, fetchFacets, fetchSheet } from '@/lib/contacts'
 import type { ClientRow, Counters as CountersType, SheetParams } from '@/lib/contacts'
@@ -23,7 +24,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
   // the App Router still serializes this segment into the flight payload — a
   // layout is not a boundary for its children. So the page re-checks the gate
   // and contributes NOTHING (no fetch, no copy) without an account.
-  if (!(await getAccount())) return null
+  const account = await getAccount()
+  if (!account) return null
 
   const sp = new URLSearchParams()
   for (const [k, v] of Object.entries(await searchParams)) {
@@ -33,6 +35,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
   // cast records that here, at the one boundary where untrusted input comes in.
   const params = parseSheetParams(sp) as SheetParams
   const { pageSize } = pageRange(params)
+
+  // The gate passed — that is a visit, whatever the data layer does next.
+  // Post-response insert; can never block or break this render.
+  logActivity(account, 'page', pageDetail(params.view) as string)
 
   // When the data source is unreachable the page still renders — chrome,
   // counter labels, a plain line — and the operator detail goes to the server
@@ -55,7 +61,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
 
   return (
     <>
-      <Nav params={params} />
+      <Nav params={params} admin={Boolean(isOwner(account))} />
       <main>
         <h1>{viewLabel(params.view)}</h1>
         <Counters counters={data ? data.counters : null} />

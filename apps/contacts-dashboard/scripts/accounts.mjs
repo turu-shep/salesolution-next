@@ -1,7 +1,8 @@
 /**
  * accounts — the founder CLI for the contacts dashboard's per-person logins.
  *
- *   node apps/contacts-dashboard/scripts/accounts.mjs invite "<Name>" <email>
+ *   node apps/contacts-dashboard/scripts/accounts.mjs invite "<Name>" <email> [--role owner]
+ *   node apps/contacts-dashboard/scripts/accounts.mjs promote <email>
  *   node apps/contacts-dashboard/scripts/accounts.mjs revoke <email>
  *   node apps/contacts-dashboard/scripts/accounts.mjs reactivate <email>
  *   node apps/contacts-dashboard/scripts/accounts.mjs list
@@ -16,13 +17,15 @@
  * recoverable. There is no rotation path here yet: `invite` refuses an email
  * that already has a row and `revoke` only ends access, so a lost password
  * means a future `reset` command or a direct SQL update of password_hash.
+ *
+ * `promote` is the owner bootstrap: the in-app /admin screen only renders for
+ * an owner, so the first owner has to be minted here, not there.
  */
-import { randomBytes } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { hashPassword } from '../lib/auth.mjs'
+import { generatePassword, hashPassword } from '../lib/auth.mjs'
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..')
 
@@ -37,7 +40,8 @@ function loadEnv() {
 loadEnv()
 
 const USAGE = `usage:
-  node apps/contacts-dashboard/scripts/accounts.mjs invite "<Name>" <email>
+  node apps/contacts-dashboard/scripts/accounts.mjs invite "<Name>" <email> [--role owner]
+  node apps/contacts-dashboard/scripts/accounts.mjs promote <email>
   node apps/contacts-dashboard/scripts/accounts.mjs revoke <email>
   node apps/contacts-dashboard/scripts/accounts.mjs reactivate <email>
   node apps/contacts-dashboard/scripts/accounts.mjs list`
@@ -80,18 +84,35 @@ function normalizeEmail(raw) {
   return email
 }
 
-async function invite(name, rawEmail) {
+/**
+ * Pull `--role <value>` out of the args wherever it sits; everything else
+ * keeps its order. Validates BEFORE any env or network work — a bad flag
+ * should die at the keyboard, not at the database.
+ */
+function takeRoleFlag(args) {
+  const i = args.indexOf('--role')
+  if (i === -1) return { rest: args, role: undefined }
+  const role = args[i + 1]
+  if (!role || !['viewer', 'owner'].includes(role)) {
+    fail(`--role must be 'viewer' or 'owner', not '${role ?? '(missing)'}'.\n\n${USAGE}`)
+  }
+  return { rest: [...args.slice(0, i), ...args.slice(i + 2)], role }
+}
+
+async function invite(name, rawEmail, role = 'viewer') {
   if (!name || !String(name).trim()) fail(`invite needs a name and an email.\n\n${USAGE}`)
   const email = normalizeEmail(rawEmail)
   const env = requireEnv()
 
-  // 20 chars of base64url ≈ 119 bits of entropy — out-of-band deliverable.
-  const password = randomBytes(32).toString('base64url').slice(0, 20)
+  // Same generator as the /api/admin/invite route (lib/auth.mjs) — one shape,
+  // two doors, out-of-band deliverable either way.
+  const password = generatePassword()
   const password_hash = hashPassword(password)
 
   const res = await rest(env, 'POST', 'accounts', {
     email,
     name: String(name).trim(),
+    role,
     password_hash,
     invited_by: 'cli',
   })
@@ -101,11 +122,21 @@ async function invite(name, rawEmail) {
   if (!res.ok) fail(`Insert failed (HTTP ${res.status}): ${res.text.slice(0, 300)}`)
 
   const row = Array.isArray(res.json) ? res.json[0] : res.json
-  console.log(`Invited ${row?.name ?? name} <${email}> (role ${row?.role ?? 'viewer'}).`)
+  console.log(`Invited ${row?.name ?? name} <${email}> (role ${row?.role ?? role}).`)
   console.log('')
   console.log(`  password: ${password}`)
   console.log('')
   console.log('Shown this once only — deliver it out-of-band; it is not stored.')
+}
+
+async function promote(rawEmail) {
+  const email = normalizeEmail(rawEmail)
+  const env = requireEnv()
+  const res = await rest(env, 'PATCH', `accounts?email=eq.${encodeURIComponent(email)}`, { role: 'owner' })
+  if (!res.ok) fail(`Update failed (HTTP ${res.status}): ${res.text.slice(0, 300)}`)
+  const rows = Array.isArray(res.json) ? res.json : []
+  if (rows.length === 0) fail(`No account with email ${email}.`)
+  console.log(`Promoted ${email} to owner — /admin is theirs on their next request.`)
 }
 
 async function setStatus(rawEmail, status, verb) {
@@ -140,8 +171,13 @@ async function list() {
 
 const [cmd, ...args] = process.argv.slice(2)
 switch (cmd) {
-  case 'invite':
-    await invite(args[0], args[1])
+  case 'invite': {
+    const { rest: positional, role } = takeRoleFlag(args)
+    await invite(positional[0], positional[1], role)
+    break
+  }
+  case 'promote':
+    await promote(args[0])
     break
   case 'revoke':
     await setStatus(args[0], 'revoked', 'Revoked')

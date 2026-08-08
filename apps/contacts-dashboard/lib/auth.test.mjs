@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { createHmac } from 'node:crypto'
 import test from 'node:test'
 
-import { CONTACTS_COOKIE, MAX_AGE_S, hashPassword, isLocalHost, readSession, signSession, verifyPassword } from './auth.mjs'
+import { CONTACTS_COOKIE, MAX_AGE_S, generatePassword, hashPassword, isLocalHost, readSession, signSession, verifyPassword } from './auth.mjs'
 
 function withNodeEnv(value, fn) {
   const prev = process.env.NODE_ENV
@@ -47,6 +47,25 @@ test('outside production the local hosts are open, and nothing else is', () => {
 test("the cookie name is this app's own, not the house one", () => {
   assert.equal(CONTACTS_COOKIE, 'contacts_auth')
   assert.equal(MAX_AGE_S, 60 * 60 * 24 * 30)
+})
+
+// ── generatePassword ────────────────────────────────────────────────────────
+
+test('generatePassword: exactly 20 chars of the base64url alphabet, every call', () => {
+  // 20 chars off 32 random bytes ≈ 119 bits of entropy — the out-of-band
+  // deliverable shape the CLI has always printed; the invite route mints
+  // through the same function.
+  for (let i = 0; i < 200; i += 1) {
+    assert.match(generatePassword(), /^[A-Za-z0-9_-]{20}$/)
+  }
+})
+
+test('generatePassword never repeats and round-trips through the scrypt pair', () => {
+  const seen = new Set()
+  for (let i = 0; i < 1000; i += 1) seen.add(generatePassword())
+  assert.equal(seen.size, 1000)
+  const pw = generatePassword()
+  assert.equal(verifyPassword(pw, hashPassword(pw)), true)
 })
 
 // ── scrypt password hashing ─────────────────────────────────────────────────

@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
+import { logActivity } from '@/lib/auth-server'
 import { CONTACTS_COOKIE, MAX_AGE_S, hashPassword, signSession, verifyPassword } from '@/lib/auth.mjs'
 import { LOGIN_POLICY, rateLimit } from '@/lib/rate-limit.mjs'
 import { describeError, serverClient } from '@/lib/supabase'
@@ -65,6 +66,10 @@ export async function POST(req: NextRequest) {
   if (row === null || !passwordOk || row.status !== 'active') {
     return NextResponse.json({ error: 'invalid credentials' }, { status: 401 })
   }
+
+  // A minted session is the one login event worth a usage row. Post-response
+  // insert (after()); failures log server-side and never touch this response.
+  logActivity({ id: row.id, email }, 'login', null)
 
   const res = NextResponse.json({ ok: true })
   res.cookies.set(CONTACTS_COOKIE, signSession(row.id, secret), {

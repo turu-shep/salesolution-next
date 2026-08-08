@@ -43,6 +43,18 @@ export function isLocalHost(host) {
   return LOCAL_HOSTS.has(h) || h.endsWith('.local')
 }
 
+// ── password generation ─────────────────────────────────────────────────────
+
+/**
+ * A fresh account password: 20 chars of base64url off 32 random bytes ≈ 119
+ * bits of entropy — an out-of-band deliverable, never stored anywhere. The
+ * CLI's `invite` and the /api/admin/invite route both mint through THIS
+ * function, so the two doors cannot drift.
+ */
+export function generatePassword() {
+  return randomBytes(32).toString('base64url').slice(0, 20)
+}
+
 // ── scrypt password hashing ─────────────────────────────────────────────────
 
 const SCRYPT_N = 16384
