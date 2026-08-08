@@ -77,10 +77,10 @@ A versioned, brand-agnostic content pipeline (`research → draft → humanize �
 
 ## Model & cost routing
 
-Standing rule (2026-07-24): **Fable plans, Opus executes.** The main loop — persisted default `fable[1m]`, pay-per-use credits — does high-level work only: planning, strategy, adjudication, synthesis, review. `CLAUDE_CODE_SUBAGENT_MODEL=opus` routes every subagent and workflow agent to Opus 5 (subscription-billed), which does the ground work: bulk reading, research fan-out, mechanical edits, scoped implementation, verification. On Fable, delegate bounded execution instead of doing it inline and keep the main loop holding conclusions, not file dumps — delegated volume bills as subscription; inline Fable tokens bill as credits. Sessions that are pure execution (no strategy component) run on `/model opus[1m]` end to end.
+Standing rule (2026-08-02): **everything runs on Fable** — the earlier "Fable plans, Opus executes" split is revoked. The main loop stays on the persisted default `fable[1m]`, and subagents/workflow agents inherit it (the `CLAUDE_CODE_SUBAGENT_MODEL=opus` override was removed from user settings). Never pass `model:` in Agent calls, agent frontmatter, or Workflow `agent()` stages, and don't move sessions to `/model opus` — delegate to subagents for parallelism and context isolation, not to change models.
 
-- **Run everything at maximum effort.** `CLAUDE_CODE_EFFORT_LEVEL=max` is set in his user settings and outranks all other effort sources — do NOT pass `effort:` in Workflow `agent()` calls or agent frontmatter to economize; quality-first is the standing instruction. Same for `model:` — the env var wins anyway.
-- **Ultracode when it helps:** Artur opts into ultracode (xhigh + standing workflow orchestration) per session via the effort slider or the "ultracode" keyword. Under it, orchestrate substantive tasks with workflows; adversarial verify passes are welcome. Fan-out costs subscription rate-limit headroom, not credits — size it to the task, not to a token budget.
+- **Run everything at maximum effort.** `CLAUDE_CODE_EFFORT_LEVEL=max` is set in his user settings and outranks all other effort sources — do NOT pass `effort:` in Workflow `agent()` calls or agent frontmatter to economize; quality-first is the standing instruction. Same for `model:` — subagents inherit the session model.
+- **Ultracode when it helps:** Artur opts into ultracode (xhigh + standing workflow orchestration) per session via the effort slider or the "ultracode" keyword. Under it, orchestrate substantive tasks with workflows; adversarial verify passes are welcome. Size the fan-out to the task.
 
 ## Voice
 
