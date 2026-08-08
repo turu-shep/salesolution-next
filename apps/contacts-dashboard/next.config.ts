@@ -15,6 +15,13 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
+  // Vercel's modifyConfig injects outputFileTracingRoot=<repo root> when the
+  // repo has a lockfile above the Root Directory, and Next prefers that value
+  // over turbopack.root when they disagree — un-pinning the boundary above.
+  // Setting it explicitly keeps both roots at this package (Vercel fills the
+  // value only when absent). The app's node_modules are self-contained, so
+  // tracing never needs to leave this directory.
+  outputFileTracingRoot: path.join(__dirname),
   async headers() {
     return [
       {
