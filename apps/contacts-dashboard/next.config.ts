@@ -1,27 +1,20 @@
-import path from 'node:path'
-
 import type { NextConfig } from 'next'
 
 /**
  * The contacts dashboard is internal and gated. It must never be indexed and it
  * must never be framed by anything.
+ *
+ * Both dev and build run WEBPACK (see package.json), deliberately. Turbopack's
+ * workspace-root inference (two pnpm lockfiles → repo root wins) swept the
+ * MAIN SITE's instrumentation.ts + sentry.*.config.ts into this build on
+ * Vercel, and the two config levers cancel each other there: turbopack.root
+ * loses to Vercel's injected outputFileTracingRoot, while pinning
+ * outputFileTracingRoot breaks Vercel's output collection (it derives the
+ * .next location from it). Webpack scopes convention discovery to this
+ * package, so neither lever is needed; postcss.config.mjs guards the CSS side
+ * (its discovery is bundler-independent).
  */
 const nextConfig: NextConfig = {
-  // Two pnpm lockfiles exist (repo root + this app), and Next's root inference
-  // picks the outermost — which sweeps the MAIN SITE's instrumentation.ts,
-  // sentry.*.config.ts and postcss config into this build (they need deps this
-  // app deliberately lacks). Pin the project root to this package; files above
-  // it are not resolved.
-  turbopack: {
-    root: path.join(__dirname),
-  },
-  // Vercel's modifyConfig injects outputFileTracingRoot=<repo root> when the
-  // repo has a lockfile above the Root Directory, and Next prefers that value
-  // over turbopack.root when they disagree — un-pinning the boundary above.
-  // Setting it explicitly keeps both roots at this package (Vercel fills the
-  // value only when absent). The app's node_modules are self-contained, so
-  // tracing never needs to leave this directory.
-  outputFileTracingRoot: path.join(__dirname),
   async headers() {
     return [
       {
