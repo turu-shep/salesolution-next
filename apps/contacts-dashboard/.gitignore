@@ -1,0 +1,18 @@
+# dependencies + build output (the root .gitignore anchors these to the repo root)
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# env — the service-role key bypasses RLS by design
+.env*
+
+# DATA NEVER ENTERS GIT. Migrations are committed; rows are not.
+*.csv
+/data/
+/dump/
+/exports/
+
+# vercel
+.vercel

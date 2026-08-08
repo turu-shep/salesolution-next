@@ -395,11 +395,15 @@ declare
   c_rows bigint;
   v_rows bigint;
 begin
-  delete from contacts;
+  -- `where true` is deliberate: Supabase runs pg-safeupdate on the PostgREST
+  -- path, which rejects a WHERE-less DELETE even inside a function (21000,
+  -- "DELETE requires a WHERE clause"). This is its sanctioned full-table form —
+  -- the FULL REPLACE semantics above are unchanged.
+  delete from contacts where true;
   insert into contacts select * from contacts_staging;
   get diagnostics c_rows = row_count;
 
-  delete from verify_results;
+  delete from verify_results where true;
   insert into verify_results (email, result, flags, verified_date)
     select email, result, flags, verified_date from verify_results_staging;
   get diagnostics v_rows = row_count;
@@ -1826,7 +1830,7 @@ test('buildFilterSpec turns params into one spec, and applyFilters chains it', (
   assert.deepEqual(spec.eq, [{ column: 'pool', value: 'non-us' }])
   assert.deepEqual(spec.gte, [{ column: 'category_core', value: 2 }])
   assert.deepEqual(spec.lte, [{ column: 'category_core', value: 8 }])
-  assert.equal(spec.or, 'company_display.ilike.%ac\\%me%,domain.ilike.%ac\\%me%')
+  assert.equal(spec.or, 'company_display.ilike."%ac\\\\%me%",domain.ilike."%ac\\\\%me%"')
 
   const q = recorder()
   applyFilters(q, spec)
@@ -1836,8 +1840,21 @@ test('buildFilterSpec turns params into one spec, and applyFilters chains it', (
     ['eq', 'pool', 'non-us'],
     ['gte', 'category_core', 2],
     ['lte', 'category_core', 8],
-    ['or', 'company_display.ilike.%ac\\%me%,domain.ilike.%ac\\%me%'],
+    ['or', 'company_display.ilike."%ac\\\\%me%",domain.ilike."%ac\\\\%me%"'],
   ])
+})
+
+test('a comma in q stays one quoted pattern instead of splitting the or', () => {
+  // PostgREST splits or-conditions on top-level commas. Unquoted, this q is a
+  // 400 (the parser sees " Inc.%" as a malformed extra condition); quoted, it
+  // is one pattern per field.
+  const spec = buildFilterSpec(params('q=Bearings, Inc.'))
+  assert.equal(spec.or, 'company_display.ilike."%Bearings, Inc.%",domain.ilike."%Bearings, Inc.%"')
+})
+
+test('a double quote in q cannot break out of the quoted pattern', () => {
+  const spec = buildFilterSpec(params('q=3" pipe'))
+  assert.equal(spec.or, 'company_display.ilike."%3\\" pipe%",domain.ilike."%3\\" pipe%"')
 })
 
 test('country=us excludes the non-us pool rather than guessing from state', () => {
@@ -1897,6 +1914,17 @@ export function escapeLike(s) {
 }
 
 /**
+ * One or-branch pattern, as a PostgREST double-quoted literal. PostgREST splits
+ * an `or=` string on top-level commas, so a bare q containing one either breaks
+ * the parse (400) or smuggles extra OR conditions in. The quotes keep the
+ * pattern one value; this layer's own escapes — backslash first, then the
+ * double quote — sit on top of escapeLike's LIKE escaping underneath.
+ */
+function quotedPattern(pattern) {
+  return `"${pattern.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`
+}
+
+/**
  * Country, honestly. There is no `country` column in the seated list or in any
  * pool, including pool-non-us. The only country signal we hold is pool
  * membership, so the filter ships as two values derived server-side. A non-US
@@ -1947,7 +1975,7 @@ export function buildFilterSpec(params) {
   if (p.catMin !== null) spec.gte.push({ column: 'category_core', value: p.catMin })
   if (p.catMax !== null) spec.lte.push({ column: 'category_core', value: p.catMax })
   if (p.q) {
-    const like = `%${escapeLike(p.q)}%`
+    const like = quotedPattern(`%${escapeLike(p.q)}%`)
     spec.or = `company_display.ilike.${like},domain.ilike.${like}`
   }
   return spec
@@ -1989,7 +2017,7 @@ export function pageRange(params) {
 - [ ] **Step 8: Run the tests to verify they pass**
 
 Run: `cd "/Users/artur/Documents/Projects/Salesolution new/apps/contacts-dashboard" && pnpm test`
-Expected: PASS — 15 tests, 0 failures.
+Expected: PASS — 17 tests, 0 failures.
 
 - [ ] **Step 9: Write the Supabase client and the fetchers**
 
@@ -2003,8 +2031,8 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js'
  *
  * The service-role key bypasses RLS by design — it is the database, not a
  * credential with a blast radius. It never reaches the browser: there is no
- * NEXT_PUBLIC_SUPABASE_* variable in this app, and no client component imports
- * this module.
+ * browser-exposed (public-prefixed) Supabase variable in this app, and no
+ * client component imports this module.
  */
 
 /** What a paused free-tier project says. Never a bare fetch error. */
@@ -2414,7 +2442,7 @@ export function rateLimit(ip, policy = LOGIN_POLICY) {
 - [ ] **Step 4: Run the tests to verify they pass**
 
 Run: `cd "/Users/artur/Documents/Projects/Salesolution new/apps/contacts-dashboard" && pnpm test`
-Expected: PASS — 23 tests, 0 failures.
+Expected: PASS — 25 tests, 0 failures.
 
 - [ ] **Step 5: Write the login form and the login route**
 
@@ -2888,7 +2916,7 @@ export function plannedTokens(dataTokens, registryTokens) {
 - [ ] **Step 4: Run the tests to verify they pass**
 
 Run: `cd "/Users/artur/Documents/Projects/Salesolution new/apps/contacts-dashboard" && pnpm test`
-Expected: PASS — 31 tests, 0 failures.
+Expected: PASS — 33 tests, 0 failures.
 
 - [ ] **Step 5: Write the nav and the counters**
 
@@ -3336,7 +3364,7 @@ export function exportFilename(project, isoDate) {
 - [ ] **Step 4: Run the tests to verify they pass**
 
 Run: `cd "/Users/artur/Documents/Projects/Salesolution new/apps/contacts-dashboard" && pnpm test`
-Expected: PASS — 36 tests, 0 failures.
+Expected: PASS — 38 tests, 0 failures.
 
 - [ ] **Step 5: Write the export route**
 
@@ -3636,7 +3664,7 @@ export function applyCriteria(query, filters) {
 - [ ] **Step 4: Run the tests to verify they pass**
 
 Run: `cd "/Users/artur/Documents/Projects/Salesolution new/apps/contacts-dashboard" && pnpm test`
-Expected: PASS — 42 tests, 0 failures.
+Expected: PASS — 44 tests, 0 failures.
 
 - [ ] **Step 5: Write `registry.ts`**
 
