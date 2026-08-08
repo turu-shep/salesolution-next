@@ -28,11 +28,15 @@ declare
   c_rows bigint;
   v_rows bigint;
 begin
-  delete from contacts;
+  -- `where true` is deliberate: Supabase runs pg-safeupdate on the PostgREST
+  -- path, which rejects a WHERE-less DELETE even inside a function (21000,
+  -- "DELETE requires a WHERE clause"). This is its sanctioned full-table form —
+  -- the FULL REPLACE semantics above are unchanged.
+  delete from contacts where true;
   insert into contacts select * from contacts_staging;
   get diagnostics c_rows = row_count;
 
-  delete from verify_results;
+  delete from verify_results where true;
   insert into verify_results (email, result, flags, verified_date)
     select email, result, flags, verified_date from verify_results_staging;
   get diagnostics v_rows = row_count;
