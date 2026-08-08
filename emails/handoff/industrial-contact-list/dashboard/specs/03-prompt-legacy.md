@@ -1,5 +1,9 @@
 # dashboard — build and deploy the contacts dashboard
 
+> **SUPERSEDED as the folder's entry point (2026-08-08):** the package now follows
+> `.claude/rules/handoff-packages.md` — paste `../PROMPT.md` instead. This file's
+> content was already AMENDMENT-2-aware and is kept for reference only.
+
 Your mission: ship the industrial contact asset as a **client-facing** Next.js app on Vercel — **one** deployment behind **per-person logins**, with a Field Advisor / Hosebox project switcher, a locations sheet with honest provenance, and CSV export over a Supabase copy of the 12 current CSV files.
 
 ## Read first, in order

@@ -40,7 +40,7 @@ Three kinds of file live here:
 
 | File | What it is |
 |---|---|
-| `dashboard/00-README.md` | Extend the existing operator dashboard so the whole asset is visible in one place: Sources, Everything, Projects. Read-only work, no gates. |
+| `dashboard/PROMPT.md` | **Handoff package** (first under `.claude/rules/handoff-packages.md`, 2026-08-08): deploy the client-facing locations dashboard — one URL, per-person logins, Field Advisor ⇄ Hosebox switcher. Paste `dashboard/PROMPT.md`; decision history in `dashboard/specs/` (AMENDMENT 2 wins). |
 | `99-hygiene.md` | Storage, duplicates, one unexplained pool swing, one missing manifest. Every deletion is GATE:HUMAN. |
 | `{token} [{STATUS}]/` | One folder per source. `00-README.md` is the dossier — what it is, what we pulled, how deep, what is left. `01-prompt.md` is the executable session prompt. The status lives in the folder title. |
 

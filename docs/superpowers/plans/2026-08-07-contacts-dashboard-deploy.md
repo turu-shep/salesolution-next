@@ -2,6 +2,12 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+> ⚠ **STALE IN PARTS (2026-08-08):** written against AMENDMENT 1 (internal, three URLs).
+> AMENDMENT 2 in `emails/handoff/industrial-contact-list/dashboard/specs/02-client-view.md`
+> reversed the audience to client-facing — its §Consequences table governs: tasks 5 and 9
+> are RE-PLAN, tasks 6/7/8 amended, tasks 1–4 and 10 stand. Execute only via the package
+> at `emails/handoff/industrial-contact-list/dashboard/PROMPT.md`, which carries the deltas.
+
 **Goal:** Deploy the industrial contact asset as an internal, password-gated Next.js app on Vercel — a locations sheet with honest provenance and CSV export over a Supabase Postgres copy of the 12 current CSV files, on three URLs.
 
 **Architecture:** A new independent package at `apps/contacts-dashboard/` (Next.js App Router, its own `package.json` and lockfile, no pnpm workspace) reads Supabase server-side with the service-role key; the browser never touches Supabase. A manual Node script, `emails/scripts/sync-supabase.mjs`, full-replaces the database from the CSVs on disk through a staging table and a promote function, with a conservation check that exits non-zero on any mismatch. The repo root — `package.json`, `vercel.json`, the main site — is not touched at all.
