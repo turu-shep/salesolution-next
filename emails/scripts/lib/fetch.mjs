@@ -10,6 +10,10 @@
  *     `Retry-After` respected when the server sends one. Same for 5xx.
  *   - **Cache every response on disk, keyed by URL.** Re-runs must not re-hit the
  *     origin; raw payloads are kept this time so profiling never costs a fetch.
+ *     SECURITY: the cache key and the stored artifact both contain the FULL URL,
+ *     query string included — never route an authenticated request through this
+ *     client if the credential rides the URL (Smartlead's API key does; that is
+ *     why `dashboard.mjs` deliberately does not reuse politeFetch for Smartlead).
  *   - **A normal desktop User-Agent.** Honest identification. We do NOT rotate
  *     UAs, spoof TLS fingerprints, or otherwise disguise the client to defeat a
  *     block — §7.1 draws that line at Cloudflare/Akamai 403s, which we never

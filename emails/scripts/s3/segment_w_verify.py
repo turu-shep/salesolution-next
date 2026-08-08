@@ -33,6 +33,27 @@ Pacing. Routes 2 and 3 hit a paid API that is built for concurrency, so the
 3s-per-host rule that governs scraping small businesses' own servers does not
 apply to it -- but every response is still cached on disk, so a re-run costs
 nothing and no query is ever paid for twice.
+
+Extended 2026-08-03 for the no-domain backlog (handoff:
+`emails/handoff/industrial-contact-list/no-domain-backlog*/02-assessment.md`).
+The federal cohort has no phone, no coordinates and often no zip/city, which
+the shipped rules quietly mishandle. Four changes, none of which alters the
+behavior of a phone-bearing row that carries coordinates:
+
+  * route 2 geocodes a missing lat/lng from `--centroids` (ZIP medians built
+    from our own raw DFS corpus), falls back to a ZIP-exact `filters` clause,
+    and is SKIPPED outright when no corroboration arm could ever fire
+    (no phone, no zip, no city) -- that call could never be accepted, so it
+    would be pure spend.
+  * for a row with NO phone, a zip5 match alone no longer corroborates: it must
+    also carry a name-token overlap. Industrial parks share zips, and title
+    search returns name-alikes by construction.
+  * `--alt-names` (UEI-keyed DBAs from the federal source) widens the
+    corroboration token set, and a full miss earns ONE route-3 retry with the
+    best token-distinct alternate name.
+  * `--captured` / `--out` / `--cohort` / `--max-cost` parameterize what was
+    hardcoded. The 2026-08-01 output artifact is historical and is never
+    rewritten: an existing --out refuses to be overwritten without --overwrite.
 """
 import argparse
 import base64
@@ -115,11 +136,39 @@ COMMON_TRADE = {
     "distributors", "distributing", "distribution", "wholesale", "sales",
     "products", "solutions", "systems", "technologies", "group", "national",
     "american", "united", "general", "quality", "premier", "advanced", "supplies",
+    # 2026-08-03: the pilot hand-read caught wrong domains riding these --
+    # "Sunbelt Spring & Stamping" accepted southernspring.com on "spring".
+    "spring", "springs", "stamping", "stampings", "repair", "repairs",
+    "compressor", "compressors", "welder", "welders", "automation", "controls",
+    "fabrication", "machining", "packaging", "plastics", "coatings",
+    "filtration", "conveyor", "conveyors", "fire", "protection", "safety",
+    "battery", "batteries", "transportation", "sure", "true", "best", "first",
+}
+
+# State code -> full name, for the geographic echo test and place-token
+# exclusion. A domain named after the row's own city or state proves nothing
+# ("bomninchevroletmanassas.com" matched MANASSAS Electric Motor on "manassas").
+STATE_NAMES = {
+    "AL": "alabama", "AK": "alaska", "AZ": "arizona", "AR": "arkansas",
+    "CA": "california", "CO": "colorado", "CT": "connecticut", "DE": "delaware",
+    "FL": "florida", "GA": "georgia", "HI": "hawaii", "ID": "idaho",
+    "IL": "illinois", "IN": "indiana", "IA": "iowa", "KS": "kansas",
+    "KY": "kentucky", "LA": "louisiana", "ME": "maine", "MD": "maryland",
+    "MA": "massachusetts", "MI": "michigan", "MN": "minnesota",
+    "MS": "mississippi", "MO": "missouri", "MT": "montana", "NE": "nebraska",
+    "NV": "nevada", "NH": "hampshire", "NJ": "jersey", "NM": "mexico",
+    "NY": "york", "NC": "carolina", "ND": "dakota", "OH": "ohio",
+    "OK": "oklahoma", "OR": "oregon", "PA": "pennsylvania", "RI": "rhode",
+    "SC": "carolina", "SD": "dakota", "TN": "tennessee", "TX": "texas",
+    "UT": "utah", "VT": "vermont", "VA": "virginia", "WA": "washington",
+    "WV": "virginia", "WI": "wisconsin", "WY": "wyoming", "DC": "columbia",
 }
 
 _lock = threading.Lock()
 _cost = [0.0]
 _calls = [0]
+_max_cost = [0.0]        # 0 = no ceiling; set from --max-cost
+_ceiling_hit = [False]
 
 
 def env():
@@ -156,6 +205,13 @@ def dfs_post(path, payload, auth, dry=False):
             pass
     if dry:
         return None, False
+    # Spend ceiling: the prompt's rule is stop and re-report at >25% over the
+    # stated number. Cache reads above stay free and unaffected.
+    if _max_cost[0]:
+        with _lock:
+            if _cost[0] >= _max_cost[0]:
+                _ceiling_hit[0] = True
+                return {"_error": "cost-ceiling"}, False
     req = urllib.request.Request(
         DFS + path, data=json.dumps([payload]).encode(),
         headers={"Authorization": "Basic " + auth,
@@ -230,13 +286,31 @@ def from_email(row):
 # ------------------------------------------------------------------ route 2
 
 
-def from_dfs_listing(row, auth, dry):
+def from_dfs_listing(row, auth, dry, ext=None):
+    ext = ext or {}
     name = row.get("company_display") or row.get("company")
     if not name:
         return None, "no-name", None
+    phone = digits(row.get("phone_e164"))
+    zip5 = str(row.get("zip5") or "").strip()[:5]
+    city = (row.get("city") or "").strip()
+    # No phone, no zip, no city: no corroboration arm could ever accept a hit,
+    # so the call would be pure spend. Route 3's name-in-domain test is the
+    # only rule that can decide these rows.
+    if not phone and not zip5 and not city:
+        return None, "skipped-uncorroboratable", None
+    lat, lng = row.get("lat"), row.get("lng")
+    if not (lat and lng) and zip5:
+        cent = (ext.get("centroids") or {}).get(zip5)
+        if cent:
+            lat, lng = cent[0], cent[1]
     payload = {"title": re.sub(r"\s+", " ", name)[:120], "limit": 10}
-    if row.get("lat") and row.get("lng"):
-        payload["location_coordinate"] = "%s,%s,50" % (row["lat"], row["lng"])
+    if lat and lng:
+        payload["location_coordinate"] = "%s,%s,50" % (lat, lng)
+    elif zip5:
+        # No coordinates anywhere: scope the search to the zip itself. Same
+        # filter family the DFS harvest already uses on country_code.
+        payload["filters"] = [["address_info.zip", "=", zip5]]
     body, cached = dfs_post("/business_data/business_listings/search/live",
                             payload, auth, dry)
     if not body or body.get("_error"):
@@ -245,22 +319,29 @@ def from_dfs_listing(row, auth, dry):
     if not tasks or not (tasks[0].get("result") or []):
         return None, "no-result", None
     items = (tasks[0]["result"][0] or {}).get("items") or []
-    want = tokens(name)
-    phone = digits(row.get("phone_e164"))
+    want = tokens(name) | (ext.get("alt_tokens") or set())
     for it in items:
         host = apex(it.get("domain") or it.get("url"))
         if not host or host in NOT_OWN_SITE:
             continue
         ai = it.get("address_info") or {}
+        got = tokens(it.get("title"))
+        overlap = bool(want) and len(want & got) >= max(1, len(want) // 2)
         # Corroboration, in descending strength. A listing that only sounds
         # like the company is not the company.
         if phone and digits(it.get("phone")) == phone:
             return host, None, "phone"
-        if row.get("zip5") and str(ai.get("zip") or "")[:5] == row["zip5"]:
-            return host, None, "zip5"
-        got = tokens(it.get("title"))
-        same_city = (row.get("city") or "").lower() == str(ai.get("city") or "").lower()
-        if same_city and want and len(want & got) >= max(1, len(want) // 2):
+        if zip5 and str(ai.get("zip") or "")[:5] == zip5:
+            # A phone-bearing row keeps the shipped rule (zip alone). A row
+            # with no phone lost its strong arm, so zip must also carry a
+            # name-token overlap -- industrial parks share zips.
+            if phone:
+                return host, None, "zip5"
+            if overlap:
+                return host, None, "zip5+name"
+            continue
+        same_city = city.lower() == str(ai.get("city") or "").lower()
+        if same_city and overlap:
             return host, None, "city+name"
     return None, "no-corroborated-listing", None
 
@@ -268,8 +349,9 @@ def from_dfs_listing(row, auth, dry):
 # ------------------------------------------------------------------ route 3
 
 
-def from_search(row, auth, dry):
-    name = row.get("company_display") or row.get("company")
+def from_search(row, auth, dry, ext=None, name_override=None):
+    ext = ext or {}
+    name = name_override or row.get("company_display") or row.get("company")
     if not name:
         return None, "no-name", None
     q = '%s %s %s' % (re.sub(r"\s+", " ", name)[:70],
@@ -283,7 +365,12 @@ def from_search(row, auth, dry):
     if not tasks or not (tasks[0].get("result") or []):
         return None, "no-result", None
     items = (tasks[0]["result"][0] or {}).get("items") or []
-    want = tokens(name)
+    want = tokens(name) | (ext.get("alt_tokens") or set())
+    # The row's own place tokens prove nothing when they appear in a domain --
+    # every business in Manassas can own a "manassas" domain.
+    city = (row.get("city") or "").strip()
+    state = str(row.get("state") or "").strip().upper()
+    place = tokens(city) | ({STATE_NAMES[state]} if state in STATE_NAMES else set())
     for it in items:
         if it.get("type") != "organic":
             continue
@@ -299,12 +386,54 @@ def from_search(row, auth, dry):
         label = re.sub(r"[^a-z0-9]", "", host.split(".")[0])
         if not want or not label or NOT_A_COMPANY_LABEL.search(label):
             continue
+        # The whole name, concatenated in order, IS the domain label:
+        # "Klamath Falls Electric Motor" at klamathfallselectricmotor.com.
+        # Place and trade tokens prove nothing individually, but the full
+        # ordered name is not an accident.
+        ordered = [t for t in re.split(r"[^a-z0-9]+", str(name).lower())
+                   if len(t) > 2 and t in want]
+        fullname = re.sub(r"[^a-z0-9]", "", "".join(ordered))
+        if fullname and len(fullname) >= 8 and label == fullname:
+            return host, None, "exact-name-domain"
         matched = [t for t in want
                    if len(re.sub(r"[^a-z0-9]", "", t)) >= 4
                    and re.sub(r"[^a-z0-9]", "", t) in label]
-        distinctive = [t for t in matched if t not in COMMON_TRADE]
-        if distinctive or len(matched) >= 2:
-            return host, None, "organic-top10-name-in-domain"
+        distinctive = [t for t in matched
+                       if t not in COMMON_TRADE and t not in place]
+        if not distinctive:
+            continue
+        # 2026-08-03, from the pilot hand-read: a name-token in the domain is
+        # NOT enough on its own -- southernspring.com is not Sunbelt Spring,
+        # and a Malaysian alliancebearings.net is not a Chino Hills bearing
+        # house. Two ways to accept:
+        #   * two DISTINCTIVE name tokens (two shared trade words --
+        #     "alliance"+"bearings" -- still prove nothing), or
+        #   * one distinctive token PLUS a geographic echo: the result's own
+        #     title/snippet names the row's city or state. A local business's
+        #     homepage result almost always carries its geography; a stranger
+        #     sharing one name word almost never carries the RIGHT geography.
+        # Rows with no geography at all (a slice of the federal residue) fall
+        # back to requiring a longer, coined-looking distinctive token.
+        blob = "%s %s %s" % (it.get("title") or "", it.get("description") or "",
+                             it.get("breadcrumb") or "")
+        if city or state:
+            # Geographic echo is mandatory for every geo-bearing row -- the
+            # fresh v4 hand-read caught two-token acceptances landing on
+            # strangers (alliedhightech.com for a Woburn MA "Allied Tech";
+            # a lake association for "Platte Lake Steel"). A row that HAS a
+            # city must be echoed at city grain: a state echo is one word
+            # shared with every business in California.
+            if city:
+                echo = city.lower() in blob.lower()
+            else:
+                echo = bool(re.search(r"\b%s\b" % re.escape(state), blob)) or (
+                    state in STATE_NAMES and STATE_NAMES[state] in blob.lower())
+            if echo:
+                return host, None, ("name-in-domain+geo" if len(distinctive) < 2
+                                    else "name2-in-domain+geo")
+        elif len(distinctive) >= 2 or any(
+                len(re.sub(r"[^a-z0-9]", "", t)) >= 5 for t in distinctive):
+            return host, None, "name-in-domain(no-geo-row)"
     return None, "no-corroborated-result", None
 
 
@@ -320,6 +449,20 @@ def main():
                     help="skip route 3 (the paid organic fallback)")
     ap.add_argument("--dry", action="store_true",
                     help="cache-only; make no paid calls")
+    ap.add_argument("--captured", default=CAPTURED,
+                    help="capture date stamped on records and the default out path")
+    ap.add_argument("--out", default=None,
+                    help="output JSON (default data/s3/segment-w-<captured>.json)")
+    ap.add_argument("--cohort", default="",
+                    help="label stamped on every record and the summary")
+    ap.add_argument("--centroids", default=None,
+                    help="JSON {zip5: [lat, lng]} used when a row has no coordinates")
+    ap.add_argument("--alt-names", default=None,
+                    help="JSON {federal_uei: [alternate names]} widening corroboration")
+    ap.add_argument("--max-cost", type=float, default=0.0,
+                    help="stop making NEW paid calls once measured cost reaches this")
+    ap.add_argument("--overwrite", action="store_true",
+                    help="allow writing over an existing --out file")
     args = ap.parse_args()
 
     user, pw = env()
@@ -330,6 +473,20 @@ def main():
     auth = base64.b64encode(("%s:%s" % (user, pw)).encode()).decode()
     os.makedirs(CACHE, exist_ok=True)
 
+    out_path = args.out or os.path.join(S3_DIR, "segment-w-%s.json" % args.captured)
+    if os.path.exists(out_path) and not args.overwrite:
+        print("refusing to overwrite %s (pass --overwrite)" % out_path,
+              file=sys.stderr)
+        return 2
+    _max_cost[0] = args.max_cost
+
+    centroids = {}
+    if args.centroids and os.path.exists(args.centroids):
+        centroids = json.load(open(args.centroids))
+    alt_names = {}
+    if args.alt_names and os.path.exists(args.alt_names):
+        alt_names = json.load(open(args.alt_names))
+
     rows = [r for r in csv.DictReader(open(args.csv, newline=""))
             if not r.get("domain")]
     if args.limit:
@@ -339,14 +496,32 @@ def main():
     out, lock = [], threading.Lock()
     n = [0]
 
+    def alt_retry_name(row):
+        """The best token-DISTINCT alternate, or None. Punctuation variants
+        normalize to the same token set and earn no second query."""
+        alts = alt_names.get(str(row.get("federal_uei") or "")) or []
+        primary = tokens(row.get("company_display") or row.get("company"))
+        best, best_new = None, 0
+        for a in sorted(alts):
+            new = len(tokens(a) - primary)
+            if new > best_new:
+                best, best_new = a, new
+        return best
+
     def work(row):
+        ext = {"centroids": centroids}
+        alts = alt_names.get(str(row.get("federal_uei") or "")) or []
+        if alts:
+            ext["alt_tokens"] = set().union(*(tokens(a) for a in alts))
         rec = {"company": row.get("company"),
                "company_display": row.get("company_display"),
                "city": row.get("city"), "state": row.get("state"),
                "zip5": row.get("zip5"), "phone_e164": row.get("phone_e164"),
                "source": row.get("source"),
+               "federal_uei": row.get("federal_uei") or None,
+               "cohort": args.cohort or None,
                "recovered_domain": None, "route": None, "corroboration": None,
-               "notes": [], "captured": CAPTURED}
+               "notes": [], "captured": args.captured}
 
         d, note = from_email(row)
         if note:
@@ -355,19 +530,30 @@ def main():
             rec["recovered_domain"], rec["route"] = d, "email-domain"
             rec["corroboration"] = "published email address"
         else:
-            d, note, corr = from_dfs_listing(row, auth, args.dry)
+            d, note, corr = from_dfs_listing(row, auth, args.dry, ext)
             if note:
                 rec["notes"].append("dfs:" + note)
             if d:
                 rec["recovered_domain"], rec["route"] = d, "dfs-listing"
                 rec["corroboration"] = corr
             elif not args.no_search:
-                d, note, corr = from_search(row, auth, args.dry)
+                d, note, corr = from_search(row, auth, args.dry, ext)
                 if note:
                     rec["notes"].append("search:" + note)
                 if d:
                     rec["recovered_domain"], rec["route"] = d, "name-city-search"
                     rec["corroboration"] = corr
+                else:
+                    alt = alt_retry_name(row)
+                    if alt:
+                        d, note, corr = from_search(row, auth, args.dry, ext,
+                                                    name_override=alt)
+                        if note:
+                            rec["notes"].append("search-alt:" + note)
+                        if d:
+                            rec["recovered_domain"] = d
+                            rec["route"] = "name-city-search"
+                            rec["corroboration"] = "%s(alt:%s)" % (corr, alt)
         with lock:
             out.append(rec)
             n[0] += 1
@@ -382,21 +568,26 @@ def main():
 
     got = sum(1 for r in out if r["recovered_domain"])
     payload = {
-        "source": "segment-w-verify", "captured": CAPTURED,
+        "source": "segment-w-verify", "captured": args.captured,
+        "cohort": args.cohort or None,
         "routes": ["email-domain", "dfs-listing", "name-city-search"],
         "candidates": len(rows), "rescued": got, "no_website": len(rows) - got,
         "api_calls": _calls[0], "api_cost_measured": round(_cost[0], 4),
+        "cost_ceiling": args.max_cost or None, "ceiling_hit": _ceiling_hit[0],
+        "route_yields": dict(Counter(r["route"] for r in out if r["route"])),
+        "corroboration_yields": dict(
+            Counter(r["corroboration"] for r in out if r["corroboration"])),
         "records": sorted(out, key=lambda r: r.get("company") or ""),
     }
-    path = os.path.join(S3_DIR, "segment-w-%s.json" % CAPTURED)
-    tmp = path + ".tmp"
+    tmp = out_path + ".tmp"
     with open(tmp, "w") as f:
         json.dump(payload, f, indent=1)
-    os.replace(tmp, path)
-    print("\ncandidates %d | rescued %d | no-website %d | calls %d | cost $%.4f"
-          % (len(rows), got, len(rows) - got, _calls[0], _cost[0]))
+    os.replace(tmp, out_path)
+    print("\ncandidates %d | rescued %d | no-website %d | calls %d | cost $%.4f%s"
+          % (len(rows), got, len(rows) - got, _calls[0], _cost[0],
+             " | COST CEILING HIT" if _ceiling_hit[0] else ""))
     print(Counter(r["route"] for r in out).most_common())
-    print("-> %s" % path)
+    print("-> %s" % out_path)
     return 0
 
 

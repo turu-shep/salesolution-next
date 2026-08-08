@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { makeRecord } from './contract.mjs'
-import { BRAND_BANDS, componentsToString, ecomClass, rankScore } from './rank.mjs'
+import { AD_MEMBER, BRAND_BANDS, componentsToString, ecomClass, rankScore } from './rank.mjs'
 
 /**
  * S4's own columns (`category_core`, `category_contam`, …) are assigned onto the
@@ -54,6 +54,16 @@ test('brand breadth is NOT monotonic — it peaks at 6–10 and turns negative a
 
 test('BRAND_BANDS is ordered descending, or `step` reads the wrong row', () => {
   for (let i = 1; i < BRAND_BANDS.length; i++) assert.ok(BRAND_BANDS[i][0] < BRAND_BANDS[i - 1][0])
+})
+
+test('AD membership scores as a token of the source chain, never a substring', () => {
+  const member = at(rec({ source: 'timken|ad' }))
+  const not = at(rec())
+  const lookalike = at(rec({ source: 'adaptall' }))
+  assert.equal(member.components.ad_member, AD_MEMBER)
+  assert.equal(not.components.ad_member, 0)
+  assert.equal(lookalike.components.ad_member, 0, '`adaptall` must not read as AD membership')
+  assert.equal(member.score - not.score, AD_MEMBER)
 })
 
 test('a page-verbatim declaration beats a Google-truncated snippet', () => {

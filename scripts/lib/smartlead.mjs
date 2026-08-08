@@ -24,9 +24,15 @@
  *     through one serialized queue spaced 200ms apart, so parallel callers
  *     still take turns.
  *
- * Verified against the live API on 2026-08-01: the two read paths the CLI uses
- * (`/campaigns/`, `/email-accounts/`) both returned 200. Everything that writes
- * follows the documented v1 shapes and is UNTESTED — see setCampaignStatus.
+ * Verified against the live API on 2026-08-01. Read paths: `/campaigns/`,
+ * `/campaigns/:id`, `/campaigns/:id/sequences`, `/campaigns/:id/email-accounts`,
+ * `/campaigns/:id/leads`, `/email-accounts/`. Write paths exercised end-to-end
+ * by scripts/dental-smartlead-setup.mjs: createCampaign, updateCampaignSchedule,
+ * updateCampaignSettings, saveSequences. Three shapes needed correcting against
+ * the published docs — each is noted on the function it belongs to.
+ *
+ * Still UNTESTED: setCampaignStatus, addLeads, addEmailAccountsToCampaign,
+ * upsertWebhook. Expect the same docs-vs-reality gap when you first run them.
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
@@ -194,12 +200,30 @@ export function createCampaign({ name, client_id = null }) {
   return request('POST', '/campaigns/create', { body: { name, client_id } })
 }
 
-/** settings: { track_settings, stop_lead_settings, unsubscribe_text, send_as_plain_text, follow_up_percentage, … } */
+/**
+ * settings: { name, track_settings, stop_lead_settings, unsubscribe_text,
+ *             send_as_plain_text, add_unsubscribe_tag, follow_up_percentage, … }
+ *
+ * track_settings is written as DONT_TRACK_EMAIL_OPEN / DONT_TRACK_LINK_CLICK /
+ * DONT_TRACK_REPLY_TO_AN_EMAIL and read back with the DONT_TRACK_ prefix
+ * shortened to DONT_ — compare on the short form. `add_unsubscribe_tag` is
+ * accepted but absent from GET /campaigns/:id, so it cannot be verified by
+ * read-back; check it in the UI.
+ */
 export function updateCampaignSettings(id, settings) {
   return request('POST', `/campaigns/${enc(id)}/settings`, { body: settings })
 }
 
-/** schedule: { timezone, days_of_the_week, start_hour, end_hour, min_time_btw_emails, max_leads_per_day } */
+/**
+ * schedule: { timezone, days_of_the_week, start_hour, end_hour,
+ *             min_time_btw_emails, max_new_leads_per_day }
+ *
+ * All six are REQUIRED — the docs call the last two optional, the live API 400s
+ * without them. Read-back is asymmetric and lives on the campaign object, not
+ * here: GET /campaigns/:id returns `scheduler_cron_value: { tz, days, startHour,
+ * endHour }` plus `min_time_btwn_emails` (note the extra n) and
+ * `max_leads_per_day` (no "new").
+ */
 export function updateCampaignSchedule(id, schedule) {
   return request('POST', `/campaigns/${enc(id)}/schedule`, { body: schedule })
 }
@@ -229,6 +253,12 @@ export function getSequences(id) {
  * Save the whole sequence set — this replaces what's there, it does not append.
  * Takes the bare array or an already-wrapped { sequences } object; the API
  * wants the wrapped form.
+ *
+ * Per step: { seq_number, seq_delay_details: { delay_in_days }, subject,
+ * email_body }. The delay key is snake_case ON WRITE and camelCase
+ * (`delayInDays`) ON READ — sending the camel form is a 400. `email_body` is
+ * HTML; an empty `subject` on a follow-up threads it as a reply to the step
+ * before it, a non-empty one starts a fresh thread.
  */
 export function saveSequences(id, sequences) {
   const body = Array.isArray(sequences) ? { sequences } : sequences
@@ -322,6 +352,11 @@ export function fetchLeadByEmail(email) {
 /** Every sending account on the workspace, paginated to the end. */
 export function listEmailAccounts() {
   return fetchAll('/email-accounts/')
+}
+
+/** The sending accounts attached to one campaign. Empty array = none attached. */
+export function listCampaignEmailAccounts(id) {
+  return request('GET', `/campaigns/${enc(id)}/email-accounts`)
 }
 
 export function addEmailAccountsToCampaign(id, emailAccountIds) {

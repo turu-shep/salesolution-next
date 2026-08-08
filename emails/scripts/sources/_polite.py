@@ -94,6 +94,16 @@ class Fetcher:
                     raise Blocked(f"HTTP {e.code} on {url} — source stopped, no bypass")
                 if e.code == 404:
                     raise Blocked(f"HTTP 404 on {url}")
+                # Every other 4xx is DETERMINISTIC: the server understood the
+                # request and refused it. Retrying re-sends something already
+                # rejected — 345s of backoff and 5 extra origin hits for an
+                # answer that cannot change. Found 2026-08-03, when Continental's
+                # `locatorType=aftermarket` returned a hard 400 and this ladder
+                # retried it five times. 408 and 429 are the exceptions: those
+                # ARE timing signals, and the backoff below is the right response.
+                if 400 <= e.code < 500 and e.code not in (408, 429):
+                    raise Blocked(
+                        f"HTTP {e.code} on {url} — deterministic refusal, not retried")
                 wait = BACKOFF[min(attempt, len(BACKOFF) - 1)]
                 print(f"  HTTP {e.code} on {url} -> backoff {wait}s", flush=True)
                 time.sleep(wait)

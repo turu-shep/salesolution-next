@@ -178,6 +178,68 @@ function isOwnBrand(b, names) {
   })
 }
 
+/**
+ * Words a RESELLER bolts onto a brand it carries. `martinsupply` is Martin
+ * Sprocket's dealer; `vikingpump` is the Viking brand's owner. The remainder
+ * after the brand is the whole difference, and it is a short, closed list —
+ * these are the nouns a distributor names itself with, not the nouns a
+ * manufacturer names a product line with.
+ */
+const RESELLER_TAIL_RX =
+  /(suppl|sales|service|distribut|wholesale|dealer|store|shop|\bmro\b|repair|rebuild|agenc|associate|broker|trading|industrial|industries|company|group|corp)/
+
+/**
+ * Is this brand the company's OWN apex label — §5t's "a brand match against the
+ * company's own apex label"?
+ *
+ * Deliberately much tighter than {@link isOwnBrand}: that one matches loose name
+ * forms in both directions so a company's own brand is never counted as a third
+ * party's, and it is right to be loose for a signal it SUPPRESSES. This one
+ * ADDS a manufacturer signal, so it matches the domain label only, and only when
+ * the leftover is not a reseller word.
+ *
+ * `vikingpump.com` + "Viking" → true. `martinsupply.com` + "Martin" → false.
+ *
+ * The tail is tested for a reseller word **anywhere inside it**, not for
+ * equality. Measured: equality let `millerpumpsupply.com` ("pumpsupply"),
+ * `millerindustrial.com` ("industrial") and `parkerstore-koblenz.com`
+ * ("storekoblenz") all read as brand owners — three false positives out of five
+ * hits, on a signal whose whole job is to catch the case where the brand really
+ * is the company's.
+ *
+ * @param {string} brand normalized brand name
+ * @param {{domain?: string}} r
+ */
+function isOwnLabelBrand(brand, r) {
+  const b = squash(brand)
+  if (b.length < 4) return false
+  const label = squash(String(r?.domain ?? '').split('.')[0])
+  if (label.length < 4) return false
+  if (label === b) return true
+  if (!label.startsWith(b)) return false
+  const tail = label.slice(b.length)
+  return tail.length >= 3 && !RESELLER_TAIL_RX.test(tail)
+}
+
+/**
+ * §5t's corrected pre-filter for the hand-reading surface.
+ *
+ * §5s measured `brand_count = 0` on 91.4% of confirmed manufacturers against
+ * 39.0% of the list and proposed it as the cheapest way to cut the reading
+ * surface. **The first-send census falsified the cut point:** two of the three
+ * manufacturers it found sat at `brand_count = 1`, and for `vikingpump.com` that
+ * single brand was its own. **Cut at ≤1, not =0.**
+ *
+ * @param {{brand_count?: unknown}} r
+ * @returns {boolean} true when the row belongs in the reading surface
+ */
+export function manufacturerPreFilter(r) {
+  const n = r?.brand_count
+  if (n === null || n === undefined || n === '') return true
+  const v = Number(n)
+  return !Number.isFinite(v) || v <= 1
+}
+
 function ownClaim(txt, names, vocab) {
   const found = []
   for (const c of CLAIM) {
@@ -280,8 +342,33 @@ export function makeScorer(vocab) {
 
     // D3 — THIRD-PARTY evidence. A manufacturer's own locator named this company
     // its authorized dealer. Makers do not appear in rivals' locators.
-    const ba = (r.brand_authorized || []).filter((b) => !isOwnBrand(norm(b), names)).length
-    if (ba >= 1) { dist += ba >= 3 ? 7 : ba >= 2 ? 5 : 3; sig.push(`D3 named by ${ba} manufacturer locator(s): ${(r.brand_authorized || []).slice(0, 5).join(', ')}`) }
+    const baAll = r.brand_authorized || []
+    const baOwn = baAll.filter((b) => isOwnLabelBrand(norm(b), r))
+    const ba = baAll.filter((b) => !isOwnBrand(norm(b), names)).length
+    if (ba >= 1) { dist += ba >= 3 ? 7 : ba >= 2 ? 5 : 3; sig.push(`D3 named by ${ba} manufacturer locator(s): ${baAll.slice(0, 5).join(', ')}`) }
+
+    // M7 — §5t's inversion. Excluding the company's own brand from D3 (which the
+    // line above does) only stops the signal firing the WRONG way; the fact
+    // itself is evidence, and it points at manufacturing.
+    //
+    // `vikingpump.com` was seated because `brand_authorized` carried "Viking" —
+    // its own name. A locator that names the brand is not naming a dealer, it is
+    // naming the brand OWNER. That failure scales with how well-known the
+    // manufacturer is: any OEM whose brand our distributors line-card can ride
+    // the same path in. Weighed at 4 so it cannot route alone (§5f), which it
+    // does not need to — an OEM that owns its brand always also claims to make
+    // something.
+    //
+    // Guarded three ways, because a distributor can legitimately share a name
+    // with a brand it carries ("Martin Supply" ⟷ Martin Sprocket): the match is
+    // against the company's own APEX LABEL and not its loose name forms; it is
+    // dropped when another party's locator also named the company; and it only
+    // counts alongside make evidence the page already published. The last guard
+    // is what keeps it a multiplier on evidence rather than a claim of its own.
+    if (baOwn.length && ba === 0 && mfg > 0) {
+      mfg += 4
+      sig.push(`M7 own brand in brand_authorized (${baOwn.join(', ')}) — a locator named this company as the BRAND, not as a dealer`)
+    }
 
     const fb = foreignBrands(both, names, vocab)
     if (fb.length >= 2) { dist += fb.length >= 6 ? 6 : fb.length >= 3 ? 4 : 2; sig.push(`D4 names ${fb.length} other-party brands: ${fb.slice(0, 6).join(', ')}`) }

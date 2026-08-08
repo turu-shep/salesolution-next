@@ -171,6 +171,12 @@ export const CHAIN_BLOCKLIST = [
   { name: 'McMaster-Carr', tokens: ['mcmaster'] },
   { name: 'RS Components', tokens: ['rs', 'components'], lead: 'rs' },
   { name: 'SunSource', tokens: ['sunsource'] },
+  // PE roll-up parents (rollup-rosters workstream, 2026-08-03). Both tokens
+  // required: 'singer' alone would sweep Singer Equipment (foodservice, a real
+  // independent); 'ritter' alone would reach dental. 'Motion & Control
+  // Enterprises' needs no entry — the 'motion' lead token already catches it.
+  { name: 'Singer Industrial', tokens: ['singer', 'industrial'] },
+  { name: 'Ritter Technology', tokens: ['ritter', 'technology'] },
 ]
 
 /**
@@ -222,6 +228,124 @@ export const CHAIN_DOMAIN_BLOCKLIST = [
   'walmart.com',
   'homedepot.com',
   'lowes.com',
+  // ── PE roll-up subsidiaries (rollup-rosters workstream, confirmed 2026-08-03) ──
+  //
+  // The hole this closes: chain suppression caught the PARENT (sunsource is on
+  // the name list, sunsource.com/sun-source.com above) while every SUBSIDIARY
+  // walked straight past — each one trades under its own name on its own
+  // domain, carries no parent badge on its homepage, and never reaches 20
+  // in-dataset addresses. The parent's own roster/press pages are the only
+  // evidence that exists, so the fix is this list, re-derived from those pages.
+  //
+  // Sources (first-hand fetches, cached; see emails/data/raw/rollup-rosters/
+  // and emails/handoff/industrial-contact-list/rollup-rosters*/02-rosters-*.md):
+  //   Singer:    singerindustrial.com/brands (47 companies, read 2026-08-03)
+  //              + dated press releases (ccrconveyor); fcgdivision.com 308s
+  //              into dfpoemdivision.com (Dakota Fluid Power OEM division).
+  //   MCE:       mceautomation.com/about/mce-companies + /about/news (dated
+  //              acquisition announcements 2017–2026).
+  //   SunSource: subsidiaries CONFIRMED one-by-one (own-site badge/history or
+  //              dated deal coverage) — sun-source.com itself serves a JS
+  //              shell, so its roster is assembled second-hand and only
+  //              confirmed names are listed here. Adjudicated NOT owned (never
+  //              add): zemarc.com, jhf.com, jhfoster.com, aberdeendynamics.com,
+  //              sloanfluid.com, airlinehyd.com, livhaven.com (+ its store
+  //              mrostop.com).
+  //
+  // Singer Industrial (AEA Investors) — parent + operating companies
+  'singerindustrial.com',
+  '4starhose.com',
+  'ablehose.com',
+  'alliedrubber.com',
+  'american-hose.com',
+  'capitalrubberco.com',
+  'catawbarubber.com',
+  'ccrconveyor.com',
+  'cenhyd.com',
+  'connectallltd.com',
+  'customhydraulic.com',
+  'dakotafluidpower.com',
+  'dfpoemdivision.com',
+  'epgdivision.com',
+  'fcgdivision.com',
+  'fluidconveyancegroup.com',
+  'fluidtechhydraulics.com',
+  'fosterhose.com',
+  'futurehydraulik.com',
+  'hamptonrubber.com',
+  'hannarubbercompany.com',
+  'hosetechusa.com',
+  'hoserinc.com',
+  'hydrafab-us.com',
+  'kencohydraulics.com',
+  'mepbrothers.com',
+  'midway-machining.com',
+  'nationalhose.com',
+  'polyflowhose.com',
+  'prcindustrial.com',
+  'qualityconveyorsolutions.com',
+  'raylewisco.com',
+  'rubberworxhose.com',
+  'rwconnection.com',
+  'shipyardsupplyinc.com',
+  'smithindustrial.com',
+  'spartanindustrial.com',
+  'stewarthunt.com',
+  'summersrubber.com',
+  'texasrubbersupply.com',
+  'triadbellows.com',
+  'unisource-mfg.com',
+  'vikinghose.com',
+  'wattssteamstore.com',
+  'wilmingtonrubber.com',
+  'y2kfiltration.com',
+  // Motion & Control Enterprises (Frontenac) — parent + acquired companies
+  'mceautomation.com',
+  'ritter1.com',
+  'aic-controls.com',
+  'airautomation.com',
+  'dascosales.com',
+  'esgcontrols.com',
+  'filterresources.com',
+  'generalmachinery.com',
+  'global-controls.us',
+  'industrialcontrol.com',
+  'ivesequipment.com',
+  'lonestarmachineworks.com',
+  'netechsales.com',
+  'novahydraulics.com',
+  'piedmontelectricmotor.com',
+  'questenginc.com',
+  'romanoffindustries.com',
+  'rsainfo.com',
+  'tlr-hydraulics.com',
+  'ultimationinc.com',
+  // SunSource (CD&R) — confirmed subsidiaries only (parent domains above)
+  'amazonhose.com',
+  'callahanweber.com',
+  'carotek.com',
+  'doverhydraulics.com',
+  'ford-gelatt.com',
+  'ghxinc.com',
+  'k-and-s.com',
+  'mccartyequipment.com',
+  'perfectionservo.com',
+  'priceeng.com',
+  'rhfs.com',
+  'stuarthose.com',
+  'thehopegroup.com',
+  'unitedcentral.net',
+  'westernintech.com',
+  // SunSource via Vytl Controls Group (closed 2026-01-30): the group site and
+  // its four divisions — setpointis/wosupply/valsource.net 301 into
+  // vytlcontrols.com/company/*; atcontrols.com 301s to a-tcontrols.com, whose
+  // portal and social handles are vytlcontrols (all verified 2026-08-04).
+  'vytlcontrols.com',
+  'setpointis.com',
+  'wosupply.com',
+  'valsource.net',
+  'atcontrols.com',
+  'a-tcontrols.com',
 ]
 
 const CHAIN_DOMAINS = new Set(CHAIN_DOMAIN_BLOCKLIST)

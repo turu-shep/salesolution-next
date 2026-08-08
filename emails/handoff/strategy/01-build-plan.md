@@ -680,6 +680,187 @@ The hardest technical problem was **subject attribution**: `sealcompany.com` pub
 
 Also noted: signal D3 (a manufacturer's locator naming the company) has a false-positive mode — `sealfast.com` scores −10 and is a manufacturer.
 
+## 5t. First-send cohort (2026-08-01) — `first-send-200.csv`, and the ranking earns its keep
+
+**Contamination inside the top 200: 3 manufacturers, 1.5%** — a full census, all 200 read individually, against §5s's list-wide 14.8%. **Roughly 10× cleaner.** Wilson 95% CI 0.5–4.3%, so "materially lower", not "clean". **This is the first hard evidence that `rank_score` correlates with genuine distributor-ness** rather than merely with data availability.
+
+**5 routed, 5 replaced, backfill reached only #201–#205** — five consecutive positions, cut score unchanged at 75 for the cohort. Removed: `flexaseal.com` and `plyind.com` (own-product manufacturers), **`vikingpump.com`** (IDEX gear-pump OEM that runs its own dealer locator in eight countries), `autopartintl.com` (four companies collapsed into one row — no valid send target) and `checkerindustrial.com` (**Windsor, Ontario** — non-US). **T1 unaffected: 32 in the cohort, 43 across `seated-v2`.**
+
+**The mandatory readback worked:** 9,400 inherited fields plus 230 on the routed file, **0 diffs, verified by two independent implementations** (Node and Python `csv`), with the S4 columns explicitly re-checked non-blank and `seated-v2.csv`'s hash unchanged.
+
+### The detector caught 0 of 3 — and one failure mode is systematic
+
+Two of the three scored `review`, one scored **`distributor (−1)`**. At the top of the list the detector is not merely low-recall, it is inverted on the cases that matter.
+
+**The systematic hole: signal D3 fires against a company's own brand.** `vikingpump.com` was scored *toward* distributor because `brand_authorized` contained "Viking" — its own name. **Any OEM whose brand our distributors line-card can ride this exact path in.** That is strictly worse than the known `sealfast.com` mode, because it scales with how well-known the manufacturer is. **Fix: a brand match against the company's own apex label must count as evidence of manufacturing, not distribution.**
+
+**And §5s's proposed `brand_count = 0` pre-filter would have missed 2 of 3.** Both sit at `brand_count = 1` — and for Viking, that single brand is its own. **Cut at ≤1, not =0.**
+
+### ⚠ Send-blocking: some rows carry a manufacturer's inbox as the contact
+
+**12 rows (6 of them inside the first-send cohort) carry `info.us@nord.com`** — NORD Drivesystems' own corporate inbox — as the prospect's email address. Three more point at Atlas Copco, Rockwell and Pepperl+Fuchs. These come from locator records where the manufacturer publishes *its own* contact for dealers that have none.
+
+**Mailing these means sending a pitch about a distributor's catalog to the manufacturer whose products they distribute.** Being fixed now, with the general rule: **an email whose domain is a known manufacturer domain and does not match the company's own domain is invalid** and must be dropped rather than sent.
+
+**Two further defects found:** `santaclarasystems.com` (#339) carries a **negated declaration inside `seated-v2`** — so §5o's "0 negated leaked" does not hold list-wide, only for the cohort. And a **null `state` passes the non-US filter**, which is how a Windsor, Ontario company reached rank 200. `rg-group.com` / `benzhydraulics.com` are also one company the dedupe missed.
+
+## 5u. Send-blocking fixes (2026-08-01) — `seated-v3.csv` = 2,788
+
+**Readback: 274,645 cells diffed, 0 differences**, re-verified independently in Python; all seven S4 columns non-blank across all 2,788; `seated-v2.csv` hash unchanged. Conservation 2,847 = 2,788 + 59. **317 tests pass** (+34 new).
+
+**D1 — manufacturer inboxes: 50 voided, not the 15 known.** `nord.com` alone accounts for **34** — §5t's "12 rows" was counting only what the cohort surfaced. Also caught: Atlas Copco (including via `atlascopcousa.com`, found by the brand rule rather than the domain list), IDEX, Rockwell, Pepperl+Fuchs, H.B. Fuller, igus, HAWE, Busch, Saint-Gobain, Rice Lake, Hengst, Nucor, AMETEK, Fischer. Seven sat inside the first-send cohort.
+**Three lower-confidence buckets were reported, not nulled** — correctly, since nulling on suspicion destroys reachable prospects: **282 domain-mismatch**, 77 free-provider, 9 placeholder (`@example.com`, `@test.com`), and 5 marketplace/chain. That last bucket found something else: **`corrosionfluid.com` and `spencerfluidpower.com` are Applied Industrial subsidiaries the chain suppression missed.**
+
+**D2 — negated declarations: 3 found and cleared**, not the 1 known. Beyond `santaclarasystems.com`: `universalservo.com`, and **`instantind.com`, which publishes "We are a Non-Authorized Stocking Distributor."** Quoting that back would have been catastrophic. A loose port of the rule found 5 with 2 false positives, so the shipped test binds negation to the reseller noun and keeps the loose version as a review net.
+
+**D3 — non-US: 9 routed** (6 by the fixed filter, 3 found by hand — `parkerstore-koblenz.com` DE, `u3sengitech.com` IN, `hymatik.com` DK). A third `unverified` verdict now covers 48 ambiguous rows.
+**The naive fix was actively dangerous and this is the lesson worth keeping.** Running foreign signals first produced **11 false routes**: **Ontario, *California*.** A "New Brunswick Ave" in New Jersey. **"BC Fluid Power" in Kentucky.** A `.co` domain. Place-name collisions between US and Canadian geography are dense enough that a tightened filter costs real US distributors. Precedence now lets a complete US state + ZIP settle the question first — every genuine Canadian record has neither.
+
+**D4 — the D3 inversion catches exactly 2** (`vikingpump.com`, `nucorwarehousesystems.com`), both moving from `review` to `manufacturer`. The detector flagged 48 in total; **all 48 were hand-read — 37 routed, 11 kept.** Pre-filter corrected to `brand_count ≤1`.
+**Telling: 12 further manufacturers were surfaced by the D1 and D3 sweeps rather than by the detector** — igus, HAWE, Busch, Saint-Gobain, AMETEK, Fischer, Edwards Vacuum, ND Industries, Mainfilter, ShipServ, a crimping-machine maker, and **Boeing**. Contact-shape and geography evidence is finding manufacturers that content analysis misses.
+
+---
+
+## 5v. Campaigns staged + S7 machinery (2026-08-02) — `seated-v5.csv`
+
+**The campaigns handoff (`emails/handoff/campaigns/`) is executed.** Both
+sequences live in Smartlead as gated drafts — `IND-C1` **3751334** (5 steps /
+28 variants: E1-A, E1-B, Cohort-E × 4 subjects each, E2–E5), `IND-C2`
+**3751335** (4 steps / 20 variants incl. the Cohort-E first-line inflection) —
+DRAFTED, 0 senders, 0 leads, no schedule. Staging is reproducible from the
+repo: `scripts/industrial-smartlead-setup.mjs` (dry-run / `--apply` /
+`--verify`) parses the handoff files as the copy SSOT and enforces the copy
+contract as executable checks (capitalization rule, one-link rule, merge
+declarations, G3 brand ban, subject rules, §7 blockers-section presence).
+Verified byte-exact against live: **C1 81/81, C2 62/62**; dental drafts
+untouched (25/25 both). Full account: `emails/data/_smartlead-upload-2026-08-02.md` §9.
+
+**`seated-v5.csv` = v4 + the thehoseshop split** (§5u's open item): 8 cells on
+one row, Santa Cruz NAP restored from the DFS Google-Business listing,
+field-for-field readback, everything else byte-identical
+(`emails/scripts/s4h-hoseshop-fix.mjs`; audit `_hoseshop-fix-2026-08-02.md`).
+
+**S7 has machinery instead of a spec:** `emails/scripts/s7-export.mjs` builds
+micro-batch previews (≤50, campaign × body × segment, T4 isolated, Cohort E
+separate, voided rows out, Segment C parked pending per-row categories, all six
+custom-field keys always present) with conservation asserted and a
+`_DO-NOT-UPLOAD.md` sentinel until the send gates clear. Measured on v5:
+**787 of 2,782 batchable today — 1,274 rows have no email (S5's job), 671
+Segment C rows wait on nav-read categories.** Pilot: 109 of 200 batchable.
+The `{{declaration}}` review queue exists (`emails/scripts/
+declaration-review.mjs`; 671 rows, 5 handoff-cited prefills, 175 brand flags)
+and `--extract` validates human approvals against the §1 shape rules before
+they can reach an E1-A batch. Track 1 hand-send sheet:
+`emails/data/track1-handsend-2026-08-02.md` (11 named rows).
+
+**S5 unblocked:** the claude.ai Apollo MCP connector works (~47k lead credits;
+direct-dial exhausted → email-only). Pilot-cohort enrichment run 2026-08-02 —
+output `emails/data/s5-apollo-contacts-2026-08-02.csv`; fold-in to seated is a
+later, separate pass with the usual readback.
+
+## 5w. No-domain backlog: free pass + pilot (2026-08-03) — the 76% does not travel
+
+**The free pass resolved 128 of 8,156 for $0.00** (`s4i-backlog-freepass.mjs`,
+ledger `data/s3/backlog-freepass-2026-08-03.json`): email-apex 48 ·
+sibling-phone 44 · sibling-namezip 35 · current-universe re-join 1 (both tiers
++ `alternate_names` re-attached by UEI — the universe barely moved since the
+fold-in, so 1 is the honest number). W×federal crossjoin: 1 pair. Zero
+ambiguous, zero conflicts. The **9,006 vs 8,156 reconciliation is now exact**:
+the 850 delta is no-domain rows already adjudicated out (adjacent-trades 473 ·
+not-a-distributor 358 · chains 14 · above-ceiling 5). And the billable scope
+was never 8,156 — **939 federal rows are already adjudicated out**
+(not-a-distributor 909 / above-ceiling 29 / non-US 1), so bills only ever
+applied to 7,217, and 7,098 after the free pass.
+
+**Pilot: 500 records (250 W + 250 federal identity-backlog, seeded,
+stratified), 876 calls, $5.40 measured.** First-cut recovery: W 98 (39.2%),
+federal 159 (63.6%). Then the mandated 30-domain hand-read — extended to 34,
+weighted onto the weak arms — measured **route-3 W precision at roughly 29%
+(5 of 7 sampled wrong)**: southernspring.com is not Sunbelt Spring & Stamping,
+a Malaysian alliancebearings.net is not a Chino Hills bearing house, and
+"MANASSAS ELECTRIC MOTOR" accepted a Chevrolet dealer on the city token. The
+phone / zip5+name / city+name arms measured clean (0 wrong of 21).
+
+**The fix was free because the cache is payload-keyed:** four rule iterations
+re-adjudicated the same 876 responses at $0.02 marginal cost. Final rules
+(v5, shipped in `segment_w_verify.py`): place tokens and 19 more trade words
+excluded from "distinctive"; **geographic echo mandatory for every geo-bearing
+row** (city-grain when a city exists — a state echo is one word shared with
+every business in California); exact-ordered-name domains accepted
+("klamathfallselectricmotor.com"); no-geo rows require a coined-looking token.
+A fresh 20-domain hand-read of never-adjudicated v5 survivors: **17 confirmed,
+1 plausible, 2 wrong (~90%)**, and the residual failure mode is named:
+same-landmark neighbors (plattelakemn.com — a lake association sharing name
+AND town with Platte Lake Steel). Only content classification separates those,
+which is S3's job, not the resolver's.
+
+**Measured verdict on §5c's 76%: it does not travel.** Precision-safe
+recovery is **W 39/250 (15.6%)** — §5c's cohort was locator nulls (stale
+manufacturer data over real dealers); GBP-null businesses mostly genuinely
+lack sites — and **federal 115/250 (46.0%)** (zip tier 66% raw / lower after
+tightening; the no-location tier is large national names and recovers best).
+Route 2 is confirmed near-dead for DFS-sourced W rows (2 of 250 — the
+listing that lacks a URL is the same listing the search returns): route 3
+carries the cohort, exactly inverting §4.1's assumed order a second time.
+
+**Projection, measured arithmetic:** remaining billable = 4,103 W + 2,495
+federal. At measured per-record cost (W $0.0143, fed $0.0073): **≈ $77
+(band $75–85, stop at $97)** for ≈ 640 + 1,148 ≈ **1,790 further recovered
+domains** (~2,070 total with pilot + free pass). Seating at DFS's measured
+9.6%: **≈ 150–260 seated, NOT the dossier's 330–530** — that band assumed
+40–70% recovery, and the measured W rate is 15.6%. GATE:HUMAN is open on the
+$77 figure. Artifacts: `data/s3/pilot-{w,fed}-result-v5-2026-08-03.json`,
+hand-reads `data/s3/handread{,-v4}-2026-08-03.json`, S3-input
+`data/s3/backlog-recovered-2026-08-03.csv` (282 rows, readback clean, pools
+deliberately untouched until the post-gate pass).
+
+### Full run (gate signed 2026-08-03, completed 2026-08-04) — 2,241 resolved, $81.10
+
+Artur signed "run both cohorts ≈$77". Measured landing: **W 804/4,103
+(19.6%) · federal 1,155/2,495 (46.3%) · $81.10 total** (pilot $5.40 + W
+$57.74 + federal $17.96), inside the $75–85 band, neither ceiling hit. The
+projection held because the pilot did: federal landed 46.3% vs 46.0%
+projected; W landed 19.6% vs 15.6% (locator-sourced rows lifted it — they
+rescued at 49.2% vs 18.2% for GBP-sourced, which is §5c's stale-null thesis
+measured a second way). Alt-name retries won 22 federal domains. Mid-run the
+DataForSEO balance ran out at $27.13 against ~$53 of remaining need; the W
+process was killed at ~950 records, and after top-up the resume **replayed
+all 950 from cache at $0.00** — the §5f stalled-agent lesson, now standard
+procedure.
+
+**Cumulative: 2,241 of 8,156 backlog rows now carry a domain** (935 W +
+1,306 federal = free pass 128 + pilot 154 + full runs 1,959).
+`backlog-recovered-2026-08-03.csv` is the S3 input, rebuilt with a
+**`recovered_confidence` column: high 1,480 · medium 298 · low 463**, because
+the post-run drift-checks split by cohort: federal precision held (~90–95%,
+12/12 fresh sample clean), **W did not — 4 confirmed / 1 plausible / 6 wrong
+of 11**. The W failure shape is hyperlocal namesakes: Mt. Hood Metals drew
+the Mt. Hood dental clinic in the same town; a Pensacola pool-screen shop
+drew a Pensacola pool-enclosure rival; one GBP listing carried a typo TLD
+(belaireswelding.cm, phone-corroborated, flagged). Name+geography cannot
+separate same-town namesakes — only content classification can, so the low
+tier (single-distinctive-token + geo echo, W cohort) is priced at ~40–60%
+true and **must be identity-verified during S3 fold-in, not trusted**.
+High-tier arms (phone / zip+name / city+name / all federal) measured
+≥90% throughout.
+
+Residue: W 3,510 · federal identity-backlog 1,475 (+929 adjudicated-out
+unresolved, +1 crossjoin rider). Seating projection unchanged: **≈150–260**
+(high-conf 1,480×9.6% ≈ 142 + medium/low haircuts). Next: the S3/S4 fold-in
+(vertical filter → chain suppression → manufacturer detector → rank; §5f
+order), then the GATE-L2 re-decision on a verified no-website segment that
+now stands ~3,500 strong on the W side alone. The Walter Surface increment
+(~2,562 rows, 69.7% email fill) queues behind its own folder's routing.
+
+## Known debt before scaling past the first 200
+
+The first-send cohort is verified and the ≤100-account test fits inside it. **These must be addressed before scaled sending, not before the pilot:**
+
+1. **~294 manufacturers (≈10%) remain in the tail of `seated-v3`.** Detector recall is 0.27. The top 200 measured 1.5%, so the ranking helps — but the tail is not clean.
+2. **282 emails have a domain that does not match the company's** — lower-confidence, deliberately not nulled. Truelist verification (S6) should resolve most.
+3. **No suppression / DNC list exists.** Join is wired and tested; there is no data. **Nothing sends until this is supplied.**
+4. **Sender warmup has never run** (§5r) and both domains should be retired in favour of fresh ones.
+
 ## 6. Definition of done
 
 - [ ] `seated-v1.csv` exists with per-segment + per-tier counts reported against 2,500–3,500

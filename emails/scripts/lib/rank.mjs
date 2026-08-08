@@ -117,6 +117,17 @@ export const NAP_EACH = 2
 export const PENALTY_ICP_UNCERTAIN = -8
 export const PENALTY_UNRESOLVED_IDENTITY = -10
 export const BONUS_PUBLISHED_EMAIL = 3
+/**
+ * AD buying-group membership — the strategy's §1 thesis ("the $5M+ independence
+ * filter, pre-applied") finally used as the signal it claimed to be. Gate
+ * answered 2026-08-03 (record then, apply at the next regeneration — S4l);
+ * weight sits in the dossier's recommended +4…+6 band, at the +6 the gate
+ * question itself quoted: comparable to depth-2 evidence, below a verbatim
+ * declaration. Measured before applying: all 43 ranked-out rows this moves
+ * across the cut are classed industrial-distributor, BPT/PVF-heavy
+ * (`ad [DONE-DEEP]/00-README.md` §4).
+ */
+export const AD_MEMBER = 6
 
 function step(table, value) {
   if (value === null || value === undefined) return 0
@@ -177,6 +188,7 @@ export function rankScore(record, ctx) {
     nap: nap * NAP_EACH,
     size: SIZE_BAND_WEIGHTS[ctx?.size?.band] ?? 0,
     email: record.email ? BONUS_PUBLISHED_EMAIL : 0,
+    ad_member: split(record.source).includes('ad') ? AD_MEMBER : 0,
     icp_uncertain:
       record.icp_uncertain === true || record.icp_uncertain === 'true' ? PENALTY_ICP_UNCERTAIN : 0,
     identity:
