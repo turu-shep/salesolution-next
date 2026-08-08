@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "lighthouse": {
+      "command": "npx",
+      "args": ["-y", "@danielsogl/lighthouse-mcp@latest"]
+    },
+    "pagespeed-insights": {
+      "command": "npx",
+      "args": ["-y", "-p", "pino-pretty", "-p", "pagespeed-insights-mcp", "pagespeed-insights-mcp"],
+      "env": {
+        "GOOGLE_API_KEY": "${GOOGLE_PSI_API_KEY:-}"
+      }
+    },
+    "a11y": {
+      "command": "npx",
+      "args": ["-y", "a11y-mcp"]
+    },
+    "ux-best-practices": {
+      "command": "npx",
+      "args": ["-y", "@elsahafy/ux-mcp-server"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    }
+  }
+}

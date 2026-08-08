@@ -71,8 +71,19 @@ backup/
 
 # .engine content pipeline: regenerable skill symlinks (recreate via
 # `python .engine/skills/engine-init/scripts/engine_init.py install-skills --root .`)
-.claude/skills/
+# `/*` + negation so real (non-symlink) skills can be committed alongside them.
+.claude/skills/*
+!.claude/skills/ui-ux-pro-max/
 .agents/skills/
+
+# Claude workflow template runtime state (per-machine; decisions.jsonl,
+# learnings/, policies/, commands/, rules/, agents/ ARE committed)
+.claude/settings.local.json
+.claude/state.json
+.claude/worktrees/
+.claude/pending-learnings.txt
+.claude/watch-pr/
+.claude/batches/
 
 # .engine content pipeline: local analytics exports + caches (data, not source)
 analysis/gsc/*.csv

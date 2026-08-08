@@ -53,6 +53,17 @@ A versioned, brand-agnostic content pipeline (`research → draft → humanize �
 - Sanity Studio is at `/studio` — review drafts and publish there (publishing is manual).
 - Definition of done for a content change: `npx tsc --noEmit` clean (ignore pre-existing `lib/lead-form/*` Zod errors), lint clean on changed files, `pnpm build` compiles, content seeded as **drafts** unless told to publish. Full checklist in `prompts/_CONTEXT.md`.
 
+## Dev workflow (Linear template, ported 2026-08-08)
+
+A command-driven workflow system lives in `.claude/` (ported from the Field Advisor template, adapted to SAL/pnpm/Sanity). Optional for content/strategy sessions; use it for Linear-tracked build work.
+
+- **Core loop:** `/pull-task` → `/spec` (high-stakes only) → `/plan` → `/implement` (or `/pair` for risky areas) → `/ship`. `/batch` runs multiple SAL issues in parallel worktrees (natural language works: "implement SAL-x, SAL-y in parallel worktrees" — see `.claude/rules/batch-mode.md`). Also: `/continue`, `/undo`, `/handoff`, `/fix-issue`, `/review`, `/sync`, `/push-task`, `/split-tasks`, `/watch-pr`, `/health`, `/retro`, `/postmortem`, `/scan-modules`, `/ux-audit`, `/design-system`, `/pm-analysis`.
+- **State:** `.claude/state.json` (local, gitignored) tracks the in-progress task; `.claude/decisions.jsonl` (committed, append-only) records WHY choices were made — grep it before non-trivial work; `.claude/learnings/` holds gotchas; `.claude/policies/` holds enforced rules (secrets check, content-drafts-only). Formats + triggers: `.claude/rules/*.md`.
+- **Git:** branches `sal-123-short-desc`, commits `type(scope): description [SAL-123]` when Linear-tracked, PRs target `main`. `/ship` builds the PR with a reviewer checklist from plan outcomes.
+- **Handoff packages** (`docs/handoff/<slug>/`, forward-looking, PROMPT.md + 00/01/02 + CLOSEOUT) are governed by `.claude/rules/handoff-packages.md`; pre-2026-08-08 handoff folders are legacy format — read for content, don't retrofit.
+- **Agents:** `reviewer`, `test-runner`, `investigator` in `.claude/agents/` (no `model:` overrides — see Model & cost routing). Skill: `ui-ux-pro-max` (generic design DB; brand palette/tokens override its picks on salesolution.net pages).
+- `docs/modules/` (positive knowledge base) is not bootstrapped yet — run `/scan-modules` when wanted; ROADMAP.md is created by `/sync` on first run.
+
 ## Data & measurement
 
 - **GSC is connected to Ahrefs** (project `Salesolution`, id 5379899, verified 2026-06-15). For hub measurement the preferred workflow is still **manual CSV exports** into `seo-project/data/` (`Queries.csv`, `Pages.csv`), compared against the pre-launch baseline in `docs/strategy/career-path/08-gsc-baseline-2026-06-15.md`. This sidesteps the Ahrefs connection; use Ahrefs only when you want the data inside Ahrefs.
