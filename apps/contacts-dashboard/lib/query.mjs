@@ -20,6 +20,17 @@ export function escapeLike(s) {
 }
 
 /**
+ * One or-branch pattern, as a PostgREST double-quoted literal. PostgREST splits
+ * an `or=` string on top-level commas, so a bare q containing one either breaks
+ * the parse (400) or smuggles extra OR conditions in. The quotes keep the
+ * pattern one value; this layer's own escapes — backslash first, then the
+ * double quote — sit on top of escapeLike's LIKE escaping underneath.
+ */
+function quotedPattern(pattern) {
+  return `"${pattern.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`
+}
+
+/**
  * Country, honestly. There is no `country` column in the seated list or in any
  * pool, including pool-non-us. The only country signal we hold is pool
  * membership, so the filter ships as two values derived server-side. A non-US
@@ -70,7 +81,7 @@ export function buildFilterSpec(params) {
   if (p.catMin !== null) spec.gte.push({ column: 'category_core', value: p.catMin })
   if (p.catMax !== null) spec.lte.push({ column: 'category_core', value: p.catMax })
   if (p.q) {
-    const like = `%${escapeLike(p.q)}%`
+    const like = quotedPattern(`%${escapeLike(p.q)}%`)
     spec.or = `company_display.ilike.${like},domain.ilike.${like}`
   }
   return spec

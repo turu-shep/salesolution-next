@@ -69,7 +69,7 @@ test('buildFilterSpec turns params into one spec, and applyFilters chains it', (
   assert.deepEqual(spec.eq, [{ column: 'pool', value: 'non-us' }])
   assert.deepEqual(spec.gte, [{ column: 'category_core', value: 2 }])
   assert.deepEqual(spec.lte, [{ column: 'category_core', value: 8 }])
-  assert.equal(spec.or, 'company_display.ilike.%ac\\%me%,domain.ilike.%ac\\%me%')
+  assert.equal(spec.or, 'company_display.ilike."%ac\\\\%me%",domain.ilike."%ac\\\\%me%"')
 
   const q = recorder()
   applyFilters(q, spec)
@@ -79,8 +79,21 @@ test('buildFilterSpec turns params into one spec, and applyFilters chains it', (
     ['eq', 'pool', 'non-us'],
     ['gte', 'category_core', 2],
     ['lte', 'category_core', 8],
-    ['or', 'company_display.ilike.%ac\\%me%,domain.ilike.%ac\\%me%'],
+    ['or', 'company_display.ilike."%ac\\\\%me%",domain.ilike."%ac\\\\%me%"'],
   ])
+})
+
+test('a comma in q stays one quoted pattern instead of splitting the or', () => {
+  // PostgREST splits or-conditions on top-level commas. Unquoted, this q is a
+  // 400 (the parser sees " Inc.%" as a malformed extra condition); quoted, it
+  // is one pattern per field.
+  const spec = buildFilterSpec(params('q=Bearings, Inc.'))
+  assert.equal(spec.or, 'company_display.ilike."%Bearings, Inc.%",domain.ilike."%Bearings, Inc.%"')
+})
+
+test('a double quote in q cannot break out of the quoted pattern', () => {
+  const spec = buildFilterSpec(params('q=3" pipe'))
+  assert.equal(spec.or, 'company_display.ilike."%3\\" pipe%",domain.ilike."%3\\" pipe%"')
 })
 
 test('country=us excludes the non-us pool rather than guessing from state', () => {

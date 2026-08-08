@@ -5,8 +5,8 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js'
  *
  * The service-role key bypasses RLS by design — it is the database, not a
  * credential with a blast radius. It never reaches the browser: there is no
- * NEXT_PUBLIC_SUPABASE_* variable in this app, and no client component imports
- * this module.
+ * browser-exposed (public-prefixed) Supabase variable in this app, and no
+ * client component imports this module.
  */
 
 /** What a paused free-tier project says. Never a bare fetch error. */
