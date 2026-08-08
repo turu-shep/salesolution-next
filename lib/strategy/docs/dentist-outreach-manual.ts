@@ -237,6 +237,8 @@ Then stop. Let them route you.
 
 > **GATE:HUMAN — Drafts. Not approved for sending until Artur signs off.**
 
+> **Superseded for sending, 2026-08-01 — section 12 is what gets sent.** Artur sends the dental email himself now; this section stays on the page only in case a partner motion is ever revived.
+
 You speaking as yourself, naming Artur as the operator who runs the audit. Built off the approved copy in section 7 and the cadence in section 6.
 
 **Slot rule:** every prospect-specific fact is a [SLOT: ...] you fill from something you actually observed. Nothing here is pre-filled with plausible-looking data. If you can't fill a slot from what you saw, cut the line. Don't guess it.
@@ -359,4 +361,99 @@ Read this before you promise anything.
 - **Compliance ownership for a partner motion has not been scoped.** Every rule in section 9 was written for one founder dialing his own list from Florida. Who scrubs the DNC registry, who holds the internal do-not-call list, whose caller ID shows, who owns the "leak I personally observed" honesty gate — none of that is decided. **Flag it with Artur before dialing at volume.**
 - **The offer sign-off sheet is only partly signed.** Section B and several claims rows are still open, and the anchor-ladder decision is parked. Build nothing from unsigned rows.
 - **The taught layer is drafted and unsigned.** The monthly numbers call, front-desk coaching, and the quarterly re-aim note are proposed in docs/strategy/offer-research/05-dental-fd7-tier2-draft.md. Do not promise any of them.
+
+## 12. Artur-voiced sequences — hybrid evidence — DRAFTS
+
+> **GATE:HUMAN — Drafts. Not approved for sending until Artur signs off.**
+
+Two founder decisions, 2026-08-01, and both are binding here.
+
+**Artur sends it.** The partner persona in section 8 is retired for sending. The name on the mailbox, the name in the sign-off, and the person who runs the audit are the same person, so the copy stops explaining who is who. First person singular throughout, one operator writing to one owner.
+
+**Nobody calls.** No dialer, no voicemail drops, no assistant working a list. Section 6's three calls and the LinkedIn touch are not part of this campaign. It is four emails on working days 1, 4, 9 and 15, and every hook has to stand up without a call behind it.
+
+**Evidence is hybrid** — two grades of the same discipline, one observation you can point at.
+
+- **Base, for the whole list.** What the scan saw from outside: a Google profile with no way to book, a site that gives a phone number and nothing else, review replies that stopped months ago, an AI answer that names three practices near them and not theirs. One finding, dated where a date exists.
+- **Hot tier, email 1 only.** A real form test. Send a genuine new-patient question through the practice's own website form, log the time it went in, then log what came back and when. Emails 2, 3 and 4 are identical across both tracks.
+
+**Running the form test honestly.** Ask something you would actually want answered: do they take new patients, what is the wait for an implant consult. Real name, real address, no invented patient and no invented symptom — nothing that puts a clinician on a hook. Send it inside their posted opening hours, so the reply window you are measuring is a fair one. Log the submission time, the reply time, and what the reply said. The email reports what happened and stops there. Section 6's honesty rule governs all of it: if it did not happen, it does not go in the email. Silence is a legitimate result and usually the strongest one.
+
+### Slot contract — never pre-filled
+
+Every prospect-specific fact is a merge field, filled per lead from something that was actually observed. No fallbacks, no defaults, nothing generated. A lead missing a field for its track is not ready to send.
+
+| Field | Track | What fills it | Where it comes from |
+|---|---|---|---|
+| first_name | both | The owner-dentist's first name. | List build |
+| company_name | base | The practice name the way they write it. | List build |
+| slot_1 | base | The primary leak, written as one finished sentence that can follow a full stop, dated where a date exists. | Scan output |
+| slot_2 | both | The second finding, same rules, never a restatement of slot_1. On a hot-tier lead the form test carried email 1, so slot_2 is the strongest thing the scan found. | Scan output |
+| form_day_time | hot tier | When the form went in. Written to follow the word website with no leading preposition: "last Tuesday at 9:40am". | Form-test log |
+| form_result | hot tier | What came back and how long it took, in one sentence. | Form-test log |
+
+**The callback number is a constant, not a slot.** Artur is always the sender, so it is the same digits on every lead on both tracks. It appears once, in email 4, written as a placeholder for Artur to fill before launch. Section 11 still has whether the published number rings him directly as an open verify item — settle that first.
+
+**Email 1 — base — day 1. The whole list. No link.**
+
+> Subject: one thing I saw looking up [Company]
+>
+> [Name] — I went looking for your practice the way a new patient would. [SLOT: slot_1]
+>
+> Not pitching anything. I fix the calls that come in during chair time and the treatment plans that go quiet after you present them.
+>
+> Is that already on your list, or is it news?
+>
+> — Artur
+
+**Email 1 — hot tier — day 1. Form test. No link.**
+
+> Subject: I sent a question through your website form
+>
+> [Name] — I sent a new-patient question through the form on your website [SLOT: form_day_time]. [SLOT: form_result]
+>
+> Not a knock on your team. They were with patients, which is where they should be. But someone shopping an implant doesn't wait. They fill in the next form on the list.
+>
+> Not pitching anything. That's the thing I fix. Is that the usual turnaround, or did I catch a bad week?
+>
+> — Artur
+
+**Email 2 — day 4. Shared by both tracks. The audit link goes here, and only here.**
+
+> Subject: (same thread — no new subject line)
+>
+> Here's what I'd suggest, and it costs you nothing.
+>
+> Give me twenty minutes and I'll run a Revenue Leak Audit on your practice. Your own numbers. How many calls are getting missed, and when. How fast inquiries get a reply. What your Google profile's doing. Where follow-up falls through. No patient data. I'm measuring the front desk, not looking at charts. Whatever I find is yours to keep, whether we ever work together or not.
+>
+> Reply with a stretch of the week that's quiet for your phones and I'll send times. Or book it yourself: https://salesolution.net/revenue-engine/dentists/?utm_source=partner&utm_medium=email&utm_campaign=dental-audit#audit
+>
+> — Artur
+
+**Email 3 — day 9. Shared by both tracks. Second finding, then the honest fork. No link.**
+
+> Subject: (same thread — no new subject line)
+>
+> One more thing I noticed: [SLOT: slot_2]
+>
+> One of those is a bad day. Two is a pattern. It's what I'd want somebody to tell me if it were my practice.
+>
+> Should I keep this on your radar, or is now just not the time? Either's a fine answer.
+>
+> — Artur
+
+**Email 4 — day 15. Shared by both tracks. Breakup. No link, no guilt.**
+
+> Subject: (same thread — no new subject line)
+>
+> Closing the loop on my end. If the calls that come in during chair time ever start costing you cases, I'm at [NUMBER: the line that rings Artur, filled in before launch]. Otherwise I'll leave you to it.
+>
+> — Artur
+
+**Four rules that travel with this section.**
+
+1. **One link, in email 2, exactly as written above.** No link in 1, 3 or 4. No shortener, no tracking redirect, no second URL anywhere.
+2. **Emails 2, 3 and 4 carry no subject line** so they land in the same thread as email 1. That is what lets both tracks share them, and it is why the subject is written as blank rather than as a "Re:" line.
+3. **Nothing from section 5's NEVER list appears here** — no price, no guarantee wording, no proof numbers, no case study, no calculator output. The audit is the only ask, and it is free.
+4. **Section 9 reaches email too.** Any stop request is honored on the spot, suppressed on every channel, and logged (rules 5, 9, 10). Section 11's open item stands: nobody has scoped who holds the suppression list.
 `
