@@ -212,6 +212,28 @@ test('the stream pulls rows in EXPORT_BATCH windows across the whole filtered se
   assert.deepEqual(windows, [[0, 1000], [1000, 1000], [2000, 500]])
 })
 
+test('a clamped short page advances by what came back — every row lands, none is skipped', async () => {
+  // PostgREST's Max Rows setting can clamp a page below the requested window.
+  // Advancing by the EXPORT_BATCH constant would skip the unfetched remainder;
+  // advancing by rows.length walks the set completely.
+  const windows = []
+  const total = 700
+  const result = await runExport(parseSheetParams(new URLSearchParams('')), {
+    account: ACCOUNT,
+    countMatching: async () => total,
+    logExport: async () => {},
+    fetchPage: async (_params, offset, size) => {
+      windows.push([offset, size])
+      const clamped = Math.min(300, size) // the server answers at most 300 rows per request
+      return Array.from({ length: Math.min(clamped, total - offset) }, (_, i) => ({ ...ROW_2, key: `k${offset + i}` }))
+    },
+  })
+  const lines = []
+  for await (const line of result.lines) lines.push(line)
+  assert.equal(lines.length, 1 + total) // header + all 700 rows, despite 300-row pages
+  assert.deepEqual(windows, [[0, 700], [300, 400], [600, 100]])
+})
+
 test('a set that shrank between count and fetch ends the stream instead of erroring', async () => {
   const result = await runExport(parseSheetParams(new URLSearchParams('')), {
     account: ACCOUNT,

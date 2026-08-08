@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { monthYear, newTokens, plannedTokens, provenanceLine, provenanceRows, sourceDisplayParts, sourceLabel, sourcePhrase } from './sources.mjs'
+import { monthYear, provenanceLine, provenanceRows, sourceDisplayParts, sourceLabel, sourcePhrase } from './sources.mjs'
 
 test('monthYear reads the month off an ISO date and refuses anything else', () => {
   assert.equal(monthYear('2026-08-01'), 'Aug 2026')
@@ -76,13 +76,18 @@ test('a row with no provenance is marked as the defect it is', () => {
   assert.deepEqual(out.rows, [])
 })
 
-test('newTokens flags data arriving from a source with no folder', () => {
-  assert.deepEqual(newTokens(['dfs', 'timken', 'adaptall-export'], ['dfs', 'timken', 'apollo-enrichment']), ['adaptall-export'])
-  // Match on the TOKEN only: a status rename must never make the badge flicker.
-  assert.deepEqual(newTokens(['dfs'], ['dfs']), [])
-})
-
-test('plannedTokens is the inverse, and it is not an error', () => {
-  // A registry row with no data token is a source that has not run yet.
-  assert.deepEqual(plannedTokens(['dfs'], ['dfs', 'apollo-enrichment', 'ranked-out-backlog']), ['apollo-enrichment', 'ranked-out-backlog'])
+test('only http(s) source_urls mint an anchor — anything else is text, never a link', () => {
+  // source_url is scraped data. A poisoned chain must not become a clickable
+  // javascript:/data: URL; the sheet renders `href` as the anchor and falls
+  // back to the bare `url` text when the scheme is refused.
+  const row = (u) => provenanceRows('timken', u, '2026-08-01').rows[0]
+  assert.equal(row('https://a.example/x').href, 'https://a.example/x')
+  assert.equal(row('HTTP://a.example/x').href, 'HTTP://a.example/x')
+  assert.equal(row('javascript:alert(1)').href, null)
+  assert.equal(row('data:text/html,hi').href, null)
+  assert.equal(row('ftp://a.example/x').href, null)
+  assert.equal(row('').href, null)
+  // The refused URL still shows as text — provenance is kept, only the link is withheld.
+  assert.equal(row('ftp://a.example/x').url, 'ftp://a.example/x')
+  assert.equal(row('ftp://a.example/x').line, 'Verified from the Timken authorized distributor list, Aug 2026')
 })

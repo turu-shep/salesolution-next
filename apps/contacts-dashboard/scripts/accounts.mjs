@@ -13,8 +13,9 @@
  *
  * `invite` prints the generated password EXACTLY ONCE. Deliver it out-of-band
  * (call, Signal, in person) — it is not stored, not logged, and not
- * recoverable; re-provision by revoke + invite under a new password, or keep
- * the row and rotate via a future `reset` if one is ever needed.
+ * recoverable. There is no rotation path here yet: `invite` refuses an email
+ * that already has a row and `revoke` only ends access, so a lost password
+ * means a future `reset` command or a direct SQL update of password_hash.
  */
 import { randomBytes } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'

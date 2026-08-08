@@ -3,9 +3,11 @@
  *
  * The constant-time password compare stops a timing leak and does nothing about
  * volume; unthrottled guessing is the whole gate otherwise (finding F-002).
- * In-memory and per-instance, which is the right size here: this app has one
- * user and one password, and adding Redis for it would be a dependency to keep a
- * single operator honest.
+ * The login route keys each window on `${ip}:${email}` — per-person accounts
+ * mean one caller hammering one mailbox burns only that pair's budget, not the
+ * whole instance. In-memory and per-instance is still the right size: a
+ * handful of named viewers, and adding Redis for that would be a dependency to
+ * keep a short account list honest.
  */
 
 /** Password gates: 5 per 15 minutes. Enough tries to survive a few typos. */

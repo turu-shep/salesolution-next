@@ -82,19 +82,6 @@ export async function countMatching(params: SheetParams): Promise<number> {
 }
 
 /**
- * Which generation the table currently holds. It holds exactly one.
- * SERVER-SIDE USE ONLY: the generation name is internal vocabulary and never
- * renders on a client-reachable page (AMENDMENT 2 D6) — this stays for the
- * sync check and the export audit trail, not for display.
- */
-export async function fetchGeneration(): Promise<string | null> {
-  const db = serverClient()
-  const { data, error } = await db.from('contacts').select('list_generation').limit(1)
-  if (error) throw new Error(describeError(error))
-  return ((data?.[0] as { list_generation?: string } | undefined)?.list_generation) ?? null
-}
-
-/**
  * The provenance stats behind the Sources page: per token, the display parts,
  * locations contributed and the month last verified, sorted by contribution.
  * The source_stats RPC returns per-token analytics the client must not see;
@@ -112,13 +99,36 @@ export async function fetchSourceStats(): Promise<ClientSource[]> {
 /** The values the state and source controls offer. Derived from the data, never hand-listed. */
 export async function fetchFacets(): Promise<{ states: string[]; sources: string[] }> {
   const db = serverClient()
-  const [sourcesRes, statesRes] = await Promise.all([
-    db.rpc('source_stats'),
-    db.from('contacts').select('state').not('state', 'is', null).order('state', { ascending: true }).limit(50000),
-  ])
+
+  /**
+   * PostgREST clamps every response to the API Max Rows setting (1000 on a
+   * default Supabase project), so one big select would silently truncate the
+   * state list. Page in 1000-row windows ordered by id, advance by what came
+   * back, stop on a short page; 50 windows (the old 50K limit) is the ceiling.
+   */
+  async function fetchStates(): Promise<string[]> {
+    const WINDOW = 1000
+    const MAX_WINDOWS = 50
+    const seen = new Set<string>()
+    let offset = 0
+    for (let page = 0; page < MAX_WINDOWS; page += 1) {
+      const { data, error } = await db
+        .from('contacts')
+        .select('state')
+        .not('state', 'is', null)
+        .order('id', { ascending: true })
+        .range(offset, offset + WINDOW - 1)
+      if (error) throw new Error(describeError(error))
+      const rows = (data ?? []) as { state: string }[]
+      for (const row of rows) if (row.state) seen.add(row.state)
+      if (rows.length < WINDOW) break
+      offset += rows.length
+    }
+    return [...seen].sort()
+  }
+
+  const [sourcesRes, states] = await Promise.all([db.rpc('source_stats'), fetchStates()])
   if (sourcesRes.error) throw new Error(describeError(sourcesRes.error))
-  if (statesRes.error) throw new Error(describeError(statesRes.error))
-  const states = [...new Set(((statesRes.data ?? []) as { state: string }[]).map((r) => r.state).filter(Boolean))].sort()
   const sources = ((sourcesRes.data ?? []) as { token: string }[]).map((r) => r.token).sort()
   return { states, sources }
 }

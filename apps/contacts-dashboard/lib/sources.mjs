@@ -121,6 +121,13 @@ export function provenanceLine(token, captured) {
 const chain = (v) => String(v ?? '').split('|').map((s) => s.trim()).filter(Boolean)
 
 /**
+ * Anchor-safe URL: http(s) only. `source_url` is scraped data, and an anchor
+ * minted from it must never carry a javascript:/data:/anything-else scheme —
+ * those render as text (the `url` field), never as a link (the `href` field).
+ */
+const httpHref = (u) => (/^https?:\/\//i.test(String(u ?? '')) ? u : null)
+
+/**
  * One provenance line per source token.
  *
  * `source`, `source_url` and `captured` are all pipe chains, and their lengths
@@ -140,33 +147,16 @@ export function provenanceRows(source, sourceUrl, captured) {
   const fallbackDate = dates.filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d)).sort()[0] ?? null
 
   const rows = tokens.map((token, i) => {
+    const url = zipUrls ? urls[i] : urls.length === 1 && tokens.length === 1 ? urls[0] : null
     const when = zipDates ? dates[i] : fallbackDate
     return {
       token,
       label: sourceLabel(token),
       line: provenanceLine(token, when),
-      url: zipUrls ? urls[i] : urls.length === 1 && tokens.length === 1 ? urls[0] : null,
+      url,
+      href: httpHref(url),
       captured: when,
     }
   })
   return { rows, missing: false }
-}
-
-/**
- * Tokens arriving in the data from a source with no handoff folder.
- *
- * The founder's mechanism for "tell me when we're pulling from somewhere I don't
- * know about." Matched on the token only, so renaming a folder's status never
- * makes the badge flicker. It clears when someone creates the folder and
- * re-syncs — there is no dismiss control.
- */
-export function newTokens(dataTokens, registryTokens) {
-  const known = new Set(registryTokens ?? [])
-  return [...new Set(dataTokens ?? [])].filter((t) => !known.has(t)).sort()
-}
-
-/** The inverse: a registry row with no data token. That is PLANNED, not an error. */
-export function plannedTokens(dataTokens, registryTokens) {
-  const seen = new Set(dataTokens ?? [])
-  return [...new Set(registryTokens ?? [])].filter((t) => !seen.has(t)).sort()
 }

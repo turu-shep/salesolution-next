@@ -95,10 +95,15 @@ export async function runExport(params, { account, countMatching, logExport, fet
   async function* lines() {
     const columns = exportColumns()
     yield csvLine(columns)
-    for (let offset = 0; offset < total; offset += EXPORT_BATCH) {
+    // Advance by what actually came back, not by EXPORT_BATCH: PostgREST's
+    // Max Rows clamp can shorten a page below the asked-for window, and a
+    // constant stride would jump the gap and silently drop rows from the file.
+    let offset = 0
+    while (offset < total) {
       const rows = await fetchPage(params, offset, Math.min(EXPORT_BATCH, total - offset))
       if (!rows.length) break
       for (const row of rows) yield csvLine(columns.map((c) => row[c]))
+      offset += rows.length
     }
   }
   return { status: 200, rows: total, lines: lines() }

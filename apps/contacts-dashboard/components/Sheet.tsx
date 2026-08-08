@@ -75,7 +75,8 @@ export function Sheet({ rows, params }: { rows: ClientRow[]; params: SheetParams
                         {prov.rows.map((p) => (
                           <li key={p.token}>
                             {p.line}
-                            {p.url ? <> · <a href={p.url} target="_blank" rel="noopener noreferrer">{p.url}</a></> : null}
+                            {/* href is scheme-pinned to http(s) in provenanceRows; a refused URL renders as bare text. */}
+                            {p.url ? <> · {p.href ? <a href={p.href} target="_blank" rel="noopener noreferrer">{p.url}</a> : p.url}</> : null}
                             {p.captured ? <> · captured {p.captured}</> : null}
                           </li>
                         ))}
