@@ -41,6 +41,7 @@ Three kinds of file live here:
 | File | What it is |
 |---|---|
 | `dashboard/PROMPT.md` | **Handoff package** (first under `.claude/rules/handoff-packages.md`, 2026-08-08): deploy the client-facing locations dashboard — one URL, per-person logins, Field Advisor ⇄ Hosebox switcher. Paste `dashboard/PROMPT.md`; decision history in `dashboard/specs/` (AMENDMENT 2 wins). |
+| `quality-reprocess/` | **Handoff package — EXECUTED 2026-08-10** (CLOSEOUT inside): census + founder-signed cull of 41 non-company serp rows → `not-a-distributor` (generation v10/v11); G2 re-pick landed — client base is now 6 pools (non-us dropped) + a hide-small-shops toggle. Census re-runnable: `node emails/scripts/pool-quality-census.mjs`. |
 | `99-hygiene.md` | Storage, duplicates, one unexplained pool swing, one missing manifest. Every deletion is GATE:HUMAN. |
 | `{token} [{STATUS}]/` | One folder per source. `00-README.md` is the dossier — what it is, what we pulled, how deep, what is left. `01-prompt.md` is the executable session prompt. The status lives in the folder title. |
 
