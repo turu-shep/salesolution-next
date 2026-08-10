@@ -105,11 +105,18 @@ test('a view outside the allowed lenses is a 400; missing means the default lens
 
 test('the audited filter is the membership-deciding fields, nothing else', () => {
   const params = parseSheetParams(
-    new URLSearchParams('source=timken&state=IL&state=WI&country=us&catMin=2&catMax=5&q=bearing&sort=city&dir=desc&page=3&view=hosebox'),
+    new URLSearchParams('source=timken&state=IL&state=WI&brands=Timken&brands=SKF&sizes=5-10M&btype=distributor&country=us&catMin=2&catMax=5&q=bearing&sort=city&dir=desc&page=3&view=hosebox'),
   )
   // sort/dir order the set, page windows it, view is audited as its own column.
+  // Task 13 pin update: brands/sizes/btype DECIDE membership, so an audit row
+  // without them would make a filtered pull indistinguishable from a full one.
   assert.deepEqual(exportFilter(params), {
-    sources: ['timken'], states: ['IL', 'WI'], country: 'us', catMin: 2, catMax: 5, q: 'bearing',
+    sources: ['timken'], states: ['IL', 'WI'], brands: ['Timken', 'SKF'], sizes: ['5-10M'],
+    btype: 'distributor', country: 'us', catMin: 2, catMax: 5, q: 'bearing',
+  })
+  // At rest the three record their empty shapes, same convention as the rest.
+  assert.deepEqual(exportFilter(parseSheetParams(new URLSearchParams(''))), {
+    sources: [], states: [], brands: [], sizes: [], btype: null, country: null, catMin: null, catMax: null, q: '',
   })
 })
 

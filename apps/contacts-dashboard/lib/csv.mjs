@@ -66,13 +66,16 @@ export function exportRefusal(searchParams) {
 }
 
 /**
- * The filter as audited (D2): exactly the fields that decide set membership.
- * Sort and dir order the set, page windows it, and view is audited as its own
- * export_audit column — none of them belongs in the filter JSON.
+ * The filter as audited (D2): exactly the fields that decide set membership —
+ * the Task 13 trio (brands/sizes/btype) included, or an export filtered to
+ * `brands=Timken&btype=distributor` would write an audit row indistinguishable
+ * from an unfiltered pull. Sort and dir order the set, page windows it, and
+ * view is audited as its own export_audit column — none of them belongs in
+ * the filter JSON.
  */
 export function exportFilter(params) {
-  const { sources, states, country, catMin, catMax, q } = params
-  return { sources, states, country, catMin, catMax, q }
+  const { sources, states, brands, sizes, btype, country, catMin, catMax, q } = params
+  return { sources, states, brands, sizes, btype, country, catMin, catMax, q }
 }
 
 /**
