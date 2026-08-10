@@ -1,11 +1,14 @@
-import { DEFAULT_PAGE_SIZE, selectList } from './columns.mjs'
+import { CLIENT_POOLS, DEFAULT_PAGE_SIZE, selectList } from './columns.mjs'
 import { applyFilters, buildFilterSpec, counterArgs, pageRange } from './query.mjs'
-import { toClientCounters, toClientRow, toClientSources } from './rows.mjs'
+import { toClientCounters, toClientFacets, toClientRow, toClientSources } from './rows.mjs'
 import { describeError, serverClient } from './supabase'
 
 export type SheetParams = {
   sources: string[]
   states: string[]
+  brands: string[]
+  sizes: string[]
+  btype: 'distributor' | 'contractor-service' | 'other' | null
   country: 'us' | 'non-us' | null
   catMin: number | null
   catMax: number | null
@@ -14,6 +17,14 @@ export type SheetParams = {
   view: 'field-advisor' | 'hosebox'
   sort: string
   dir: 'asc' | 'desc'
+}
+
+/** The values the filter controls offer. Derived from the data (pools-scoped), never hand-listed. */
+export type Facets = {
+  states: string[]
+  sources: string[]
+  brands: string[]
+  sizes: string[]
 }
 
 /** Exactly the three location counters. No people or sendable figure exists in this type on purpose. */
@@ -88,49 +99,36 @@ export async function countMatching(params: SheetParams): Promise<number> {
  * toClientSources() discards them before anything serializes. The registry
  * table (statuses, folders, estimates — pipeline ops detail) is never read in
  * any client path (AMENDMENT 2, Task 8 D2).
+ *
+ * p_pools is pinned to CLIENT_POOLS (Task 13 A): per-source counts cover the
+ * curated client base only, so the Sources page and the sheet tell one story.
  */
 export async function fetchSourceStats(): Promise<ClientSource[]> {
   const db = serverClient()
-  const { data, error } = await db.rpc('source_stats')
+  const { data, error } = await db.rpc('source_stats', { p_pools: CLIENT_POOLS })
   if (error) throw new Error(describeError(error))
   return toClientSources((data ?? []) as Record<string, unknown>[])
 }
 
-/** The values the state and source controls offer. Derived from the data, never hand-listed. */
-export async function fetchFacets(): Promise<{ states: string[]; sources: string[] }> {
+/**
+ * The values the filter controls offer. Derived from the data, never
+ * hand-listed. One client_facets RPC computes the distincts server-side over
+ * the curated client base (it replaced a 50-window JS pagination over the
+ * whole table — Task 13 E); sources still come from source_stats, pools-scoped
+ * the same way. p_pools is pinned to CLIENT_POOLS on both calls — facet values
+ * from the reject bins must never become visible filter options.
+ */
+export async function fetchFacets(): Promise<Facets> {
   const db = serverClient()
-
-  /**
-   * PostgREST clamps every response to the API Max Rows setting (1000 on a
-   * default Supabase project), so one big select would silently truncate the
-   * state list. Page in 1000-row windows ordered by id, advance by what came
-   * back, stop on a short page; 50 windows (the old 50K limit) is the ceiling.
-   */
-  async function fetchStates(): Promise<string[]> {
-    const WINDOW = 1000
-    const MAX_WINDOWS = 50
-    const seen = new Set<string>()
-    let offset = 0
-    for (let page = 0; page < MAX_WINDOWS; page += 1) {
-      const { data, error } = await db
-        .from('contacts')
-        .select('state')
-        .not('state', 'is', null)
-        .order('id', { ascending: true })
-        .range(offset, offset + WINDOW - 1)
-      if (error) throw new Error(describeError(error))
-      const rows = (data ?? []) as { state: string }[]
-      for (const row of rows) if (row.state) seen.add(row.state)
-      if (rows.length < WINDOW) break
-      offset += rows.length
-    }
-    return [...seen].sort()
-  }
-
-  const [sourcesRes, states] = await Promise.all([db.rpc('source_stats'), fetchStates()])
+  const [facetsRes, sourcesRes] = await Promise.all([
+    db.rpc('client_facets', { p_pools: CLIENT_POOLS }),
+    db.rpc('source_stats', { p_pools: CLIENT_POOLS }),
+  ])
+  if (facetsRes.error) throw new Error(describeError(facetsRes.error))
   if (sourcesRes.error) throw new Error(describeError(sourcesRes.error))
+  const row = (Array.isArray(facetsRes.data) ? facetsRes.data[0] : facetsRes.data) as Record<string, unknown> | undefined
   const sources = ((sourcesRes.data ?? []) as { token: string }[]).map((r) => r.token).sort()
-  return { states, sources }
+  return { ...toClientFacets(row), sources }
 }
 
 export { DEFAULT_PAGE_SIZE }

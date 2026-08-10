@@ -21,7 +21,8 @@ export function Counters({ counters }: { counters: CountersType | null }) {
       <p className="footnote">
         A row is one address record, and rows were deduped by domain — &ldquo;locations shown&rdquo; is the number of
         records we hold, not necessarily the number of physical branches. The Locations column is each company&rsquo;s own
-        claim and is a different number.
+        claim and is a different number. Size is our estimate from public signals, not the company&rsquo;s figure; the
+        Type column is estimated the same way.
       </p>
     </>
   )

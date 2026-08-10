@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto'
 import test from 'node:test'
 
 import { LOCATION_COLUMNS } from './columns.mjs'
-import { opaqueKey, toClientCounters, toClientRow, toClientSource, toClientSources } from './rows.mjs'
+import { opaqueKey, toClientCounters, toClientFacets, toClientRow, toClientSource, toClientSources } from './rows.mjs'
 
 test('opaqueKey is stable, 16 hex chars, and distinct per id', () => {
   const id = 'seated-v9:seated:1042'
@@ -19,21 +19,27 @@ test('toClientRow strips every internal field and everything off the whitelist',
   const row = {
     id: 'seated-v9:chains:7', list_generation: 'seated-v9', pool: 'chains',
     raw: { anything: true }, tier: 'A', email: 'x@y.example', rank_score: 99, disposition: 'live',
+    brand_tokens: ['Timken', 'Bearings'],
     company: 'Acme Bearing', company_display: 'Acme Bearing Co', address_1: '1 Main St',
     city: 'Peoria', state: 'IL', zip5: '61601', phone_e164: '+13095550100',
-    domain: 'acmebearing.example', category_core: 4.5, brand_authorized: 'timken',
+    domain: 'acmebearing.example', category_core: 4.5, size_band: '5-10M',
+    business_type: 'distributor', brand_authorized: 'timken',
     line_card: 'bearings', source: 'timken|dfs', source_url: 'https://a.example/x|https://b.example/y',
     captured: '2026-08-01|2026-08-03', location_count: 3,
   }
   const out = toClientRow(row)
   // Exactly: the opaque key, the derived country, and the whitelist. Nothing else.
   assert.deepEqual(Object.keys(out).sort(), ['key', 'country', ...LOCATION_COLUMNS].sort())
-  for (const gone of ['id', 'pool', 'list_generation', 'raw', 'tier', 'email', 'rank_score', 'disposition']) {
+  // brand_tokens is a FILTER column: it decides membership, it never serializes.
+  for (const gone of ['id', 'pool', 'list_generation', 'raw', 'tier', 'email', 'rank_score', 'disposition', 'brand_tokens']) {
     assert.equal(gone in out, false, `${gone} must never be serialized`)
   }
   assert.equal(out.key, opaqueKey(row.id))
   assert.equal(out.country, 'United States')
   assert.equal(out.company_display, 'Acme Bearing Co')
+  // Task 13: the two labeled estimates ride the whitelist like any other column.
+  assert.equal(out.size_band, '5-10M')
+  assert.equal(out.business_type, 'distributor')
 })
 
 test('toClientRow derives Non-US from the pool before dropping it', () => {
@@ -43,6 +49,36 @@ test('toClientRow derives Non-US from the pool before dropping it', () => {
   // An absent whitelist field is an explicit null, never a missing key —
   // downstream consumers (the sheet, the export) see one stable shape.
   assert.equal(out.city, null)
+})
+
+test('toClientRow is null-safe on rows synced before 0005 populated the estimates', () => {
+  // Until the founder pastes 0005 and the controller re-syncs, size_band and
+  // business_type are null on every row. The shape stays stable: explicit
+  // nulls, never a missing key, never a throw.
+  const out = toClientRow({ id: 'g:seated:1', pool: 'seated', company: 'X' })
+  assert.equal(out.size_band, null)
+  assert.equal(out.business_type, null)
+  const empty = toClientRow({})
+  assert.deepEqual(Object.keys(empty).sort(), ['key', 'country', ...LOCATION_COLUMNS].sort())
+  assert.equal(empty.size_band, null)
+  assert.equal(empty.business_type, null)
+})
+
+test('toClientFacets serializes exactly the three facet lists, null-safe at every level', () => {
+  // The client_facets RPC returns one row of three text[] columns. The
+  // serializer sorts, drops empties, and answers junk with empty lists — the
+  // filter controls render (empty) even when the RPC answer is malformed.
+  const out = toClientFacets({ states: ['WI', 'IL'], brands: ['Timken', 'Parker'], sizes: ['5-10M'] })
+  assert.deepEqual(out, { states: ['IL', 'WI'], brands: ['Parker', 'Timken'], sizes: ['5-10M'] })
+  assert.deepEqual(Object.keys(out).sort(), ['brands', 'sizes', 'states'])
+
+  // A pre-0005 database has no RPC; a post-0005 pre-sync one answers empties.
+  assert.deepEqual(toClientFacets(undefined), { states: [], brands: [], sizes: [] })
+  assert.deepEqual(toClientFacets(null), { states: [], brands: [], sizes: [] })
+  assert.deepEqual(toClientFacets({}), { states: [], brands: [], sizes: [] })
+  assert.deepEqual(toClientFacets({ states: null, brands: 'junk', sizes: 42 }), { states: [], brands: [], sizes: [] })
+  // Null/empty entries inside a list are dropped, non-strings stringified never thrown on.
+  assert.deepEqual(toClientFacets({ states: ['IL', null, ''], brands: [], sizes: [] }).states, ['IL'])
 })
 
 test('toClientCounters serializes exactly the three location counters', () => {

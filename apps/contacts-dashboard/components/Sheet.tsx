@@ -1,3 +1,4 @@
+import { businessTypeLabel } from '@/lib/columns.mjs'
 import type { ClientRow, SheetParams } from '@/lib/contacts'
 import { toSearchParams } from '@/lib/query.mjs'
 import { provenanceRows } from '@/lib/sources.mjs'
@@ -10,7 +11,7 @@ import { provenanceRows } from '@/lib/sources.mjs'
  * else exists on the object, so nothing else can render.
  */
 
-/** The 14 visible headings: company + company_display collapse into one cell; country is derived server-side. */
+/** The 16 visible headings: company + company_display collapse into one cell; country is derived server-side. */
 const HEADINGS = [
   ['company_display', 'Company'],
   ['address_1', 'Address'],
@@ -21,6 +22,8 @@ const HEADINGS = [
   ['phone_e164', 'Phone'],
   ['domain', 'Website'],
   ['category_core', 'Core-category score'],
+  ['size_band', 'Est. size'],       // our estimate from public signals — caveat in the sheet footnote
+  ['business_type', 'Type (est.)'], // the sync's labeled heuristic — never presented as fact
   ['brand_authorized', 'Brands authorized'],
   ['line_card', 'Line card'],
   ['source', 'Sources'],
@@ -93,17 +96,22 @@ export function Sheet({ rows, params }: { rows: ClientRow[]; params: SheetParams
                     )}
                   </details>
                 </td>
-                {HEADINGS.map(([key]) => (
-                  <td
-                    key={key}
-                    className={NUM_COLUMNS.has(key) ? 'cell num' : 'cell'}
-                    title={text(row[key]) || undefined}
-                  >
-                    {key === 'domain' && row.domain
-                      ? <a href={`https://${String(row.domain)}`} target="_blank" rel="noopener noreferrer">{String(row.domain)}</a>
-                      : text(row[key])}
-                  </td>
-                ))}
+                {HEADINGS.map(([key]) => {
+                  // business_type stores the sync vocabulary; the client reads the
+                  // label. null (not yet re-synced) and junk render blank, never a guess.
+                  const shown = key === 'business_type' ? businessTypeLabel(row[key]) : text(row[key])
+                  return (
+                    <td
+                      key={key}
+                      className={NUM_COLUMNS.has(key) ? 'cell num' : 'cell'}
+                      title={shown || undefined}
+                    >
+                      {key === 'domain' && row.domain
+                        ? <a href={`https://${String(row.domain)}`} target="_blank" rel="noopener noreferrer">{String(row.domain)}</a>
+                        : shown}
+                    </td>
+                  )
+                })}
               </tr>
             )
           })}

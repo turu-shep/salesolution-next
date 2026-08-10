@@ -6,7 +6,7 @@ import { isOwner, pageDetail } from '@/lib/admin.mjs'
 import { getAccount, logActivity } from '@/lib/auth-server'
 import { viewLabel } from '@/lib/columns.mjs'
 import { countMatching, fetchCounters, fetchFacets, fetchSheet } from '@/lib/contacts'
-import type { ClientRow, Counters as CountersType, SheetParams } from '@/lib/contacts'
+import type { ClientRow, Counters as CountersType, Facets, SheetParams } from '@/lib/contacts'
 import { pageRange, parseSheetParams, toSearchParams } from '@/lib/query.mjs'
 import { describeError } from '@/lib/supabase'
 
@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic'
 type PageData = {
   rows: ClientRow[]
   counters: CountersType
-  facets: { states: string[]; sources: string[] }
+  facets: Facets
   total: number
 }
 

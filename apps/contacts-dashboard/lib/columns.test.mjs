@@ -1,17 +1,42 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { ALLOWED_VIEWS, ALWAYS_SELECTED, DEFAULT_VIEW, LOCATION_COLUMNS, TYPED_COLUMNS, isSheetColumn, selectList, viewLabel } from './columns.mjs'
+import { ALLOWED_VIEWS, ALWAYS_SELECTED, BUSINESS_TYPES, CLIENT_POOLS, DEFAULT_VIEW, LOCATION_COLUMNS, TYPED_COLUMNS, businessTypeLabel, isSheetColumn, selectList, viewLabel } from './columns.mjs'
 
 test('LOCATION_COLUMNS is the whitelist, verbatim and in order', () => {
+  // Task 13 pin update (founder v2): size_band + business_type join the
+  // whitelist, ordered after category_core — both LABELED ESTIMATES on the sheet.
   assert.deepEqual(LOCATION_COLUMNS, [
     'company', 'company_display', 'address_1', 'city', 'state', 'zip5',
-    'phone_e164', 'domain', 'category_core', 'brand_authorized', 'line_card',
-    'source', 'source_url', 'captured', 'location_count',
+    'phone_e164', 'domain', 'category_core', 'size_band', 'business_type',
+    'brand_authorized', 'line_card', 'source', 'source_url', 'captured', 'location_count',
   ])
-  // 15 identifiers, 14 visible columns: company + company_display render as one
+  // 17 identifiers, 16 visible columns: company + company_display render as one
   // "Company" cell (display for the human, company for sort stability).
-  assert.equal(LOCATION_COLUMNS.length, 15)
+  assert.equal(LOCATION_COLUMNS.length, 17)
+})
+
+test('CLIENT_POOLS is the curated client base — the reject bins can never appear in it', () => {
+  // Founder decision 2026-08-09: the client base is everything EXCEPT the
+  // pipeline's reject bins, server-enforced. This constant is a SECURITY-CLASS
+  // control like the whitelist: both query emitters pin it unconditionally.
+  assert.deepEqual(CLIENT_POOLS, [
+    'seated', 'above-ceiling', 'adjacent-trades', 'chains', 'non-us', 'small-shops', 'segment-w',
+  ])
+  for (const rejected of ['not-a-distributor', 'ranked-out', 'duplicate-sites', 'identity-backlog', 'usaspending-unmatched']) {
+    assert.equal(CLIENT_POOLS.includes(rejected), false, `${rejected} is a reject bin and must never be a client pool`)
+  }
+})
+
+test('BUSINESS_TYPES is the sync vocabulary, labeled for the client', () => {
+  assert.deepEqual(BUSINESS_TYPES, ['distributor', 'contractor-service', 'other'])
+  assert.equal(businessTypeLabel('distributor'), 'Distributor')
+  assert.equal(businessTypeLabel('contractor-service'), 'Contractor & service')
+  assert.equal(businessTypeLabel('other'), 'Other')
+  // Null (not yet re-synced) and junk render as empty, never a crash or a guess.
+  assert.equal(businessTypeLabel(null), '')
+  assert.equal(businessTypeLabel(undefined), '')
+  assert.equal(businessTypeLabel('junk'), '')
 })
 
 test('every whitelist column is a real column in the contacts table', () => {
@@ -35,9 +60,13 @@ test('selectList is the whitelist plus the server-internal fields, and nothing w
 test('isSheetColumn admits whitelist columns only — a typed column is not enough', () => {
   assert.equal(isSheetColumn('city'), true)
   assert.equal(isSheetColumn('captured'), true)
+  // Task 13: the two new whitelist columns are sortable automatically.
+  assert.equal(isSheetColumn('size_band'), true)
+  assert.equal(isSheetColumn('business_type'), true)
   assert.equal(isSheetColumn('email'), false)      // typed, but outside the whitelist
   assert.equal(isSheetColumn('tier'), false)       // typed, but outside the whitelist
   assert.equal(isSheetColumn('rank_score'), false)
+  assert.equal(isSheetColumn('brand_tokens'), false) // a FILTER column, never a rendered/sorted one
   assert.equal(isSheetColumn('id'), false)         // server-internal; never a client sort
   assert.equal(isSheetColumn('pool'), false)
   assert.equal(isSheetColumn('raw'), false)
@@ -53,7 +82,7 @@ test('the view registry is the two client lenses, labeled', () => {
 })
 
 test('TYPED_COLUMNS carries the campaign and person-adjacent columns too', () => {
-  for (const c of ['segment', 'tier', 'cohort', 'icp_class', 'size_band', 'rank_score', 'disposition', 'email', 'email_state', 'has_person', 'pool', 'list_generation', 'captured_date']) {
+  for (const c of ['segment', 'tier', 'cohort', 'icp_class', 'size_band', 'rank_score', 'disposition', 'email', 'email_state', 'has_person', 'pool', 'list_generation', 'captured_date', 'brand_tokens', 'business_type']) {
     assert.equal(TYPED_COLUMNS.includes(c), true, `${c} missing from TYPED_COLUMNS`)
   }
 })

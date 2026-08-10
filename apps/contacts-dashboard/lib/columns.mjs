@@ -14,7 +14,7 @@
  * derived from pool membership — see countryOf() in query.mjs.
  */
 
-/** The 15 identifiers the sheet serves. They render as 14 columns: company + company_display are one cell. */
+/** The 17 identifiers the sheet serves. They render as 16 columns: company + company_display are one cell. */
 export const LOCATION_COLUMNS = [
   'company',
   'company_display',
@@ -25,6 +25,8 @@ export const LOCATION_COLUMNS = [
   'phone_e164',
   'domain',
   'category_core',
+  'size_band',       // "Est. size" — our estimate from public signals, labeled as such
+  'business_type',   // "Type (est.)" — the sync's labeled heuristic, never fact
   'brand_authorized',
   'line_card',
   'source',
@@ -32,6 +34,46 @@ export const LOCATION_COLUMNS = [
   'captured',
   'location_count',
 ]
+
+/**
+ * The curated client base (founder decision 2026-08-09): every pool EXCEPT the
+ * pipeline's reject bins. A SECURITY-CLASS control like the whitelist above —
+ * server-side, unwidenable, attached at BOTH query emitters unconditionally
+ * (applyFilters pins `pool = any(CLIENT_POOLS)` on every PostgREST path;
+ * counterArgs pins `p_pools` on every RPC path). Nothing a request supplies
+ * can widen it, because no request value ever reaches it.
+ *
+ * REJECTED set (never client-visible): not-a-distributor, ranked-out,
+ * duplicate-sites, identity-backlog, usaspending-unmatched.
+ */
+export const CLIENT_POOLS = [
+  'seated',
+  'above-ceiling',
+  'adjacent-trades',
+  'chains',
+  'non-us',
+  'small-shops',
+  'segment-w',
+]
+
+/**
+ * The sync's `deriveBusinessType` vocabulary, verbatim (emails/scripts/lib/
+ * sync-supabase-data.mjs). The filter clamps to this set; anything else in a
+ * request is null. An unknown or null value renders empty — an ESTIMATE that
+ * is missing stays visibly missing, it is never guessed at render time.
+ */
+export const BUSINESS_TYPES = ['distributor', 'contractor-service', 'other']
+
+const BUSINESS_TYPE_LABELS = {
+  distributor: 'Distributor',
+  'contractor-service': 'Contractor & service',
+  other: 'Other',
+}
+
+/** The client-facing label for a stored business_type; null/junk is '' — blank, never a guess. */
+export function businessTypeLabel(value) {
+  return BUSINESS_TYPE_LABELS[value] ?? ''
+}
 
 /**
  * Server-internal fields: `id` becomes the opaque row key, `pool` becomes the
@@ -47,8 +89,8 @@ export const TYPED_COLUMNS = [
   'address_1', 'city', 'state', 'zip5', 'phone_e164',
   'category_core', 'brand_authorized', 'line_card',
   'source', 'source_url', 'captured', 'captured_date', 'location_count',
-  'segment', 'tier', 'cohort', 'icp_class', 'size_band', 'rank_score',
-  'disposition', 'source_tokens', 'email', 'email_state', 'has_person',
+  'segment', 'tier', 'cohort', 'icp_class', 'size_band', 'business_type', 'rank_score',
+  'disposition', 'source_tokens', 'brand_tokens', 'email', 'email_state', 'has_person',
 ]
 
 /** Mirrors the local dashboard's `paginate` cap. The browser never receives the full set. */

@@ -14,7 +14,7 @@
  * that the parser did not admit is ever emitted back into a URL the page
  * renders. That is what keeps junk parameters from reflecting into hrefs.
  */
-import { ALLOWED_VIEWS, DEFAULT_PAGE_SIZE, DEFAULT_VIEW, isSheetColumn } from './columns.mjs'
+import { ALLOWED_VIEWS, BUSINESS_TYPES, CLIENT_POOLS, DEFAULT_PAGE_SIZE, DEFAULT_VIEW, isSheetColumn } from './columns.mjs'
 
 const COUNTRIES = ['us', 'non-us']
 
@@ -65,9 +65,16 @@ export function parseSheetParams(searchParams) {
   const dirRaw = (sp.get('dir') ?? '').toLowerCase()
   const country = sp.get('country')
   const view = sp.get('view')
+  const btype = sp.get('btype')
   return {
     sources: sp.getAll('source').filter(Boolean),
     states: sp.getAll('state').filter(Boolean),
+    // Brands/lines carried and Est. size are facet-fed data values, admitted
+    // like states: a value the data does not hold simply matches nothing.
+    brands: sp.getAll('brands').filter(Boolean),
+    sizes: sp.getAll('sizes').filter(Boolean),
+    // business_type is a CLOSED vocabulary (the sync's), so it clamps.
+    btype: BUSINESS_TYPES.includes(btype) ? btype : null,
     country: COUNTRIES.includes(country) ? country : null,
     catMin: numOrNull(sp.get('catMin')),
     catMax: numOrNull(sp.get('catMax')),
@@ -90,6 +97,9 @@ export function toSearchParams(params) {
   if (params.view !== DEFAULT_VIEW) sp.set('view', params.view)
   for (const s of params.sources) sp.append('source', s)
   for (const s of params.states) sp.append('state', s)
+  for (const b of params.brands) sp.append('brands', b)
+  for (const s of params.sizes) sp.append('sizes', s)
+  if (params.btype) sp.set('btype', params.btype)
   if (params.country) sp.set('country', params.country)
   if (params.catMin !== null) sp.set('catMin', String(params.catMin))
   if (params.catMax !== null) sp.set('catMax', String(params.catMax))
@@ -102,11 +112,14 @@ export function toSearchParams(params) {
 /** SheetParams -> a single declarative spec. Pure; no client involved. */
 export function buildFilterSpec(params) {
   const p = params
-  const spec = { overlaps: null, in: [], eq: [], neq: [], gte: [], lte: [], or: null }
+  const spec = { overlaps: [], in: [], eq: [], neq: [], gte: [], lte: [], or: null }
 
-  if (p.sources.length) spec.overlaps = { column: 'source_tokens', values: p.sources }
+  if (p.sources.length) spec.overlaps.push({ column: 'source_tokens', values: p.sources })
+  if (p.brands.length) spec.overlaps.push({ column: 'brand_tokens', values: p.brands })
   if (p.states.length) spec.in.push({ column: 'state', values: p.states })
+  if (p.sizes.length) spec.in.push({ column: 'size_band', values: p.sizes })
   if (p.country === 'non-us') spec.eq.push({ column: 'pool', value: 'non-us' })
+  if (p.btype) spec.eq.push({ column: 'business_type', value: p.btype })
   if (p.country === 'us') spec.neq.push({ column: 'pool', value: 'non-us' })
   if (p.catMin !== null) spec.gte.push({ column: 'category_core', value: p.catMin })
   if (p.catMax !== null) spec.lte.push({ column: 'category_core', value: p.catMax })
@@ -117,10 +130,18 @@ export function buildFilterSpec(params) {
   return spec
 }
 
-/** Apply a spec to a PostgrestFilterBuilder. Order is fixed so the tests can assert it. */
+/**
+ * Apply a spec to a PostgrestFilterBuilder. Order is fixed so the tests can
+ * assert it — and the FIRST filter is not the spec's: the curated client base
+ * (Task 13 A, founder decision 2026-08-09) is pinned here at the emitter, from
+ * the imported constant. It is deliberately NOT a spec field: a spec a caller
+ * hand-built, emptied, or mutated still gets `pool = any(CLIENT_POOLS)`, and a
+ * spec that smuggles its own pool filter merely ANDs a narrower one on top.
+ * counterArgs() is the other emitter and pins the same predicate as p_pools.
+ */
 export function applyFilters(query, spec) {
-  let q = query
-  if (spec.overlaps) q = q.overlaps(spec.overlaps.column, spec.overlaps.values)
+  let q = query.in('pool', CLIENT_POOLS)
+  for (const f of spec.overlaps) q = q.overlaps(f.column, f.values)
   for (const f of spec.in) q = q.in(f.column, f.values)
   for (const f of spec.eq) q = q.eq(f.column, f.value)
   for (const f of spec.neq) q = q.neq(f.column, f.value)
@@ -130,11 +151,19 @@ export function applyFilters(query, spec) {
   return q
 }
 
-/** The same params, shaped for the contacts_counters RPC. */
+/**
+ * The same params, shaped for the contacts_counters RPC. p_pools is pinned to
+ * CLIENT_POOLS unconditionally — same rail as applyFilters, second emitter.
+ * One predicate, two emitters: change one, change the other.
+ */
 export function counterArgs(params) {
   return {
+    p_pools: CLIENT_POOLS,
     p_sources: params.sources.length ? params.sources : null,
     p_states: params.states.length ? params.states : null,
+    p_brands: params.brands.length ? params.brands : null,
+    p_sizes: params.sizes.length ? params.sizes : null,
+    p_btype: params.btype,
     p_country: params.country,
     p_cat_min: params.catMin,
     p_cat_max: params.catMax,

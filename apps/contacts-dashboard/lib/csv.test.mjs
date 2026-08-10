@@ -38,17 +38,19 @@ test('csvLine joins and terminates', () => {
 // ── the columns (D1): the whitelist, always, via the same serializer ────────
 
 test('exportColumns is the client row minus the React key — pinned exactly', () => {
+  // Task 13 pin update: size_band + business_type join after category_core —
+  // country + the 17 whitelist identifiers, 18 fields.
   assert.deepEqual(exportColumns(), [
     'country',
     'company', 'company_display', 'address_1', 'city', 'state', 'zip5',
-    'phone_e164', 'domain', 'category_core', 'brand_authorized', 'line_card',
-    'source', 'source_url', 'captured', 'location_count',
+    'phone_e164', 'domain', 'category_core', 'size_band', 'business_type',
+    'brand_authorized', 'line_card', 'source', 'source_url', 'captured', 'location_count',
   ])
   // Derived from toClientRow — the sheet's own serializer — never a second list…
   assert.deepEqual(exportColumns(), ['country', ...LOCATION_COLUMNS])
   // …and no argument reaches a wider set, because there is no wider set.
   assert.deepEqual(exportColumns(true), exportColumns())
-  for (const gone of ['key', 'id', 'pool', 'list_generation', 'email', 'tier']) {
+  for (const gone of ['key', 'id', 'pool', 'list_generation', 'email', 'tier', 'brand_tokens']) {
     assert.equal(exportColumns().includes(gone), false, `${gone} must never be a CSV column`)
   }
 })
@@ -119,10 +121,13 @@ const ROW_1 = {
   key: 'k1', country: 'United States',
   company: 'acme bearing', company_display: 'Acme Bearing Co., Inc.', address_1: null,
   city: 'Peoria', state: 'IL', zip5: '61601', phone_e164: null, domain: 'acme.example',
-  category_core: 4.5, brand_authorized: null, line_card: null, source: 'timken',
+  category_core: 4.5, size_band: '5-10M', business_type: 'distributor',
+  brand_authorized: null, line_card: null, source: 'timken',
   source_url: null, captured: null, location_count: 1,
 }
 
+// ROW_2 carries NO size_band / business_type keys at all — the pre-0005 shape.
+// The export must render them as empty cells, never throw or shift columns.
 const ROW_2 = {
   key: 'k2', country: 'United States',
   company: 'b co', company_display: null, address_1: null,
@@ -154,8 +159,9 @@ test('the audit row precedes the first CSV byte, and the file is the sheet, exac
   assert.deepEqual(calls.slice(2), [['page', 0, 2]])
   assert.equal(lines.length, 3)
   assert.equal(lines[0], csvLine(exportColumns())) // header row = the client field names
-  assert.equal(lines[1], 'United States,acme bearing,"Acme Bearing Co., Inc.",,Peoria,IL,61601,,acme.example,4.5,,,timken,,,1\n')
-  assert.equal(lines[2], 'United States,b co,,,,WI,,,,3,,,dfs,,,2\n')
+  assert.equal(lines[1], 'United States,acme bearing,"Acme Bearing Co., Inc.",,Peoria,IL,61601,,acme.example,4.5,5-10M,distributor,,,timken,,,1\n')
+  // ROW_2 has no size_band/business_type keys (pre-0005 row): two empty cells, no shift.
+  assert.equal(lines[2], 'United States,b co,,,,WI,,,,3,,,,,dfs,,,2\n')
   // The opaque React key rides on every client row and lands in no CSV cell.
   assert.equal(lines.join('').includes('k1'), false)
   assert.equal(lines.join('').includes('k2'), false)

@@ -65,3 +65,25 @@ export function toClientSource(row) {
 export function toClientSources(rows) {
   return (rows ?? []).map(toClientSource).sort((a, b) => b.locations - a.locations || a.token.localeCompare(b.token))
 }
+
+/** A defensive list: strings only, empties dropped, sorted — junk in, empty list out. */
+function facetList(value) {
+  if (!Array.isArray(value)) return []
+  return value
+    .filter((v) => v !== null && v !== undefined)
+    .map((v) => String(v))
+    .filter((v) => v !== '')
+    .sort()
+}
+
+/**
+ * The client_facets RPC row -> the three facet lists the filter controls
+ * offer (Task 13 E). NULL-SAFE by contract: before 0005 is pasted the RPC does
+ * not exist (the caller's error path handles that); right after it, before the
+ * re-sync, brands and sizes come back empty — the controls must render empty,
+ * never crash. Junk shapes (missing keys, non-arrays) answer empty lists too.
+ */
+export function toClientFacets(row) {
+  const r = row ?? {}
+  return { states: facetList(r.states), brands: facetList(r.brands), sizes: facetList(r.sizes) }
+}

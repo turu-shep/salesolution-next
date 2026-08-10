@@ -75,6 +75,71 @@ export function firstDate(captured) {
   return dates.length ? dates[0] : null
 }
 
+/** Beyond this a brand chain is scraper garbage, not a line card. First 100 win. */
+const BRAND_TOKEN_CAP = 100
+
+/**
+ * The carried-lines tokens (founder v2, Task 13 B): `brand_authorized` and
+ * `line_card` split on `|`, in that order, trimmed, internal whitespace
+ * collapsed, empties dropped, deduped case-insensitively KEEPING the
+ * first-seen casing, capped at 100 tokens for the whole row.
+ *
+ * The stored casing is load-bearing: the dashboard's facet feeds its filter,
+ * and filtering matches the exact stored values — so the dedupe must collapse
+ * casing variants to ONE stored form or "Timken" and "TIMKEN" become two
+ * filter options that each miss half the rows.
+ */
+export function brandTokens(brandAuthorized, lineCard) {
+  const seen = new Map()
+  for (const rawToken of [...split(brandAuthorized), ...split(lineCard)]) {
+    const token = rawToken.replace(/\s+/g, ' ').trim()
+    if (!token) continue
+    const key = token.toLowerCase()
+    if (!seen.has(key)) seen.set(key, token)
+    if (seen.size >= BRAND_TOKEN_CAP) break
+  }
+  return [...seen.values()]
+}
+
+const DISTRIBUTOR_RE = /distribut|dealer|wholesal|supplier/i
+const CONTRACTOR_RE = /service|repair|rental|install|contractor/i
+
+/** Distributor set first, contractor set second — the branch order inside every rule. */
+function typeFromText(text) {
+  const s = textOrNull(text)
+  if (s === null) return null
+  if (DISTRIBUTOR_RE.test(s)) return 'distributor'
+  if (CONTRACTOR_RE.test(s)) return 'contractor-service'
+  return null
+}
+
+/**
+ * The estimated business type (founder v2, Task 13 D) — a LABELED HEURISTIC,
+ * surfaced to clients as "Type (est.)", never as fact. Exact precedence, and
+ * the order is the contract (a row matching 1-contractor AND 2 must be
+ * 'contractor-service' — rule 1 wins):
+ *
+ *   1. `distributor_type` — the source's own type string — matched against
+ *      /distribut|dealer|wholesal|supplier/i -> 'distributor', else
+ *      /service|repair|rental|install|contractor/i -> 'contractor-service'
+ *   2. non-empty `brand_authorized` OR `line_card` -> 'distributor'
+ *   3. `self_declaration_verbatim` / `self_declaration` matched against the
+ *      same two sets, same order
+ *   4. pool 'adjacent-trades' -> 'contractor-service'
+ *   5. 'other' — never null out of the sync; null means "not yet re-synced"
+ */
+export function deriveBusinessType(raw, pool) {
+  const r = raw || {}
+  const fromType = typeFromText(r.distributor_type)
+  if (fromType) return fromType
+  if (textOrNull(r.brand_authorized) !== null || textOrNull(r.line_card) !== null) return 'distributor'
+  const declaration = [r.self_declaration_verbatim, r.self_declaration].map((v) => textOrNull(v) ?? '').join(' ')
+  const fromDeclaration = typeFromText(declaration)
+  if (fromDeclaration) return fromDeclaration
+  if (pool === 'adjacent-trades') return 'contractor-service'
+  return 'other'
+}
+
 /**
  * One CSV row -> one `contacts` row.
  *
@@ -117,9 +182,13 @@ export function toContactRow(raw, ctx) {
     cohort: textOrNull(r.cohort),
     icp_class: textOrNull(r.icp_class),
     size_band: textOrNull(r.size_band),
+    // Founder v2 (Task 13): derived AT SYNC TIME so the dashboard filters on
+    // stored values. business_type is a labeled heuristic ('Type (est.)').
+    business_type: deriveBusinessType(r, ctx.pool),
     rank_score: numOrNull(r.rank_score),
     disposition: textOrNull(r.disposition),
     source_tokens: split(r.source),
+    brand_tokens: brandTokens(r.brand_authorized, r.line_card),
     email: email === null ? null : email.toLowerCase(),
     // The CSV has no `email_state` column; `contact_email_status` is the value
     // the schema's `email_state` was named for.

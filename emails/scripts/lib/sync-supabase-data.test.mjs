@@ -5,7 +5,9 @@ import { fromCsv } from './contract.mjs'
 import {
   PAUSED_MESSAGE,
   SOURCE_DIR_RE,
+  brandTokens,
   conservationLines,
+  deriveBusinessType,
   firstDate,
   isPausedError,
   normDomain,
@@ -55,6 +57,10 @@ test('toContactRow maps every typed column and keeps the whole row in raw', () =
   assert.equal(row.captured, '2026-08-01|2026-08-03') // verbatim chain
   assert.equal(row.captured_date, '2026-08-01')       // derived sort key
   assert.deepEqual(row.source_tokens, ['timken', 'dfs'])
+  // Founder v2 (Task 13): the carried-lines tokens and the estimated type are
+  // derived AT SYNC TIME — the dashboard filters on stored values, never re-derives.
+  assert.deepEqual(row.brand_tokens, ['Timken', 'Bearings'])
+  assert.equal(row.business_type, 'distributor')   // rule 2: non-empty brand_authorized
   assert.equal(row.email, 'sales@acme-fixture.example')
   assert.equal(row.email_state, 'verified')
   assert.equal(row.has_person, true)
@@ -69,6 +75,10 @@ test('toContactRow leaves a missing domain null and never invents a person', () 
   assert.equal(row.email, null)
   assert.equal(row.has_person, false)
   assert.deepEqual(row.source_tokens, ['serp'])
+  // No brand claim anywhere on the row: an EMPTY array (never null — the column
+  // is not null default '{}') and the honest 'other', never a guessed type.
+  assert.deepEqual(row.brand_tokens, [])
+  assert.equal(row.business_type, 'other')
 })
 
 test('toContactRow nulls an unparseable numeric or date rather than guessing zero', () => {
@@ -78,6 +88,93 @@ test('toContactRow nulls an unparseable numeric or date rather than guessing zer
   assert.equal(row.rank_score, null)
   assert.equal(row.captured, 'not-a-date')  // stored verbatim
   assert.equal(row.captured_date, null)     // but never coerced
+})
+
+// ── brand_tokens (founder v2, Task 13 B) ────────────────────────────────────
+
+test('brandTokens splits both brand_authorized and line_card on | and keeps order', () => {
+  assert.deepEqual(brandTokens('Timken|SKF', 'Bearings|Seals'), ['Timken', 'SKF', 'Bearings', 'Seals'])
+  assert.deepEqual(brandTokens('Timken', null), ['Timken'])
+  assert.deepEqual(brandTokens(null, 'Bearings'), ['Bearings'])
+})
+
+test('brandTokens trims, collapses internal whitespace, and drops empties', () => {
+  assert.deepEqual(brandTokens(' Gates  Fluid   Power |Parker', null), ['Gates Fluid Power', 'Parker'])
+  assert.deepEqual(brandTokens('||', ''), [])
+  assert.deepEqual(brandTokens(null, undefined), [])
+  assert.deepEqual(brandTokens('  ', ' | '), [])
+})
+
+test('brandTokens dedupes case-insensitively keeping the first-seen casing', () => {
+  // The facet feeds the filter, so the STORED casing is what round-trips; two
+  // casings of one brand must collapse to one stored value or the filter splits.
+  assert.deepEqual(brandTokens('Timken|TIMKEN', 'timken|SKF'), ['Timken', 'SKF'])
+  assert.deepEqual(brandTokens('enerpac', 'Enerpac'), ['enerpac'])
+  // Whitespace-collapse happens BEFORE dedupe, so spacing variants collapse too.
+  assert.deepEqual(brandTokens('Gates  Fluid Power', 'gates fluid  power'), ['Gates Fluid Power'])
+})
+
+test('brandTokens caps an absurd chain at the first 100 tokens', () => {
+  const chain = Array.from({ length: 150 }, (_, i) => `Brand${i}`).join('|')
+  const out = brandTokens(chain, null)
+  assert.equal(out.length, 100)
+  assert.equal(out[0], 'Brand0')
+  assert.equal(out[99], 'Brand99')
+  // The cap applies to the COMBINED deduped list, not per field.
+  const out2 = brandTokens(Array.from({ length: 60 }, (_, i) => `A${i}`).join('|'), Array.from({ length: 60 }, (_, i) => `B${i}`).join('|'))
+  assert.equal(out2.length, 100)
+  assert.equal(out2[99], 'B39')
+})
+
+// ── business_type (founder v2, Task 13 D) — exact precedence ────────────────
+
+test('deriveBusinessType rule 1: distributor_type decides first, distributor branch before contractor', () => {
+  assert.equal(deriveBusinessType({ distributor_type: 'Authorized Distributor' }, 'seated'), 'distributor')
+  assert.equal(deriveBusinessType({ distributor_type: 'Dealer' }, 'seated'), 'distributor')
+  assert.equal(deriveBusinessType({ distributor_type: 'Wholesaler' }, 'seated'), 'distributor')
+  assert.equal(deriveBusinessType({ distributor_type: 'Parts Supplier' }, 'seated'), 'distributor')
+  assert.equal(deriveBusinessType({ distributor_type: 'Service Center' }, 'seated'), 'contractor-service')
+  assert.equal(deriveBusinessType({ distributor_type: 'Repair Shop' }, 'seated'), 'contractor-service')
+  assert.equal(deriveBusinessType({ distributor_type: 'Rental' }, 'seated'), 'contractor-service')
+  assert.equal(deriveBusinessType({ distributor_type: 'Installation' }, 'seated'), 'contractor-service')
+  assert.equal(deriveBusinessType({ distributor_type: 'Contractor' }, 'seated'), 'contractor-service')
+  // Matching BOTH sets: the distributor branch is checked first within rule 1.
+  assert.equal(deriveBusinessType({ distributor_type: 'Distributor / Service Center' }, 'seated'), 'distributor')
+  // "Sales" is in neither set — rule 1 passes and the row falls through.
+  assert.equal(deriveBusinessType({ distributor_type: 'Sales' }, 'seated'), 'other')
+})
+
+test('deriveBusinessType precedence: rule 1 contractor BEATS rule 2 brands — the order is the contract', () => {
+  // A row matching 1-contractor AND 2 must be contractor-service. Rule 1 wins.
+  const row = { distributor_type: 'Service & Repair', brand_authorized: 'Timken', line_card: 'Bearings' }
+  assert.equal(deriveBusinessType(row, 'seated'), 'contractor-service')
+})
+
+test('deriveBusinessType rule 2: a non-empty brand_authorized OR line_card means distributor', () => {
+  assert.equal(deriveBusinessType({ brand_authorized: 'Timken' }, 'seated'), 'distributor')
+  assert.equal(deriveBusinessType({ line_card: 'Bearings' }, 'seated'), 'distributor')
+  // Whitespace-only is empty, not a brand claim.
+  assert.equal(deriveBusinessType({ brand_authorized: '  ', line_card: '' }, 'seated'), 'other')
+})
+
+test('deriveBusinessType rule 3: the self-declaration matches the same sets, distributor first', () => {
+  assert.equal(deriveBusinessType({ self_declaration: 'A stocking distributor of hydraulic components.' }, 'seated'), 'distributor')
+  assert.equal(deriveBusinessType({ self_declaration: 'We repair and rebuild pumps.' }, 'seated'), 'contractor-service')
+  assert.equal(deriveBusinessType({ self_declaration_verbatim: 'Full-service dealer for Bobcat.' }, 'seated'), 'distributor')
+  // Matching both sets resolves distributor-first, same as rule 1.
+  assert.equal(deriveBusinessType({ self_declaration: 'Distribution and service since 1952.' }, 'seated'), 'distributor')
+  // A boolean-ish verbatim flag ('true') matches neither set and falls through.
+  assert.equal(deriveBusinessType({ self_declaration_verbatim: 'true' }, 'seated'), 'other')
+  // Rule 3 beats rule 4: a declared distributor in adjacent-trades is a distributor.
+  assert.equal(deriveBusinessType({ self_declaration: 'Wholesale distributor.' }, 'adjacent-trades'), 'distributor')
+})
+
+test('deriveBusinessType rule 4/5: adjacent-trades defaults to contractor-service, everything else to other', () => {
+  assert.equal(deriveBusinessType({}, 'adjacent-trades'), 'contractor-service')
+  assert.equal(deriveBusinessType({}, 'seated'), 'other')
+  assert.equal(deriveBusinessType({}, 'chains'), 'other')
+  assert.equal(deriveBusinessType(null, 'seated'), 'other')
+  assert.equal(deriveBusinessType(undefined, undefined), 'other')
 })
 
 test('toVerifyRow keeps the verdict verbatim and nulls an unparseable date', () => {
