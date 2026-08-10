@@ -37,6 +37,13 @@ create index if not exists contacts_brands_idx on contacts using gin (brand_toke
 -- p_pools to CLIENT_POOLS on every call; null keeps the pre-0005 behavior so a
 -- re-run against old app code stays sound.
 --
+-- SEMANTIC CHANGE (founder v2 amendment): the `brands` output now counts
+-- distinct CARRIED brands — unnest(brand_tokens) over the filtered set — not
+-- distinct source tokens. Counting sources as "brands" was the exact
+-- brand/source conflation the founder rejected in the filter, sitting in the
+-- hero numbers. Empty brand_tokens arrays contribute nothing (unnest of '{}'
+-- yields no rows), so the counter reads 0 until the post-0005 re-sync runs.
+--
 -- DROP first, deliberately: CREATE OR REPLACE with a different parameter list
 -- creates an OVERLOAD, and two candidates with defaults make every named-args
 -- PostgREST call ambiguous (300 "could not choose the best candidate").
@@ -93,7 +100,8 @@ as $$
          and exists (select 1 from verify_results v
                      where lower(v.email) = lower(f.email) and v.result = 'valid')),
     (select count(*)               from filtered),
-    (select count(distinct t)      from filtered f, unnest(f.source_tokens) as t),
+    -- carried brands (brand_tokens), NOT source tokens — see the header note
+    (select count(distinct t)      from filtered f, unnest(f.brand_tokens) as t),
     (select count(distinct state)  from filtered where state is not null and state <> '');
 $$;
 

@@ -6,6 +6,11 @@ import type { Counters as CountersType } from '@/lib/contacts'
  * people and sendable figures are discarded server-side and have no element
  * here to land in. `counters` is null when the data source is unreachable; the
  * labels still render, with an em dash where a number would mislead.
+ *
+ * "Brands covered" counts distinct CARRIED brands/lines (brand_tokens, from
+ * the line-card data) since 0005 — NOT distinct source tokens. Counting
+ * sources as brands was the founder-rejected conflation (v2 amendment); the
+ * caption below must always say what the number actually is.
  */
 
 const fmt = (n: number | undefined) => (typeof n === 'number' ? n.toLocaleString('en-US') : '—')
@@ -15,7 +20,7 @@ export function Counters({ counters }: { counters: CountersType | null }) {
     <>
       <ul className="counters">
         <li><b>{fmt(counters?.locations)}</b><span>Locations shown — rows in the current filter</span></li>
-        <li><b>{fmt(counters?.brands)}</b><span>Brands covered — distinct sources in the current filter</span></li>
+        <li><b>{fmt(counters?.brands)}</b><span>Brands covered — distinct brands/lines carried in the current filter</span></li>
         <li><b>{fmt(counters?.states)}</b><span>States covered — distinct non-empty states</span></li>
       </ul>
       <p className="footnote">

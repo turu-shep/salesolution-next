@@ -82,11 +82,17 @@ test('toClientFacets serializes exactly the three facet lists, null-safe at ever
 })
 
 test('toClientCounters serializes exactly the three location counters', () => {
+  // `brands` is distinct CARRIED brands/lines (unnest of brand_tokens, 0005
+  // v2 amendment) — not source tokens. The serializer passes the number
+  // through; the semantic lives in contacts_counters and the caption says it.
   const out = toClientCounters({ locations: '12', brands: 3, states: '7', companies: 999, no_domain: 1, people: 500, sendable: 250 })
   assert.deepEqual(out, { locations: 12, brands: 3, states: 7 })
   assert.deepEqual(Object.keys(out).sort(), ['brands', 'locations', 'states'])
   // A missing RPC row is three zeros, never a leak of whatever was in scope.
   assert.deepEqual(toClientCounters(undefined), { locations: 0, brands: 0, states: 0 })
+  // Post-0005 pre-re-sync: every brand_tokens is '{}', so brands is a REAL 0
+  // alongside nonzero locations — 0 must survive, never read as missing.
+  assert.deepEqual(toClientCounters({ locations: 500, brands: 0, states: 12 }), { locations: 500, brands: 0, states: 12 })
 })
 
 test('toClientSource serializes exactly the five provenance keys and nothing else', () => {
