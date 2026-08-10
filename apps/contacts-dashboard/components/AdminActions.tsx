@@ -57,7 +57,7 @@ export function AdminActions({ email, actions }: { email: string; actions: strin
           {LABELS[action] ?? action}
         </button>
       ))}
-      {error ? <span style={{ color: '#b42318' }}>{error}</span> : null}
+      {error ? <span style={{ color: 'var(--error)' }}>{error}</span> : null}
     </span>
   )
 }

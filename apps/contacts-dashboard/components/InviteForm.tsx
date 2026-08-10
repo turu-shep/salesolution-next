@@ -104,7 +104,7 @@ export function InviteForm() {
       <button type="submit" disabled={busy || !name.trim() || !email.trim()} style={{ padding: '6px 12px' }}>
         {busy ? 'Inviting…' : 'Invite'}
       </button>
-      {error ? <span style={{ color: '#b42318' }}>{error}</span> : null}
+      {error ? <span style={{ color: 'var(--error)' }}>{error}</span> : null}
     </form>
   )
 }

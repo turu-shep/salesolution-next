@@ -7,6 +7,7 @@
   --accent: #1c4ed8;
   --warn: #9a5b00;
   --warn-bg: #fdf3e3;
+  --error: #b42318;
 }
 
 * { box-sizing: border-box; }

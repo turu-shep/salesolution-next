@@ -62,7 +62,7 @@ export function Login() {
           placeholder="Password"
           style={{ width: '100%', padding: '8px 10px', marginTop: 8 }}
         />
-        {error ? <p style={{ color: '#b42318' }}>{error}</p> : null}
+        {error ? <p style={{ color: 'var(--error)' }}>{error}</p> : null}
         <button
           type="submit"
           disabled={busy || !email || !password}
