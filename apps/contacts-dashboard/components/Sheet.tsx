@@ -7,18 +7,17 @@ import { provenanceRows } from '@/lib/sources.mjs'
  * Every string renders through React's default escaping — the injection-prone
  * HTML API is banned app-wide (the ship greps enforce it): scraped fields are
  * untrusted and carry embedded newlines. Rows arrive here already serialized
- * (lib/rows.mjs): opaque `key`, derived `country`, whitelist fields — nothing
- * else exists on the object, so nothing else can render.
+ * (lib/rows.mjs): opaque `key` + whitelist fields — nothing else exists on the
+ * object, so nothing else can render.
  */
 
-/** The 16 visible headings: company + company_display collapse into one cell; country is derived server-side. */
+/** The 15 visible headings: company + company_display collapse into one cell. (Country left with the G2 non-us drop — the base is US-only.) */
 const HEADINGS = [
   ['company_display', 'Company'],
   ['address_1', 'Address'],
   ['city', 'City'],
   ['state', 'State'],
   ['zip5', 'ZIP'],
-  ['country', 'Country'],
   ['phone_e164', 'Phone'],
   ['domain', 'Website'],
   ['category_core', 'Core-category score'],
@@ -58,7 +57,7 @@ export function Sheet({ rows, params }: { rows: ClientRow[]; params: SheetParams
             <th>Provenance</th>
             {HEADINGS.map(([key, label]) => (
               <th key={key} className={NUM_COLUMNS.has(key) ? 'num' : undefined} aria-sort={sortState(params, key)}>
-                {key === 'country' ? label : <a href={sortHref(params, key)}>{label}</a>}
+                <a href={sortHref(params, key)}>{label}</a>
               </th>
             ))}
           </tr>

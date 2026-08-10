@@ -9,7 +9,7 @@ export type SheetParams = {
   brands: string[]
   sizes: string[]
   btype: 'distributor' | 'contractor-service' | 'other' | null
-  country: 'us' | 'non-us' | null
+  hideSmall: boolean
   catMin: number | null
   catMax: number | null
   q: string
@@ -34,8 +34,8 @@ export type Counters = {
   states: number
 }
 
-/** A row as the client is allowed to see it: opaque key, derived country, whitelist fields. */
-export type ClientRow = { key: string; country: string } & Record<string, unknown>
+/** A row as the client is allowed to see it: opaque key + whitelist fields. */
+export type ClientRow = { key: string } & Record<string, unknown>
 
 /** A source as the client is allowed to see it: name, kind, contribution, month verified. */
 export type ClientSource = {

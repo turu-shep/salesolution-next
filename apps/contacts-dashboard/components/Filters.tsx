@@ -61,13 +61,12 @@ export function Filters({
         <p className="hint">Estimated from the company&rsquo;s own listings and declarations.</p>
       </div>
       <div className="field">
-        <label htmlFor="f-country">Country</label>
-        <select id="f-country" name="country" defaultValue={params.country ?? ''}>
-          <option value="">Any</option>
-          <option value="us">United States</option>
-          <option value="non-us">Non-US</option>
-        </select>
-        <p className="hint">Derived — the source data carries no country column.</p>
+        <label htmlFor="f-hide-small">Small shops</label>
+        <label className="check">
+          <input id="f-hide-small" type="checkbox" name="hideSmall" value="1" defaultChecked={params.hideSmall} />
+          {' '}Hide small shops
+        </label>
+        <p className="hint">Excludes the smallest single-location shops (our size estimate).</p>
       </div>
       <div className="field">
         <label htmlFor="f-cat-min">Core-category score</label>

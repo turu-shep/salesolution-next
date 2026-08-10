@@ -28,24 +28,24 @@ test('toClientRow strips every internal field and everything off the whitelist',
     captured: '2026-08-01|2026-08-03', location_count: 3,
   }
   const out = toClientRow(row)
-  // Exactly: the opaque key, the derived country, and the whitelist. Nothing else.
-  assert.deepEqual(Object.keys(out).sort(), ['key', 'country', ...LOCATION_COLUMNS].sort())
+  // Exactly: the opaque key and the whitelist. Nothing else. (The derived
+  // country left with the G2 non-us drop — the base is US-only.)
+  assert.deepEqual(Object.keys(out).sort(), ['key', ...LOCATION_COLUMNS].sort())
   // brand_tokens is a FILTER column: it decides membership, it never serializes.
-  for (const gone of ['id', 'pool', 'list_generation', 'raw', 'tier', 'email', 'rank_score', 'disposition', 'brand_tokens']) {
+  for (const gone of ['id', 'pool', 'list_generation', 'raw', 'tier', 'email', 'rank_score', 'disposition', 'brand_tokens', 'country']) {
     assert.equal(gone in out, false, `${gone} must never be serialized`)
   }
   assert.equal(out.key, opaqueKey(row.id))
-  assert.equal(out.country, 'United States')
   assert.equal(out.company_display, 'Acme Bearing Co')
   // Task 13: the two labeled estimates ride the whitelist like any other column.
   assert.equal(out.size_band, '5-10M')
   assert.equal(out.business_type, 'distributor')
 })
 
-test('toClientRow derives Non-US from the pool before dropping it', () => {
-  const out = toClientRow({ id: 'g:non-us:1', pool: 'non-us', company: 'X' })
-  assert.equal(out.country, 'Non-US')
+test('toClientRow drops the pool outright — no derived country survives it', () => {
+  const out = toClientRow({ id: 'g:chains:1', pool: 'chains', company: 'X' })
   assert.equal('pool' in out, false)
+  assert.equal('country' in out, false)
   // An absent whitelist field is an explicit null, never a missing key —
   // downstream consumers (the sheet, the export) see one stable shape.
   assert.equal(out.city, null)
@@ -59,7 +59,7 @@ test('toClientRow is null-safe on rows synced before 0005 populated the estimate
   assert.equal(out.size_band, null)
   assert.equal(out.business_type, null)
   const empty = toClientRow({})
-  assert.deepEqual(Object.keys(empty).sort(), ['key', 'country', ...LOCATION_COLUMNS].sort())
+  assert.deepEqual(Object.keys(empty).sort(), ['key', ...LOCATION_COLUMNS].sort())
   assert.equal(empty.size_band, null)
   assert.equal(empty.business_type, null)
 })

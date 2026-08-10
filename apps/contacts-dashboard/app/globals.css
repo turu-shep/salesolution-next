@@ -249,6 +249,7 @@ td.prov { white-space: normal; min-width: 260px; max-width: 380px; }
   padding: 12px 16px; margin: 0 0 14px;
 }
 .field label { display: block; font-size: 12px; font-weight: 600; color: var(--ink-soft); margin: 0 0 4px; }
+.field .check { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 400; color: var(--ink); margin: 6px 0 0; cursor: pointer; }
 .hint { font-size: 11px; line-height: 1.45; color: var(--ink-soft); margin: 5px 0 0; max-width: 220px; }
 .range { display: flex; align-items: center; gap: 6px; }
 .range input { width: 72px; }

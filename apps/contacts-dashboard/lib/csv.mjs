@@ -35,8 +35,8 @@ export function csvLine(values) {
 /**
  * The CSV header: the client row's own field names, minus `key` — the opaque
  * key is a React key, not data. Derived from toClientRow, so no argument (and
- * no future drift) can widen the export past what the sheet serves: `country`
- * rides along because the sheet shows it; nothing else exists to include.
+ * no future drift) can widen the export past what the sheet serves; nothing
+ * outside the whitelist exists to include.
  */
 export function exportColumns() {
   return Object.keys(toClientRow({})).filter((c) => c !== 'key')
@@ -74,8 +74,10 @@ export function exportRefusal(searchParams) {
  * the filter JSON.
  */
 export function exportFilter(params) {
-  const { sources, states, brands, sizes, btype, country, catMin, catMax, q } = params
-  return { sources, states, brands, sizes, btype, country, catMin, catMax, q }
+  // hideSmall replaced country here (G2 2026-08-10): it narrows the pool set,
+  // so it decides membership and must be audited like any other filter.
+  const { sources, states, brands, sizes, btype, hideSmall, catMin, catMax, q } = params
+  return { sources, states, brands, sizes, btype, hideSmall, catMin, catMax, q }
 }
 
 /**

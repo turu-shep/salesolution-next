@@ -10,8 +10,8 @@
  *
  * Four names a brief would reach for do not exist in the data, and the
  * corrections are load-bearing: `zip5` not `zip`, `phone_e164` not `phone`,
- * `domain` not `website`, and there is no `category_display` at all. Country is
- * derived from pool membership — see countryOf() in query.mjs.
+ * `domain` not `website`, and there is no `category_display` at all. (Country
+ * is gone too — the base is US-only since the G2 non-us drop, 2026-08-10.)
  */
 
 /** The 17 identifiers the sheet serves. They render as 16 columns: company + company_display are one cell. */
@@ -36,25 +36,39 @@ export const LOCATION_COLUMNS = [
 ]
 
 /**
- * The curated client base (founder decision 2026-08-09): every pool EXCEPT the
- * pipeline's reject bins. A SECURITY-CLASS control like the whitelist above —
- * server-side, unwidenable, attached at BOTH query emitters unconditionally
- * (applyFilters pins `pool = any(CLIENT_POOLS)` on every PostgREST path;
- * counterArgs pins `p_pools` on every RPC path). Nothing a request supplies
- * can widen it, because no request value ever reaches it.
+ * The curated client base (founder decision 2026-08-09; narrowed by the G2
+ * re-pick 2026-08-10): every pool EXCEPT the pipeline's reject bins and
+ * `non-us`. A SECURITY-CLASS control like the whitelist above — server-side,
+ * unwidenable, attached at BOTH query emitters unconditionally (applyFilters
+ * pins the pool predicate on every PostgREST path; counterArgs pins `p_pools`
+ * on every RPC path). Nothing a request supplies can widen it, because no
+ * request value ever reaches it.
  *
  * REJECTED set (never client-visible): not-a-distributor, ranked-out,
  * duplicate-sites, identity-backlog, usaspending-unmatched.
+ * `non-us` is NOT a reject bin — the pool stays in the asset — but the founder
+ * dropped it from the client view entirely ("fully drop non-us", G2
+ * 2026-08-10, after the quality census measured its serp rows 44% flagged).
+ * The Country filter and derived column left with it: with one country in the
+ * base there is nothing to filter or display.
  */
 export const CLIENT_POOLS = [
   'seated',
   'above-ceiling',
   'adjacent-trades',
   'chains',
-  'non-us',
   'small-shops',
   'segment-w',
 ]
+
+/**
+ * The hide-small-shops narrowing (same G2 decision): the ONLY other pool set
+ * an emitter may pin. Derived from CLIENT_POOLS in code — a request
+ * contributes one boolean (`hideSmall=1`) and chooses between two sanctioned
+ * subsets; widening stays impossible because neither set contains anything
+ * CLIENT_POOLS does not.
+ */
+export const CLIENT_POOLS_NO_SMALL_SHOPS = CLIENT_POOLS.filter((p) => p !== 'small-shops')
 
 /**
  * The sync's `deriveBusinessType` vocabulary, verbatim (emails/scripts/lib/
@@ -76,8 +90,8 @@ export function businessTypeLabel(value) {
 }
 
 /**
- * Server-internal fields: `id` becomes the opaque row key, `pool` becomes the
- * derived country. Both are consumed and DROPPED by toClientRow() before the
+ * Server-internal fields: `id` becomes the opaque row key; `pool` is fetched
+ * for the server predicate only. Both are DROPPED by toClientRow() before the
  * response — they never reach HTML, JSON, serialized props, or the export.
  */
 export const ALWAYS_SELECTED = ['id', 'pool']

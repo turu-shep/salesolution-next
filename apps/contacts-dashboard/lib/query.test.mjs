@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { CLIENT_POOLS } from './columns.mjs'
-import { applyFilters, buildFilterSpec, counterArgs, countryOf, escapeLike, pageRange, parseSheetParams, toSearchParams } from './query.mjs'
+import { CLIENT_POOLS, CLIENT_POOLS_NO_SMALL_SHOPS } from './columns.mjs'
+import { applyFilters, buildFilterSpec, counterArgs, escapeLike, pageRange, parseSheetParams, toSearchParams } from './query.mjs'
 
 /** A stand-in for a PostgrestFilterBuilder: every filter method returns `this`. */
 function recorder() {
@@ -21,13 +21,13 @@ function recorder() {
 const params = (qs) => parseSheetParams(new URLSearchParams(qs))
 
 test('parseSheetParams reads every control', () => {
-  const p = params('source=timken&source=dfs&state=IL&state=WI&brands=Timken&brands=Parker&sizes=5-10M&sizes=10-20M&btype=distributor&country=us&catMin=2&catMax=8&q=acme&page=3&sort=city&dir=desc&view=hosebox')
+  const p = params('source=timken&source=dfs&state=IL&state=WI&brands=Timken&brands=Parker&sizes=5-10M&sizes=10-20M&btype=distributor&hideSmall=1&catMin=2&catMax=8&q=acme&page=3&sort=city&dir=desc&view=hosebox')
   assert.deepEqual(p.sources, ['timken', 'dfs'])
   assert.deepEqual(p.states, ['IL', 'WI'])
   assert.deepEqual(p.brands, ['Timken', 'Parker'])
   assert.deepEqual(p.sizes, ['5-10M', '10-20M'])
   assert.equal(p.btype, 'distributor')
-  assert.equal(p.country, 'us')
+  assert.equal(p.hideSmall, true)
   assert.equal(p.catMin, 2)
   assert.equal(p.catMax, 8)
   assert.equal(p.q, 'acme')
@@ -43,11 +43,16 @@ test('parseSheetParams refuses nonsense instead of passing it to the database', 
   assert.equal(p.sort, 'company')     // falls back to a whitelist column
   assert.equal(p.dir, 'asc')
   assert.equal(p.catMin, null)        // never coerced to 0
-  assert.equal(p.country, null)
+  assert.equal('country' in p, false) // retired vocabulary (G2 non-us drop) — never parsed
   assert.equal(p.view, 'field-advisor')  // an unknown view is the default lens; a bad URL still renders
   assert.equal(p.btype, null)         // outside the sync vocabulary — clamped, never forwarded
   assert.equal(params('btype=').btype, null)
   assert.equal(params('btype=contractor-service').btype, 'contractor-service')
+  // hideSmall admits exactly '1'; everything else — junk, 'true', absence — is off.
+  assert.equal(params('hideSmall=1').hideSmall, true)
+  assert.equal(params('hideSmall=true').hideSmall, false)
+  assert.equal(params('hideSmall=0').hideSmall, false)
+  assert.equal(params('').hideSmall, false)
 })
 
 test('no parameter exists that reaches the pools predicate — the client base cannot be widened', () => {
@@ -76,11 +81,13 @@ test('show=all is dead vocabulary: ignored, and the page size never changes', ()
 })
 
 test('toSearchParams emits the canonical state and round-trips through the parser', () => {
-  const p = params('source=timken&source=dfs&state=IL&brands=Timken&brands=SKF&sizes=5-10M&btype=other&country=us&catMin=2&catMax=8&q=acme&sort=city&dir=desc&view=hosebox&page=3&show=all&tier=junk')
+  const p = params('source=timken&source=dfs&state=IL&brands=Timken&brands=SKF&sizes=5-10M&btype=other&hideSmall=1&catMin=2&catMax=8&q=acme&sort=city&dir=desc&view=hosebox&page=3&show=all&tier=junk&country=us')
   const sp = toSearchParams(p)
   assert.equal(sp.has('page'), false)   // page is navigation, not filter state
   assert.equal(sp.has('show'), false)   // deleted vocabulary is never re-emitted
   assert.equal(sp.has('tier'), false)   // junk a request carried is never reflected back out
+  assert.equal(sp.has('country'), false) // retired vocabulary is never re-emitted
+  assert.equal(sp.get('hideSmall'), '1')
   assert.deepEqual(sp.getAll('brands'), ['Timken', 'SKF'])
   assert.deepEqual(sp.getAll('sizes'), ['5-10M'])
   assert.equal(sp.get('btype'), 'other')
@@ -95,7 +102,7 @@ test('toSearchParams leaves defaults out of the URL', () => {
   assert.equal(toSearchParams(params('view=hosebox')).toString(), 'view=hosebox')
   assert.equal(toSearchParams(params('sort=city')).toString(), 'sort=city')
   // The new filters at rest add nothing to the URL.
-  assert.equal(toSearchParams(params('btype=&brands=&sizes=')).toString(), '')
+  assert.equal(toSearchParams(params('btype=&brands=&sizes=&hideSmall=0')).toString(), '')
 })
 
 test('escapeLike neutralises the LIKE wildcards so a search for "50%" means "50%"', () => {
@@ -104,24 +111,17 @@ test('escapeLike neutralises the LIKE wildcards so a search for "50%" means "50%
   assert.equal(escapeLike('back\\slash'), 'back\\\\slash')
 })
 
-test('countryOf derives country from pool membership and nothing else', () => {
-  assert.equal(countryOf('non-us'), 'Non-US')
-  assert.equal(countryOf('seated'), 'United States')
-  assert.equal(countryOf(null), 'United States')
-  // There is no `country` column in any file. On a non-US row `state` holds a
-  // province code with no country attached, so it is never used to guess.
-})
-
 test('buildFilterSpec turns params into one spec, and applyFilters chains it', () => {
-  const spec = buildFilterSpec(params('source=timken&source=dfs&state=IL&brands=Timken&brands=Parker&sizes=5-10M&btype=distributor&country=non-us&catMin=2&catMax=8&q=ac%25me'))
+  const spec = buildFilterSpec(params('source=timken&source=dfs&state=IL&brands=Timken&brands=Parker&sizes=5-10M&btype=distributor&catMin=2&catMax=8&q=ac%25me'))
   assert.deepEqual(spec.overlaps, [
     { column: 'source_tokens', values: ['timken', 'dfs'] },
     { column: 'brand_tokens', values: ['Timken', 'Parker'] },
   ])
   assert.deepEqual(spec.in, [{ column: 'state', values: ['IL'] }, { column: 'size_band', values: ['5-10M'] }])
-  assert.deepEqual(spec.eq, [{ column: 'pool', value: 'non-us' }, { column: 'business_type', value: 'distributor' }])
+  assert.deepEqual(spec.eq, [{ column: 'business_type', value: 'distributor' }])
   assert.deepEqual(spec.gte, [{ column: 'category_core', value: 2 }])
   assert.deepEqual(spec.lte, [{ column: 'category_core', value: 8 }])
+  assert.equal(spec.hideSmall, false)
   assert.equal(spec.or, 'company_display.ilike."%ac\\\\%me%",domain.ilike."%ac\\\\%me%"')
 
   const q = recorder()
@@ -132,7 +132,6 @@ test('buildFilterSpec turns params into one spec, and applyFilters chains it', (
     ['overlaps', 'brand_tokens', ['Timken', 'Parker']],
     ['in', 'state', ['IL']],
     ['in', 'size_band', ['5-10M']],
-    ['eq', 'pool', 'non-us'],
     ['eq', 'business_type', 'distributor'],
     ['gte', 'category_core', 2],
     ['lte', 'category_core', 8],
@@ -175,13 +174,21 @@ test('a double quote in q cannot break out of the quoted pattern', () => {
   assert.equal(spec.or, 'company_display.ilike."%3\\" pipe%",domain.ilike."%3\\" pipe%"')
 })
 
-test('country=us excludes the non-us pool rather than guessing from state', () => {
+test('hideSmall narrows the pin to the sanctioned subset on BOTH emitters', () => {
+  // The toggle never names pools: it selects between two code-owned sets.
   const q = recorder()
-  applyFilters(q, buildFilterSpec(params('country=us')))
-  assert.deepEqual(q.calls, [
-    ['in', 'pool', CLIENT_POOLS],   // the base is curated first…
-    ['neq', 'pool', 'non-us'],      // …then country narrows within it
-  ])
+  applyFilters(q, buildFilterSpec(params('hideSmall=1')))
+  assert.deepEqual(q.calls, [['in', 'pool', CLIENT_POOLS_NO_SMALL_SHOPS]])
+  assert.deepEqual(counterArgs(params('hideSmall=1')).p_pools, CLIENT_POOLS_NO_SMALL_SHOPS)
+  // A hand-built spec smuggling hideSmall can only NARROW — widening would
+  // require a pool set that does not exist in code.
+  const smuggledNarrow = recorder()
+  applyFilters(smuggledNarrow, { hideSmall: true, overlaps: [], in: [], eq: [], neq: [], gte: [], lte: [], or: null })
+  assert.deepEqual(smuggledNarrow.calls, [['in', 'pool', CLIENT_POOLS_NO_SMALL_SHOPS]])
+  // Junk hideSmall values fail the === true check and pin the full base.
+  const junk = recorder()
+  applyFilters(junk, { hideSmall: 'yes', overlaps: [], in: [], eq: [], neq: [], gte: [], lte: [], or: null })
+  assert.deepEqual(junk.calls, [['in', 'pool', CLIENT_POOLS]])
 })
 
 test('an empty filter set still serves only the curated client base', () => {
@@ -193,14 +200,16 @@ test('an empty filter set still serves only the curated client base', () => {
 })
 
 test('counterArgs matches the contacts_counters signature exactly', () => {
-  assert.deepEqual(counterArgs(params('source=dfs&state=IL&brands=Timken&sizes=5-10M&btype=other&country=us&catMin=2&q=acme')), {
+  assert.deepEqual(counterArgs(params('source=dfs&state=IL&brands=Timken&sizes=5-10M&btype=other&catMin=2&q=acme')), {
     p_pools: CLIENT_POOLS,
     p_sources: ['dfs'],
     p_states: ['IL'],
     p_brands: ['Timken'],
     p_sizes: ['5-10M'],
     p_btype: 'other',
-    p_country: 'us',
+    // The RPC keeps p_country in its signature; the control is retired, so it
+    // is pinned null on every call.
+    p_country: null,
     p_cat_min: 2,
     p_cat_max: null,
     p_q: 'acme',

@@ -14,9 +14,7 @@
  * that the parser did not admit is ever emitted back into a URL the page
  * renders. That is what keeps junk parameters from reflecting into hrefs.
  */
-import { ALLOWED_VIEWS, BUSINESS_TYPES, CLIENT_POOLS, DEFAULT_PAGE_SIZE, DEFAULT_VIEW, isSheetColumn } from './columns.mjs'
-
-const COUNTRIES = ['us', 'non-us']
+import { ALLOWED_VIEWS, BUSINESS_TYPES, CLIENT_POOLS, CLIENT_POOLS_NO_SMALL_SHOPS, DEFAULT_PAGE_SIZE, DEFAULT_VIEW, isSheetColumn } from './columns.mjs'
 
 /** Neutralise LIKE metacharacters so a search for "50%" is a search for "50%". */
 export function escapeLike(s) {
@@ -34,17 +32,9 @@ function quotedPattern(pattern) {
   return `"${pattern.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`
 }
 
-/**
- * Country, honestly. There is no `country` column in the seated list or in any
- * pool, including pool-non-us. The only country signal we hold is pool
- * membership, so the filter ships as two values derived server-side. A non-US
- * row's `state` holds a province or region code with no country attached, so it
- * is never used to guess. Real country values are a pipeline task, not a
- * display task here.
- */
-export function countryOf(pool) {
-  return String(pool ?? '') === 'non-us' ? 'Non-US' : 'United States'
-}
+// The country filter and the derived Country column were retired with the G2
+// non-us drop (2026-08-10): the base is US-only, so there is nothing to filter
+// or display. The only country signal ever held was pool membership.
 
 function numOrNull(v) {
   const s = String(v ?? '').trim()
@@ -63,7 +53,6 @@ export function parseSheetParams(searchParams) {
   const sp = searchParams ?? new URLSearchParams()
   const sortRaw = sp.get('sort') ?? ''
   const dirRaw = (sp.get('dir') ?? '').toLowerCase()
-  const country = sp.get('country')
   const view = sp.get('view')
   const btype = sp.get('btype')
   return {
@@ -75,7 +64,9 @@ export function parseSheetParams(searchParams) {
     sizes: sp.getAll('sizes').filter(Boolean),
     // business_type is a CLOSED vocabulary (the sync's), so it clamps.
     btype: BUSINESS_TYPES.includes(btype) ? btype : null,
-    country: COUNTRIES.includes(country) ? country : null,
+    // One boolean, exact-match '1' — it selects between two sanctioned pool
+    // subsets at the emitters and can only narrow (G2 2026-08-10).
+    hideSmall: sp.get('hideSmall') === '1',
     catMin: numOrNull(sp.get('catMin')),
     catMax: numOrNull(sp.get('catMax')),
     q: (sp.get('q') ?? '').trim(),
@@ -100,7 +91,7 @@ export function toSearchParams(params) {
   for (const b of params.brands) sp.append('brands', b)
   for (const s of params.sizes) sp.append('sizes', s)
   if (params.btype) sp.set('btype', params.btype)
-  if (params.country) sp.set('country', params.country)
+  if (params.hideSmall) sp.set('hideSmall', '1')
   if (params.catMin !== null) sp.set('catMin', String(params.catMin))
   if (params.catMax !== null) sp.set('catMax', String(params.catMax))
   if (params.q) sp.set('q', params.q)
@@ -112,15 +103,16 @@ export function toSearchParams(params) {
 /** SheetParams -> a single declarative spec. Pure; no client involved. */
 export function buildFilterSpec(params) {
   const p = params
-  const spec = { overlaps: [], in: [], eq: [], neq: [], gte: [], lte: [], or: null }
+  // `hideSmall` is a boolean, not a filter clause: applyFilters reads it to
+  // choose WHICH sanctioned pool subset to pin. A mutated spec can only pick
+  // between the two code-owned sets — it cannot name pools.
+  const spec = { hideSmall: p.hideSmall === true, overlaps: [], in: [], eq: [], neq: [], gte: [], lte: [], or: null }
 
   if (p.sources.length) spec.overlaps.push({ column: 'source_tokens', values: p.sources })
   if (p.brands.length) spec.overlaps.push({ column: 'brand_tokens', values: p.brands })
   if (p.states.length) spec.in.push({ column: 'state', values: p.states })
   if (p.sizes.length) spec.in.push({ column: 'size_band', values: p.sizes })
-  if (p.country === 'non-us') spec.eq.push({ column: 'pool', value: 'non-us' })
   if (p.btype) spec.eq.push({ column: 'business_type', value: p.btype })
-  if (p.country === 'us') spec.neq.push({ column: 'pool', value: 'non-us' })
   if (p.catMin !== null) spec.gte.push({ column: 'category_core', value: p.catMin })
   if (p.catMax !== null) spec.lte.push({ column: 'category_core', value: p.catMax })
   if (p.q) {
@@ -140,7 +132,7 @@ export function buildFilterSpec(params) {
  * counterArgs() is the other emitter and pins the same predicate as p_pools.
  */
 export function applyFilters(query, spec) {
-  let q = query.in('pool', CLIENT_POOLS)
+  let q = query.in('pool', spec?.hideSmall === true ? CLIENT_POOLS_NO_SMALL_SHOPS : CLIENT_POOLS)
   for (const f of spec.overlaps) q = q.overlaps(f.column, f.values)
   for (const f of spec.in) q = q.in(f.column, f.values)
   for (const f of spec.eq) q = q.eq(f.column, f.value)
@@ -158,13 +150,15 @@ export function applyFilters(query, spec) {
  */
 export function counterArgs(params) {
   return {
-    p_pools: CLIENT_POOLS,
+    p_pools: params.hideSmall === true ? CLIENT_POOLS_NO_SMALL_SHOPS : CLIENT_POOLS,
     p_sources: params.sources.length ? params.sources : null,
     p_states: params.states.length ? params.states : null,
     p_brands: params.brands.length ? params.brands : null,
     p_sizes: params.sizes.length ? params.sizes : null,
     p_btype: params.btype,
-    p_country: params.country,
+    // The country control is retired (G2 non-us drop); the RPC keeps the
+    // parameter in its signature, so it is pinned null rather than removed.
+    p_country: null,
     p_cat_min: params.catMin,
     p_cat_max: params.catMax,
     p_q: params.q || null,

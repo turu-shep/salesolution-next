@@ -38,19 +38,18 @@ test('csvLine joins and terminates', () => {
 // ── the columns (D1): the whitelist, always, via the same serializer ────────
 
 test('exportColumns is the client row minus the React key — pinned exactly', () => {
-  // Task 13 pin update: size_band + business_type join after category_core —
-  // country + the 17 whitelist identifiers, 18 fields.
+  // The 17 whitelist identifiers, nothing else. (Country left with the G2
+  // non-us drop 2026-08-10 — the base is US-only.)
   assert.deepEqual(exportColumns(), [
-    'country',
     'company', 'company_display', 'address_1', 'city', 'state', 'zip5',
     'phone_e164', 'domain', 'category_core', 'size_band', 'business_type',
     'brand_authorized', 'line_card', 'source', 'source_url', 'captured', 'location_count',
   ])
   // Derived from toClientRow — the sheet's own serializer — never a second list…
-  assert.deepEqual(exportColumns(), ['country', ...LOCATION_COLUMNS])
+  assert.deepEqual(exportColumns(), [...LOCATION_COLUMNS])
   // …and no argument reaches a wider set, because there is no wider set.
   assert.deepEqual(exportColumns(true), exportColumns())
-  for (const gone of ['key', 'id', 'pool', 'list_generation', 'email', 'tier', 'brand_tokens']) {
+  for (const gone of ['key', 'id', 'pool', 'list_generation', 'email', 'tier', 'brand_tokens', 'country']) {
     assert.equal(exportColumns().includes(gone), false, `${gone} must never be a CSV column`)
   }
 })
@@ -105,18 +104,18 @@ test('a view outside the allowed lenses is a 400; missing means the default lens
 
 test('the audited filter is the membership-deciding fields, nothing else', () => {
   const params = parseSheetParams(
-    new URLSearchParams('source=timken&state=IL&state=WI&brands=Timken&brands=SKF&sizes=5-10M&btype=distributor&country=us&catMin=2&catMax=5&q=bearing&sort=city&dir=desc&page=3&view=hosebox'),
+    new URLSearchParams('source=timken&state=IL&state=WI&brands=Timken&brands=SKF&sizes=5-10M&btype=distributor&hideSmall=1&catMin=2&catMax=5&q=bearing&sort=city&dir=desc&page=3&view=hosebox'),
   )
   // sort/dir order the set, page windows it, view is audited as its own column.
-  // Task 13 pin update: brands/sizes/btype DECIDE membership, so an audit row
-  // without them would make a filtered pull indistinguishable from a full one.
+  // brands/sizes/btype DECIDE membership; hideSmall narrows the pool set, so
+  // an audit row without it would make a narrowed pull look like a full one.
   assert.deepEqual(exportFilter(params), {
     sources: ['timken'], states: ['IL', 'WI'], brands: ['Timken', 'SKF'], sizes: ['5-10M'],
-    btype: 'distributor', country: 'us', catMin: 2, catMax: 5, q: 'bearing',
+    btype: 'distributor', hideSmall: true, catMin: 2, catMax: 5, q: 'bearing',
   })
-  // At rest the three record their empty shapes, same convention as the rest.
+  // At rest the filters record their empty shapes, same convention as the rest.
   assert.deepEqual(exportFilter(parseSheetParams(new URLSearchParams(''))), {
-    sources: [], states: [], brands: [], sizes: [], btype: null, country: null, catMin: null, catMax: null, q: '',
+    sources: [], states: [], brands: [], sizes: [], btype: null, hideSmall: false, catMin: null, catMax: null, q: '',
   })
 })
 
@@ -125,7 +124,7 @@ test('the audited filter is the membership-deciding fields, nothing else', () =>
 const ACCOUNT = { id: 'a1', email: 'op@example.com', name: 'Op', role: 'member' }
 
 const ROW_1 = {
-  key: 'k1', country: 'United States',
+  key: 'k1',
   company: 'acme bearing', company_display: 'Acme Bearing Co., Inc.', address_1: null,
   city: 'Peoria', state: 'IL', zip5: '61601', phone_e164: null, domain: 'acme.example',
   category_core: 4.5, size_band: '5-10M', business_type: 'distributor',
@@ -136,7 +135,7 @@ const ROW_1 = {
 // ROW_2 carries NO size_band / business_type keys at all — the pre-0005 shape.
 // The export must render them as empty cells, never throw or shift columns.
 const ROW_2 = {
-  key: 'k2', country: 'United States',
+  key: 'k2',
   company: 'b co', company_display: null, address_1: null,
   city: null, state: 'WI', zip5: null, phone_e164: null, domain: null,
   category_core: 3, brand_authorized: null, line_card: null, source: 'dfs',
@@ -166,9 +165,9 @@ test('the audit row precedes the first CSV byte, and the file is the sheet, exac
   assert.deepEqual(calls.slice(2), [['page', 0, 2]])
   assert.equal(lines.length, 3)
   assert.equal(lines[0], csvLine(exportColumns())) // header row = the client field names
-  assert.equal(lines[1], 'United States,acme bearing,"Acme Bearing Co., Inc.",,Peoria,IL,61601,,acme.example,4.5,5-10M,distributor,,,timken,,,1\n')
+  assert.equal(lines[1], 'acme bearing,"Acme Bearing Co., Inc.",,Peoria,IL,61601,,acme.example,4.5,5-10M,distributor,,,timken,,,1\n')
   // ROW_2 has no size_band/business_type keys (pre-0005 row): two empty cells, no shift.
-  assert.equal(lines[2], 'United States,b co,,,,WI,,,,3,,,,,dfs,,,2\n')
+  assert.equal(lines[2], 'b co,,,,WI,,,,3,,,,,dfs,,,2\n')
   // The opaque React key rides on every client row and lands in no CSV cell.
   assert.equal(lines.join('').includes('k1'), false)
   assert.equal(lines.join('').includes('k2'), false)

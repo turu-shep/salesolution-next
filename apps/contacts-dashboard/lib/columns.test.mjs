@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { ALLOWED_VIEWS, ALWAYS_SELECTED, BUSINESS_TYPES, CLIENT_POOLS, DEFAULT_VIEW, LOCATION_COLUMNS, TYPED_COLUMNS, businessTypeLabel, isSheetColumn, selectList, viewLabel } from './columns.mjs'
+import { ALLOWED_VIEWS, ALWAYS_SELECTED, BUSINESS_TYPES, CLIENT_POOLS, CLIENT_POOLS_NO_SMALL_SHOPS, DEFAULT_VIEW, LOCATION_COLUMNS, TYPED_COLUMNS, businessTypeLabel, isSheetColumn, selectList, viewLabel } from './columns.mjs'
 
 test('LOCATION_COLUMNS is the whitelist, verbatim and in order', () => {
   // Task 13 pin update (founder v2): size_band + business_type join the
@@ -17,14 +17,27 @@ test('LOCATION_COLUMNS is the whitelist, verbatim and in order', () => {
 })
 
 test('CLIENT_POOLS is the curated client base — the reject bins can never appear in it', () => {
-  // Founder decision 2026-08-09: the client base is everything EXCEPT the
-  // pipeline's reject bins, server-enforced. This constant is a SECURITY-CLASS
-  // control like the whitelist: both query emitters pin it unconditionally.
+  // Founder decision 2026-08-09, narrowed by the G2 re-pick 2026-08-10: the
+  // client base is everything EXCEPT the reject bins and non-us,
+  // server-enforced. This constant is a SECURITY-CLASS control like the
+  // whitelist: both query emitters pin it unconditionally.
   assert.deepEqual(CLIENT_POOLS, [
-    'seated', 'above-ceiling', 'adjacent-trades', 'chains', 'non-us', 'small-shops', 'segment-w',
+    'seated', 'above-ceiling', 'adjacent-trades', 'chains', 'small-shops', 'segment-w',
   ])
   for (const rejected of ['not-a-distributor', 'ranked-out', 'duplicate-sites', 'identity-backlog', 'usaspending-unmatched']) {
     assert.equal(CLIENT_POOLS.includes(rejected), false, `${rejected} is a reject bin and must never be a client pool`)
+  }
+  // non-us is not a reject bin — it stays in the asset — but the founder
+  // dropped it from the client view entirely ("fully drop non-us").
+  assert.equal(CLIENT_POOLS.includes('non-us'), false)
+})
+
+test('CLIENT_POOLS_NO_SMALL_SHOPS is the only other pool set an emitter may pin', () => {
+  // The hide-small-shops toggle chooses between two code-owned subsets; it can
+  // never name pools, so it can never widen.
+  assert.deepEqual(CLIENT_POOLS_NO_SMALL_SHOPS, CLIENT_POOLS.filter((p) => p !== 'small-shops'))
+  for (const p of CLIENT_POOLS_NO_SMALL_SHOPS) {
+    assert.equal(CLIENT_POOLS.includes(p), true, `${p} must be a subset of the client base`)
   }
 })
 
@@ -44,7 +57,7 @@ test('every whitelist column is a real column in the contacts table', () => {
   assert.equal(TYPED_COLUMNS.includes('website'), false)   // a brief would reach for it; the real one is `domain`
   assert.equal(TYPED_COLUMNS.includes('zip'), false)       // the real one is `zip5`
   assert.equal(TYPED_COLUMNS.includes('phone'), false)     // the real one is `phone_e164`
-  assert.equal(TYPED_COLUMNS.includes('country'), false)   // derived from pool; no column exists
+  assert.equal(TYPED_COLUMNS.includes('country'), false)   // no column exists; the derived one left with non-us
   assert.equal(TYPED_COLUMNS.includes('category_display'), false)
 })
 
