@@ -68,8 +68,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
         {data ? (
           <>
             <Filters params={params} facets={data.facets} />
-            <p>
-              <a href={exportHref}>Download CSV of this filter</a>{' '}
+            <p className="sheet-meta">
+              <a href={exportHref} className="btn btn-quiet btn-sm">Download CSV of this filter</a>{' '}
               <span className="muted">
                 page {params.page} of {lastPage.toLocaleString('en-US')} · {pageSize} rows per page
               </span>
@@ -77,7 +77,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             <Sheet rows={data.rows} params={params} />
           </>
         ) : (
-          <p className="warn" style={{ display: 'inline-block', padding: '8px 12px' }}>
+          <p className="warn banner">
             Data is temporarily unavailable. Try again in a few minutes.
           </p>
         )}

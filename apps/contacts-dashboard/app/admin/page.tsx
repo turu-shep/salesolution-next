@@ -48,7 +48,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       <Nav params={params} active="admin" admin />
       <main>
         <h1>Admin</h1>
-        <p className="muted" style={{ maxWidth: 640 }}>
+        <p className="lede">
           Invite people, revoke access, and see who is actually using the sheet. A new invite shows
           its password exactly once — it is never stored. Revocation bites on the person&rsquo;s next
           request.
@@ -66,9 +66,9 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                     <th>Status</th>
                     <th>Created</th>
                     <th>Last seen (UTC)</th>
-                    <th>Visits 7d</th>
-                    <th>Visits 30d</th>
-                    <th>Exports</th>
+                    <th className="num">Visits 7d</th>
+                    <th className="num">Visits 30d</th>
+                    <th className="num">Exports</th>
                     <th aria-label="Actions" />
                   </tr>
                 </thead>
@@ -81,12 +81,20 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                       </td>
                       <td>{a.email}</td>
                       <td>{a.role}</td>
-                      <td>{a.status === 'revoked' ? <span className="chip warn">revoked</span> : a.status}</td>
+                      <td>
+                        {a.status === 'revoked' ? (
+                          <span className="chip warn">revoked</span>
+                        ) : a.status === 'active' ? (
+                          <span className="chip ok">active</span>
+                        ) : (
+                          a.status
+                        )}
+                      </td>
                       <td>{a.createdAt ?? '—'}</td>
                       <td>{a.lastSeen ?? '—'}</td>
-                      <td>{a.visits7d.toLocaleString('en-US')}</td>
-                      <td>{a.visits30d.toLocaleString('en-US')}</td>
-                      <td>{a.exportsTotal.toLocaleString('en-US')}</td>
+                      <td className="num">{a.visits7d.toLocaleString('en-US')}</td>
+                      <td className="num">{a.visits30d.toLocaleString('en-US')}</td>
+                      <td className="num">{a.exportsTotal.toLocaleString('en-US')}</td>
                       <td>
                         <AdminActions email={a.email} actions={rowActions(a, self.email) as string[]} />
                       </td>
@@ -96,10 +104,10 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
               </table>
             </div>
           ) : (
-            <p className="muted">No accounts yet. Invite the first one above.</p>
+            <p className="empty">No accounts yet. Invite the first one above.</p>
           )
         ) : (
-          <p className="warn" style={{ display: 'inline-block', padding: '8px 12px' }}>
+          <p className="warn banner">
             Data is temporarily unavailable. Try again in a few minutes.
           </p>
         )}

@@ -30,11 +30,20 @@ const HEADINGS = [
 
 const text = (v: unknown) => (v === null || v === undefined || v === '' ? '' : String(v))
 
+/** Columns that hold numbers: right-aligned, tabular figures (CSS .num). Display only. */
+const NUM_COLUMNS = new Set(['category_core', 'location_count'])
+
 function sortHref(params: SheetParams, column: string) {
   const sp = toSearchParams(params)
   sp.set('sort', column)
   sp.set('dir', params.sort === column && params.dir === 'asc' ? 'desc' : 'asc')
   return `/?${sp.toString()}`
+}
+
+/** aria-sort for the active sort column — styling hook for the ↑/↓ marker, state already in the URL. */
+function sortState(params: SheetParams, column: string) {
+  if (params.sort !== column) return undefined
+  return params.dir === 'desc' ? ('descending' as const) : ('ascending' as const)
 }
 
 export function Sheet({ rows, params }: { rows: ClientRow[]; params: SheetParams }) {
@@ -45,7 +54,7 @@ export function Sheet({ rows, params }: { rows: ClientRow[]; params: SheetParams
           <tr>
             <th>Provenance</th>
             {HEADINGS.map(([key, label]) => (
-              <th key={key}>
+              <th key={key} className={NUM_COLUMNS.has(key) ? 'num' : undefined} aria-sort={sortState(params, key)}>
                 {key === 'country' ? label : <a href={sortHref(params, key)}>{label}</a>}
               </th>
             ))}
@@ -56,7 +65,7 @@ export function Sheet({ rows, params }: { rows: ClientRow[]; params: SheetParams
             const prov = provenanceRows(row.source, row.source_url, row.captured)
             return (
               <tr key={row.key}>
-                <td>
+                <td className="prov">
                   <details>
                     <summary>
                       {prov.missing ? (
@@ -85,7 +94,11 @@ export function Sheet({ rows, params }: { rows: ClientRow[]; params: SheetParams
                   </details>
                 </td>
                 {HEADINGS.map(([key]) => (
-                  <td key={key}>
+                  <td
+                    key={key}
+                    className={NUM_COLUMNS.has(key) ? 'cell num' : 'cell'}
+                    title={text(row[key]) || undefined}
+                  >
                     {key === 'domain' && row.domain
                       ? <a href={`https://${String(row.domain)}`} target="_blank" rel="noopener noreferrer">{String(row.domain)}</a>
                       : text(row[key])}
@@ -96,7 +109,7 @@ export function Sheet({ rows, params }: { rows: ClientRow[]; params: SheetParams
           })}
         </tbody>
       </table>
-      {rows.length === 0 ? <p className="muted">No rows match this filter.</p> : null}
+      {rows.length === 0 ? <p className="empty">No rows match this filter.</p> : null}
     </div>
   )
 }

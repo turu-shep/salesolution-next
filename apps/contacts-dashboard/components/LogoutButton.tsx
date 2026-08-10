@@ -22,12 +22,7 @@ export function LogoutButton() {
   }
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={busy}
-      style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent)', cursor: 'pointer', font: 'inherit' }}
-    >
+    <button type="button" className="btn-link" onClick={onClick} disabled={busy}>
       {busy ? 'Signing out…' : 'Log out'}
     </button>
   )

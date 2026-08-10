@@ -45,19 +45,19 @@ export function AdminActions({ email, actions }: { email: string; actions: strin
 
   if (actions.length === 0) return null
   return (
-    <span style={{ display: 'inline-flex', gap: 10, alignItems: 'baseline' }}>
+    <span className="row-actions">
       {actions.map((action) => (
         <button
           key={action}
           type="button"
+          className={action === 'revoke' ? 'btn btn-danger btn-sm' : 'btn btn-quiet btn-sm'}
           onClick={() => run(action)}
           disabled={busy}
-          style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent)', cursor: 'pointer', font: 'inherit' }}
         >
           {LABELS[action] ?? action}
         </button>
       ))}
-      {error ? <span style={{ color: 'var(--error)' }}>{error}</span> : null}
+      {error ? <span className="form-error small" style={{ margin: 0 }}>{error}</span> : null}
     </span>
   )
 }

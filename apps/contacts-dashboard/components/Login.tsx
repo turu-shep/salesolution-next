@@ -39,35 +39,33 @@ export function Login() {
   }
 
   return (
-    <main>
-      <form onSubmit={onSubmit} style={{ maxWidth: 320 }}>
-        <h1>Contacts — private</h1>
-        <p className="muted">Sign in with the credentials you were given.</p>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          autoFocus
-          autoComplete="username"
-          aria-label="Email"
-          placeholder="Email"
-          style={{ width: '100%', padding: '8px 10px', marginTop: 12 }}
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="current-password"
-          aria-label="Password"
-          placeholder="Password"
-          style={{ width: '100%', padding: '8px 10px', marginTop: 8 }}
-        />
-        {error ? <p style={{ color: 'var(--error)' }}>{error}</p> : null}
-        <button
-          type="submit"
-          disabled={busy || !email || !password}
-          style={{ width: '100%', padding: '8px 10px', marginTop: 12 }}
-        >
+    <main className="login-wrap">
+      <form onSubmit={onSubmit} className="login-card">
+        <h1>Contacts</h1>
+        <p className="login-sub">Private — sign in with the credentials you were given.</p>
+        <div className="field">
+          <label htmlFor="login-email">Email</label>
+          <input
+            id="login-email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoFocus
+            autoComplete="username"
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="login-password">Password</label>
+          <input
+            id="login-password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+          />
+        </div>
+        {error ? <p className="form-error" role="alert">{error}</p> : null}
+        <button type="submit" className="btn btn-primary btn-block" disabled={busy || !email || !password}>
           {busy ? 'Checking…' : 'Sign in'}
         </button>
       </form>

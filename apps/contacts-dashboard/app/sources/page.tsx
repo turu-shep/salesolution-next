@@ -50,40 +50,29 @@ export default async function SourcesPage({ searchParams }: { searchParams: Prom
       <Nav params={params} active="sources" admin={Boolean(isOwner(account))} />
       <main>
         <h1>Sources</h1>
-        <p className="muted" style={{ maxWidth: 640 }}>
+        <p className="lede">
           Every location in the sheet was captured from one or more of these public sources. Each row
           links its own provenance — its source chips and the &ldquo;found in N lists&rdquo; expander
           name the exact source and the month it was verified.
         </p>
         {sources ? (
           sources.length ? (
-            <div className="scroll">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Source</th>
-                    <th>Kind</th>
-                    <th>Locations contributed</th>
-                    <th>Last verified</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sources.map((s) => (
-                    <tr key={s.token}>
-                      <td>{s.display}</td>
-                      <td>{s.kind ?? '—'}</td>
-                      <td>{s.locations.toLocaleString('en-US')}</td>
-                      <td>{s.lastCaptured ?? '—'}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <ul className="source-cards">
+              {sources.map((s) => (
+                <li key={s.token} className="card source-card">
+                  <div className="source-name">{s.display}</div>
+                  <div className="source-kind">{s.kind ?? '—'}</div>
+                  <p className="source-meta">
+                    {s.locations.toLocaleString('en-US')} locations contributed · last verified {s.lastCaptured ?? '—'}
+                  </p>
+                </li>
+              ))}
+            </ul>
           ) : (
-            <p className="muted">No sources recorded yet.</p>
+            <p className="empty">No sources recorded yet.</p>
           )
         ) : (
-          <p className="warn" style={{ display: 'inline-block', padding: '8px 12px' }}>
+          <p className="warn banner">
             Data is temporarily unavailable. Try again in a few minutes.
           </p>
         )}

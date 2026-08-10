@@ -16,34 +16,36 @@ import { toSearchParams } from '@/lib/query.mjs'
  */
 export function Nav({ params, active, admin }: { params: SheetParams; active?: 'sources' | 'admin'; admin?: boolean }) {
   const homeQs = params.view === DEFAULT_VIEW ? '' : `?view=${params.view}`
+  const onHome = active === undefined
   const onSources = active === 'sources'
   const onAdmin = active === 'admin'
   return (
-    <nav style={{ borderBottom: '1px solid var(--rule)', padding: '10px 24px', display: 'flex', gap: 16, alignItems: 'baseline' }}>
-      <Link href={`/${homeQs}`}>Locations</Link>
-      <Link href="/sources" aria-current={onSources ? 'page' : undefined} style={onSources ? { fontWeight: 600 } : undefined}>
+    <nav className="nav">
+      <Link className="nav-tab" href={`/${homeQs}`} aria-current={onHome ? 'page' : undefined}>
+        Locations
+      </Link>
+      <Link className="nav-tab" href="/sources" aria-current={onSources ? 'page' : undefined}>
         Sources
       </Link>
       {admin ? (
-        <Link href="/admin" aria-current={onAdmin ? 'page' : undefined} style={onAdmin ? { fontWeight: 600 } : undefined}>
+        <Link className="nav-tab" href="/admin" aria-current={onAdmin ? 'page' : undefined}>
           Admin
         </Link>
       ) : null}
-      <span className="muted" style={{ marginLeft: 'auto' }}>View:</span>
-      {ALLOWED_VIEWS.map((view) => {
-        const qs = toSearchParams({ ...params, view }).toString()
-        const active = params.view === view
-        return (
-          <Link
-            key={view}
-            href={qs ? `/?${qs}` : '/'}
-            aria-current={active ? 'page' : undefined}
-            style={active ? { fontWeight: 600 } : undefined}
-          >
-            {viewLabel(view)}
-          </Link>
-        )
-      })}
+      <span className="nav-lens">
+        <span className="seg-label">View:</span>
+        <span className="seg">
+          {ALLOWED_VIEWS.map((view) => {
+            const qs = toSearchParams({ ...params, view }).toString()
+            const activeView = params.view === view
+            return (
+              <Link key={view} href={qs ? `/?${qs}` : '/'} aria-current={activeView ? 'page' : undefined}>
+                {viewLabel(view)}
+              </Link>
+            )
+          })}
+        </span>
+      </span>
     </nav>
   )
 }

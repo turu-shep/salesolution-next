@@ -55,24 +55,20 @@ export function InviteForm() {
 
   if (created) {
     return (
-      <div style={{ border: '1px solid var(--rule)', padding: '12px 16px', maxWidth: 560, marginBottom: 20 }}>
+      <div className="card password-card">
         <p style={{ margin: '0 0 8px' }}>
           Account created for <strong>{created.email}</strong>. Their password:
         </p>
         <p style={{ margin: '0 0 8px' }}>
-          <code style={{ fontSize: 15, background: 'var(--surface-alt)', padding: '4px 8px' }}>{created.password}</code>{' '}
-          <button
-            type="button"
-            onClick={copyPassword}
-            style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent)', cursor: 'pointer', font: 'inherit' }}
-          >
+          <code className="well">{created.password}</code>{' '}
+          <button type="button" className="btn-link" onClick={copyPassword}>
             {copied ? 'Copied' : 'Copy'}
           </button>
         </p>
-        <p className="muted" style={{ margin: '0 0 10px' }}>
+        <p className="muted small" style={{ margin: '0 0 12px' }}>
           Copy it now — it is not stored and will not be shown again. Deliver it out-of-band.
         </p>
-        <button type="button" onClick={() => window.location.reload()} style={{ padding: '6px 10px' }}>
+        <button type="button" className="btn btn-quiet" onClick={() => window.location.reload()}>
           Done — refresh the list
         </button>
       </div>
@@ -80,31 +76,41 @@ export function InviteForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', marginBottom: 20 }}>
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        aria-label="Name"
-        placeholder="Name"
-        style={{ padding: '6px 10px', width: 180 }}
-      />
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        autoComplete="off"
-        aria-label="Email"
-        placeholder="Email"
-        style={{ padding: '6px 10px', width: 240 }}
-      />
-      <select value={role} onChange={(e) => setRole(e.target.value)} aria-label="Role" style={{ padding: '6px 10px' }}>
-        <option value="viewer">Viewer</option>
-        <option value="owner">Owner</option>
-      </select>
-      <button type="submit" disabled={busy || !name.trim() || !email.trim()} style={{ padding: '6px 12px' }}>
-        {busy ? 'Inviting…' : 'Invite'}
-      </button>
-      {error ? <span style={{ color: 'var(--error)' }}>{error}</span> : null}
+    <form onSubmit={onSubmit} className="card">
+      <h2 className="card-title">Invite someone</h2>
+      <div className="form-row">
+        <div className="field">
+          <label htmlFor="inv-name">Name</label>
+          <input
+            id="inv-name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            style={{ width: 180 }}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="inv-email">Email</label>
+          <input
+            id="inv-email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="off"
+            style={{ width: 240 }}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="inv-role">Role</label>
+          <select id="inv-role" value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="viewer">Viewer</option>
+            <option value="owner">Owner</option>
+          </select>
+        </div>
+        <button type="submit" className="btn btn-primary" disabled={busy || !name.trim() || !email.trim()}>
+          {busy ? 'Inviting…' : 'Invite'}
+        </button>
+        {error ? <span className="form-error" style={{ margin: 0 }}>{error}</span> : null}
+      </div>
     </form>
   )
 }

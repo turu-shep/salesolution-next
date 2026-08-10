@@ -2,6 +2,7 @@
  * accounts — the founder CLI for the contacts dashboard's per-person logins.
  *
  *   node apps/contacts-dashboard/scripts/accounts.mjs invite "<Name>" <email> [--role owner]
+ *   node apps/contacts-dashboard/scripts/accounts.mjs reset <email>
  *   node apps/contacts-dashboard/scripts/accounts.mjs promote <email>
  *   node apps/contacts-dashboard/scripts/accounts.mjs revoke <email>
  *   node apps/contacts-dashboard/scripts/accounts.mjs reactivate <email>
@@ -12,11 +13,15 @@
  * SUPABASE_SERVICE_ROLE_KEY from .env.local (repo root), same loader as
  * supabase/anon-check.mjs.
  *
- * `invite` prints the generated password EXACTLY ONCE. Deliver it out-of-band
- * (call, Signal, in person) — it is not stored, not logged, and not
- * recoverable. There is no rotation path here yet: `invite` refuses an email
- * that already has a row and `revoke` only ends access, so a lost password
- * means a future `reset` command or a direct SQL update of password_hash.
+ * `invite` and `reset` print the generated password EXACTLY ONCE. Deliver it
+ * out-of-band (call, Signal, in person) — it is not stored, not logged, and
+ * not recoverable. Rotation IS `reset`, not revoke+invite: `invite` refuses
+ * an email that already has a row, so a lost password means `reset <email>`,
+ * which writes a fresh password_hash to the existing account. Note that a
+ * reset does NOT end the person's existing sessions — the cookie is an
+ * HMAC-signed token, not password-derived — so when the goal is locking
+ * someone out, `revoke` first (status is checked on every request), then
+ * `reset` if they are coming back.
  *
  * `promote` is the owner bootstrap: the in-app /admin screen only renders for
  * an owner, so the first owner has to be minted here, not there.
@@ -41,6 +46,7 @@ loadEnv()
 
 const USAGE = `usage:
   node apps/contacts-dashboard/scripts/accounts.mjs invite "<Name>" <email> [--role owner]
+  node apps/contacts-dashboard/scripts/accounts.mjs reset <email>
   node apps/contacts-dashboard/scripts/accounts.mjs promote <email>
   node apps/contacts-dashboard/scripts/accounts.mjs revoke <email>
   node apps/contacts-dashboard/scripts/accounts.mjs reactivate <email>
@@ -129,6 +135,31 @@ async function invite(name, rawEmail, role = 'viewer') {
   console.log('Shown this once only — deliver it out-of-band; it is not stored.')
 }
 
+/**
+ * The rotation path: a fresh password for an EXISTING account. Same generator
+ * as invite (one shape, two doors), printed exactly once. Sessions are HMAC
+ * tokens, not password-derived, so existing sessions keep working — `revoke`
+ * is the lockout tool; this is the lost-password tool.
+ */
+async function reset(rawEmail) {
+  const email = normalizeEmail(rawEmail)
+  const env = requireEnv()
+
+  const password = generatePassword()
+  const password_hash = hashPassword(password)
+
+  const res = await rest(env, 'PATCH', `accounts?email=eq.${encodeURIComponent(email)}`, { password_hash })
+  if (!res.ok) fail(`Update failed (HTTP ${res.status}): ${res.text.slice(0, 300)}`)
+  const rows = Array.isArray(res.json) ? res.json : []
+  if (rows.length === 0) fail(`No account with email ${email}.`)
+  console.log(`Reset the password for ${email}.`)
+  console.log('')
+  console.log(`  password: ${password}`)
+  console.log('')
+  console.log('Shown this once only — deliver it out-of-band; it is not stored.')
+  console.log('Existing sessions keep working (sessions are signed tokens, not password-derived) — revoke first when the goal is locking out.')
+}
+
 async function promote(rawEmail) {
   const email = normalizeEmail(rawEmail)
   const env = requireEnv()
@@ -176,6 +207,9 @@ switch (cmd) {
     await invite(positional[0], positional[1], role)
     break
   }
+  case 'reset':
+    await reset(args[0])
+    break
   case 'promote':
     await promote(args[0])
     break

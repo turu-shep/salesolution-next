@@ -29,17 +29,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         {account ? (
           <>
-            <header
-              style={{
-                display: 'flex',
-                alignItems: 'baseline',
-                gap: 12,
-                padding: '10px 24px',
-                borderBottom: '1px solid var(--rule)',
-              }}
-            >
-              <strong>Contacts</strong>
-              <span className="muted" style={{ marginLeft: 'auto' }}>{account.name}</span>
+            <header className="topbar">
+              <strong className="brand">Contacts</strong>
+              <span className="account">{account.name}</span>
               <LogoutButton />
             </header>
             {children}
